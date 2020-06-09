@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if title %}
+        <title>Dublin Bus {{ title }}</title>
+    {% else %}
+        <title>Dublin Bus - {{ title }}</title>
+    {% endif %}
+</head>
+<body>
+    {% for post in posts %}
+        <h1>{{ post.route }}</h1>
+        <p>From {{ post.from }} to {{ post.to }}</p>
+        <p>{{ post.content }}</p>
+    {% endfor %}
+</body>
+</html>
