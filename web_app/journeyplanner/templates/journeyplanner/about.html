@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-    {% if title %}
-        <title>Dublin Bus {{ title }}</title>
-    {% else %}
-        <title>Dublin Bus - {{ title }}</title>
-    {% endif %}
-
-</head>
-<body>
+{% extends "journeyplanner/base.html" %}
+<!-- want the code below to override the content block in base.html -->
+{% block content %}
     <h1>About Page</h1>
-</body>
-</html>
+{% endblock content %}

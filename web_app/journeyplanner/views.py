@@ -3,13 +3,13 @@ from django.shortcuts import render
 #showing how data can be added to a html page
 posts = [
     {
-        'route':'9',
+        'route':'Route 9',
         'from' :'Charlestown',
         'to':'Limekiln Avenue',
         'time':'10:40'
     },
     {
-        'route':'39',
+        'route':'Route 39',
         'from' :'Burlington Road',
         'to':'Ongar',
         'time':'07:00'
