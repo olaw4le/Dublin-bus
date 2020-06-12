@@ -1,9 +1,53 @@
 {% extends "journeyplanner/base.html" %}
 <!-- want the code below to override the content block in base.html -->
 {% block content %}
-    {% for post in posts %}
-        <h1>{{ post.route }}</h1>
-        <p>From {{ post.from }} to {{ post.to }}</p>
-        <p>{{ post.content }}</p>
-    {% endfor %}
+
+<div class="padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#tab-1" aria-controls="home" role="tab" data-toggle="tab">Journey Planner</a></li>
+            <li role="presentation"><a href="#tab-2" aria-controls="profile" role="tab" data-toggle="tab">All stops</a></li>
+            <li role="presentation"><a href="#tab-3" aria-controls="profile" role="tab" data-toggle="tab">Disruptions</a></li>
+            <li role="presentation"><a href="#tab-4" aria-controls="profile" role="tab" data-toggle="tab">Leap Card</a></li>
+            <li role="presentation"><a href="#tab-5" aria-controls="profile" role="tab" data-toggle="tab">Tourist Attractions</a></li>
+          </ul>
+          
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-1">
+                <h3>Journey Planner</h3>
+                <p>Tab Content 1</p>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-2">
+                <h3>All stops</h3>
+                <p>Tab Content 2</p>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-3">
+                <h3>Disruptions</h3>
+                <p>Tab Content 3</p>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-4">
+                <h3>Leap Card</h3>
+                <p>Tab Content 4</p>
+            </div>   
+            <div role="tabpanel" class="tab-pane" id="tab-5">
+                <h3>Tourist Attractions</h3>
+                <p>Tab Content 5</p>
+            </div>              
+          </div>
+        </div>
+      <div class="col-sm-8">
+        </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('.nav-tabs').responsiveTabs();
+</script> 
 {% endblock content %}
+
+
+
+
+

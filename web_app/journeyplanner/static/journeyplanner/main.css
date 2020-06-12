@@ -31,6 +31,7 @@
   html, body {
     height: 100%;
     width: 100%;
+    padding-top: 50px; /* to stop content being hidden under nav bar */
   }
   
   .navbar {
@@ -40,7 +41,7 @@
   }
   
   .navbar-brand {
-    min-height: 55px;
+    min-height: 20px;
     padding: 0 15px 5px;
   }
   
@@ -51,3 +52,7 @@
   .navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:active {
     color: #FFF;
   }
+
+
+
+ 
