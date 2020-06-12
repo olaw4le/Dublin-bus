@@ -1,4 +1,4 @@
-body {
+/* body {
     background: #fafafa;
     color: #333333;
     margin-top: 5rem;
@@ -26,5 +26,28 @@ body {
   
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
-  }
+  } */
 
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .navbar {
+    background-color: #23415C;
+    padding: 1% 0;
+    font-size: 1.2em;
+  }
+  
+  .navbar-brand {
+    min-height: 55px;
+    padding: 0 15px 5px;
+  }
+  
+  .navbar-default .navbar-nav li a {
+    color: #D5D5D5;
+  }
+  
+  .navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:active {
+    color: #FFF;
+  }
