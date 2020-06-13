@@ -29,6 +29,7 @@ $(document).ready(function () {
     $(window).resize(function () {
         if ($(window).width() >= 992) {
             $("#map-interface").show();
+            $("#show-map").html("Show Map");
         }
     });
 
