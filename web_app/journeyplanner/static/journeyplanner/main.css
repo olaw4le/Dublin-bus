@@ -1,30 +1,102 @@
-body {
-    background: #fafafa;
-    color: #333333;
-    margin-top: 5rem;
+html, body {
+    height: 100%;
+    width: 100%;
+    /* margin: 0;
+    padding: 0; */
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    color: #444444;
+  /* nav bar */
+  .navbar {
+    background-color: #23415C;
+    padding: 1% 0;
+    font-size: 1.2em;
   }
   
-  ul {
-    margin: 0;
+  .navbar-brand {
+    min-height: 20px;
+    padding: 0 15px 5px;
   }
   
-  .bg-steel {
-    background-color: #5f788a;
+  .navbar-default .navbar-nav li a {
+    color: #D5D5D5;
   }
   
-  .site-header .navbar-nav .nav-link {
-    color: #cbd5db;
-  }
-  
-  .site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
-  }
-  
-  .site-header .navbar-nav .nav-link.active {
-    font-weight: 500;
+  .navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:active {
+    color: #FFF;
   }
 
+
+  /*map */
+  #map {
+    height: 100%;
+    position: relative;
+  }
+
+  #fullscreen-map {
+    height: calc(100vh - 77.594px);
+    position: relative;
+  }
+  /*map interface*/
+  #map-interface {
+    z-index: 1000;
+    position: absolute;
+    display: block;
+    top: 5rem;
+    left: 50px;
+    bottom: 50px;
+    width: 450px;
+  }
+
+  #map-button {
+    display: none;
+  }
+
+  #show-map {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    background-color: orange;
+    display: none;
+  }
+  .form-area {
+    margin: 20px 0px 0px 20px;
+  }
+
+  .datetimepicker {
+    margin: 20px 0px 0px 0px;
+  }
+
+  /* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+  #fullscreen-map {
+    height: calc(100vh - 107.594px);
+
+  }
+    #map-interface {
+      top: 30px;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+    }
+    #map-button {
+      display: block;
+    }
+
+    #show-map {
+      display: block;
+    }
+  }
+  
+  @media only screen and (min-width: 992px) {
+    #map-interface {
+      z-index: 1000;
+      position: absolute;
+      display: block;
+      top: 5rem;
+      left: 50px;
+      bottom: 50px;
+      width: 450px;
+    }
+  }
