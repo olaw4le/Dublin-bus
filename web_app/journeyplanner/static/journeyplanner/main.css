@@ -67,7 +67,7 @@ html, body {
   }
 
   /* media queries to make interface responsive */
-
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
 
   #fullscreen-map {
@@ -88,8 +88,7 @@ html, body {
       display: block;
     }
   }
-
-
+  
   @media only screen and (min-width: 992px) {
     #map-interface {
       z-index: 1000;

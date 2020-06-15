@@ -25,16 +25,13 @@ $(document).ready(function () {
         }
     });
 
-    // Show interface if hidden when window resized
+    // Show interface if hidden when window resized and change button to say show map
     $(window).resize(function () {
         if ($(window).width() >= 992) {
             $("#map-interface").show();
             $("#show-map").html("Show Map");
         }
     });
-
-
-
 });
 
 // bootstrap datetime picker
@@ -44,12 +41,7 @@ $(function () {
 			time: 'far fa-clock',
 			date: 'far fa-calendar',
 			up: 'fas fa-arrow-up',
-			down: 'fas fa-arrow-down',
-			previous: 'fas fa-chevron-left',
-			next: 'fas fa-chevron-right',
-			today: 'far fa-calendar-check-o',
-			clear: 'far fa-trash',
-			close: 'far fa-times'
+			down: 'fas fa-arrow-down'
 		}
 	
     });
