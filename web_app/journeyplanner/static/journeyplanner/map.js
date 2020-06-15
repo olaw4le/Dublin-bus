@@ -216,6 +216,11 @@ function routes() {
             });
           }	  
           
-
+// when the user click the go button, the route function runs 
+$(function(){
+  $('#go').on('click', function(){
+     routes();
+  });
+});
 
 
