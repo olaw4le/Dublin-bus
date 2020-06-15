@@ -25,6 +25,7 @@ html, body {
     color: #FFF;
   }
 
+
   /*map */
   #map {
     height: 100%;
@@ -35,7 +36,7 @@ html, body {
     height: calc(100vh - 77.594px);
     position: relative;
   }
-
+  /*map interface*/
   #map-interface {
     z-index: 1000;
     position: absolute;
@@ -57,10 +58,15 @@ html, body {
     background-color: orange;
     display: none;
   }
+  .form-area {
+    margin: 20px 0px 0px 20px;
+  }
 
+  .datetimepicker {
+    margin: 20px 0px 0px 0px;
+  }
 
-
-  /* media queries  */
+  /* media queries to make interface responsive */
 
   @media only screen and (max-width: 992px) {
 
@@ -68,7 +74,6 @@ html, body {
     height: calc(100vh - 107.594px);
 
   }
-
     #map-interface {
       top: 30px;
       left: 0px;
