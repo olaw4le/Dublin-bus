@@ -22,6 +22,8 @@
       
 
       <link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/main.css' %}">
+      
+      <script src=" {% static 'journeyplanner/layout.js' %}"></script>
     {% if title %}
         <title>Dublin Bus {{ title }}</title>
     {% else %}
@@ -38,15 +40,15 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">About</a>
+      <a class="nav-item nav-link active d-none d-xl-block" href="#">Home <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link" href="#">Login</a>
-    </div>
+      <a class="nav-item nav-link d-lg-none" id="routeplanner-nav">Route Planner</a>
+      <a class="nav-item nav-link d-lg-none" id="all-routes-nav">All Routes</a>
+      <a class="nav-item nav-link d-lg-none" id="leap-nav">Leap Card</a>
+      <a class="nav-item nav-link d-lg-none" id="disruptions-nav">Disruptions</a>
+      <a class="nav-item nav-link d-lg-none" id="tourist-nav">Tourist Information</a>
   </div>
 </nav>
-
- 
-
 
     <!-- this block will be overridden with code in the html pages -->
          {% block content %}{% endblock %}

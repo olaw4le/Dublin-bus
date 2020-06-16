@@ -88,6 +88,10 @@ html, body {
     #show-map {
       display: block;
     }
+
+    .nav-tabs {
+      display: none;
+    }
   }
   
   @media only screen and (min-width: 992px) {
@@ -101,3 +105,4 @@ html, body {
       width: 450px;
     }
   }
+
