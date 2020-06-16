@@ -67,6 +67,11 @@ html, body {
     margin: 20px 0px 0px 0px;
   }
 
+  .nav-tabs .nav-link {
+    padding: 6.25px;
+    border:solid 0.5px grey;
+  }
+
   /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
