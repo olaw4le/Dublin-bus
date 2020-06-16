@@ -4,7 +4,7 @@
 {% block content %}
 <script src=" {% static 'journeyplanner/map.js' %}"></script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEfrhfrJl6kKe-Au_rmeUXq030BJsNn3o&callback=initMap">
+ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap" async defer>>
   </script>
 <div id="fullscreen-map">
   <div id="show-map"><p>Show Map</p></div>
@@ -14,7 +14,7 @@
   <!-- input boxes for user to enter origin and destination locations -->
   <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
     <div class="container form-area">
-      <form>
+      <form onsubmit="return false">
         <div class="form-group">
           <label for="exampleInputEmail1">From:</label>
           <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
@@ -38,7 +38,7 @@
               </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Go</button>
+        <button type="submit" class="btn btn-primary" id="go">Go</button>
       </form>
     </div>
   </div>
