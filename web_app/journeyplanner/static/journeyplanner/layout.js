@@ -75,13 +75,15 @@ $(document).ready(function () {
         }
     });
 
-    // Show interface if hidden when window resized and change button to say show map
-    $(window).resize(function () {
-        if ($(window).width() >= 992) {
-            $("#map-interface").show();
-            $("#show-map").html("Show Map");
-        }
+
+
+    $('.navbar-nav>a').on('click', function(){
+        $('.navbar-collapse').collapse('hide');
     });
+
+
+
+
 });
 
 // bootstrap datetime picker
@@ -99,4 +101,10 @@ $(function () {
 });
 
 
-
+// Show interface if hidden when window resized and change button to say show map
+$(window).resize(function () {
+    if ($(window).width() >= 992) {
+        $("#map-interface").show();
+        $("#show-map").html("Show Map");
+    }
+});

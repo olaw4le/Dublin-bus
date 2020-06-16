@@ -98,6 +98,16 @@ html, body {
     .nav-tabs {
       display: none;
     }
+
+
+    #navbarNavAltMarkup {
+      position: fixed;
+      top: 50px;
+      z-index: 9999;
+      background-color: #D5D5D5;
+      width: 100vw;
+      /* height: calc(100vh - 50px); */
+    }
   }
   
   @media only screen and (min-width: 992px) {
