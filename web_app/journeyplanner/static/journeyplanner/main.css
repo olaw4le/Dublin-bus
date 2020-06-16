@@ -10,6 +10,8 @@ html, body {
     background-color: #23415C;
     padding: 1% 0;
     font-size: 1.2em;
+    min-height: 55px !important;
+    max-height: 55px !important;
   }
   
   .navbar-brand {
@@ -33,7 +35,7 @@ html, body {
   }
 
   #fullscreen-map {
-    height: calc(100vh - 77.594px);
+    height: calc(100vh - 55px);
     position: relative;
   }
   /*map interface*/
@@ -71,13 +73,13 @@ html, body {
   @media only screen and (max-width: 992px) {
 
   #fullscreen-map {
-    height: calc(100vh - 107.594px);
+    height: calc(100vh - 85px);
 
   }
     #map-interface {
       top: 30px;
       left: 0px;
-      bottom: 0px;
+      bottom: -30px;
       width: 100%;
     }
     #map-button {
