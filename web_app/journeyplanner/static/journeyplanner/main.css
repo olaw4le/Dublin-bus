@@ -81,9 +81,9 @@ html, body {
 
   }
     #map-interface {
-      top: 30px;
+      top: 0px;
       left: 0px;
-      bottom: -30px;
+      bottom: 0px;
       width: 100%;
     }
     #map-button {
@@ -92,6 +92,7 @@ html, body {
 
     #show-map {
       display: block;
+      text-align: center;
     }
 
     .nav-tabs {

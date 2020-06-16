@@ -3,7 +3,6 @@
 $(document).ready(function () {
 
     // loading html into tabs on dekstop view
-
     // .load() sends a get request and fills the html will the result of the request
     $("#map-interface-content").load("/routeplanner");
     // .getScript(name of script);
@@ -61,8 +60,6 @@ $(document).ready(function () {
         $("#map-interface-content").load("/tourist");
         console.log("tourist");
     });
-
-
 
 // show and hide map
     $("#show-map").click(function () {
