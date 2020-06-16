@@ -10,8 +10,7 @@ html, body {
     background-color: #23415C;
     padding: 1% 0;
     font-size: 1.2em;
-    min-height: 55px !important;
-    max-height: 55px !important;
+
   }
   
   .navbar-brand {
