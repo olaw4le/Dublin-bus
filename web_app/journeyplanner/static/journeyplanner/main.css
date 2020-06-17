@@ -42,11 +42,14 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 5rem;
+    top: 3.5rem;
     left: 50px;
     bottom: 50px;
     width: 450px;
+    height: 750px;
+
   }
+
 
   #map-button {
     display: none;
@@ -59,13 +62,42 @@ html, body {
     background-color: orange;
     display: none;
   }
+
+  /* routeplanner tab */
   .form-area {
-    margin: 20px 0px 0px 20px;
+    margin: 5px 0px 0px 5px;
+    padding: 5px;
+  }
+  
+  .form-group {
+    margin-bottom: 3px;
   }
 
   .datetimepicker {
-    margin: 20px 0px 0px 0px;
+    margin-top: 4px;
+    padding: 0px;
   }
+
+  label {
+    margin-bottom: 3px;
+  }
+  
+#go {
+  margin-left:10px;
+
+  }
+
+  .results {
+    padding-top: 10px;
+    height: 480px;
+    width: 100%;
+  }
+
+  .route-results {
+    padding-top: 5px;
+  }
+
+  /*tabs*/
 
   .nav-tabs .nav-link {
     padding: 6.25px;
@@ -115,10 +147,11 @@ html, body {
       z-index: 1000;
       position: absolute;
       display: block;
-      top: 5rem;
+      top: 3.5rem;
       left: 50px;
       bottom: 50px;
       width: 450px;
+      height: 750px;
     }
   }
 
