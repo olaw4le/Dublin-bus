@@ -86,45 +86,7 @@ var starting_lng;
 var ending_lat;
 var ending_lng;
 
-// show map when map button clicked
-// .ready waits for DOM to be loaded before executing this function
-$(document).ready(function () {
 
-    $("#show-map").click(function () {
-
-        // Toggle display of map-interface 
-        $("#map-interface").toggle();
-
-        // Change text on show/hide map button
-        if ($("#map-interface").is(":hidden")){
-            $("#show-map").html("Hide Map");
-        } else {
-            $("#show-map").html("Show Map");
-        }
-    });
-
-    // Show interface if hidden when window resized and change button to say show map
-    $(window).resize(function () {
-        if ($(window).width() >= 992) {
-            $("#map-interface").show();
-            $("#show-map").html("Show Map");
-        }
-    });
-});
-
-// bootstrap datetime picker
-$(function () {
-    $('#datetimepicker1').datetimepicker({
-        icons: {
-			time: 'far fa-clock',
-			date: 'far fa-calendar',
-			up: 'fas fa-arrow-up',
-			down: 'fas fa-arrow-down'
-		}
-	
-    });
-
-});
 
 // The routes function that shows the route 
 function routes() {
@@ -222,5 +184,4 @@ $(function(){
      routes();
   });
 });
-
 

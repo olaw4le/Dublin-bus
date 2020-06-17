@@ -37,3 +37,22 @@ def about(request):
 
 # Create your views here.
 
+def routeplanner(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/routeplanner.html')
+
+def allroutes(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/allroutes.html')
+
+def leap(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/leap.html')
+
+def disruptions(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/disruptions.html')
+
+def tourist(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/tourist.html')

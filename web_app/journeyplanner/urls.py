@@ -6,6 +6,11 @@ from . import views #import views.py from current directory
 urlpatterns = [
     path('', views.home, name = 'home-page'),
     path('about/', views.about, name = 'about-page'),
+    path('routeplanner/', views.routeplanner, name = 'routeplanner'),
+    path('allroutes/', views.allroutes, name = 'allroutes'),
+    path('leap/', views.leap, name = 'leap'),
+    path('disruptions/', views.disruptions, name = 'disruptions'),
+    path('tourist/', views.tourist, name = 'tourist')
 ]
 
 # we have a urls module in made project 'dublin-bus'. 

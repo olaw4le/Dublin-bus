@@ -3,46 +3,30 @@
 <!-- want the code below to override the content block in base.html -->
 {% block content %}
 <script src=" {% static 'journeyplanner/map.js' %}"></script>
-<script async defer
- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap" async defer>>
-  </script>
+
 <div id="fullscreen-map">
-  <div id="show-map"><p>Show Map</p></div>
+  
   <div id="map"></div>
   <!-- map interface -->
   <div class="card" id="map-interface">
-  <!-- input boxes for user to enter origin and destination locations -->
-  <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
-    <div class="container form-area">
-      <form onsubmit="return false">
-        <div class="form-group">
-          <label for="exampleInputEmail1">From:</label>
-          <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">To:</label>
-          <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
-        </div>
-        <!-- date time picker https://tempusdominus.github.io/bootstrap-4/Usage/ -->
-        <div class="container datetimepicker">
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" id="go">Go</button>
-      </form>
-    </div>
+    <!--adapted from https://getbootstrap.com/docs/4.0/components/navs/-->
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active load-interface" id="routeplanner-tab" data-toggle="tab" role="tab" aria-controls="route-planner" aria-selected="true">Routeplanner</a>
+        <a class="nav-item nav-link load-interface" id="allroutes-tab" data-toggle="tab" role="tab" aria-controls="all-routes" aria-selected="false">All Routes</a>
+        <a class="nav-item nav-link load-interface" id="leap-tab" data-toggle="tab" role="tab" aria-controls="leap-card" aria-selected="false">Leap Card</a>
+        <a class="nav-item nav-link load-interface" id="disruptions-tab" data-toggle="tab" role="tab" aria-controls="disruptions" aria-selected="false">Disruptions</a>
+        <a class="nav-item nav-link load-interface" id="tourist-tab" data-toggle="tab" role="tab" aria-controls="tourist-attractions" aria-selected="false">Tourist</a>
+      </div>
+    </nav>
+    <div id="map-interface-content">interface content</div>
+    
+
   </div>
+  <div id="show-map"><p>Show Map</p></div>
 </div>
+
+
 
 
 {% endblock content %}
