@@ -218,7 +218,7 @@ function createMarker(place) {
        $("#route-results").show();
     });
 
-
+    // add on click to edit-journey button to hide results and show journey planner
     $('#edit-journey').on('click', function(){
       $(".form-area").show();
       $("#route-results").hide();
