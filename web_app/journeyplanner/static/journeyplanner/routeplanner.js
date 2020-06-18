@@ -210,11 +210,21 @@ function createMarker(place) {
             });
           }	  
             
-  // when the user click the go button, the route function runs 
+  // when the user click the go button, the route function runs and the results div shows
   $(function(){
     $('#go').on('click', function(){
        routes();
+       $(".form-area").hide();
+       $("#route-results").show();
     });
+
+
+    $('#edit-journey').on('click', function(){
+      $(".form-area").show();
+      $("#route-results").hide();
+   });
+
+    
   });
   
   

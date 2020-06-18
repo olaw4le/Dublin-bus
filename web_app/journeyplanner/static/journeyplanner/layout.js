@@ -58,3 +58,4 @@ $(window).resize(function () {
         $("#show-map").html("Show Map");
     }
 });
+

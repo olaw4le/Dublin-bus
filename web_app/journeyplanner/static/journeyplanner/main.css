@@ -42,15 +42,34 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 3.5rem;
+    top: 320px;
     left: 50px;
     bottom: 50px;
-    width: 450px;
+    width: 440px;
     height: 750px;
 
   }
 
+   /*tabs*/
 
+   .nav-tabs {
+    position: absolute;
+    top: 3.5rem;
+    left: 50px;
+    height: 35px;
+    width: 440px;
+    background-color: white;
+  }
+
+
+  .nav-tabs .nav-link {
+    padding: 6.25px;
+    border:solid 0.5px grey;
+    width: 110px;
+    text-align: center;
+  }
+
+  /* show map button */
   #map-button {
     display: none;
   }
@@ -84,24 +103,18 @@ html, body {
   
 #go {
   margin-left:10px;
-
   }
 
-  .results {
+  /* twitter feed on routeplanner tab */
+  .news {
     padding-top: 10px;
     height: 480px;
     width: 100%;
   }
 
-  .route-results {
-    padding-top: 5px;
-  }
-
-  /*tabs*/
-
-  .nav-tabs .nav-link {
-    padding: 6.25px;
-    border:solid 0.5px grey;
+  /* route-plan-results*/
+  #route-results {
+    display: none;
   }
 
   /* media queries to make interface responsive */
@@ -148,10 +161,10 @@ html, body {
       z-index: 1000;
       position: absolute;
       display: block;
-      top: 3.5rem;
+      top: 90px;
       left: 50px;
       bottom: 50px;
-      width: 450px;
+      width: 440px;
       height: 750px;
     }
   }
