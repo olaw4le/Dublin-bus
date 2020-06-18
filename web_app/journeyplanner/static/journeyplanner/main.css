@@ -1,36 +1,12 @@
 html, body {
     height: 100%;
     width: 100%;
-    /* margin: 0;
-    padding: 0; */
-  }
-  
-  /* tp[ nav bar */
-  .navbar {
-    background-color: #23415C;
-    padding: 1% 0;
-    font-size: 1.2em;
-  }
-  
-  .navbar-brand {
-    min-height: 20px;
-    padding: 0 15px 5px;
-  }
-  
-  .navbar-default .navbar-nav li a {
-    color: #D5D5D5;
-  }
-  
-  .navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:active {
-    color: #FFF;
   }
 
-  /* mobile nav */
-
+  /* mobile bottom nav - hidden on larger screens */
   .fixed-bottom  {
     display: none;
   }
-
 
   /*map */
   #map {
@@ -42,6 +18,7 @@ html, body {
     height: calc(100vh - 55px);
     position: relative;
   }
+
   /*map interface*/
   #map-interface {
     z-index: 1000;
@@ -51,12 +28,11 @@ html, body {
     left: 50px;
     bottom: 50px;
     width: 440px;
-    height: 750px;
+    height: 550px;
 
   }
 
-   /*tabs*/
-
+   /*tabs on homepage on large screens*/
    .nav-tabs {
     position: absolute;
     top: 3.5rem;
@@ -65,7 +41,6 @@ html, body {
     width: 440px;
     background-color: white;
   }
-
 
   .nav-tabs .nav-link {
     padding: 6.25px;
@@ -106,7 +81,7 @@ html, body {
     margin-bottom: 3px;
   }
   
-#go {
+  #go {
   margin-left:10px;
   }
 
@@ -118,7 +93,7 @@ html, body {
   }
 
   /* route-plan-results*/
-  #route-results {
+    #route-results {
     display: none;
   }
 
@@ -155,15 +130,6 @@ html, body {
       display: none;
     }
 
-    #navbarNavAltMarkup {
-      position: fixed;
-      top: 50px;
-      z-index: 9999;
-      background-color: #D5D5D5;
-      width: 100vw;
-      /* height: calc(100vh - 50px); */
-    }
-
     /* mobile screen bottom nav */
     .fixed-bottom  {
       display: block;
@@ -176,8 +142,8 @@ html, body {
     }
 
     .nav-link.nav-bottom {
-      font-size: 1rem;
-      text-align: center;
+      font-size: 0.8rem;
+      /* text-align: center; */
     }
 
     a.active {
@@ -189,10 +155,10 @@ html, body {
       padding: 0px;
     }
 
-    a {
+    a.nav-item.nav-link.load-interface.nav-bottom {
       height: 65px;
     }
- 
+
   }
   
   /* show map interface again when screen is stretched out */
@@ -205,7 +171,7 @@ html, body {
       left: 50px;
       bottom: 50px;
       width: 440px;
-      height: 750px;
+      height: 550px;
     }
   }
 
