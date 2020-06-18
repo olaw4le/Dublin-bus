@@ -1,4 +1,3 @@
-
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -107,7 +106,7 @@ function createMarker(place) {
          
     //Then if no tbody just select your table 
     var left = $('#left');
-    var right=$("#right");
+    var right=$("#text");
          
     for (var i = 0; i < journeysteps.length; i++) {
     // the route distance
@@ -133,10 +132,11 @@ function createMarker(place) {
     
     // going through the repsone recieved from google
     var travelMode =journeysteps[i].travel_mode;
-      
-      
+ 
     //picture
-    var picture;
+    var bus=("<img src=static/journeyplanner/com.nextbus.dublin.jpg width=50 height=50>");
+    var walking=("<img src=static/journeyplanner/walking.png width=50 height=50>");
+    var road=("<img src=static/journeyplanner/road.png width=50 height=50>");
       
     // going through the object to get the travel mode details 
       
@@ -146,7 +146,7 @@ function createMarker(place) {
     duration=journeysteps[i].duration.text;
     instruction=journeysteps[i].instructions;
       
-    right.append('<p align="center" style=font-size:40px;margin: 0 auto;>&#8675;</p><h2>'+instruction+'</h2><p><b>Distance:</b> '+distance+'</p><p><b>Duration: </b>'+duration+'</p>');	
+    right.append('<p>'+walking+'&nbsp;&nbsp;'+instruction+'</p><p>'+road+'&nbsp;&nbsp;<b>Duration:</b>&nbsp;'+duration+'</p>');
       
     }
       
@@ -158,23 +158,10 @@ function createMarker(place) {
     arrival_stop=journeysteps[i].transit.arrival_stop.name;
     departure_stop=journeysteps[i].transit.departure_stop.name;
     num_stops=journeysteps[i].transit.num_stops;
-    
-      
-      
-      
-    //	
-      console.log(distance)
-    //	console.log(instruction)
-    //	console.log(Route_number)
-    //	console.log(arrival_stop)
-    //	console.log(departure_stop)
-    //	console.log(num_stops)
-      
-    
-    right.append('<p align="center" style=font-size:40px;margin: 0 auto;>&#8675;</p><h2>'+instruction+'</h2><p><b>Distance: </b>'+distance+'</p><p><b>Duration: </b></p><p><b>Bus Route: </b>'+Route_number+'</p><p><b>Number of Stops: </b>'+num_stops+'</p><p><b>Final Stop: </b>'+arrival_stop+'</p>');};
-    
-    
-    
+
+    right.append('<p>'+bus+'&nbsp;&nbsp;'+instruction+'</p><p>'+road+'&nbsp;&nbsp;<b>Route:&nbsp;</b>'+Route_number+'&nbsp;&nbsp;<b>Stops:&nbsp;</b>'+num_stops+'&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>'+duration+'</p>');
+
+    };
     };
      
       //showing the response on the map. 	 
