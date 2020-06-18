@@ -5,12 +5,11 @@ html, body {
     padding: 0; */
   }
   
-  /* nav bar */
+  /* tp[ nav bar */
   .navbar {
     background-color: #23415C;
     padding: 1% 0;
     font-size: 1.2em;
-
   }
   
   .navbar-brand {
@@ -24,6 +23,12 @@ html, body {
   
   .navbar-default .navbar-nav li a:hover,  .navbar-default .navbar-nav li a:active {
     color: #FFF;
+  }
+
+  /* mobile nav */
+
+  .fixed-bottom  {
+    display: none;
   }
 
 
@@ -70,17 +75,17 @@ html, body {
   }
 
   /* show map button */
-  #map-button {
+  /* #map-button {
     display: none;
-  }
+  } */
 
-  #show-map {
+  /* #show-map {
     position: relative;
     height: 30px;
     width: 100%;
     background-color: orange;
     display: none;
-  }
+  } */
 
   /* routeplanner tab */
   .form-area {
@@ -141,15 +146,14 @@ html, body {
       display: block;
     }
 
-    #show-map {
+    /* #show-map {
       display: block;
       text-align: center;
-    }
+    } */
 
     .nav-tabs {
       display: none;
     }
-
 
     #navbarNavAltMarkup {
       position: fixed;
@@ -159,8 +163,39 @@ html, body {
       width: 100vw;
       /* height: calc(100vh - 50px); */
     }
+
+    /* mobile screen bottom nav */
+    .fixed-bottom  {
+      display: block;
+      height: 65px;
+      width: 100vw; 
+    }
+    
+    .nav-item.nav-bottom {
+      width: 20%;
+    }
+
+    .nav-link.nav-bottom {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    a.active {
+      background-color: #A9A9A9;
+    }
+
+    #bottom-nav-div {
+      height: 65px;
+      padding: 0px;
+    }
+
+    a {
+      height: 65px;
+    }
+ 
   }
   
+  /* show map interface again when screen is stretched out */
   @media only screen and (min-width: 992px) {
     #map-interface {
       z-index: 1000;
@@ -173,4 +208,8 @@ html, body {
       height: 750px;
     }
   }
+
+
+
+
 

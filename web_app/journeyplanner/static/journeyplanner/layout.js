@@ -36,8 +36,16 @@ $(document).ready(function () {
     $('.navbar-nav>a').on('click', function(){
         $('.navbar-collapse').collapse('hide');
     });
-});
 
+    // show active link in bottom nav bar
+    $('.nav-bottom').on('click', function(){
+        $('.nav-bottom').removeClass("active");
+        navId = $(this).attr('id');
+        console.log(navId);
+        $('#' + navId).addClass("active");
+    });
+});
+;
 // bootstrap datetime picker
 $(function () {
     $('#datetimepicker1').datetimepicker({
@@ -58,4 +66,6 @@ $(window).resize(function () {
         $("#show-map").html("Show Map");
     }
 });
+
+
 
