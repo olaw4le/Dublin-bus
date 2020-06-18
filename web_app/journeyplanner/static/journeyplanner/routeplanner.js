@@ -134,9 +134,9 @@ function createMarker(place) {
     var travelMode =journeysteps[i].travel_mode;
  
     //picture
-    var bus=("<img src=static/journeyplanner/com.nextbus.dublin.jpg width=50 height=50>");
-    var walking=("<img src=static/journeyplanner/walking.png width=50 height=50>");
-    var road=("<img src=static/journeyplanner/road.png width=50 height=50>");
+    var bus=("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=50 height=50>");
+    var walking=("<img src=static/journeyplanner/icons/walking.png width=50 height=50>");
+    var road=("<img src=static/journeyplanner/icons/road.png width=50 height=50>");
       
     // going through the object to get the travel mode details 
       
