@@ -24,7 +24,7 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 320px;
+    top: 90px;
     left: 50px;
     bottom: 50px;
     width: 440px;
@@ -133,7 +133,7 @@ html, body {
     /* mobile screen bottom nav */
     .fixed-bottom  {
       display: block;
-      height: 65px;
+      height: 70px;
       width: 100vw; 
     }
     
@@ -151,15 +151,20 @@ html, body {
     }
 
     #bottom-nav-div {
-      height: 65px;
+      height: 70px;
       padding: 0px;
     }
 
     a.nav-item.nav-link.load-interface.nav-bottom {
-      height: 65px;
+      height: 70px;
+      text-align: center;
+    }
+  
+    .word {
+      padding-top: 5px !important;
     }
 
-  }
+ 
   
   /* show map interface again when screen is stretched out */
   @media only screen and (min-width: 992px) {
