@@ -1,10 +1,10 @@
 
 {% load static %}
 
-<script src=" {% static 'journeyplanner/map.js' %}"></script>
-<script async defer
- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap" async defer>>
-  </script>
+<script src=" {% static 'journeyplanner/routeplanner.js' %}"></script>
+
+
+
 
 <!-- want the code below to override the content block in base.html -->
 <!-- input boxes for user to enter origin and destination locations -->
@@ -13,14 +13,15 @@
 <div class="container form-area">
 <form onsubmit="return false">
     <div class="form-group">
-        <label for="exampleInputEmail1">From:</label>
+        <label for="origin">From:</label>
         <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">To:</label>
+        <label for="destination">To:</label>
         <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
     </div>
     <!-- date time picker https://tempusdominus.github.io/bootstrap-4/Usage/ -->
+    <label for="date-time">Date and Time:</label>
     <div class="container datetimepicker">
         <div class="row">
         <div class="col-sm-6">
@@ -33,8 +34,27 @@
             </div>
             </div>
         </div>
+        <button type="submit" class="btn btn-primary" id="go">Go</button>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary" id="go">Go</button>
+    
+
     </form>
+    <div class="container news">
+        <p>dublin bus twitter feed and disruption alerts here</p>
+    </div>
+</div>
+
+<div class="container" id="route-results">
+    <div class="card results">
+        <div class="row results">
+            <p>Summary results shown here</p>
+        </div>
+        <div class="row results">
+        <button type="submit" class="btn btn-primary" id="edit-journey">Edit journey details</button>
+        </div>
+    </div>
+    <div class="card results">
+        <div class="row" id="text"></div>
+    </div>
 </div>
