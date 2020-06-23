@@ -1,0 +1,186 @@
+html, body {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* mobile bottom nav - hidden on larger screens */
+  .fixed-bottom  {
+    display: none;
+  }
+
+  /*map */
+  #map {
+    height: 100%;
+    position: relative;
+  }
+
+  #fullscreen-map {
+    height: calc(100vh - 55px);
+    position: relative;
+  }
+
+  /*map interface*/
+  #map-interface {
+    z-index: 1000;
+    position: absolute;
+    display: block;
+    top: 90px;
+    left: 50px;
+    bottom: 50px;
+    width: 440px;
+    height: 550px;
+
+  }
+
+   /*tabs on homepage on large screens*/
+   .nav-tabs {
+    position: absolute;
+    top: 3.5rem;
+    left: 50px;
+    height: 35px;
+    width: 440px;
+    background-color: white;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 6.25px;
+    border:solid 0.5px grey;
+    width: 110px;
+    text-align: center;
+  }
+
+  /* show map button */
+  /* #map-button {
+    display: none;
+  } */
+
+  /* #show-map {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    background-color: orange;
+    display: none;
+  } */
+
+  /* routeplanner tab */
+  .form-area {
+    margin: 5px 0px 0px 5px;
+    padding: 5px;
+  }
+  
+  .form-group {
+    margin-bottom: 3px;
+  }
+
+  .datetimepicker {
+    margin-top: 4px;
+    padding: 0px;
+  }
+
+  label {
+    margin-bottom: 3px;
+  }
+  
+  #go {
+  margin-left:10px;
+  }
+
+  /* twitter feed on routeplanner tab */
+  .news {
+    padding-top: 10px;
+    height: 480px;
+    width: 100%;
+  }
+
+  /* route-plan-results*/
+    #route-results {
+    display: none;
+  }
+
+  .card.results {
+    padding-left: 50px;
+    margin-top: 10px;
+  }
+
+  /* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+  #fullscreen-map {
+    height: calc(100vh - 85px);
+
+  }
+    #map-interface {
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      height: calc(100vh - 85px);
+    }
+    #map-button {
+      display: block;
+    }
+
+    /* #show-map {
+      display: block;
+      text-align: center;
+    } */
+
+    .nav-tabs {
+      display: none;
+    }
+
+    /* mobile screen bottom nav */
+    .fixed-bottom  {
+      display: block;
+      height: 70px;
+      width: 100vw; 
+    }
+    
+    .nav-item.nav-bottom {
+      width: 20%;
+    }
+
+    .nav-link.nav-bottom {
+      font-size: 0.8rem;
+      /* text-align: center; */
+    }
+
+    a.active {
+      background-color: #A9A9A9;
+    }
+
+    #bottom-nav-div {
+      height: 70px;
+      padding: 0px;
+    }
+
+    a.nav-item.nav-link.load-interface.nav-bottom {
+      height: 70px;
+      text-align: center;
+    }
+  
+    .word {
+      padding-top: 5px !important;
+    }
+
+ 
+  
+  /* show map interface again when screen is stretched out */
+  @media only screen and (min-width: 992px) {
+    #map-interface {
+      z-index: 1000;
+      position: absolute;
+      display: block;
+      top: 90px;
+      left: 50px;
+      bottom: 50px;
+      width: 440px;
+      height: 550px;
+    }
+  }
+
+
+
+
+
