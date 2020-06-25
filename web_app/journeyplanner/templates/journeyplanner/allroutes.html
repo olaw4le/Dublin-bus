@@ -2,7 +2,7 @@
 <script src=" {% static 'journeyplanner/estimator.js' %}"></script>
 
 
-<div class="container form-area">
+<div class="container form-area" id="stop-to-stop-input">
     <form onsubmit="return false">
         <div class="form-group">
             <label for="origin">Route:</label>
@@ -24,9 +24,25 @@
             <label for="destination">Time:</label>
             <input type="text" class="form-control col-6" id="estimator-time" placeholder="Enter time">
         </div>
-        <button type="submit" class="btn btn-primary" id="estimator-go">Go</button>
+        <button type="submit" class="btn btn-primary" id="stop-to-stop-go">Go</button>
 
         
     
         </form>
+    </div>
+
+    <div class="container" id="journey-time-results">
+        <div class="card results">
+            <div class="row results">
+                <p>Summary results shown here</p>
+            </div>
+            <div class="row results">
+            <button type="submit" class="btn btn-primary" id="stop-to-stop-edit">Edit journey details</button>
+            </div>
+        </div>
+        <div class="card results">
+            <div class="row" id="text">
+                <p>detailed results shown here</p>
+            </div>
+        </div>
     </div>
