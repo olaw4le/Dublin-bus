@@ -18,8 +18,8 @@ function initMap() {
     var current = { lat: 53.3155395, lng: -6.4161858 };
 
     //using google map autocomplete for the address          
-    var input1 = document.getElementById('origin');
-    var input2 = document.getElementById("destination");
+    var input1 = $('#origin')[0];
+    var input2 = $("#destination")[0];
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
     destination = new google.maps.places.Autocomplete(input2, options);
@@ -27,7 +27,7 @@ function initMap() {
 
     //showing the map
     map = new google.maps.Map(
-        document.getElementById('map'), { center: current, zoom: 16 });
+        $('#map'), { center: current, zoom: 16 });
 
 
     // marker for the current location 

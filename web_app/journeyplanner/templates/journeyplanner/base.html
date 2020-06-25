@@ -22,12 +22,7 @@
       <link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/main.css' %}">
       
       <script src=" {% static 'journeyplanner/layout.js' %}"></script>
-      <script src=" {% static 'journeyplanner/initmap.js' %}"></script>
-
-       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap"
-        async defer>
-        </script>
+     
         
     {% if title %}
         <title>Dublin Bus {{ title }}</title>
