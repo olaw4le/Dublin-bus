@@ -46,17 +46,7 @@ $(document).ready(function () {
     });
 });
 ;
-// bootstrap datetime picker
-$(function () {
-    $('#datetimepicker1').datetimepicker({
-        icons: {
-			time: 'far fa-clock',
-			date: 'far fa-calendar',
-			up: 'fas fa-arrow-up',
-			down: 'fas fa-arrow-down'
-		}
-    });
-});
+
 
 
 // Show interface if hidden when window resized and change button to say show map
