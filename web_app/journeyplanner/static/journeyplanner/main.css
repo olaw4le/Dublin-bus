@@ -74,7 +74,7 @@ html, body {
 
   .datetimepicker {
     margin-top: 4px;
-    padding: 0px;
+    padding-right: 10px;
   }
 
   label {
@@ -166,6 +166,11 @@ html, body {
   
     .word {
       padding-top: 5px !important;
+    }
+
+
+    .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+      width: 100%;
     }
 
  

@@ -212,5 +212,17 @@ $(function () {
 
 });
 
+// bootstrap datetime picker
+$(function () {
+  $('#datetimepicker1').datetimepicker({
+      icons: {
+    time: 'far fa-clock',
+    date: 'far fa-calendar',
+    up: 'fas fa-arrow-up',
+    down: 'fas fa-arrow-down'
+  }
+  });
+});
+
 
 
