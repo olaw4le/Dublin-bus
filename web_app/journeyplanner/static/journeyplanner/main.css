@@ -102,8 +102,8 @@ html, body {
     margin-top: 10px;
   }
 
-  #allroutes-tab {
-    font-size: 1em;
+  #estimator-go {
+    padding-top: 10px;
   }
 
   /* media queries to make interface responsive */
