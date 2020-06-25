@@ -10,7 +10,7 @@ var markerArray;
 var example;
 
 //loading the ui map.This is the function that loads when the opens the page 
-function initMap1() {
+function initMap() {
 
     // Instantiate a directions service.
     directionsService = new google.maps.DirectionsService;
@@ -28,7 +28,7 @@ function initMap1() {
 
     //showing the map
     map = new google.maps.Map(
-        $('#map'), { center: current, zoom: 16 });
+        document.getElementById('map'), { center: current, zoom: 16 });
 
 
     // marker for the current location 
