@@ -1,1 +1,16 @@
-<p>all routes/busstops info!!</p>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/main.css' %}">
+<script src=" {% static 'journeyplanner/allroute.js' %}"></script>
+
+
+
+<form autocomplete="off" onsubmit="return false">
+            <div class="autocomplete" style="width: 300px;">
+                <input id="myInput" type="text" name="myCountry" placeholder="Stop Number" />
+                <select class="form-control" id="busid" placeholder="Enter a location"></select>
+            </div>
+            <input type="submit"/>
+        </form>
+        
+        <div>
