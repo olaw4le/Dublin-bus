@@ -4,7 +4,7 @@ function autocomplete(inp, arr) {
      the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
-    inp[0].addEventListener("input", function (e) {
+    inp.addEventListener("input", function (e) {
         var a,
             b,
             i,
@@ -45,7 +45,7 @@ function autocomplete(inp, arr) {
         }
     });
     /*execute a function presses a key on the keyboard:*/
-    inp[0].addEventListener("keydown", function (e) {
+    inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
@@ -122,8 +122,8 @@ route_number =route_number.trim().split(" ");
 
 console.log(route_number)
 
-// using auto complete for the all the bus stop
-autocomplete($("#estimator-route"), route_number);
+// using auto complete for the all the bus stop, if i use jquery it wont work
+autocomplete(document.getElementById("estimator-route"),route_number);
 });
 
 
@@ -145,10 +145,6 @@ for (var key2 in routes) {
 var list= routes[key2].stops
 console.log(list)
 }
- // using auto complete for the all the bus stop
-autocomplete($("#estimator-origin"), list);
-   
-    
 
 
 //     for (var key2 in stations[key]) {
