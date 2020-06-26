@@ -108,6 +108,7 @@ var stop_name = "";
 var latitude = "";
 var longitude = "";
 var stations="";
+var routes=""
 
 //jquery to acess the json file
 var jqxhr = $.getJSON("static/journeyplanner/ordered_stops.json", null, function (data) {
@@ -126,43 +127,88 @@ console.log(route_number)
 autocomplete(document.getElementById("estimator-route"),route_number);
 });
 
-
-// function to populate the stop list			
-function route_list() {
 //getting the value of the selected route
-var sel = $("#estimator-route").val();
+var sel =""
+
+// function to populate the sub_routes list			
+function route_list() {
+
+//getting the value of the selected route
+sel = $("#estimator-route").val();
+
+var list=''
 
 //jquery to open the json file 
 $.getJSON("static/journeyplanner/ordered_stops.json", null, function (data) {
-var To = "<option value=0>Select Route</option>";
 stations = data;
+
+// populating the sub route select list 
+var To = "<option value=0>Sub Route</option>";
 for (var key in stations) {
 
 if (sel == key) {
-var routes= stations[key]
+routes= stations[key]
+
+console.log(routes)
 
 for (var key2 in routes) {
-var list= routes[key2].stops
-console.log(list)
+list += key2 + " ";
+} } }
+
+//turning the into an array
+list =list.trim().split(" ");
+
+//popuplating the sub route select list
+for (var i = 0; i < list.length; i++) {
+    To += "<option  value=" + list[i] + ">" + list[i] + "</option>";
 }
 
+document.getElementById("estimator-sub").innerHTML = To;
 
-//     for (var key2 in stations[key]) {
-
-//     for (var key3 in stations[key][key2]) {
-    
-//     }
-    
-// // To += "<option  value=" + routes + ">" + routes + "</option>";
-//             }
-        }
-    }
-// document.getElementById("busid").innerHTML = To;
     });
 }
-function olawale(){console.log(1234)}
+
+//getting the value of the selected sub route
+var sel_sub ="";
+
+// function to populate the origin and destination
+function stops(){
+var To = "<option value=0>Routes</option>";
+sel_sub = $("#estimator-sub").val();
+
+for (key in routes){
+    
+if (sel_sub==key){
+bus_stops=routes[key].stops;
+
+for (var i = 0; i < bus_stops.length; i++) {
+    To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i]+ "</option>";
+
+}
+document.getElementById("estimator-origin").innerHTML = To;
+document.getElementById("estimator-destination").innerHTML = To;
+   
+
+}
+
+
+
+
+
+
+}
+
+console.log(sel_sub)
+
+
+
+
+
+
+
+}
 
 
 // event listner to porpulate the route dropdown list
-$("#estimator-route").click(route_list);
-$("#estimator-go").click(route_list);
+$("#estimator-route").change(route_list);
+$("#estimator-sub").change(stops);
