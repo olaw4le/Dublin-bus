@@ -105,13 +105,11 @@ except the one passed as an argument:*/
 var routes = "";
 var route_number = "";
 var stop_name = "";
-var latitude = "";
-var longitude = "";
 var stations="";
 var routes=""
 
 //jquery to acess the json file
-var jqxhr = $.getJSON("static/journeyplanner/ordered_stops.json", null, function (data) {
+var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
 stations = data;
 
 for (var key in stations) {
@@ -139,7 +137,7 @@ sel = $("#estimator-route").val();
 var list=''
 
 //jquery to open the json file 
-$.getJSON("static/journeyplanner/ordered_stops.json", null, function (data) {
+$.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
 stations = data;
 
 // populating the sub route select list 
@@ -148,8 +146,6 @@ for (var key in stations) {
 
 if (sel == key) {
 routes= stations[key]
-
-console.log(routes)
 
 for (var key2 in routes) {
 list += key2 + " ";
@@ -174,41 +170,35 @@ var sel_sub ="";
 // function to populate the origin and destination
 function stops(){
 var To = "<option value=0>Routes</option>";
+
+// getting the value of the selected sub-route
 sel_sub = $("#estimator-sub").val();
 
+// going through the sub-routes the selected route has 
 for (key in routes){
-    
+
+// if the user selected sub-route is found 
 if (sel_sub==key){
+
+// the stops the selected sub-routes goes through
 bus_stops=routes[key].stops;
 
+// poppulating the origin and destination with the stops
 for (var i = 0; i < bus_stops.length; i++) {
     To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i]+ "</option>";
 
 }
+// populating the inner html
 document.getElementById("estimator-origin").innerHTML = To;
 document.getElementById("estimator-destination").innerHTML = To;
    
-
 }
-
-
-
-
-
-
 }
-
 console.log(sel_sub)
-
-
-
-
-
-
-
 }
 
 
 // event listner to porpulate the route dropdown list
 $("#estimator-route").change(route_list);
+// event listner to populate the origin and destination 
 $("#estimator-sub").change(stops);
