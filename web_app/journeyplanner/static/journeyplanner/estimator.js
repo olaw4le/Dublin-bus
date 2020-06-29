@@ -199,7 +199,6 @@ function stops() {
     console.log(sel_sub)
 }
 
-
 // event listner to porpulate the route dropdown list
 $("#estimator-route").change(route_list);
 // event listner to populate the origin and destination 
