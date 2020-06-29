@@ -119,8 +119,6 @@ route_number+=key + " ";
 //turning the into an array
 route_number =route_number.trim().split(" ");
 
-console.log(route_number)
-
 // using auto complete for the all the bus stop, if i use jquery it wont work
 autocomplete(document.getElementById("estimator-route"),route_number);
 });
@@ -194,9 +192,7 @@ document.getElementById("estimator-destination").innerHTML = To;
    
 }
 }
-console.log(sel_sub)
 }
-
 
 // event listner to porpulate the route dropdown list
 $("#estimator-route").change(route_list);
