@@ -72,10 +72,10 @@ html, body {
     margin-bottom: 3px;
   }
 
-  .datetimepicker {
+  /* .datetimepicker {
     margin-top: 4px;
     padding-right: 10px;
-  }
+  } */
 
   label {
     margin-bottom: 3px;
@@ -94,6 +94,10 @@ html, body {
 
   /* route-plan-results*/
     #route-results {
+    display: none;
+  }
+
+  #stop-to-stop-results {
     display: none;
   }
 
