@@ -8,7 +8,7 @@ $(document).ready(function () {
     $(".load-interface").click(function() {
         navId = $(this).attr('id');
         navId = navId.split("-")[0];
-
+        console.log(navId);
         $("#map-interface-content").load("/" + navId);
     });
 
