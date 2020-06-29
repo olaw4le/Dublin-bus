@@ -105,96 +105,98 @@ except the one passed as an argument:*/
 var routes = "";
 var route_number = "";
 var stop_name = "";
-var stations="";
-var routes=""
+var stations = "";
+var routes = ""
 
 //jquery to acess the json file
 var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
-stations = data;
+    stations = data;
 
-for (var key in stations) {
-route_number+=key + " ";
-}
+    for (var key in stations) {
+        route_number += key + " ";
+    }
 
-//turning the into an array
-route_number =route_number.trim().split(" ");
+    //turning the into an array
+    route_number = route_number.trim().split(" ");
 
-console.log(route_number)
+    console.log(route_number)
 
-// using auto complete for the all the bus stop, if i use jquery it wont work
-autocomplete(document.getElementById("estimator-route"),route_number);
+    // using auto complete for the all the bus stop, if i use jquery it wont work
+    autocomplete(document.getElementById("estimator-route"), route_number);
 });
 
 //getting the value of the selected route
-var sel =""
+var sel = ""
 
 // function to populate the sub_routes list			
 function route_list() {
 
-//getting the value of the selected route
-sel = $("#estimator-route").val();
+    //getting the value of the selected route
+    sel = $("#estimator-route").val();
 
-var list=''
+    var list = ''
 
-//jquery to open the json file 
-$.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
-stations = data;
+    //jquery to open the json file 
+    $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
+        stations = data;
 
-// populating the sub route select list 
-var To = "<option value=0>Sub Route</option>";
-for (var key in stations) {
+        // populating the sub route select list 
+        var To = "<option value=0>Sub Route</option>";
+        for (var key in stations) {
 
-if (sel == key) {
-routes= stations[key]
+            if (sel == key) {
+                routes = stations[key]
 
-for (var key2 in routes) {
-list += key2 + " ";
-} } }
+                for (var key2 in routes) {
+                    list += key2 + " ";
+                }
+            }
+        }
 
-//turning the into an array
-list =list.trim().split(" ");
+        //turning the into an array
+        list = list.trim().split(" ");
 
-//popuplating the sub route select list
-for (var i = 0; i < list.length; i++) {
-    To += "<option  value=" + list[i] + ">" + list[i] + "</option>";
-}
+        //popuplating the sub route select list
+        for (var i = 0; i < list.length; i++) {
+            To += "<option  value=" + list[i] + ">" + list[i] + "</option>";
+        }
 
-document.getElementById("estimator-sub").innerHTML = To;
+        document.getElementById("estimator-sub").innerHTML = To;
 
     });
 }
 
 //getting the value of the selected sub route
-var sel_sub ="";
+var sel_sub = "";
 
 // function to populate the origin and destination
-function stops(){
-var To = "<option value=0>Routes</option>";
+function stops() {
+    var To = "<option value=0>Routes</option>";
 
-// getting the value of the selected sub-route
-sel_sub = $("#estimator-sub").val();
+    // getting the value of the selected sub-route
+    sel_sub = $("#estimator-sub").val();
 
-// going through the sub-routes the selected route has 
-for (key in routes){
+    // going through the sub-routes the selected route has 
+    for (key in routes) {
 
-// if the user selected sub-route is found 
-if (sel_sub==key){
+        // if the user selected sub-route is found 
+        if (sel_sub == key) {
 
-// the stops the selected sub-routes goes through
-bus_stops=routes[key].stops;
+            // the stops the selected sub-routes goes through
+            bus_stops = routes[key].stops;
 
-// poppulating the origin and destination with the stops
-for (var i = 0; i < bus_stops.length; i++) {
-    To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i]+ "</option>";
+            // poppulating the origin and destination with the stops
+            for (var i = 0; i < bus_stops.length; i++) {
+                To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
 
-}
-// populating the inner html
-document.getElementById("estimator-origin").innerHTML = To;
-document.getElementById("estimator-destination").innerHTML = To;
-   
-}
-}
-console.log(sel_sub)
+            }
+            // populating the inner html
+            document.getElementById("estimator-origin").innerHTML = To;
+            document.getElementById("estimator-destination").innerHTML = To;
+
+        }
+    }
+    console.log(sel_sub)
 }
 
 
