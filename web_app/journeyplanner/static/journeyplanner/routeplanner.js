@@ -200,8 +200,19 @@ $(function () {
   
   $('#go').on('click', function () {
     console.log("inside go");
-    var datetimeValue = $("#datetime-4").val();
+    var datetimeValue = $("#datetime-tab1").val();
+    var arr = datetimeValue.split('T');
+    var date = arr[0];
+    var time = arr[1];
+ 
+    console.log("date: " + date);
+    console.log("time: "+ time);
 
+    // convert time to seconds since midnight
+    console.log("time: "+ time);
+    var timeSplit = time.split(':');
+    var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+    console.log(timeSeconds); 
 
     routes();
     $(".form-area").hide();
