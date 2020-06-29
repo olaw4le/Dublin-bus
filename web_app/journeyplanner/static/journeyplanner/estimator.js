@@ -210,7 +210,6 @@ $(function () {
   
     $('#stop-to-stop-go').on('click', function () {
         var datetimeValue = $("#datetime-tab2").val();
-        console.log(typeof datetimeValue);
         var arr = datetimeValue.split('T');
         var date = arr[0];
         var time = arr[1];
@@ -224,11 +223,9 @@ $(function () {
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
         console.log(timeSeconds); 
 
-  
-    //   routes();
+        // show results
         $(".form-area").hide();
         $("#stop-to-stop-results").show();
-        console.log(datetimeValue);
   
     });
   

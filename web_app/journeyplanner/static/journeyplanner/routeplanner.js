@@ -199,7 +199,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
   
   $('#go').on('click', function () {
-    console.log("inside go");
     var datetimeValue = $("#datetime-tab1").val();
     var arr = datetimeValue.split('T');
     var date = arr[0];
@@ -214,11 +213,10 @@ $(function () {
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
     console.log(timeSeconds); 
 
+    // show results and routes
     routes();
     $(".form-area").hide();
     $("#route-results").show();
-    console.log(datetimeValue);
-
   });
 
   // add on click to edit-journey button to hide results and show journey planner
