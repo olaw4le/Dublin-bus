@@ -204,3 +204,26 @@ function stops() {
 $("#estimator-route").change(route_list);
 // event listner to populate the origin and destination 
 $("#estimator-sub").change(stops);
+
+// go button for tab 2 to show and hide results
+$(function () {
+  
+    $('#stop-to-stop-go').on('click', function () {
+      console.log("inside stop-to-stop-go");
+      var datetimeValue = $("#datetime-tab2").val();
+    //   routes();
+      $(".form-area").hide();
+      $("#stop-to-stop-results").show();
+      console.log(datetimeValue);
+  
+    });
+  
+    // add on click to edit-journey button to hide results and show journey planner
+    $('#edit-journey-tab2').on('click', function () {
+        console.log("inside edit-journey-results");
+      $(".form-area").show();
+      $("#stop-to-stop-results").hide();
+    });
+  
+  
+  });

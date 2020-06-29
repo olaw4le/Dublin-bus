@@ -197,10 +197,15 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
+  
   $('#go').on('click', function () {
+    console.log("inside go");
+    var datetimeValue = $("#datetime-4").val();
     routes();
     $(".form-area").hide();
     $("#route-results").show();
+    console.log(datetimeValue);
+
   });
 
   // add on click to edit-journey button to hide results and show journey planner
@@ -212,17 +217,6 @@ $(function () {
 
 });
 
-// bootstrap datetime picker
-$(function () {
-  $('#datetimepicker1').datetimepicker({
-      icons: {
-    time: 'far fa-clock',
-    date: 'far fa-calendar',
-    up: 'fas fa-arrow-up',
-    down: 'fas fa-arrow-down'
-  }
-  });
-});
 
 
 

@@ -23,18 +23,37 @@
             <select class="form-control col-6" id="estimator-destination" placeholder="Select stop">
             <option value="0">Select stop:</option></select>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="destination">Day:</label>
             <input type="text" class="form-control col-6" id="estimator-day" placeholder="Enter date">
         </div>
         <div class="form-group">
             <label for="destination">Time:</label>
             <input type="text" class="form-control col-6" id="estimator-time" placeholder="Enter time">
+        </div> -->
+        <div class="form-group">
+            <label for="datetime-4">Enter date and time:</label>
+            <input type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab2" value="">
         </div>
-        <button type="submit" class="btn btn-primary" id="estimator-go">Go</button>
+        <button type="submit" class="btn btn-primary" id="stop-to-stop-go">Go</button>
 
         
     
         </form>
+    </div>
+
+    <div class="container" id="stop-to-stop-results">
+        <div class="card results">
+            <div class="row results">
+                <p>Summary results shown here</p>
+            </div>
+            <div class="row results">
+            <button type="submit" class="btn btn-primary" id="edit-journey-tab2">Edit journey details</button>
+            </div>
+        </div>
+        <div class="card results">
+            <div class="row" id="text"></div>
+            <p>detailed results shown here</p>
+        </div>
     </div>
     
