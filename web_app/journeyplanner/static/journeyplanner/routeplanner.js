@@ -201,6 +201,8 @@ $(function () {
   $('#go').on('click', function () {
     console.log("inside go");
     var datetimeValue = $("#datetime-4").val();
+
+
     routes();
     $(".form-area").hide();
     $("#route-results").show();

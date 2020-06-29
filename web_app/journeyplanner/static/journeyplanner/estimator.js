@@ -209,12 +209,26 @@ $("#estimator-sub").change(stops);
 $(function () {
   
     $('#stop-to-stop-go').on('click', function () {
-      console.log("inside stop-to-stop-go");
-      var datetimeValue = $("#datetime-tab2").val();
+        var datetimeValue = $("#datetime-tab2").val();
+        console.log(typeof datetimeValue);
+        var arr = datetimeValue.split('T');
+        var date = arr[0];
+        var time = arr[1];
+     
+        console.log("date: " + date);
+        console.log("time: "+ time);
+
+        // convert time to seconds since midnight
+        console.log("time: "+ time);
+        var timeSplit = time.split(':');
+        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+        console.log(timeSeconds); 
+
+  
     //   routes();
-      $(".form-area").hide();
-      $("#stop-to-stop-results").show();
-      console.log(datetimeValue);
+        $(".form-area").hide();
+        $("#stop-to-stop-results").show();
+        console.log(datetimeValue);
   
     });
   
