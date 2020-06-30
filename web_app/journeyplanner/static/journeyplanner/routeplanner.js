@@ -233,6 +233,9 @@ $(function () {
     routes();
     $(".form-area").hide();
     $("#route-results").show();
+
+    // set the value of the html for the results using the html id
+    $("#origin-tab1").text("hi");
   });
 
   // add on click to edit-journey button to hide results and show journey planner

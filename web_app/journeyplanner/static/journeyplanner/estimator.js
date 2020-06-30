@@ -239,6 +239,9 @@ $(function () {
         // show results
         $(".form-area").hide();
         $("#stop-to-stop-results").show();
+
+        // set the value of the html for the results using the html id
+        $("#origin-tab2").text("hi");
   
     });
   
