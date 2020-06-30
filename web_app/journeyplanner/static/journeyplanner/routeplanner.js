@@ -95,6 +95,22 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         endingAddress = response.routes[0].legs[0].end_address;
 
+        //trimming the origin address
+        startingAddress = response.routes[0].legs[0].start_address;
+        address1 = startingAddress.split(',');
+        address1 = address1[0];
+
+        //trimming the destination address
+        endingAddress = response.routes[0].legs[0].end_address;
+        address2 = endingAddress.split(',');
+        address2 = address2[0];
+
+
+        $(selector).html(address1)
+        $(selector).html(address2)
+
+
+
 
         journeysteps = response.routes[0].legs[0].steps;
 
