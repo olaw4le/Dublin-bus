@@ -105,10 +105,15 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         address2 = endingAddress.split(',');
         address2 = address2[0];
 
+        //getting the value of the user selected time
+        var time= $("#datetime-tab1").val();
 
-        $(selector).html(address1)
-        $(selector).html(address2)
+        $("#origin-tab1").html(address1);
+        $("#destination-tab1").html(address2);
+        $("#datetime-tab").html(time);
 
+        
+      
 
 
 
