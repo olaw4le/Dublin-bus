@@ -213,8 +213,22 @@ $(function () {
         var date = arr[0];
         var time = arr[1];
      
-        console.log("date: " + date);
-        console.log("time: "+ time);
+      // sending a post request to the server
+      $.ajax({
+          type:"POST",
+          url: "prediction/",
+          data:{date:date,
+                time:time,
+                route:$("#estimator-route").val(),
+                origin:$("#estimator-origin").val(),
+                destination:$("#estimator-destination").val(),},
+
+                sucess:function(){
+                    alert("successfully posted")
+
+                }
+      }) 
+
 
         // convert time to seconds since midnight
         console.log("time: "+ time);

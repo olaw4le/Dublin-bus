@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.http import HttpResponse
+
 
 #showing how data can be added to a html page
 posts = [
@@ -56,3 +59,18 @@ def disruptions(request):
 def tourist(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/tourist.html')
+
+
+@csrf_exempt
+def prediction(request):
+    if request.method == "POST":
+        route= request.POST["route"]
+        origin= request.POST["origin"]
+        destination = request.POST["destination"]
+        date = request.POST["date"]
+        time = request.POST["time"]
+
+        print("routes:",route)
+        print("origin:",origin)
+    return HttpResponse("")
+
