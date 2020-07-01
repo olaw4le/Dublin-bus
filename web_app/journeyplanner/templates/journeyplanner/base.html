@@ -35,42 +35,21 @@
 <!--bootstrap 4 nav bar code adapted from https://getbootstrap.com/docs/4.0/components/navbar/-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Dublin Bus</a>
-  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> -->
-    <div class="navbar-nav ml-auto">
-      <!-- <a class="nav-item nav-link active d-none d-xl-block" href="#">Home <span class="sr-only">(current)</span></a> -->
-      <a class="nav-item nav-link nav-top" href="#">Login</a>
-      <!-- <a class="nav-item nav-link d-lg-none load-interface" id="routeplanner-nav">Route Planner</a>
-      <a class="nav-item nav-link d-lg-none load-interface" id="allroutes-nav">All Routes</a>
-      <a class="nav-item nav-link d-lg-none load-interface" id="leap-nav">Leap Card</a>
-      <a class="nav-item nav-link d-lg-none load-interface" id="disruptions-nav">Disruptions</a>
-      <a class="nav-item nav-link d-lg-none load-interface" id="tourist-nav">Tourist Information</a> -->
+  <div class="navbar-nav ml-auto">
+    <a class="nav-item nav-link nav-top" href="#">Login</a>
   </div>
 </nav>
 
 <!-- mobile screen bottom nav -->
 <nav class="fixed-bottom navbar-light bg-light justify-content-center">
   <div class="navbar navbar-light bg-light nav-justified w-100 text-center" id="bottom-nav-div">
-    <!-- <div class="col-sx-offset-1 col-xs-1">
-      <a class="nav-item nav-link load-interface nav-bottom" id="routeplanner-nav">
-        <i class="fab fa-bootstrap"></i><br>
-       <span class>Route Plan</span>
-      </a>
-    </div> -->
-      <a class="nav-item nav-link load-interface nav-bottom" id="routeplanner-nav"><i class="fa fa-road fa-2x"></i><br><div class="word">Route Plan</div></a>
-      <a class="nav-item nav-link load-interface nav-bottom" id="allroutes-nav"><i class="fa fa-bus fa-2x"></i><br><div class="word">stop-to-stop</div></a>
-      <a class="nav-item nav-link load-interface nav-bottom" id="leap-nav"><i class="fas fa-frog fa-2x"></i><br><div class="word">Leap Card</div></a> 
-      <a class="nav-item nav-link load-interface nav-bottom" id="tourist-nav"><i class="fa fa-camera-retro fa-2x"></i><br><div class="word">Tourist Map</div></a>
-      <a class="nav-item nav-link load-interface nav-bottom" id="show-map"><i class="fa fa-map fa-2x"></i><br><div class="word">Show Map</div></a>
+    <a class="nav-item nav-link load-interface nav-bottom" id="routeplanner-nav"><i class="fa fa-road fa-2x"></i><br><div class="word">Route Plan</div></a>
+    <a class="nav-item nav-link load-interface nav-bottom" id="allroutes-nav"><i class="fa fa-bus fa-2x"></i><br><div class="word">stop-to-stop</div></a>
+    <a class="nav-item nav-link load-interface nav-bottom" id="leap-nav"><i class="fas fa-frog fa-2x"></i><br><div class="word">Leap Card</div></a> 
+    <a class="nav-item nav-link load-interface nav-bottom" id="tourist-nav"><i class="fa fa-camera-retro fa-2x"></i><br><div class="word">Tourist Map</div></a>
+    <a class="nav-item nav-link load-interface nav-bottom" id="show-map"><i class="fa fa-map fa-2x"></i><br><div class="word">Show Map</div></a>
   </div>
 </nav>
-
-
-
-
-
 
     <!-- this block will be overridden with code in the html pages -->
          {% block content %}{% endblock %}
