@@ -2,6 +2,14 @@
 // .ready waits for DOM to be loaded before executing this function
 $(document).ready(function () {
 
+    // function to populate datetime inputs with current date and time
+    var currentDateTime = function(){
+        var d = new Date();
+        var datestring = d.getFullYear() + "-" + "0" + (d.getMonth()+1) + "-" + "0" + d.getDate() + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+        console.log("full date " + datestring);
+        $(".datetime").val(datestring);
+    }
+
     // All nav items that load the interface pane have this class
     // When clicked the ID of the clicked element is checked and the
     // appropriate html is loaded and put in the interface
@@ -10,21 +18,15 @@ $(document).ready(function () {
         navId = navId.split("-")[0];
         console.log(navId);
         $("#map-interface-content").load("/" + navId, function() {
-            $(".datetime").val("2020-03-04T23:12");
+            currentDateTime();
         });
         
     });
 
     // Load routeplanner by default when page is loaded
     $("#map-interface-content").load("/routeplanner", function () {
-
-        // set current date and time as the default
-        $("#datetime-tab1").val("2020-03-04T23:12");
-        var d = new Date();
-        var datestring = d.getFullYear() + "-" + "0" + (d.getMonth()+1) + "-" + "0" + d.getDate() + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-        console.log("full date " + datestring);
-        $("#datetime-tab1").val(datestring);
-        });
+        currentDateTime();
+    });
 
 // show and hide map
     $("#show-map").click(function () {
