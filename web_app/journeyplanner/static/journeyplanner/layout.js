@@ -2,6 +2,8 @@
 // .ready waits for DOM to be loaded before executing this function
 $(document).ready(function () {
 
+
+
     // function to populate datetime inputs with current date and time
     var currentDateTime = function(){
         var d = new Date();
@@ -26,7 +28,11 @@ $(document).ready(function () {
     // Load routeplanner by default when page is loaded
     $("#map-interface-content").load("/routeplanner", function () {
         currentDateTime();
+        $('#datetimepicker').datetimepicker();
     });
+
+    
+        
 
 // show and hide map
     $("#show-map").click(function () {

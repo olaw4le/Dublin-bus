@@ -18,12 +18,13 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
-
+      <link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/datetime_picker/jquery.datetimepicker.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/main.css' %}">
-      
+     
+      <!-- <script src=" {% static 'journeyplanner/datetime_picker/jquery.datetimepicker.js' %}"></script> -->
       <script src=" {% static 'journeyplanner/layout.js' %}"></script>
       
-        
+       
     {% if title %}
         <title>Dublin Bus {{ title }}</title>
     {% else %}
