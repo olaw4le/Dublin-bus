@@ -84,9 +84,10 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
+      console.log(response)
       // Route the directions and pass the response to a function to create
 
-      console.log(response)
+      console.log(status)
       // markers for each step.
       if (status === 'OK') {
 
@@ -123,7 +124,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         //Then if no tbody just select your table 
         var left = $('#left');
-        var right = $("#text");
+        var direction_text = $("#direction");
 
         for (var i = 0; i < journeysteps.length; i++) {
           // the route distance
@@ -151,9 +152,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var travelMode = journeysteps[i].travel_mode;
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=50 height=50>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=50 height=50>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=50 height=50>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=40 height=40>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=40 height=40>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=40 height=40>");
 
           // going through the object to get the travel mode details 
 
@@ -163,7 +164,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             duration = journeysteps[i].duration.text;
             instruction = journeysteps[i].instructions;
 
-            right.append('<p>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</p>');
+            direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
           }
 
@@ -176,7 +177,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
 
-            right.append('<p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</p>');
+            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
 
           };
         };
@@ -239,8 +240,8 @@ $(function () {
     $(".form-area").hide();
     $("#route-results").show();
 
-    // set the value of the html for the results using the html id
-    $("#origin-tab1").text("hi");
+    // // set the value of the html for the results using the html id
+    // $("#origin-tab1").text("hi");
   });
 
   // add on click to edit-journey button to hide results and show journey planner
