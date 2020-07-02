@@ -9,6 +9,7 @@ $(document).ready(function () {
         navId = $(this).attr('id');
         navId = navId.split("-")[0];
         console.log(navId);
+        $("#map-interface").css("top", "0px");
         $("#map-interface-content").load("/" + navId);
     });
 
