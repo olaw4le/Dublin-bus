@@ -224,6 +224,7 @@ $(function () {
 
         // show results
         $(".form-area").hide();
+        $("#map-interface").css("top", "400px");
         $("#stop-to-stop-results").show();
   
     });
@@ -232,6 +233,7 @@ $(function () {
     $('#edit-journey-tab2').on('click', function () {
         console.log("inside edit-journey-results");
       $(".form-area").show();
+      $("#map-interface").css("top", "0px");
       $("#stop-to-stop-results").hide();
     });
   

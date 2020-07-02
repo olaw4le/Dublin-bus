@@ -216,13 +216,17 @@ $(function () {
     // show results and routes
     routes();
     $(".form-area").hide();
+    $("#map-interface").css("top", "400px");
     $("#route-results").show();
+    
   });
 
   // add on click to edit-journey button to hide results and show journey planner
   $('#edit-journey').on('click', function () {
     $(".form-area").show();
+    $("#map-interface").css("top", "0px");
     $("#route-results").hide();
+    $("#route-results").attr
   });
 
 
