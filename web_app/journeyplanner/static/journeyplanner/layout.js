@@ -18,18 +18,18 @@ $(document).ready(function () {
 
 
 // show and hide map
-    $("#show-map").click(function () {
+    // $("#show-map").click(function () {
 
-        // Toggle display of map-interface 
-        $("#map-interface").toggle();
+    //     // Toggle display of map-interface 
+    //     $("#map-interface").toggle();
 
-        // Change text on show/hide map button
-        if ($("#map-interface").is(":hidden")){
-            $("#show-map").html("Hide Map");
-        } else {
-            $("#show-map").html("Show Map");
-        }
-    });
+    //     // Change text on show/hide map button
+    //     if ($("#map-interface").is(":hidden")){
+    //         $("#show-map").html("Hide Map");
+    //     } else {
+    //         $("#show-map").html("Show Map");
+    //     }
+    // });
 
 
     // Collapse mobile nav bar when menu item is clicked

@@ -49,19 +49,6 @@ html, body {
     text-align: center;
   }
 
-  /* show map button */
-  /* #map-button {
-    display: none;
-  } */
-
-  /* #show-map {
-    position: relative;
-    height: 30px;
-    width: 100%;
-    background-color: orange;
-    display: none;
-  } */
-
   /* routeplanner tab */
   .form-area {
     margin: 5px 0px 0px 5px;
@@ -72,10 +59,6 @@ html, body {
     margin-bottom: 3px;
   }
 
-  /* .datetimepicker {
-    margin-top: 4px;
-    padding-right: 10px;
-  } */
 
   label {
     margin-bottom: 3px;
@@ -172,10 +155,7 @@ input[type=submit] {
   color: #ffffff; 
 }
 
-
-
 /* media queries to be kept at bottom of css file for ease of understanding */
-
 
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
@@ -201,14 +181,6 @@ input[type=submit] {
         height: 100%;
         /* position: relative; */
       }
-      /* #map-button {
-        display: block;
-      } */
-  
-      /* #show-map {
-        display: block;
-        text-align: center;
-      } */
   
       .nav-tabs {
         display: none;
@@ -222,7 +194,7 @@ input[type=submit] {
       }
       
       .nav-item.nav-bottom {
-        width: 20%;
+        width: 25%;
       }
   
       .nav-link.nav-bottom {
@@ -253,7 +225,6 @@ input[type=submit] {
         width: 100%;
       }
   
-   
     
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
