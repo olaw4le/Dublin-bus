@@ -224,7 +224,7 @@ $(function () {
 
         // show results
         $(".form-area").hide();
-        $("#map-interface").css("top", "400px");
+        $("#map-interface").css("top", "300px");
         $("#stop-to-stop-results").show();
   
     });

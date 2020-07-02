@@ -216,7 +216,7 @@ $(function () {
     // show results and routes
     routes();
     $(".form-area").hide();
-    $("#map-interface").css("top", "400px");
+    $("#map-interface").css("top", "300px");
     $("#route-results").show();
     
   });
