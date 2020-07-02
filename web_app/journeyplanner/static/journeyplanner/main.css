@@ -29,6 +29,7 @@ html, body {
     bottom: 50px;
     width: 440px;
     height: 550px;
+    /* overflow-y: scroll; */
 
   }
 
@@ -105,12 +106,17 @@ html, body {
     padding-top: 10px;
     padding-left: 10px;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   #estimator-go {
     padding-top: 10px;
   }
 
+  .btn-secondary {
+    padding: 5px;
+    margin-left: 20px;
+  }
 
   /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
@@ -126,6 +132,7 @@ html, body {
       bottom: 0px;
       width: 100%;
       height: calc(100vh - 85px);
+      overflow-x: scroll;
     }
     #map-button {
       display: block;
@@ -266,4 +273,6 @@ input[type=submit] {
 
 ul {
   list-style-type: none;
+  padding-left:10px;
+  font-size: 0.9em;
 }

@@ -109,15 +109,23 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         //getting the value of the user selected time
         var time= $("#datetime-tab1").val();
 
+        var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
+
+        dateArr = time.split('T');
+        date = dateArr[0];
+        dateElements = date.split('-');
+        year = dateElements[0];
+        month = dateElements[1];
+        date = dateElements[2];
+        dateToDisplay = date + "-" + month + "-" + year;
+
+        time = dateArr[1];
+
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
-        $("#datetime-tab").html(time);
+        $("#datetime-tab").html(dateToDisplay + ", " + time);
 
-        
-      
-
-
-
+    
         journeysteps = response.routes[0].legs[0].steps;
 
         console.log(journeysteps)
@@ -152,9 +160,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var travelMode = journeysteps[i].travel_mode;
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=40 height=40>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=40 height=40>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=40 height=40>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=30 height=30>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=30 height=30>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=20 height=20>");
 
           // going through the object to get the travel mode details 
 
@@ -239,9 +247,8 @@ $(function () {
     routes();
     $(".form-area").hide();
     $("#route-results").show();
+    $('#map-interface').css("overflow-y", "scroll");
 
-    // // set the value of the html for the results using the html id
-    // $("#origin-tab1").text("hi");
   });
 
   // add on click to edit-journey button to hide results and show journey planner
