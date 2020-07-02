@@ -1,9 +1,4 @@
 
-$(document).ready(function () {
-
-  $('#datetimepicker').datetimepicker();
-});
-
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
