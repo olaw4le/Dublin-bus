@@ -2,6 +2,7 @@
 {% load static %}
 <script src=" {% static 'journeyplanner/routeplanner.js' %}"></script>
 <script src=" {% static 'journeyplanner/datetime_picker/jquery.datetimepicker.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/datetime_picker/jquery.datetimepicker.css' %}">
 
 
 
@@ -22,9 +23,11 @@
     </div>
     <div>
         <label for="datetime-4">Date and Time:</label>
+        
         <div class="row"></div>
-    <!--         <input type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab1" value=""> -->
-        <input id="datetimepicker" type="text" >
+           <input type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab1" value="">
+    <label>Date and Time:</label>
+            <input id="datetimepicker" type="text" >
 
         </div>
     </div>

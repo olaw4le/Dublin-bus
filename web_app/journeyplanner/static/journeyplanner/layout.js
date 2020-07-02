@@ -28,12 +28,9 @@ $(document).ready(function () {
     // Load routeplanner by default when page is loaded
     $("#map-interface-content").load("/routeplanner", function () {
         currentDateTime();
-        $('#datetimepicker').datetimepicker();
     });
 
     
-        
-
 // show and hide map
     $("#show-map").click(function () {
 
@@ -55,6 +52,7 @@ $(document).ready(function () {
         console.log(navId);
         $('#' + navId).addClass("active");
     });
+
 });
 ;
 
@@ -65,6 +63,7 @@ $(window).resize(function () {
         $("#show-map").html("Show Map");
     }
 });
+
 
 
 

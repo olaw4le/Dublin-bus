@@ -1,4 +1,9 @@
 
+$(document).ready(function () {
+
+  $('#datetimepicker').datetimepicker();
+});
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -196,6 +201,11 @@ function attachInstructionText(stepDisplay, marker, text, map) {
   });
 }
 
+
+
+
+
+
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
   
@@ -228,7 +238,6 @@ $(function () {
 
 
 });
-
 
 
 
