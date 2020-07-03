@@ -19,7 +19,7 @@ $(document).ready(function () {
         navId = $(this).attr('id');
         navId = navId.split("-")[0];
         console.log(navId);
-        $("#map-interface").css("top", "0px");
+        
         $("#map-interface-content").load("/" + navId);
     });
 
@@ -49,6 +49,7 @@ $(document).ready(function () {
         navId = $(this).attr('id');
         console.log(navId);
         $('#' + navId).addClass("active");
+        $("#map-interface").css("top", "0px");
     });
 
 });
@@ -59,6 +60,7 @@ $(window).resize(function () {
     if ($(window).width() >= 992) {
         $("#map-interface").show();
         $("#show-map").html("Show Map");
+        $("#map-interface").css("top", "");
     }
 });
 

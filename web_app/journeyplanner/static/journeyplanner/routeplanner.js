@@ -290,8 +290,7 @@ $(function () {
     $(".form-area").show();
     $("#map-interface").css("top", "0px");
     $("#route-results").hide();
-    $("#route-results").attr
-    
+    //$("#route-results").attr
   });
 
 
