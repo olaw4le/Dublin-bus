@@ -278,7 +278,9 @@ $(function () {
     // show results and routes
     routes();
     $(".form-area").hide();
-    $("#map-interface").css("top", "300px");
+    if ($(window).width() < 992) {
+        $("#map-interface").css("top", "300px");
+    }
     $("#route-results").show();
     
     $('#map-interface').css("overflow-y", "scroll");
@@ -290,8 +292,7 @@ $(function () {
     $(".form-area").show();
     $("#map-interface").css("top", "0px");
     $("#route-results").hide();
-    $("#route-results").attr
-    
+    //$("#route-results").attr
   });
 
 

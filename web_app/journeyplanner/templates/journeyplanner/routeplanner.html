@@ -9,22 +9,22 @@
 <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
 
 <div class="container form-area">
-<form onsubmit="return false">
-    <div class="form-group">
-        <label for="origin">From:</label>
-        <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
-    </div>
-    <div class="form-group">
-        <label for="destination">To:</label>
-        <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
-    </div>
-    <div>
-        <label for="datetime-4">Date and Time:</label>
-        <div class="row">
-            <input type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
+    <form onsubmit="return false">
+        <div class="form-group">
+            <label for="origin">From:</label>
+            <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
         </div>
-        <button type="submit" class="btn btn-primary" id="go">Go</button>
-
+        <div class="form-group">
+            <label for="destination">To:</label>
+            <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
+        </div>
+        <div>
+            <label for="datetime-4">Date and Time:</label>
+            <div class="row">
+                <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
+            </div>
+            <button type="submit" class="btn btn-primary" id="go">Go</button>
+        </div>
     </form>
     <div class="container news">
         <p>dublin bus twitter feed and disruption alerts here</p>
@@ -35,13 +35,6 @@
     <div class="card results">
         <div class="row results">
         </div>
-<<<<<<< HEAD
-        <div class="row results">
-            <button type="submit" class="btn btn-primary" id="edit-journey">Edit journey details</button>
-||||||| 8f65290
-        <div class="row results">
-        <button type="submit" class="btn btn-primary" id="edit-journey">Edit journey details</button>
-=======
         <div class="row from">
             <div class="col-6">
                 <p>From:</p>
@@ -68,7 +61,6 @@
         </div>
         <div class="row">
         <button type="submit" class="btn btn-secondary" id="edit-journey">Edit journey details</button>
->>>>>>> getting_posting
         </div>
     </div>
     <div class="card results">
