@@ -2,6 +2,7 @@ import requests
 import csv
 import os.path
 import sys
+import json
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -104,7 +105,7 @@ def main(file_path):
 
 if __name__ == "__main__":
 
-    if sys.argv[1]:
+    if len(sys.argv) > 1:
         out_file = sys.argv[1]
     else:
         out_file = "openweatherdata_scraped.csv"
