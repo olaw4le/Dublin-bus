@@ -83,6 +83,7 @@ html, body {
   
   #go {
   margin-left:10px;
+  margin-top: 10px;
   }
 
   /* twitter feed on routeplanner tab */
@@ -108,6 +109,14 @@ html, body {
 
   #estimator-go {
     padding-top: 10px;
+  }
+
+  #datetime-tab1 {
+    margin-left: 8px;
+  }
+
+  #datetime-tab2 {
+    margin-left: 15px;
   }
 
   /* media queries to make interface responsive */
