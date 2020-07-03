@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
-from data-analytics import linear_regression
+import sys
+sys.path.append("..")
+from data_analytics import linear_regression
 
 
 #showing how data can be added to a html page
@@ -71,14 +73,17 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
-
+        print("time from views.py", time)
+        result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
         
+
 
         print("routes:",route)
         print("origin:",origin)
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
+        print("result", result)
     return HttpResponse("")
 
 @csrf_exempt

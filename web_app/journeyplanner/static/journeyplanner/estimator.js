@@ -216,14 +216,20 @@ $(function () {
         var datetimeValue = $("#datetime-tab2").val();
         var arr = datetimeValue.split('T');
         var date = arr[0];
-        var time = arr[1];
+        var input_time = arr[1];
+
+         // convert time to seconds since midnight
+        console.log("time: "+ input_time);
+        var timeSplit = input_time.split(':');
+        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+        console.log(timeSeconds);
      
       // sending a post request to the server
       $.ajax({
           type:"POST",
           url: "prediction/",
           data:{date:date,
-                time:time,
+                time:timeSeconds,
                 route:$("#estimator-route").val(),
                 origin:$("#estimator-origin").val(),
                 destination:$("#estimator-destination").val(),
@@ -236,11 +242,7 @@ $(function () {
       }) 
 
 
-        // convert time to seconds since midnight
-        console.log("time: "+ time);
-        var timeSplit = time.split(':');
-        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-        console.log(timeSeconds); 
+
 
         // show results
         $(".form-area").hide();
