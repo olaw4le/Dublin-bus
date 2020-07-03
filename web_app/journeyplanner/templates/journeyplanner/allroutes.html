@@ -6,7 +6,7 @@
     <form autocomplete="off" onsubmit="return false">
         <div class="autocomplete">
             <label for="origin">Route:</label>
-            <input type="text" class="form-control col-6" id="estimator-route" placeholder="Enter route">
+            <input type="text" class="form-control" id="estimator-route" placeholder="Enter route">
         </div>
         <div class="form-group">
             <label for="Sub">Sub Route:</label>
@@ -23,18 +23,10 @@
             <select class="form-control col-6" id="estimator-destination" placeholder="Select stop">
             <option value="0">Select stop:</option></select>
         </div>
-        <!-- <div class="form-group">
-            <label for="destination">Day:</label>
-            <input type="text" class="form-control col-6" id="estimator-day" placeholder="Enter date">
-        </div>
-        <div class="form-group">
-            <label for="destination">Time:</label>
-            <input type="text" class="form-control col-6" id="estimator-time" placeholder="Enter time">
-        </div> -->
         <div class="form-group">
             <label for="datetime-4">Date and Time:</label>
             <div class="row">
-                <input type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab2" value="">
+                <input type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab2" value="">
             </div>
         </div>
         <button type="submit" class="btn btn-primary" id="stop-to-stop-go">Go</button>

@@ -1,3 +1,4 @@
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -195,6 +196,11 @@ function attachInstructionText(stepDisplay, marker, text, map) {
   });
 }
 
+
+
+
+
+
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
   
@@ -216,18 +222,21 @@ $(function () {
     // show results and routes
     routes();
     $(".form-area").hide();
+    $("#map-interface").css("top", "300px");
     $("#route-results").show();
+    
   });
 
   // add on click to edit-journey button to hide results and show journey planner
   $('#edit-journey').on('click', function () {
     $(".form-area").show();
+    $("#map-interface").css("top", "0px");
     $("#route-results").hide();
+    $("#route-results").attr
   });
 
 
 });
-
 
 
 
