@@ -69,8 +69,22 @@ def prediction(request):
         destination = request.POST["destination"]
         date = request.POST["date"]
         time = request.POST["time"]
+        direction=request.POST["direction"]
 
         print("routes:",route)
         print("origin:",origin)
+        print("destination:",destination)
+        print("direction:",direction)
+        print("date",date)
     return HttpResponse("")
+
+@csrf_exempt
+def planner(request):
+    if request.method == "POST":
+        # data= request.POST["bus_details"]
+
+        print(request.POST)
+
+    return HttpResponse("")
+
 

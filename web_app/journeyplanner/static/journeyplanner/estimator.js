@@ -168,6 +168,7 @@ function route_list() {
 
 //getting the value of the selected sub route
 var sel_sub = "";
+var direction=""
 
 // function to populate the origin and destination
 function stops() {
@@ -184,6 +185,10 @@ function stops() {
 
             // the stops the selected sub-routes goes through
             bus_stops = routes[key].stops;
+
+            direction= routes[key].direction
+
+            console.log(direction)
 
             // poppulating the origin and destination with the stops
             for (var i = 0; i < bus_stops.length; i++) {
@@ -221,7 +226,8 @@ $(function () {
                 time:time,
                 route:$("#estimator-route").val(),
                 origin:$("#estimator-origin").val(),
-                destination:$("#estimator-destination").val(),},
+                destination:$("#estimator-destination").val(),
+                direction:direction},
 
                 sucess:function(){
                     alert("successfully posted")

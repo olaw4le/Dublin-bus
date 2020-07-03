@@ -84,13 +84,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-      console.log(response)
-      // Route the directions and pass the response to a function to create
-
-      console.log(status)
+   
       // markers for each step.
       if (status === 'OK') {
-
 
         staringAddress = response.routes[0].legs[0].start_address;
 
@@ -113,17 +109,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         $("#destination-tab1").html(address2);
         $("#datetime-tab").html(time);
 
-        
-      
-
-
-
         journeysteps = response.routes[0].legs[0].steps;
 
-        console.log(journeysteps)
-
-        //Then if no tbody just select your table 
-        var left = $('#left');
         var direction_text = $("#direction");
 
         for (var i = 0; i < journeysteps.length; i++) {
@@ -148,13 +135,20 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           // the bus number user take
           var Route_number = '';
 
+          var arrival_latlng;
+          var departure_latlng;
+
+          var bus_details=[]; //array to store each bus journey 
+          var journey_steps={}; //array for each bus steps in the journey
+
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
+         
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=40 height=40>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=40 height=40>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=40 height=40>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=30 height=30>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=30 height=30>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=30 height=30>");
 
           // going through the object to get the travel mode details 
 
@@ -176,6 +170,33 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
+            departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
+            arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
+
+            
+            journey_steps["route_number"]=Route_number;
+            journey_steps["arrival_stop"]=arrival_stop;
+            journey_steps["departure_stop"]=departure_stop;
+            journey_steps["num_stops"]=num_stops;
+            journey_steps["departure_latlng"]=departure_latlng;
+            journey_steps["arrival_latlng"]=arrival_latlng;
+
+        // Append the dictionary made for each bus
+        bus_details.push(journey_steps);
+
+        //turning the list into a json
+        bus_details=JSON.stringify(bus_details);
+
+        // sending a post request to the server
+        $.ajax({
+        type:"POST",
+        url: "planner/",
+        data:{bus_details},
+              sucess:function(){
+                  alert("successfully posted")
+
+              }
+    }) 
 
             direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
 

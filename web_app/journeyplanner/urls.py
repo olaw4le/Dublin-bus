@@ -14,6 +14,7 @@ urlpatterns = [
     path('disruptions/', views.disruptions, name = 'disruptions'),
     path('tourist/', views.tourist, name = 'tourist'),
     url(r'^prediction/', views.prediction, name = 'prediction'),
+    url(r'^planner/', views.planner, name = 'planner'),
 ]
 
 
