@@ -168,6 +168,7 @@ function route_list() {
 
 //getting the value of the selected sub route
 var sel_sub = "";
+var direction=""
 
 // function to populate the origin and destination
 function stops() {
@@ -184,6 +185,10 @@ function stops() {
 
             // the stops the selected sub-routes goes through
             bus_stops = routes[key].stops;
+
+            direction= routes[key].direction
+
+            console.log(direction)
 
             // poppulating the origin and destination with the stops
             for (var i = 0; i < bus_stops.length; i++) {
@@ -213,8 +218,23 @@ $(function () {
         var date = arr[0];
         var time = arr[1];
      
-        console.log("date: " + date);
-        console.log("time: "+ time);
+      // sending a post request to the server
+      $.ajax({
+          type:"POST",
+          url: "prediction/",
+          data:{date:date,
+                time:time,
+                route:$("#estimator-route").val(),
+                origin:$("#estimator-origin").val(),
+                destination:$("#estimator-destination").val(),
+                direction:direction},
+
+                sucess:function(){
+                    alert("successfully posted")
+
+                }
+      }) 
+
 
         // convert time to seconds since midnight
         console.log("time: "+ time);
@@ -226,6 +246,9 @@ $(function () {
         $(".form-area").hide();
         $("#map-interface").css("top", "300px");
         $("#stop-to-stop-results").show();
+
+        // set the value of the html for the results using the html id
+        $("#origin-tab2").text("hi");
   
     });
   

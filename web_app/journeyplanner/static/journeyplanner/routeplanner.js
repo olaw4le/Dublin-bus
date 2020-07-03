@@ -85,25 +85,47 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-      // Route the directions and pass the response to a function to create
-
-      console.log(response)
+   
       // markers for each step.
       if (status === 'OK') {
-
 
         staringAddress = response.routes[0].legs[0].start_address;
 
         endingAddress = response.routes[0].legs[0].end_address;
 
+        //trimming the origin address
+        startingAddress = response.routes[0].legs[0].start_address;
+        address1 = startingAddress.split(',');
+        address1 = address1[0];
 
+        //trimming the destination address
+        endingAddress = response.routes[0].legs[0].end_address;
+        address2 = endingAddress.split(',');
+        address2 = address2[0];
+
+        //getting the value of the user selected time
+        var time= $("#datetime-tab1").val();
+
+        var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
+
+        dateArr = time.split('T');
+        date = dateArr[0];
+        dateElements = date.split('-');
+        year = dateElements[0];
+        month = dateElements[1];
+        date = dateElements[2];
+        dateToDisplay = date + "-" + month + "-" + year;
+
+        time = dateArr[1];
+
+        $("#origin-tab1").html(address1);
+        $("#destination-tab1").html(address2);
+        $("#datetime-tab").html(dateToDisplay + ", " + time);
+
+    
         journeysteps = response.routes[0].legs[0].steps;
 
-        console.log(journeysteps)
-
-        //Then if no tbody just select your table 
-        var left = $('#left');
-        var right = $("#text");
+        var direction_text = $("#direction");
 
         for (var i = 0; i < journeysteps.length; i++) {
           // the route distance
@@ -127,13 +149,20 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           // the bus number user take
           var Route_number = '';
 
+          var arrival_latlng;
+          var departure_latlng;
+
+          var bus_details=[]; //array to store each bus journey 
+          var journey_steps={}; //array for each bus steps in the journey
+
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
+         
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=50 height=50>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=50 height=50>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=50 height=50>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=20 height=30>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=20 height=20>");
 
           // going through the object to get the travel mode details 
 
@@ -143,7 +172,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             duration = journeysteps[i].duration.text;
             instruction = journeysteps[i].instructions;
 
-            right.append('<p>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</p>');
+            direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
           }
 
@@ -155,8 +184,35 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
+            departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
+            arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
 
-            right.append('<p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</p>');
+            
+            journey_steps["route_number"]=Route_number;
+            journey_steps["arrival_stop"]=arrival_stop;
+            journey_steps["departure_stop"]=departure_stop;
+            journey_steps["num_stops"]=num_stops;
+            journey_steps["departure_latlng"]=departure_latlng;
+            journey_steps["arrival_latlng"]=arrival_latlng;
+
+        // Append the dictionary made for each bus
+        bus_details.push(journey_steps);
+
+        //turning the list into a json
+        bus_details=JSON.stringify(bus_details);
+
+        // sending a post request to the server
+        $.ajax({
+        type:"POST",
+        url: "planner/",
+        data:{bus_details},
+              sucess:function(){
+                  alert("successfully posted")
+
+              }
+    }) 
+
+            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
 
           };
         };
@@ -225,6 +281,8 @@ $(function () {
     $("#map-interface").css("top", "300px");
     $("#route-results").show();
     
+    $('#map-interface').css("overflow-y", "scroll");
+
   });
 
   // add on click to edit-journey button to hide results and show journey planner
@@ -233,6 +291,7 @@ $(function () {
     $("#map-interface").css("top", "0px");
     $("#route-results").hide();
     $("#route-results").attr
+    
   });
 
 
