@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
+from data-analytics import linear_regression
 
 
 #showing how data can be added to a html page
@@ -70,6 +71,8 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
+
+        
 
         print("routes:",route)
         print("origin:",origin)
