@@ -65,7 +65,8 @@ def create_segments(file, **kwargs):
                     values[row_id] = {}
 
                 values[row_id]["Segment"] = "%d-%d" % (prev_stop, this_stop)
-                values[row_id]["EndStopID"] = stop_order[seq]
+                values[row_id]["StartStopID"] = prev_stop
+                values[row_id]["EndStopID"] = this_stop
                 values[row_id]["PlannedArrTime"] = row["PLANNEDTIME_ARR"]
                 values[row_id]["ActualArrTime"] = row["ACTUALTIME_ARR"]
                 values[row_id]["ArrDelay"] = row["DELAYARR"]
@@ -75,9 +76,10 @@ def create_segments(file, **kwargs):
                 values[row_id]["LineID"] = row["LINEID"]
                 values[row_id]["RouteID"] = row["ROUTEID"]
                 values[row_id]["UniqueTripID"] = row["UNIQUE_TRIP"]
-                values[row_id]["ProgressNum"] = row["PROGRNUMBER"]
+                #values[row_id]["ProgressNum"] = row["PROGRNUMBER"]
                 values[row_id]["Month"] = row["MONTH"]
                 values[row_id]["Weekday"] = row["DAYOFWEEK"]
+                values[row_id]["TimeGroup"] = row["TIME_GROUP"]
 
             # if not the last stop - fill in data for the next segment
             if seq != max_num:
@@ -95,7 +97,8 @@ def create_segments(file, **kwargs):
                     values[row_id] = {}
 
                 values[row_id]["Segment"] = "%d-%d" % (this_stop, next_stop)
-                values[row_id]["EndStopID"] = stop_order[nxt]
+                values[row_id]["StartStopID"] = this_stop
+                values[row_id]["EndStopID"] = next_stop
                 values[row_id]["PlannedDepTime"] = row["PLANNEDTIME_DEP"]
                 values[row_id]["ActualDepTime"] = row["ACTUALTIME_DEP"]
                 values[row_id]["DepDelay"] = row["DELAYDEP"]
@@ -108,6 +111,7 @@ def create_segments(file, **kwargs):
                 values[row_id]["ProgressNum"] = row["PROGRNUMBER"]
                 values[row_id]["Month"] = row["MONTH"]
                 values[row_id]["Weekday"] = row["DAYOFWEEK"]
+                values[row_id]["TimeGroup"] = row["TIME_GROUP"]
 
         segments = segments.append(list(values.values()), ignore_index=True)
 
@@ -152,4 +156,3 @@ if __name__ == "__main__":
         c += 2
 
     create_segments(raw_data, **opt_args)
-
