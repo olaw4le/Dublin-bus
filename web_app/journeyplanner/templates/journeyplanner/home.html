@@ -9,8 +9,9 @@
         <script src=" {% static 'journeyplanner/map.js' %}"></script>
 
 <div id="fullscreen-map">
-  
-  <div id="map"></div>
+  <div id="map-wrapper">
+    <div id="map"></div>
+  </div>
   <!-- map interface -->
     <!--adapted from https://getbootstrap.com/docs/4.0/components/navs/-->
     <nav>
@@ -24,5 +25,13 @@
   <div class="card" id="map-interface">
   
     <div id="map-interface-content">interface content</div>
+
+
+  </div>
+  <!-- <div id="show-map"><p>Show Map</p></div> -->
+</div>
+
+
+
 
 {% endblock content %}

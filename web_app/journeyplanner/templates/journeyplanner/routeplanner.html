@@ -9,21 +9,19 @@
 <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
 
 <div class="container form-area">
-    <form onsubmit="return false">
-        <div class="form-group">
-            <label for="origin">From:</label>
-            <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
-        </div>
-        <div class="form-group">
-            <label for="destination">To:</label>
-            <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
-        </div>
-        <div>
-            <label for="datetime-4">Date and Time:</label>
-            
-            <div class="row">
-                <input type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab1" value="">
-            </div>
+<form onsubmit="return false">
+    <div class="form-group">
+        <label for="origin">From:</label>
+        <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
+    </div>
+    <div class="form-group">
+        <label for="destination">To:</label>
+        <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
+    </div>
+    <div>
+        <label for="datetime-4">Date and Time:</label>
+        <div class="row">
+            <input type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
         </div>
         <button type="submit" class="btn btn-primary" id="go">Go</button>
 

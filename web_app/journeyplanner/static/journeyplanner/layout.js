@@ -19,10 +19,8 @@ $(document).ready(function () {
         navId = $(this).attr('id');
         navId = navId.split("-")[0];
         console.log(navId);
-        $("#map-interface-content").load("/" + navId, function() {
-            currentDateTime();
-        });
-        
+        $("#map-interface").css("top", "0px");
+        $("#map-interface-content").load("/" + navId);
     });
 
     // Load routeplanner by default when page is loaded
@@ -32,18 +30,18 @@ $(document).ready(function () {
 
     
 // show and hide map
-    $("#show-map").click(function () {
+    // $("#show-map").click(function () {
 
-        // Toggle display of map-interface 
-        $("#map-interface").toggle();
+    //     // Toggle display of map-interface 
+    //     $("#map-interface").toggle();
 
-        // Change text on show/hide map button
-        if ($("#map-interface").is(":hidden")){
-            $("#show-map").html("Hide Map");
-        } else {
-            $("#show-map").html("Show Map");
-        }
-    });
+    //     // Change text on show/hide map button
+    //     if ($("#map-interface").is(":hidden")){
+    //         $("#show-map").html("Hide Map");
+    //     } else {
+    //         $("#show-map").html("Show Map");
+    //     }
+    // });
 
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function(){
