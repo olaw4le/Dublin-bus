@@ -74,6 +74,7 @@ def prediction(request):
         time = request.POST["time"]
         direction=request.POST["direction"]
         print("time from views.py", time)
+
         result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
         
 
