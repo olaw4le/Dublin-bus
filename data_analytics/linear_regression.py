@@ -80,7 +80,8 @@ def generate_preditction(route, startstop, endstop, date, time, direction):
         direction_only = df[df.DIRECTION==int(direction)]
 
         #getting the main subroute (we will need to make provision for the subroutes)
-        subroutes = pd.read_csv("~/Desktop/Trimester_3/routes_and_subroutes.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
+
+        subroutes = pd.read_csv("~/Desktop/Trimester_3/research-project/data_analytics/routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
         only_route = subroutes[subroutes.LINEID==route]
         route_direction = only_route[only_route.DIRECTION==int(direction)]
         subroute_list = list(route_direction.MAINROUTE.unique())
