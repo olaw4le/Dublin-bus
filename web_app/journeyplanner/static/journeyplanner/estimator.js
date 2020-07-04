@@ -222,7 +222,7 @@ $(function () {
         console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-        console.log(timeSeconds);
+        //console.log(timeSeconds);
      
       // sending a post request to the server
       $.ajax({
