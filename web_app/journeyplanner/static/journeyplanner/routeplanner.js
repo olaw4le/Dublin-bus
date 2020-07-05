@@ -161,7 +161,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
           //picture
           var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=20 height=30>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=20 height=20>");
           var road = ("<img src=static/journeyplanner/icons/road.png width=20 height=20>");
 
           // going through the object to get the travel mode details 
@@ -171,6 +171,10 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             distance = journeysteps[i].distance.text;
             duration = journeysteps[i].duration.text;
             instruction = journeysteps[i].instructions;
+
+            //trimming the instruction text
+            instruction = instruction.split(',');
+            instruction = instruction[0];
 
             direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
@@ -186,6 +190,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             num_stops = journeysteps[i].transit.num_stops;
             departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
             arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
+
+            //trimming the instruction text
+            instruction = instruction.split(',');
+            instruction = instruction[0];
+
 
             
             journey_steps["route_number"]=Route_number;
