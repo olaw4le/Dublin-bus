@@ -172,7 +172,7 @@ var direction=""
 
 // function to populate the origin and destination
 function stops() {
-    var To = "<option value=0>Routes</option>";
+    var To = "<option value=0>Stops</option>";
 
     // getting the value of the selected sub-route
     sel_sub = $("#estimator-sub").val();
