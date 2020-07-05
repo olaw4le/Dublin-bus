@@ -219,12 +219,13 @@ $(function () {
         var input_time = arr[1];
 
          // convert time to seconds since midnight
-        console.log("time: "+ input_time);
+        // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
         //console.log(timeSeconds);
      
       // sending a post request to the server
+      $("#stop-to-stop-estimate").html("Loading result..");
       $.ajax({
           type:"POST",
           url: "prediction/",
@@ -233,20 +234,25 @@ $(function () {
                 route:$("#estimator-route").val(),
                 origin:$("#estimator-origin").val(),
                 destination:$("#estimator-destination").val(),
-                direction:direction},
+                direction:direction
+            }
+        })
 
-                sucess:function(){
-                    alert("successfully posted")
+        .done(function(result){
+            console.log("successfully posted");
+            $("#stop-to-stop-estimate").html(result);
+            // console.log(result);
 
-                }
-      }) 
+        });
 
 
 
 
         // show results
         $(".form-area").hide();
-        $("#map-interface").css("top", "300px");
+        if ($(window).width() < 992) {
+            $("#map-interface").css("top", "300px");
+        }
         $("#stop-to-stop-results").show();
 
         // set the value of the html for the results using the html id

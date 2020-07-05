@@ -21,6 +21,7 @@ $(document).ready(function () {
         console.log(navId);
         
         $("#map-interface-content").load("/" + navId);
+        currentDateTime();
     });
 
     // Load routeplanner by default when page is loaded

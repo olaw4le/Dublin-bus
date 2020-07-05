@@ -85,7 +85,7 @@ def prediction(request):
         print("direction:",direction)
         print("date",date)
         print("result", result)
-    return HttpResponse("")
+    return HttpResponse(result)
 
 @csrf_exempt
 def planner(request):
