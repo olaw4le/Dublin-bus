@@ -240,7 +240,7 @@ $(function () {
 
         .done(function(result){
             console.log("successfully posted");
-            $("#stop-to-stop-estimate").html(result);
+            $("#stop-to-stop-estimate").html(result + " minutes");
             // console.log(result);
 
         });
