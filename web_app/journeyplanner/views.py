@@ -75,7 +75,7 @@ def prediction(request):
         direction=request.POST["direction"]
         print("time from views.py", time)
 
-        # result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
+        result = linear_regression.generate_prediction(route, origin, destination, date, time, direction)
         
 
 
@@ -84,7 +84,7 @@ def prediction(request):
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-        # print("result", result)
+        print("result", result)
     return HttpResponse("")
 
 @csrf_exempt
