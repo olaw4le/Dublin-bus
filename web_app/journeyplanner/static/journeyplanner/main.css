@@ -200,9 +200,14 @@ html, body {
 
 
 
+<<<<<<< HEAD
 >>>>>>> getting_posting
 =======
 >>>>>>> 2eaeb5c0b01ab7c70502f46415e004a4472002db
+||||||| 11dcce9
+>>>>>>> getting_posting
+=======
+>>>>>>> error_fixing
 * {
   box-sizing: border-box;
 }
@@ -263,6 +268,7 @@ input[type=submit] {
 .autocomplete-active {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+<<<<<<< HEAD
 }
 
 ul {
@@ -270,3 +276,245 @@ ul {
   padding-left:10px;
   font-size: 0.9em;
 }
+||||||| 11dcce9
+<<<<<<< HEAD
+}
+
+/* media queries to be kept at bottom of css file for ease of understanding */
+
+/* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+    /* #fullscreen-map {
+      height: calc(100vh - 85px);
+  
+    } */
+
+    #map-wrapper {
+      height: 400px;
+    }
+      #map-interface {
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: calc(100vh - 85px);
+      }
+
+      #map {
+        height: 100%;
+        /* position: relative; */
+      }
+  
+      .nav-tabs {
+        display: none;
+      }
+  
+      /* mobile screen bottom nav */
+      .fixed-bottom  {
+        display: block;
+        height: 70px;
+        width: 100vw; 
+      }
+      
+      .nav-item.nav-bottom {
+        width: 25%;
+      }
+  
+      .nav-link.nav-bottom {
+        font-size: 0.8rem;
+        /* text-align: center; */
+      }
+  
+      a.active {
+        background-color: #A9A9A9;
+      }
+  
+      #bottom-nav-div {
+        height: 70px;
+        padding: 0px;
+      }
+  
+      a.nav-item.nav-link.load-interface.nav-bottom {
+        height: 70px;
+        text-align: center;
+      }
+    
+      .word {
+        padding-top: 5px !important;
+      }
+  
+  
+      .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+        width: 100%;
+      }
+  
+    
+    /* show map interface again when screen is stretched out */
+    @media only screen and (min-width: 992px) {
+      #map-interface {
+        z-index: 1000;
+        position: absolute;
+        display: block;
+        top: 90px;
+        left: 50px;
+        bottom: 50px;
+        width: 440px;
+        height: 550px;
+      }
+    }
+  }
+  
+||||||| 8f65290
+}
+=======
+}
+
+ul {
+  list-style-type: none;
+  padding-left:10px;
+  font-size: 0.9em;
+}
+>>>>>>> getting_posting
+=======
+}
+
+/* media queries to be kept at bottom of css file for ease of understanding */
+
+/* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+    /* #fullscreen-map {
+      height: calc(100vh - 85px);
+  
+    } */
+
+    #map-wrapper {
+      height: 400px;
+    }
+      #map-interface {
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: calc(100vh - 85px);
+      }
+
+      #map {
+        height: 100%;
+        /* position: relative; */
+      }
+  
+      .nav-tabs {
+        display: none;
+      }
+  
+      /* mobile screen bottom nav */
+      .fixed-bottom  {
+        display: block;
+        height: 70px;
+        width: 100vw; 
+      }
+      
+      .nav-item.nav-bottom {
+        width: 25%;
+      }
+  
+      .nav-link.nav-bottom {
+        font-size: 0.8rem;
+        /* text-align: center; */
+      }
+  
+      a.active {
+        background-color: #A9A9A9;
+      }
+  
+      #bottom-nav-div {
+        height: 70px;
+        padding: 0px;
+      }
+  
+      a.nav-item.nav-link.load-interface.nav-bottom {
+        height: 70px;
+        text-align: center;
+      }
+    
+      .word {
+        padding-top: 5px !important;
+      }
+  
+  
+      .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+        width: 100%;
+      }
+  
+    
+    /* show map interface again when screen is stretched out */
+    @media only screen and (min-width: 992px) {
+      #map-interface {
+        z-index: 1000;
+        position: absolute;
+        display: block;
+        top: 90px;
+        left: 50px;
+        bottom: 50px;
+        width: 440px;
+        height: 550px;
+      }
+    }
+  }
+  
+  .ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+  }
+  
+  .ui-autocomplete > li > div {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333333;
+    white-space: nowrap;
+  }
+  
+  .ui-state-hover,
+  .ui-state-active,
+  .ui-state-focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+  
+  .ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+>>>>>>> error_fixing
