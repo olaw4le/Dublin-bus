@@ -234,21 +234,28 @@ $("#estimator-sub").change(stops);
 $(function () {
   
     $('#stop-to-stop-go').on('click', function () {
+
+         // use different variables for date and time depending on screen size
         if ($(window).width() < 992) {
             var datetimeValue = $("#datetime-tab2").val();
             var arr = datetimeValue.split('T');
             var date = arr[0];
             var input_time = arr[1];
         } else {
-            var datetimeValue = $("#datepicker-tab2").val();
-            console.log("desktop date: " + datetimeValue);
-            var input_time = $('.timepicker-tab1').val();
+            var dateValue = $("#datepicker-tab2").val();
+            var dateElements = dateValue.split('-');
+            var year, month, date;
+            year = dateElements[2];
+            month = dateElements[1];
+            date = dateElements[0];
+            date = year + '-' + month + '-' + date;
+            console.log("desktop date: " + date);
+            var input_time = $('#timepicker-tab2').val();
             console.log("desktop time: " + input_time);
             
         }
         
-
-         // convert time to seconds since midnight
+        // convert time to seconds since midnight
         // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;

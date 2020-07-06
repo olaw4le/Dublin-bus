@@ -286,13 +286,26 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
   
   $('#go').on('click', function () {
-    var datetimeValue = $("#datetime-tab1").val();
-    var arr = datetimeValue.split('T');
-    var date = arr[0];
-    var time = arr[1];
- 
-    console.log("date: " + date);
-    console.log("time: "+ time);
+
+    // use different variables for date and time depending on screen size
+    if ($(window).width() < 992) {
+      var datetimeValue = $("#datetime-tab1").val();
+      var arr = datetimeValue.split('T');
+      var date = arr[0];
+      var input_time = arr[1];
+  } else {
+      var dateValue = $("#datepicker-tab1").val();
+      var dateElements = dateValue.split('-');
+      var year, month, date;
+      year = dateElements[2];
+      month = dateElements[1];
+      date = dateElements[0];
+      date = year + '-' + month + '-' + date;
+      console.log("desktop date: " + date);
+      var input_time = $('#timepicker-tab1').val();
+      console.log("desktop time: " + input_time);
+    
+  }
 
     // convert time to seconds since midnight
     console.log("time: "+ time);
