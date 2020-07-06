@@ -52,17 +52,8 @@ html, body {
     background-color: white;
   }›
 
-  /* .nav-tabs .nav-link {
-    padding: 6.25px;
-    border:solid 0.5px grey;
-    width: 110px;
-    text-align: center;
-    height: 33px !important;
-    margin: 3px 3px 3px 3px !important;
-    background-color: #F5F5F5 !important;
-  } */
-
-  .nav-tabs .nav-item {
+ /* not working!! */
+  .nav-tabs .nav-link {
     height: 33px;
     margin: 3px 3px 3px 3px;
     background-color: #F5F5F5;
@@ -73,7 +64,10 @@ html, body {
     opacity: 0.9;
     border-radius: 8px;
     color: white;
-  }
+  } 
+
+ 
+
 
   /* routeplanner tab */
   .form-area {
@@ -127,13 +121,6 @@ html, body {
     margin-left: 20px;
   }
 
-* {
-  box-sizing: border-box;
-}
-
-body { 
-  font: 16px Arial;  
-}
 
 /*the container must be positioned relative:*/
 .autocomplete {
@@ -217,11 +204,6 @@ ul {
         display: block;
       }
   
-      /* #show-map {
-        display: block;
-        text-align: center;
-      } */
-  
       .nav-tabs {
         display: none;
       }
@@ -239,7 +221,6 @@ ul {
   
       .nav-link.nav-bottom {
         font-size: 0.8rem;
-        /* text-align: center; */
       }
   
       a.active {
@@ -260,13 +241,6 @@ ul {
         padding-top: 5px !important;
       }
   
-  
-      .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
-        width: 100%;
-      }
-  
-   
-    
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
       #map-interface {
