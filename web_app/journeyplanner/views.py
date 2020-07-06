@@ -84,16 +84,8 @@ def prediction(request):
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-<<<<<<< HEAD
-        print("result", result)
-    return HttpResponse(result)
-||||||| 11dcce9
-        print("result", result)
-    return HttpResponse("")
-=======
         # print("result", result)
     return HttpResponse("")
->>>>>>> error_fixing
 
 @csrf_exempt
 def planner(request):
