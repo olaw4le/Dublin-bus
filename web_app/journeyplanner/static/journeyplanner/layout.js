@@ -18,9 +18,10 @@ $(document).ready(function () {
         navId = navId.split("-")[0];
         console.log(navId);
         
-        $("#map-interface-content").load("/" + navId);
-        console.log("cur time: " + currentDateTime());
-        $(".datetime").val(currentDateTime());
+        $("#map-interface-content").load("/" + navId, function(){
+            console.log("cur time: " + currentDateTime());
+            $(".datetime").val(currentDateTime());
+        });
     });
 
     // Load routeplanner by default when page is loaded
