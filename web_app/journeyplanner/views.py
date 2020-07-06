@@ -96,12 +96,17 @@ def prediction(request):
     return HttpResponse(result)
 =======
         print("result", result)
+<<<<<<< HEAD
     return HttpResponse("")
 >>>>>>> trying to get results showing again
+=======
+    return HttpResponse(result)
+>>>>>>> fixing code after it was broken
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
+<<<<<<< HEAD
         data= json.loads(request.POST["data"])
 
         prediction=[] #list to store the calculated predictions
@@ -183,3 +188,7 @@ def list_latlng(request):
 
 
 
+=======
+        data= request.POST["bus_details"]
+        return HttpResponse("")
+>>>>>>> fixing code after it was broken
