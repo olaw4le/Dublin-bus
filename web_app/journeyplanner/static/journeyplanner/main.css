@@ -102,6 +102,13 @@ html, body {
     margin-left: 20px;
   }
 
+  /* date and time pickers on desktop screens */
+  .row.datetime {
+    width: 220px;
+    margin-left: 7px;
+    padding-left: 0px;
+  }
+
   /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {

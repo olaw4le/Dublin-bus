@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    $( "#datepicker-tab2" ).datepicker();
+    $('.timepicker').timepicker();
+  });
+
 //the code from w3 school 
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
