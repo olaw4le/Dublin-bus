@@ -75,7 +75,7 @@ def prediction(request):
         direction=request.POST["direction"]
         print("time from views.py", time)
 
-        result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
+        # result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
         
 
 
@@ -84,16 +84,21 @@ def prediction(request):
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
+<<<<<<< HEAD
         print("result", result)
     return HttpResponse(result)
+||||||| 11dcce9
+        print("result", result)
+    return HttpResponse("")
+=======
+        # print("result", result)
+    return HttpResponse("")
+>>>>>>> error_fixing
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-        # data= request.POST["bus_details"]
-
-        print(request.POST)
-
-    return HttpResponse("")
+        data= request.POST["bus_details"]
+        return HttpResponse("")
 
 
