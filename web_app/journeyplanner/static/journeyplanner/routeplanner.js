@@ -1,7 +1,23 @@
 
 $(document).ready(function () {
-  $( "#datepicker" ).datepicker();
-  $('.timepicker').timepicker();
+
+  // jquery datepicker
+  // var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  $( "#datepicker-tab1" ).datepicker({
+    dateFormat: 'dd-mm-yy' //need to switch order to send to backend yyyy-mm-dd
+  }).datepicker("setDate", new Date());
+
+  // jquery timepicker
+  $('.timepicker').timepicker({
+    timeFormat: 'HH:mm',
+    minTime: '05:00',
+    interval: 30,
+    scrollbar: true,
+    // defaultTime: new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
+    startTime: '05:00',
+    dynamic: true
+
+  });
 });
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
@@ -266,10 +282,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 }
 
 
-
-
-
-
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
   
@@ -305,10 +317,7 @@ $(function () {
     $(".form-area").show();
     $("#map-interface").css("top", "0px");
     $("#route-results").hide();
-    //$("#route-results").attr
   });
-
-
 });
 
 

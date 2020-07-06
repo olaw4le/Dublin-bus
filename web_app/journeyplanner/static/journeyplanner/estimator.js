@@ -1,6 +1,22 @@
 $(document).ready(function () {
-    $( "#datepicker-tab2" ).datepicker();
-    $('.timepicker').timepicker();
+
+    // jquery datepicker
+    // var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    $( "#datepicker-tab2" ).datepicker({
+      dateFormat: 'dd-mm-yy' //need to switch order to send to backend yyyy-mm-dd
+    }).datepicker("setDate", new Date());
+  
+    // jquery timepicker
+    $('.timepicker').timepicker({
+      timeFormat: 'HH:mm',
+      minTime: '05:00',
+      interval: 30,
+      scrollbar: true,
+      // defaultTime: new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
+      startTime: '05:00',
+      dynamic: true
+  
+    });
   });
 
 //the code from w3 school 
@@ -218,10 +234,19 @@ $("#estimator-sub").change(stops);
 $(function () {
   
     $('#stop-to-stop-go').on('click', function () {
-        var datetimeValue = $("#datetime-tab2").val();
-        var arr = datetimeValue.split('T');
-        var date = arr[0];
-        var input_time = arr[1];
+        if ($(window).width() < 992) {
+            var datetimeValue = $("#datetime-tab2").val();
+            var arr = datetimeValue.split('T');
+            var date = arr[0];
+            var input_time = arr[1];
+        } else {
+            var datetimeValue = $("#datepicker-tab2").val();
+            console.log("desktop date: " + datetimeValue);
+            var input_time = $('.timepicker-tab1').val();
+            console.log("desktop time: " + input_time);
+            
+        }
+        
 
          // convert time to seconds since midnight
         // console.log("time: "+ input_time);
