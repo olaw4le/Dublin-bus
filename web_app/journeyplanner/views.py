@@ -101,6 +101,7 @@ def planner(request):
            route= data[i]["route_number"]
            date = request.POST["date"]
            time = request.POST["time"]
+           direction=1
 
            #departure stops lat and lng
            departure=data[i]["departure_latlng"]
@@ -124,7 +125,7 @@ def planner(request):
            arrival=find_stop(route_list,(arrival_lat,arrival_lng))
 
         #    #use the maachine learning module to calculate prediction 
-           calculation=linear_regression.generate_preditction(route, origin, arrival, date, time, direction)
+           calculation=linear_regression.generate_preditction(route, origin, arrival, date, time, diection)
 
         #    #adding the calculated value to the list that will be sent back
            prediction.append(calculation)
