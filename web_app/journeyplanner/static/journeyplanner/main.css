@@ -35,7 +35,7 @@ html, body {
   }
 
   .navbar {
-    background-color: #3A86FF;
+    background-color: #1561AD;
   }
 
   .navbar-brand {
@@ -74,8 +74,8 @@ html, body {
   }
 
   .nav-tabs .nav-link.active {
-    background-color: #3A86FF;
-    opacity: 0.9;
+    background-color: #1561AD;
+    opacity: 0.8;
     border-radius: 15px;
     color: white;
   } 
@@ -124,6 +124,34 @@ html, body {
     padding-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  /* overall journey length on results tab1*/
+  #journey-time { 
+    margin-left: 30px;
+    margin-bottom: 0px;
+    font-size: 1.7em;
+    font-weight: 500;
+  }
+
+  #overall-duration{
+    margin-left: 18px;
+  }
+
+  #from {
+    height: 30px;
+  }
+
+  #to {
+    height: 30px;
+  }
+
+  #on {
+    height: 30px;
+  }
+
+  .row .from {
+  height: 30px; 
   }
 
   #estimator-go {
