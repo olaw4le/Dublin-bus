@@ -79,11 +79,13 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
     transitOptions: {
       modes: ['BUS'],
       routingPreference: 'FEWER_TRANSFERS',
+      // departure_time: "17:44:2"
     }
   },
 
     // showing the response received in a text format 
     function (response, status) {
+       console.log(response)
    
       // markers for each step.
       if (status === 'OK') {
@@ -125,6 +127,30 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         journeysteps = response.routes[0].legs[0].steps;
 
         var direction_text = $("#direction");
+        var journey_list=[]
+        var bus_details=[]; //array to store each bus journey 
+
+
+        var datetimeValue = $("#datetime-tab1").val();
+        var arr = datetimeValue.split('T');
+        var date1 = arr[0];
+        var input_time = arr[1];
+
+      
+
+         // convert time to seconds since midnight
+        // console.log("time: "+ input_time);
+        var timeSplit = input_time.split(':');
+        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+
+
+
+
+
+
+
+
+
 
         for (var i = 0; i < journeysteps.length; i++) {
           // the route distance
@@ -151,11 +177,14 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var arrival_latlng;
           var departure_latlng;
 
-          var bus_details=[]; //array to store each bus journey 
-          var journey_steps={}; //array for each bus steps in the journey
+          
 
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
+
+
+          
+
          
 
           //picture
@@ -180,6 +209,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           }
 
           else if (travelMode == "TRANSIT") {
+            var journey_steps={}; //dictionary for each bus steps in the journey
             distance = journeysteps[i].distance.text;
             //duration=journeysteps[i].duration.text
             instruction = journeysteps[i].instructions;
@@ -202,28 +232,41 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             journey_steps["num_stops"]=num_stops;
             journey_steps["departure_latlng"]=departure_latlng;
             journey_steps["arrival_latlng"]=arrival_latlng;
+            
 
-        // Append the dictionary made for each bus
-        bus_details.push(journey_steps);
+            // Append the dictionary made for each bus
+             bus_details.push(journey_steps)
 
-        //turning the list into a json
-        bus_details=JSON.stringify(bus_details);
+        
+             
+             data=JSON.stringify(bus_details);
 
-        // sending a post request to the server
-        $.ajax({
-        type:"POST",
-        url: "planner/",
-        data:{bus_details},
-              sucess:function(){
-                  alert("successfully posted")
+             console.log(bus_details)
+        
 
-              }
-    }) 
-
-            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
+    
+        direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
 
           };
         };
+       ;
+        
+        //turning the list into a json
+        
+
+
+               // sending a post request to the server
+               $.ajax({
+                type:"POST",
+                url: "planner/",
+                data:{data,
+                  date:date1,
+                  time:timeSeconds,},
+                      sucess:function(){
+                          alert("successfully posted")
+        
+                      }
+            }) 
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);

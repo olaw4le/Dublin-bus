@@ -4,6 +4,8 @@ from django.http import HttpResponse
 import sys
 sys.path.append("..")
 from data_analytics import linear_regression
+from .route_details import stops_latlng, find_stop
+import json
 
 
 #showing how data can be added to a html page
@@ -90,7 +92,51 @@ def prediction(request):
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-        data= request.POST["bus_details"]
-        return HttpResponse("")
+        data= json.loads(request.POST["data"])
+
+        prediction=[] #list to store the calculated predictions
+      
+        buses =len(data)
+        for i in range(0,buses):
+           route= data[i]["route_number"]
+           date = request.POST["date"]
+           time = request.POST["time"]
+
+           #departure stops lat and lng
+           departure=data[i]["departure_latlng"]
+           x=departure.split(",")
+           departure_lat = float(x[0])
+           departure_lng = float(x[1])
+
+           #arrival stops lat and lng 
+           arrival=data[i]["arrival_latlng"]
+           x=arrival.split(",")
+           arrival_lat = float(x[0])
+           arrival_lng = float(x[1])
+        
+
+           route_number=route.upper()
+           # getting the suggested route file 
+           route_list=stops_latlng(route_number)
+
+           #getting the orging and destination stop number using the vincenty formular 
+           origin=find_stop(route_list,(departure_lat,departure_lng))
+           arrival=find_stop(route_list,(arrival_lat,arrival_lng))
+
+        #    #use the maachine learning module to calculate prediction 
+           calculation=linear_regression.generate_preditction(route, origin, arrival, date, time, direction)
+
+        #    #adding the calculated value to the list that will be sent back
+           prediction.append(calculation)
+
+
+           print("origin",date)
+           print("Arrival",time)
+
+    print(prediction)
+
+       
+        
+    return HttpResponse("")
 
 
