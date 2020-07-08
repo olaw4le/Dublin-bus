@@ -35,7 +35,7 @@ html, body {
   }
 
   .navbar {
-    background-color: #1561AD;
+    background-color: #4484CE;
   }
 
   .navbar-brand {
@@ -74,7 +74,7 @@ html, body {
   }
 
   .nav-tabs .nav-link.active {
-    background-color: #1561AD;
+    background-color: #4484CE;
     opacity: 0.8;
     border-radius: 15px;
     color: white;
@@ -161,6 +161,12 @@ html, body {
   .btn-secondary {
     padding: 5px;
     margin-left: 20px;
+  }
+
+  #edit-journey {
+    margin-left: 130px;
+    height: 40px;
+    margin-bottom: 7px;
   }
 
 
