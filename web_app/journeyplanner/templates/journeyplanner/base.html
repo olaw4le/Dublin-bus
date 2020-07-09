@@ -18,16 +18,22 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
-             
-  
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <!-- jquery timepicker -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-      
-    
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
+      <!-- <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/confetti.css"> -->
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
       <link rel="stylesheet" type="text/css" href="{% static 'journeyplanner/main.css' %}">
-    
-      <!-- <script src=" {% static 'journeyplanner/datetime_picker/jquery.datetimepicker.js' %}"></script> -->
       <script src=" {% static 'journeyplanner/layout.js' %}"></script>
     
     {% if title %}
@@ -46,8 +52,8 @@
 <!-- mobile screen bottom nav -->
 <nav class="fixed-bottom navbar-light bg-light justify-content-center">
   <div class="navbar navbar-light bg-light nav-justified w-100 text-center" id="bottom-nav-div">
-      <a class="nav-item nav-link load-interface nav-bottom" id="routeplanner-nav"><i class="fa fa-road fa-2x"></i><br><div class="word">Route Plan</div></a>
-      <a class="nav-item nav-link load-interface nav-bottom" id="allroutes-nav"><i class="fa fa-bus fa-2x"></i><br><div class="word">All Stops</div></a>
+      <a class="nav-item nav-link load-interface nav-bottom" id="routeplanner-nav"><i class="fa fa-road fa-2x"></i><br><div class="word">Route Planner</div></a>
+      <a class="nav-item nav-link load-interface nav-bottom" id="allroutes-nav"><i class="fa fa-bus fa-2x"></i><br><div class="word">stop-to-stop</div></a>
       <a class="nav-item nav-link load-interface nav-bottom" id="leap-nav"><i class="fas fa-frog fa-2x"></i><br><div class="word">Leap Card</div></a> 
       <a class="nav-item nav-link load-interface nav-bottom" id="tourist-nav"><i class="fa fa-camera-retro fa-2x"></i><br><div class="word">Tourist</div></a>
   </div>

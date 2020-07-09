@@ -161,6 +161,16 @@ html, body {
   #from {
     height: 30px;
   }
+  /* date and time pickers on desktop screens */
+  .row.datetime {
+    width: 220px;
+    margin-left: 7px;
+    padding-left: 0px;
+  }
+
+  .mobile-dt {
+    display: none;
+  }
 
   #to {
     height: 30px;
@@ -177,6 +187,11 @@ html, body {
   #estimator-go {
     padding-top: 10px;
   }
+ 
+
+ 
+  
+
 
   .btn-secondary {
     padding: 5px;
@@ -314,6 +329,14 @@ ul {
       .word {
         padding-top: 5px !important;
       }
+
+      .desktop-dt {
+        display:none;
+      }
+  
+      .mobile-dt{
+        display: block;
+      }
   
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
@@ -329,7 +352,8 @@ ul {
       }
     }
   }
-  
+
+
   .ui-autocomplete {
     position: absolute;
     top: 100%;

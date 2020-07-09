@@ -1,3 +1,28 @@
+
+$(document).ready(function () {
+
+ // flatpickr date https://flatpickr.js.org/options/
+  $( "#datepicker-tab1" ).flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: new Date(),
+    minDate: "today"
+  });
+
+  // flatpickr time
+  $('#timepicker-tab1').flatpickr({
+    enableTime: true,
+    defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
+  });
+
+});
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -261,21 +286,45 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 }
 
 
-
-
-
-
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
   
   $('#go').on('click', function () {
-    var datetimeValue = $("#datetime-tab1").val();
-    var arr = datetimeValue.split('T');
-    var date = arr[0];
-    var time = arr[1];
- 
-    console.log("date: " + date);
-    console.log("time: "+ time);
+    var time, date
+    // use different variables for date and time depending on screen size
+    if ($(window).width() < 992) {
+      var datetimeValue = $("#datetime-tab1").val();
+      var arr = datetimeValue.split('T');
+      date = arr[0];
+      console.log("mobile date: " + date);
+      time = arr[1];
+  } else {
+      var dateValue = $("#datepicker-tab1").val();
+      console.log("desktop date: " + dateValue);
+      time = $('#timepicker-tab1').val();
+      console.log("desktop time: " + time);
+    
+
+    // show date and time inputs on desktop results page for better user experience
+    // default date and time are those selected by user on input page
+  $( "#datepicker-tab1-results-date" ).flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: dateValue,
+    minDate: "today"
+  });
+
+  $('#datepicker-tab1-results-time').flatpickr({
+    enableTime: true,
+    defaultDate: time,
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
+  });
+  }
 
     // convert time to seconds since midnight
     console.log("time: "+ time);
@@ -299,10 +348,7 @@ $(function () {
     $(".form-area").show();
     $("#map-interface").css("top", "0px");
     $("#route-results").hide();
-    //$("#route-results").attr
   });
-
-
 });
 
 
