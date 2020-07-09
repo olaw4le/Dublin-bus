@@ -1,23 +1,26 @@
 $(document).ready(function () {
 
-    // jquery datepicker
-    // var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    $( "#datepicker-tab2" ).datepicker({
-      dateFormat: 'dd-mm-yy' //need to switch order to send to backend yyyy-mm-dd
-    }).datepicker("setDate", new Date());
+    // flatpickr  flatpickr date https://flatpickr.js.org/options/
+    $( "#datepicker-tab2" ).flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: 'yy-m-d',
+        defaultDate: new Date(),
+        minDate: "today"
+        });
   
-    // jquery timepicker
-    $('.timepicker').timepicker({
-      timeFormat: 'HH:mm',
-      minTime: '05:00',
-      interval: 30,
-      scrollbar: true,
-      // defaultTime: new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
-      startTime: '05:00',
-      dynamic: true
-  
+    // flatpickr time
+    $('#timepicker-tab2').flatpickr({
+    enableTime: true,
+    defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
     });
-  });
+
+});
 
 //the code from w3 school 
 function autocomplete(inp, arr) {
@@ -243,23 +246,37 @@ $(function () {
             var input_time = arr[1];
         } else {
             var dateValue = $("#datepicker-tab2").val();
-            var dateElements = dateValue.split('-');
-            var year, month, date;
-            year = dateElements[2];
-            month = dateElements[1];
-            date = dateElements[0];
-            date = year + '-' + month + '-' + date;
-            console.log("desktop date: " + date);
+            console.log("desktop date: " + dateValue);
             var input_time = $('#timepicker-tab2').val();
             console.log("desktop time: " + input_time);
-            
+
+
+    // show date and time inputs on desktop results page for better user experience
+    // default date and time are those selected by user on input page
+                $( "#datepicker-tab2-results-date" ).flatpickr({
+                    altInput: true,
+                    altFormat: "F j, Y",
+                    dateFormat: 'yy-m-d',
+                    defaultDate: dateValue,
+                    minDate: "today"
+                });
+
+                $('#datepicker-tab2-results-time').flatpickr({
+                    enableTime: true,
+                    defaultDate: input_time,
+                    dateFormat: 'H:i',
+                    noCalendar: true,
+                    time_24hr: true,
+                    minTime: "05:00",
+                    minuteIncrement: 1
+                });            
         }
         
         // convert time to seconds since midnight
         // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-        //console.log(timeSeconds);
+        console.log(timeSeconds);
      
       // sending a post request to the server
       $("#stop-to-stop-estimate").html("Loading result..");

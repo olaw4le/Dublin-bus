@@ -20,6 +20,7 @@ $(document).ready(function () {
     minTime: "05:00",
     minuteIncrement: 1
   });
+
 });
 
 //using google map autocomplete for the address          
@@ -303,8 +304,27 @@ $(function () {
       time = $('#timepicker-tab1').val();
       console.log("desktop time: " + time);
     
-  }
 
+    // show date and time inputs on desktop results page for better user experience
+    // default date and time are those selected by user on input page
+  $( "#datepicker-tab1-results-date" ).flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: dateValue,
+    minDate: "today"
+  });
+
+  $('#datepicker-tab1-results-time').flatpickr({
+    enableTime: true,
+    defaultDate: time,
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
+  });
+  }
 
     // convert time to seconds since midnight
     console.log("time: "+ time);
