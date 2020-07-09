@@ -108,112 +108,41 @@ function stops() {
           $("#estimator-destination").html(To);
 
         }
-    }
-
-    // var myLatLng = { lat: -25.363, lng: 131.044 };
-
-    // var map = new google.maps.Map(document.getElementById("map"), {
-    //   zoom: 4,
-    //   center: myLatLng
-    // });
-  
-    // var origin_marker = new google.maps.Marker({
-    //   position: myLatLng,
-    //   map: map,
-    //   title: "Hello World!"
-    // });
-
-    // var destination_marker = new google.maps.Marker({
-    //     position: myLatLng,
-    //     map: map,
-    //     title: "Hello World!"
-    //   });    
+    }  
 }
 
 function origin_marker(){
     var origin_stop=$("#estimator-origin").val()
     var route=sel= $("#estimator-route").val();
-
+    
+    
     $.ajax({
         type:"POST",
-        url: "find_latlng/",
-        data:{stop:origin_stop,
-              route:route}
+        url:"list_latlng/",
+        data:{route:route}
       })
 
       .done(function(response){
           console.log("successfully posted");
           var x=JSON.parse(response)
-          var lat=x.lat
-          var lng=x.lng
 
-    
-    var myLatLng = { lat: lat, lng: lng };
+          var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center:{ lat: 53.350140, lng: -6.266155 }
+          })
 
-    var map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 16,
-      center: myLatLng
-    });
-  
-    var origin_marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: "Stop" + origin_stop
-    });
+          for (key in x) { 
+           var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(x[key].lat, x[key].lng),
+              map: map,
+              title: "Stop" + key,
+              
+
+             
+            });
+            }
       });
-
 }
-
-
-
-function destination_marker(){
-    var destination_stop=$("#estimator-destination").val()
-    var route=sel= $("#estimator-route").val();
-
-    $.ajax({
-        type:"POST",
-        url: "find_latlng/",
-        data:{stop:destination_stop,
-              route:route}
-      })
-
-      .done(function(response){
-          console.log("successfully posted");
-          var x=JSON.parse(response)
-          var lat=x.lat
-          var lng=x.lng
-
-    
-    var myLatLng = { lat: lat, lng: lng };
-
-    var map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 16,
-      center: myLatLng
-    });
-  
-    var origin_marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: "Stop" + destination_stop
-    });
-
-      });
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // event listner to porpulate the route dropdown list)

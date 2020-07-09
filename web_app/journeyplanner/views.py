@@ -102,6 +102,7 @@ def planner(request):
            date = request.POST["date"]
            time = request.POST["time"]
            direction=1
+           route_number=route.upper()
 
            #departure stops lat and lng
            departure=data[i]["departure_latlng"]
@@ -111,9 +112,9 @@ def planner(request):
 
            #arrival stops lat and lng 
            arrival=data[i]["arrival_latlng"]
-           x=arrival.split(",")
-           arrival_lat = float(x[0])
-           arrival_lng = float(x[1])
+           y=arrival.split(",")
+           arrival_lat = float(y[0])
+           arrival_lng = float(y[1])
         
 
            route_number=route.upper()
@@ -124,21 +125,20 @@ def planner(request):
            origin=find_stop(route_list,(departure_lat,departure_lng))
            arrival=find_stop(route_list,(arrival_lat,arrival_lng))
 
-        #    #use the maachine learning module to calculate prediction 
-           calculation=linear_regression.generate_preditction(route, origin, arrival, date, time, diection)
+           print("calculating",route, origin, arrival, date, time, direction)
 
-        #    #adding the calculated value to the list that will be sent back
+           #use the maachine learning module to calculate prediction 
+           calculation=linear_regression.generate_preditction(route_number, origin, arrival, date, time, direction)
+
+            #adding the calculated value to the list that will be sent back
            prediction.append(calculation)
 
-
-           print("origin",date)
-           print("Arrival",time)
-
-    print(prediction)
+           
+        print("prediction",prediction)
 
        
         
-    return HttpResponse("")
+    return HttpResponse(json.dumps(prediction))
     
 
 @csrf_exempt
@@ -155,6 +155,22 @@ def find_latlng(request):
         print(result)
         
     return HttpResponse(json.dumps(result))
+
+
+
+@csrf_exempt
+def list_latlng(request):
+    if request.method == "POST":
+         route=request.POST["route"]
+         route_number=route.upper()
+
+        # getting the suggested route file 
+         route_list=stops_latlng(route_number)
+    return HttpResponse(json.dumps(route_list))
+
+
+
+
 
 
 

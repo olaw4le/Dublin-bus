@@ -217,8 +217,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
-            departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
-            arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
+            arrival_latlng=journeysteps[i].transit.arrival_stop.location.lat()+ ',' + journeysteps[i].transit.arrival_stop.location.lng();
+            departure_latlng=journeysteps[i].transit.departure_stop.location.lat()+ ',' + journeysteps[i].transit.departure_stop.location.lng();
 
             //trimming the instruction text
             instruction = instruction.split(',');
@@ -261,12 +261,14 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 url: "planner/",
                 data:{data,
                   date:date1,
-                  time:timeSeconds,},
-                      sucess:function(){
+                  time:timeSeconds,}
+                })
+                  .done(function(response){
+                        var x=JSON.parse(response)
+                        console.log(x)
                           alert("successfully posted")
         
-                      }
-            }) 
+                      })
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
