@@ -97,48 +97,47 @@ def planner(request):
         prediction=[] #list to store the calculated predictions
       
         buses =len(data)
-        for i in range(0,buses):
-           route= data[i]["route_number"]
-           date = request.POST["date"]
-           time = request.POST["time"]
-           direction=1
-           route_number=route.upper()
+        route= data["route_number"]
+        date = request.POST["date"]
+        time = request.POST["time"]
+        direction=1
+        route_number=route.upper()
 
-           #departure stops lat and lng
-           departure=data[i]["departure_latlng"]
-           x=departure.split(",")
-           departure_lat = float(x[0])
-           departure_lng = float(x[1])
+        #departure stops lat and lng
+        departure=data["departure_latlng"]
+        x=departure.split(",")
+        departure_lat = float(x[0])
+        departure_lng = float(x[1])
 
-           #arrival stops lat and lng 
-           arrival=data[i]["arrival_latlng"]
-           y=arrival.split(",")
-           arrival_lat = float(y[0])
-           arrival_lng = float(y[1])
+        #arrival stops lat and lng 
+        arrival=data["arrival_latlng"]
+        y=arrival.split(",")
+        arrival_lat = float(y[0])
+        arrival_lng = float(y[1])
         
 
-           route_number=route.upper()
-           # getting the suggested route file 
-           route_list=stops_latlng(route_number)
+        route_number=route.upper()
+        # getting the suggested route file 
+        route_list=stops_latlng(route_number)
 
-           #getting the orging and destination stop number using the vincenty formular 
-           origin=find_stop(route_list,(departure_lat,departure_lng))
-           arrival=find_stop(route_list,(arrival_lat,arrival_lng))
+        #getting the orging and destination stop number using the vincenty formular 
+        origin=find_stop(route_list,(departure_lat,departure_lng))
+        arrival=find_stop(route_list,(arrival_lat,arrival_lng))
 
-           print("calculating",route, origin, arrival, date, time, direction)
+        print("calculating",route, origin, arrival, date, time, direction)
 
-           #use the maachine learning module to calculate prediction 
-           calculation=linear_regression.generate_preditction(route_number, origin, arrival, date, time, direction)
+        #use the maachine learning module to calculate prediction 
+        calculation=linear_regression.generate_preditction(route_number, origin, arrival, date, time, direction)
 
-            #adding the calculated value to the list that will be sent back
-           prediction.append(calculation)
+        #adding the calculated value to the list that will be sent back
+        prediction.append(calculation)
 
            
-        print("prediction",prediction)
+        print("prediction",calculation)
 
        
         
-    return HttpResponse(json.dumps(prediction))
+    return HttpResponse(calculation)
     
 
 @csrf_exempt

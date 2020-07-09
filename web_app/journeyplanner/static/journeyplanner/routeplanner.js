@@ -149,7 +149,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
 
 
-
+        var prediction=0;
 
 
         for (var i = 0; i < journeysteps.length; i++) {
@@ -232,43 +232,36 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             journey_steps["num_stops"]=num_stops;
             journey_steps["departure_latlng"]=departure_latlng;
             journey_steps["arrival_latlng"]=arrival_latlng;
+          
+          //turning the data to sent into json
+            data=JSON.stringify(journey_steps);
+
             
 
-            // Append the dictionary made for each bus
-             bus_details.push(journey_steps)
+            // sending a post request to the server
+            $.ajax({
+              type:"POST",
+              url: "planner/",
+              data:{data,
+                date:date1,
+                time:timeSeconds,}
+              })
+                .done(function(response){
+                      prediction= response
+                      console.log(prediction)
+                        alert("successfully posted")
+                      
+                        console.log(prediction)
 
-        
-             
-             data=JSON.stringify(bus_details);
+                    })
+                    
 
-             console.log(bus_details)
-        
-
-    
-        direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
+                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
+      
 
           };
         };
        ;
-        
-        //turning the list into a json
-        
-
-
-               // sending a post request to the server
-               $.ajax({
-                type:"POST",
-                url: "planner/",
-                data:{data,
-                  date:date1,
-                  time:timeSeconds,}
-                })
-                  .done(function(response){
-                        var x=JSON.parse(response)
-                        console.log(x)
-                          alert("successfully posted")
-        
-                      })
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
