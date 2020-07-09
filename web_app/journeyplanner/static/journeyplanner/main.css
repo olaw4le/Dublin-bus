@@ -30,7 +30,7 @@ html, body {
     width: 480px;
     height: 550px;
     border: none;
-    /* overflow-y: scroll; */
+    overflow-y: auto;
 
   }
 
@@ -271,7 +271,7 @@ ul {
         bottom: 0px;
         width: 100%;
         height: calc(100vh - 85px);
-        overflow-x: scroll;
+        overflow-y: none;
       }
       #map-button {
         display: block;

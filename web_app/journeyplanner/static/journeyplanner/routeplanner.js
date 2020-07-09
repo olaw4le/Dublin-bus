@@ -291,7 +291,6 @@ $(function () {
     }
     $("#route-results").show();
     
-    $('#map-interface').css("overflow-y", "scroll");
 
   });
 
