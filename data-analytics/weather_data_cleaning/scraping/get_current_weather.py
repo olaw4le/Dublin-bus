@@ -3,20 +3,36 @@ import csv
 import os.path
 import sys
 import json
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv(find_dotenv())
-
-weather_api = os.environ.get("WEATHER")
+from dotenv import load_dotenv
 
 
-def get_weather_data():
+def get_weather_data(**kwargs):
     """retrieve current weather data from openweathermap.org"""
 
-    city = "Dublin,,372"                                # 372 is the ISO 3166 Country Code for Ireland
-    api_key = weather_api
+    # define valid types of request to the API
+    req_types = ["weather", "forecast"]
 
-    url = "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s" % (city, api_key)
+    # default to current weather request
+    if "req_type" in kwargs:
+        req = kwargs["req_type"]
+        if req not in req_types:
+            req = "weather"
+    else:
+        req = "weather"
+
+    if "city" in kwargs:
+        city = kwargs["city"]
+    else:
+        city = "Dublin,,372"                     # 372 is the ISO 3166 Country Code for Ireland
+
+    if "key" in kwargs:
+        api_key = kwargs["key"]
+    else:
+        print("Error: no api key supplied")
+        return False
+
+    url = "http://api.openweathermap.org/data/2.5/%s?q=%s&appid=%s" % (req, city, api_key)
+    print(url)
 
     # get weather info and convert to python dict
     response = requests.get(url)
@@ -83,10 +99,13 @@ def write_to_csv(file_path, some_dict):
             writer.writerow(some_dict)
 
 
-def main(file_path):
+def main(file_path, **kwargs):
+    load_dotenv()
+
+    weather_api = os.environ.get("WEATHER")
 
     # get & format data from openweathermaps.org
-    data = flatten_dict(get_weather_data())
+    data = flatten_dict(get_weather_data(**kwargs))
 
     # check for missing fields and populate missing fields with empty strings
     columns = ["coord_lon", "coord_lat", "weather_0_id", "weather_0_main", "weather_0_description",
@@ -105,10 +124,19 @@ def main(file_path):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) > 1:
-        out_file = sys.argv[1]
+    # check for key-word arguments from bash
+    c = 1
+    opt_args = {}
+    while c < len(sys.argv):
+        field = sys.argv[c].strip("-")
+        value = sys.argv[c + 1]
+        opt_args[field] = value
+        c += 2
+
+    if "out_file" in opt_args:
+        out_file = opt_args["out_file"]
     else:
         out_file = "openweatherdata_scraped.csv"
 
-    main(out_file)
+    main(out_file, **opt_args)
 
