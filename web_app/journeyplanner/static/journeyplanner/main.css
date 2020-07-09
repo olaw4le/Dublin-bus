@@ -24,13 +24,22 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 90px;
+    top: 100px;
     left: 50px;
     bottom: 50px;
-    width: 440px;
+    width: 480px;
     height: 550px;
+    border: none;
     /* overflow-y: scroll; */
 
+  }
+
+  .navbar {
+    background-color: #4484CE;
+  }
+
+  .navbar-brand {
+    color: white;
   }
 
    /*tabs on homepage on large screens*/
@@ -38,17 +47,61 @@ html, body {
     position: absolute;
     top: 3.5rem;
     left: 50px;
-    height: 35px;
-    width: 440px;
+    height: 50px;
+    width: 480px;
     background-color: white;
+    /* padding-left: 7px;
+    padding-right: 4px; */
+  }
+/* 
+  .tab-wrapper {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } */
+
+  .nav-tabs .nav-item {
+    width: 120px;
+    height: 37px;
+    /* padding-left: 2px;
+    padding-right:2px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    margin-top: 5px; */
+    background-color: #F5F5F5;
+    /* text-align:center; */
+    /* border-radius: 5px; */
+    
+  }
+
+  .nav-link {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 10px;
+    padding-top: 6px;
+    text-align: center;
+ 
   }
 
   .nav-tabs .nav-link {
-    padding: 6.25px;
-    border:solid 0.5px grey;
-    width: 110px;
-    text-align: center;
+    border: 0.2px solid #C0C0C0;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
   }
+
+  .nav-tabs .nav-link.active {
+    border: 0.05px solid #C0C0C0;
+    background-color: #4484CE;
+    opacity: 0.8;
+    /* border-radius: 15px; */
+    color: white;
+  } 
+
+  a .nav-item .nav-link {
+    vertical-align: middle;
+  }
+
+ 
+
 
   /* routeplanner tab */
   .form-area {
@@ -93,6 +146,34 @@ html, body {
     margin-bottom: 10px;
   }
 
+  /* overall journey length on results tab1*/
+  #journey-time { 
+    margin-left: 30px;
+    margin-bottom: 0px;
+    font-size: 1.7em;
+    font-weight: 500;
+  }
+
+  #overall-duration{
+    margin-left: 18px;
+  }
+
+  #from {
+    height: 30px;
+  }
+
+  #to {
+    height: 30px;
+  }
+
+  #on {
+    height: 30px;
+  }
+
+  .row .from {
+  height: 30px; 
+  }
+
   #estimator-go {
     padding-top: 10px;
   }
@@ -102,99 +183,12 @@ html, body {
     margin-left: 20px;
   }
 
-  /* media queries to make interface responsive */
-  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
-  @media only screen and (max-width: 992px) {
-
-  #fullscreen-map {
-    height: calc(100vh - 85px);
-
+  #edit-journey {
+    margin-left: 130px;
+    height: 40px;
+    margin-bottom: 7px;
   }
-    #map-interface {
-      top: 0px;
-      left: 0px;
-      bottom: 0px;
-      width: 100%;
-      height: calc(100vh - 85px);
-      overflow-x: scroll;
-    }
-    #map-button {
-      display: block;
-    }
 
-    /* #show-map {
-      display: block;
-      text-align: center;
-    } */
-
-    .nav-tabs {
-      display: none;
-    }
-
-    /* mobile screen bottom nav */
-    .fixed-bottom  {
-      display: block;
-      height: 70px;
-      width: 100vw; 
-    }
-    
-    .nav-item.nav-bottom {
-      width: 20%;
-    }
-
-    .nav-link.nav-bottom {
-      font-size: 0.8rem;
-      /* text-align: center; */
-    }
-
-    a.active {
-      background-color: #A9A9A9;
-    }
-
-    #bottom-nav-div {
-      height: 70px;
-      padding: 0px;
-    }
-
-    a.nav-item.nav-link.load-interface.nav-bottom {
-      height: 70px;
-      text-align: center;
-    }
-  
-    .word {
-      padding-top: 5px !important;
-    }
-
-
-    .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
-      width: 100%;
-    }
-
- 
-  
-  /* show map interface again when screen is stretched out */
-  @media only screen and (min-width: 992px) {
-    #map-interface {
-      z-index: 1000;
-      position: absolute;
-      display: block;
-      top: 90px;
-      left: 50px;
-      bottom: 50px;
-      width: 440px;
-      height: 550px;
-    }
-  }
-}
-
-
-* {
-  box-sizing: border-box;
-}
-
-body { 
-  font: 16px Arial;  
-}
 
 /*the container must be positioned relative:*/
 .autocomplete {
@@ -255,3 +249,77 @@ ul {
   padding-left:10px;
   font-size: 0.9em;
 }
+
+/* NB: media queries to be kept at bottom of css file */
+
+  /* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+    #fullscreen-map {
+      height: calc(100vh - 85px);
+  
+    }
+      #map-interface {
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: calc(100vh - 85px);
+        overflow-x: scroll;
+      }
+      #map-button {
+        display: block;
+      }
+  
+      .nav-tabs {
+        display: none;
+      }
+  
+      /* mobile screen bottom nav */
+      .fixed-bottom  {
+        display: block;
+        height: 70px;
+        width: 100vw; 
+      }
+      
+      .nav-item.nav-bottom {
+        width: 20%;
+      }
+  
+      .nav-link.nav-bottom {
+        font-size: 0.8rem;
+      }
+  
+      a.active {
+        background-color: #A9A9A9;
+      }
+  
+      #bottom-nav-div {
+        height: 70px;
+        padding: 0px;
+      }
+  
+      a.nav-item.nav-link.load-interface.nav-bottom {
+        height: 70px;
+        text-align: center;
+      }
+    
+      .word {
+        padding-top: 5px !important;
+      }
+  
+    /* show map interface again when screen is stretched out */
+    @media only screen and (min-width: 992px) {
+      #map-interface {
+        z-index: 1000;
+        position: absolute;
+        display: block;
+        top: 90px;
+        left: 50px;
+        bottom: 50px;
+        width: 440px;
+        height: 550px;
+      }
+    }
+  }

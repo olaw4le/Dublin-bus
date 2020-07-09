@@ -2,14 +2,12 @@
 // .ready waits for DOM to be loaded before executing this function
 $(document).ready(function () {
 
-
-
     // function to populate datetime inputs with current date and time
     var currentDateTime = function(){
         var d = new Date();
         var datestring = d.getFullYear() + "-" + "0" + (d.getMonth()+1) + "-" + "0" + d.getDate() + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
         console.log("full date " + datestring);
-        $(".datetime").val(datestring);
+        return datestring;
     }
 
     // All nav items that load the interface pane have this class
@@ -21,12 +19,14 @@ $(document).ready(function () {
         console.log(navId);
         
         $("#map-interface-content").load("/" + navId);
-        currentDateTime();
+        console.log("cur time: " + currentDateTime());
+        $(".datetime").val(currentDateTime());
     });
 
     // Load routeplanner by default when page is loaded
     $("#map-interface-content").load("/routeplanner", function () {
-        currentDateTime();
+        console.log("cur time page load:" + currentDateTime());
+        $(".datetime").val(currentDateTime());
     });
 
     
