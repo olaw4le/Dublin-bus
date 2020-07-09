@@ -151,8 +151,8 @@ $("#estimator-route").on('keyup click change hover',route_list);
 // event listner to populate the origin and destination 
 $("#estimator-sub").change(stops);
 
-$("#estimator-origin").change(origin_marker);
-$("#estimator-destination").change(destination_marker);
+$("#estimator-route").change(origin_marker);
+
 
 // go button for tab 2 to show and hide results
 $(function () {
