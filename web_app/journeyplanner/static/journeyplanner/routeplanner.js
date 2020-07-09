@@ -1,24 +1,27 @@
 
 $(document).ready(function () {
 
-  // jquery datepicker
-  // var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  $( "#datepicker-tab1" ).datepicker({
-    dateFormat: 'dd-mm-yy' //need to switch order to send to backend yyyy-mm-dd
-  }).datepicker("setDate", new Date());
+ // flatpickr date https://flatpickr.js.org/options/
+  $( "#datepicker-tab1" ).flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: new Date(),
+    minDate: "today"
+  });
 
-  // jquery timepicker
-  $('.timepicker').timepicker({
-    timeFormat: 'HH:mm',
-    minTime: '05:00',
-    interval: 30,
-    scrollbar: true,
-    // defaultTime: new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
-    startTime: '05:00',
-    dynamic: true
-
+  // flatpickr time
+  $('#timepicker-tab1').flatpickr({
+    enableTime: true,
+    defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
   });
 });
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -286,26 +289,22 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
   
   $('#go').on('click', function () {
-
+    var time, date
     // use different variables for date and time depending on screen size
     if ($(window).width() < 992) {
       var datetimeValue = $("#datetime-tab1").val();
       var arr = datetimeValue.split('T');
-      var date = arr[0];
-      var input_time = arr[1];
+      date = arr[0];
+      console.log("mobile date: " + date);
+      time = arr[1];
   } else {
       var dateValue = $("#datepicker-tab1").val();
-      var dateElements = dateValue.split('-');
-      var year, month, date;
-      year = dateElements[2];
-      month = dateElements[1];
-      date = dateElements[0];
-      date = year + '-' + month + '-' + date;
-      console.log("desktop date: " + date);
-      var input_time = $('#timepicker-tab1').val();
-      console.log("desktop time: " + input_time);
+      console.log("desktop date: " + dateValue);
+      time = $('#timepicker-tab1').val();
+      console.log("desktop time: " + time);
     
   }
+
 
     // convert time to seconds since midnight
     console.log("time: "+ time);
