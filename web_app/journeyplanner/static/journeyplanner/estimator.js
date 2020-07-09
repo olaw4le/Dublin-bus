@@ -108,27 +108,112 @@ function stops() {
           $("#estimator-destination").html(To);
 
         }
-        // else if(sel_sub != key){
-        //     // the stops the selected sub-routes goes through
-        //          bus_stops = routes.stops;
-        //          direction= routes.direction
-    
-        //          // poppulating the origin and destination with the stops
-        //         for (i in bus_stops) {
-        //             To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
-    
-        //         }
-        //         // populating the inner html
-        //         $("#estimator-origin").html(To);
-        //         $("#estimator-destination").html(To);
-    
-    
-        //     }
-
-
     }
-    
+
+    // var myLatLng = { lat: -25.363, lng: 131.044 };
+
+    // var map = new google.maps.Map(document.getElementById("map"), {
+    //   zoom: 4,
+    //   center: myLatLng
+    // });
+  
+    // var origin_marker = new google.maps.Marker({
+    //   position: myLatLng,
+    //   map: map,
+    //   title: "Hello World!"
+    // });
+
+    // var destination_marker = new google.maps.Marker({
+    //     position: myLatLng,
+    //     map: map,
+    //     title: "Hello World!"
+    //   });    
 }
+
+function origin_marker(){
+    var origin_stop=$("#estimator-origin").val()
+    var route=sel= $("#estimator-route").val();
+
+    $.ajax({
+        type:"POST",
+        url: "find_latlng/",
+        data:{stop:origin_stop,
+              route:route}
+      })
+
+      .done(function(response){
+          console.log("successfully posted");
+          var x=JSON.parse(response)
+          var lat=x.lat
+          var lng=x.lng
+
+    
+    var myLatLng = { lat: lat, lng: lng };
+
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 16,
+      center: myLatLng
+    });
+  
+    var origin_marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: "Stop" + origin_stop
+    });
+      });
+
+}
+
+
+
+function destination_marker(){
+    var destination_stop=$("#estimator-destination").val()
+    var route=sel= $("#estimator-route").val();
+
+    $.ajax({
+        type:"POST",
+        url: "find_latlng/",
+        data:{stop:destination_stop,
+              route:route}
+      })
+
+      .done(function(response){
+          console.log("successfully posted");
+          var x=JSON.parse(response)
+          var lat=x.lat
+          var lng=x.lng
+
+    
+    var myLatLng = { lat: lat, lng: lng };
+
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 16,
+      center: myLatLng
+    });
+  
+    var origin_marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: "Stop" + destination_stop
+    });
+
+      });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // event listner to porpulate the route dropdown list)
@@ -136,6 +221,9 @@ $("#estimator-route").on('keyup click change hover',route_list);
 
 // event listner to populate the origin and destination 
 $("#estimator-sub").change(stops);
+
+$("#estimator-origin").change(origin_marker);
+$("#estimator-destination").change(destination_marker);
 
 // go button for tab 2 to show and hide results
 $(function () {
@@ -172,6 +260,9 @@ $(function () {
             // console.log(result);
 
         });
+
+
+
 
     // show results
         $(".form-area").hide();

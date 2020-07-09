@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import sys
 sys.path.append("..")
 from data_analytics import linear_regression
-from .route_details import stops_latlng, find_stop
+from .route_details import stops_latlng, find_stop,latlng
 import json
 
 
@@ -139,5 +139,22 @@ def planner(request):
        
         
     return HttpResponse("")
+    
+
+@csrf_exempt
+def find_latlng(request):
+    if request.method == "POST":
+        route = request.POST["route"]
+        stop_id = request.POST["stop"]
+        route_number=route.upper()
+
+        # getting the suggested route file 
+        route_list=stops_latlng(route_number)
+        result =latlng(route_list,str(stop_id))
+
+        print(result)
+        
+    return HttpResponse(json.dumps(result))
+
 
 

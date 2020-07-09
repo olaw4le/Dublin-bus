@@ -32,3 +32,12 @@ def find_stop(stopList, lat_lng):
     # Return the closest stop id to the given lat_lng
     stop = sortedList[0][0]
     return stop
+
+
+# finding the lat and lng of a stop
+def latlng(stopList,route):
+    result=stopList[route]
+    
+    return result
+
+
