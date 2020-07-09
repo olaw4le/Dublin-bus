@@ -84,16 +84,13 @@ def prediction(request):
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-        print("result", result)
+        # print("result", result)
     return HttpResponse(result)
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-        # data= request.POST["bus_details"]
-
-        print(request.POST)
-
-    return HttpResponse("")
+        data= request.POST["bus_details"]
+        return HttpResponse("")
 
 

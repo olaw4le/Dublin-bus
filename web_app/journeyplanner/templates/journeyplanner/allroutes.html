@@ -1,12 +1,15 @@
 {% load static %}
+
+ 
 <script src=" {% static 'journeyplanner/estimator.js' %}"></script>
+
 
 
 <div class="container form-area">
     <form autocomplete="off" onsubmit="return false">
-        <div class="autocomplete">
+        <div class="autocomplete" id="autocomplete">
             <label for="origin">Route:</label>
-            <input type="text" class="form-control" id="estimator-route" placeholder="Enter route">
+            <input  class="form-control" id="estimator-route" placeholder="Enter route" >
         </div>
         <div class="form-group">
             <label for="Sub">Sub Route:</label>
@@ -61,7 +64,7 @@
                     <p>On:</p>
                 </div>
                 <div class="col-6">
-                    <p id="datetime-tab2">put time and date here </p>
+                    <p id="datetime-tab">put time and date here </p>
                 </div>
             </div>
             <div class="row">
