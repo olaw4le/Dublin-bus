@@ -21,6 +21,7 @@ def construct_sql(**kwargs):
     templates = {
         "delete_all": "DELETE FROM %s",
         "select_all": "SELECT * FROM %s",
+        "select_where": "SELECT * FROM %s WHERE %s",
         "insert": "INSERT INTO %s (%s) VALUES (%s)",
         "attr_names": """SELECT column_name FROM information_schema.columns WHERE table_name = '%s' ORDER BY ordinal_position"""
     }
@@ -57,6 +58,38 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (table_name, attr_names, attr_values)
+
+        return sql_query
+
+    # if selecting with predicate
+    if query_type == "select_where":
+
+        # check that data passed as kwarg
+        if "data" not in kwargs:
+            print("Error: No data supplied for insert query")
+            return False
+
+        predicates = ""
+
+        # for item in data to be inserted;
+        # build a string containing the attribute names and attributes values
+        for key in kwargs["data"].keys():
+
+            val = kwargs["data"][key]
+
+            # place string values in single quotes
+            if type(val) is str:
+                val = "'%s'" % val
+            else:
+                val = str(val)
+
+            predicates += " %s = %s AND" % (key, val)
+
+        # remove "AND" from the end of attr_names & attr_Values
+        predicates = predicates[:-3]
+
+        # combine the query template, table name, attribute names & attribute values
+        sql_query = templates[query_type] % (table_name, predicates)
 
         return sql_query
 
