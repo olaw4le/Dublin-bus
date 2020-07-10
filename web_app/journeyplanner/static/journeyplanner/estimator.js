@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // flatpickr  flatpickr date https://flatpickr.js.org/options/
+    // flatpickr date https://flatpickr.js.org/options/
     $("#datepicker-tab2").flatpickr({
         altInput: true,
         altFormat: "F j, Y",
@@ -274,10 +274,12 @@ $(function () {
 
         if ($(window).width() < 992) {
             datetimeValue = $("#datetime-tab2").val();
+            console.log("datetime value mobile: " + datetimeValue );
             var arr = datetimeValue.split('T');
             date = arr[0];
             console.log("mobile date: " + date);
             time = arr[1];
+            console.log("mobile time: " + time);
         } else {
             var date = $("#datepicker-tab2").val();
             console.log("desktop date: " + date);
@@ -285,7 +287,8 @@ $(function () {
             console.log("desktop time: " + time);
 
             // use date and time here to make properly formatted datetimeValue for mobile
-            //datetimeValue = 0
+            datetimeValue = date + 'T' + time;
+            console.log("datetimevalue test: " + datetimeValue);
         }
         // show date and time inputs on desktop results page for better user experience
         // default date and time are those selected by user on input page
@@ -316,7 +319,7 @@ $(function () {
         });
 
 
-        //$(".datetime").val(datetimeValue);
+        $(".datetime").val(datetimeValue);
 
         // convert time to seconds since midnight
         // console.log("time: "+ input_time);
@@ -391,14 +394,9 @@ $(function () {
         $("#stop-to-stop-results").hide();
     });
 
-
-
-
-
-
-
+// call post request function when mobile datetime value changed
     $("#datetime-tab2-results").on("change", function () {
-        sendDateTimeChangePostRequest()
+        sendDateTimeChangePostRequest();
     });
 
 
@@ -408,25 +406,28 @@ $(function () {
 
 
 
-
+// these need to be the results ids??? 
 
 function sendDateTimeChangePostRequest() {
 
     if ($(window).width() < 992) {
-        datetimeValue = $("#datetime-tab2").val();
+        datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
         date = arr[0];
         console.log("mobile date: " + datetimeValue);
         time = arr[1];
     } else {
-        var date = $("#datepicker-tab2").val();
+        var date = $("#datepicker-tab2-results-date").val();
         console.log("desktop date: " + date);
-        time = $('#timepicker-tab2').val();
+        time = $('#datepicker-tab2-results-time').val();
         console.log("desktop time: " + time);
 
         // use date and time here to make properly formatted datetimeValue for mobile
-        //datetimeValue = 0
+        datetimeValue = date + 'T' + time;
     }
+    $(".datetime").val(datetimeValue);
+    $("#datepicker-tab2-results-date").val(date);
+    $("#datepicker-tab2-results-time").val(time);
 
 
     var timeSplit = time.split(':');
