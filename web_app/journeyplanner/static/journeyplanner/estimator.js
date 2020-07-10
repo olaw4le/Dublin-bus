@@ -329,7 +329,6 @@ $(function () {
         console.log(timeSeconds);
 
         // sending a post request to the server
-        $("#stop-to-stop-estimate").html("Loading result..");
         route = $("#estimator-route").val();
         origin = $("#estimator-origin").val();
         destination = $("#estimator-destination").val();
@@ -348,6 +347,7 @@ $(function () {
 
             .done(function (result) {
                 console.log("successfully posted");
+                $(".spinner-border").hide();
                 $("#stop-to-stop-estimate").html(result + " minutes");
                 // console.log(result);
 
@@ -410,6 +410,9 @@ $(function () {
 
 function sendDateTimeChangePostRequest() {
 
+    $("#stop-to-stop-estimate").hide();
+    $(".spinner-border").show();
+
     if ($(window).width() < 992) {
         datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
@@ -447,6 +450,8 @@ function sendDateTimeChangePostRequest() {
         }
     }).done(function (result) {
         console.log("successfully posted");
+        $(".spinner-border").hide();
+        $("#stop-to-stop-estimate").show();
         $("#stop-to-stop-estimate").html(result + " minutes");
         // console.log(result);
 
