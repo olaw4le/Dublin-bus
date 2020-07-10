@@ -1,1 +1,65 @@
-<p>tourist map</p>
+{% load static %}
+<script src=" {% static 'journeyplanner/touristmap.js' %}"></script>
+<div id="checkboxes">
+    <div class="form-check">
+        <p>Click to view on the map</p>
+        <input type="checkbox" class="form-check-input" id="restaurant">
+        <label class="form-check-label" for="exampleCheck1">Restaurants</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="coffee-shops">
+        <label class="form-check-label" for="exampleCheck1">Coffee Shops</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="pubs">
+        <label class="form-check-label" for="exampleCheck1">Pubs</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="museums">
+        <label class="form-check-label" for="exampleCheck1">Museums</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="art-galleries">
+        <label class="form-check-label" for="exampleCheck1">Art Galleries</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="parks">
+        <label class="form-check-label" for="exampleCheck1">Parks</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="other-attractions">
+        <label class="form-check-label" for="exampleCheck1">Other attractions</label>
+    </div>
+</div>
+<!-- input boxes for origin, destination, date and time -->
+  <div class="container form-area">
+    <form onsubmit="return false">
+        <div class="form-group">
+            <label for="origin">From:</label>
+            <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
+        </div>
+        <div class="form-group">
+            <label for="destination">To:</label>
+            <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
+        </div>
+        <div>
+            <div class="mobile-dt">
+                <label for="datetime-4">Date and Time:</label>
+                <div class="row">
+                    <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
+                </div>
+            </div>
+            <div class="desktop-dt">
+                <div class="row datetime">
+                    <label>Date:</label>
+                    <input type="text" id="datepicker-tab1">
+                </div>
+                <div class="row datetime">
+                    <label>Time:</label>
+                    <input type="text"class="timepicker" id="timepicker-tab1">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning" id="go">Go</button>
+        </div>
+    </form>
+</div>

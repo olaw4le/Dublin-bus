@@ -265,6 +265,11 @@ ul {
   font-size: 0.9em;
 }
 
+#checkboxes {
+  margin-left: 30px;
+  font-size: 1.3em;
+}
+
 
 /* media queries to be kept at bottom of css file for ease of understanding */
 
