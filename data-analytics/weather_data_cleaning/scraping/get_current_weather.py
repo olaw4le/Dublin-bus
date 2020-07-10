@@ -31,7 +31,7 @@ def get_weather_data(**kwargs):
         print("Error: no api key supplied")
         return False
 
-    url = "http://api.openweathermap.org/data/2.5/%s?q=%s&appid=%s" % (req, city, api_key)
+    url = "http://api.openweathermap.org/data/2.5/%s?q=%s&appid=%s&units=metric" % (req, city, api_key)
     print(url)
 
     # get weather info and convert to python dict
