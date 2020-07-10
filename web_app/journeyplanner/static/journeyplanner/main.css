@@ -337,7 +337,8 @@ ul {
       .mobile-dt{
         display: block;
       }
-  
+
+     
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
       #map-interface {
