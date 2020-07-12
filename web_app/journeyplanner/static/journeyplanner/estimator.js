@@ -29,7 +29,7 @@ $( "#estimator-route" ).autocomplete({
 
   });
 
-
+  
 // function to populate the sub_routes list			
 function route_list() {
 
@@ -61,6 +61,7 @@ function route_list() {
 
         //turning the into an array
         list = list.trim().split(" ");
+        result=list
 
         //popuplating the sub route select list
         for (var i = 0; i < list.length; i++) {
@@ -75,6 +76,7 @@ function route_list() {
 //getting the value of the selected sub route
 var sel_sub = "";
 var direction= ""
+var stop_list=[];
 
 // function to populate the origin and destination
 function stops() {
@@ -85,9 +87,7 @@ function stops() {
 
     // going through the sub-routes the selected route has 
     for (key in routes) {
-        console.log(routes)
-        console.log(key)
-
+   
         // if the user selected sub-route is found 
         if (sel_sub == key) {
  
@@ -96,20 +96,47 @@ function stops() {
 
             direction= routes[key].direction
 
-            console.log(direction)
 
             // poppulating the origin and destination with the stops
             for (var i = 0; i < bus_stops.length; i++) {
                 To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
 
+                stop_list.push(bus_stops[i])
+
             }
+
             // populating the inner html
           $("#estimator-origin").html(To) 
-          $("#estimator-destination").html(To);
 
         }
     }  
 }
+var index;
+    // function to populate the remaining destination stop
+    function destination(){
+        var To = "<option value=0>Stops</option>";
+
+        starting_stop=$("#estimator-origin").val()
+        console.log(starting_stop)
+        console.log(stop_list) 
+        index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
+        destination_list=stop_list.slice(index + 1) //displaying the stops after the selected stops 
+
+        console.log(destination_list)
+
+        for (var i = 0; i < destination_list.length; i++) {
+            To += "<option  value=" + destination_list[i] + ">" + destination_list[i] + "</option>";
+
+        }
+
+           // populating the inner html with the destination
+           $("#estimator-destination").html(To)
+        
+
+
+
+    }
+
 
 function origin_marker(){
     var origin_stop=$("#estimator-origin").val()
@@ -152,6 +179,7 @@ $("#estimator-route").on('keyup click change hover',route_list);
 $("#estimator-sub").change(stops);
 
 $("#estimator-route").change(origin_marker);
+$("#estimator-origin").change(destination);
 
 
 // go button for tab 2 to show and hide results
