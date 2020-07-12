@@ -45,7 +45,7 @@ def construct_sql(**kwargs):
             val = kwargs["data"][key]
 
             # place string values in single quotes
-            if type(val) is str:
+            if type(val) not in ["int", "float"]:
                 val = "'%s'" % val
             else:
                 val = str(val)
