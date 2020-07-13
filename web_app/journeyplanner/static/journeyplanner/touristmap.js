@@ -2,8 +2,64 @@ $(document).ready(function () {
 
     // https://developers.google.com/maps/documentation/javascript/places
     var dublin = { lat: 53.3155395, lng: -6.4161858 };
-    var markers = {};
 
+    // geolocation for tourists origin
+    infoWindow = new google.maps.InfoWindow;
+
+    // HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            // call geocoder function to convert coordinates to place name
+            var geocoder = new google.maps.Geocoder();
+            geocodeLatLng(geocoder, pos.lat, pos.lng);
+
+            // center map at users location
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+
+    };
+
+
+    // function to geocode coordinates into address
+    function geocodeLatLng(geocoder, lat, lng) {
+        var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        geocoder.geocode({ location: latlng }, function (results, status) {
+            if (status === "OK") {
+                if (results[0]) {
+                    // populate origin input box with address 
+                    $('#origin-tourist').val(results[0].formatted_address);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        })
+    };
+
+
+
+
+
+    var markers = {};
     // loop through checkboxes and display markers on map using data attr
     $(".tourist-check").change(function () {
         if (this.checked) {
@@ -30,7 +86,7 @@ $(document).ready(function () {
 
         }
     });
-   
+
 
     function callback(results, status, type) {
         console.log(status)
@@ -50,10 +106,10 @@ $(document).ready(function () {
 
 
     function clearMarkers(markers) {
-        $.each(markers , function(index) { 
+        $.each(markers, function (index) {
             console.log(index);
             markers[index].setMap(null);
-          });
+        });
     }
 });
 
@@ -70,6 +126,7 @@ function createMarker(place, type, icon, markerList) {
     });
 
     markerList.push(marker);
+    console.log(openingHours);
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
