@@ -1,5 +1,25 @@
 $(document).ready(function () {
 
+    // flatpickr date https://flatpickr.js.org/options/
+  $( "#datepicker-tourist" ).flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: new Date(),
+    minDate: "today"
+  });
+
+  // flatpickr time
+  $('#timepicker-tourist').flatpickr({
+    enableTime: true,
+    defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
+  });
+
     // https://developers.google.com/maps/documentation/javascript/places
     var dublin = { lat: 53.3155395, lng: -6.4161858 };
 
