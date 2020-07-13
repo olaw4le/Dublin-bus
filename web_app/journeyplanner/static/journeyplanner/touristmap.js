@@ -5,55 +5,42 @@ $(document).ready(function () {
 
     // geolocation for tourists origin
     infoWindow = new google.maps.InfoWindow;
+    var geocoder = new google.maps.Geocoder();
+
 
     // HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(function (position) {
+    //         var pos = {
+    //             lat: position.coords.latitude,
+    //             lng: position.coords.longitude
+    //         };
 
-            // call geocoder function to convert coordinates to place name
-            var geocoder = new google.maps.Geocoder();
-            geocodeLatLng(geocoder, pos.lat, pos.lng);
+    //         // call geocoder function to convert coordinates to place name
+    //         var address = geocodeLatLng(geocoder, pos.lat, pos.lng);
+    // $('#origin-tourist').val(address);
 
-            // center map at users location
-            map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
+    //         // center map at users location
+    //         map.setCenter(pos);
+    //     }, function () {
+    //         handleLocationError(true, infoWindow, map.getCenter());
+    //     });
+    // } else {
+    //     // Browser doesn't support Geolocation
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    // }
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+    // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    //     infoWindow.setPosition(pos);
+    //     infoWindow.setContent(browserHasGeolocation ?
+    //         'Error: The Geolocation service failed.' :
+    //         'Error: Your browser doesn\'t support geolocation.');
+    //     infoWindow.open(map);
 
-    };
+    // };
 
 
-    // function to geocode coordinates into address
-    function geocodeLatLng(geocoder, lat, lng) {
-        var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-        geocoder.geocode({ location: latlng }, function (results, status) {
-            if (status === "OK") {
-                if (results[0]) {
-                    // populate origin input box with address 
-                    $('#origin-tourist').val(results[0].formatted_address);
-                } else {
-                    window.alert("No results found");
-                }
-            } else {
-                window.alert("Geocoder failed due to: " + status);
-            }
-        })
-    };
+
 
 
 
@@ -94,13 +81,11 @@ $(document).ready(function () {
 
             markers[type] = []
             for (var i = 0; i < results.length; i++) {
-                console.log(results[i]);
-                console.log(results[i].icon);
                 var icon = results[i].icon
-                createMarker(results[i], type, icon, markers[type]);
+                var rating = results[i].rating;
+                console.log(results[i]);
+                createMarker(results[i], type, icon, markers[type], rating);
             }
-            console.log(markers[type]);
-            console.log(markers);
         }
     }
 
@@ -111,26 +96,58 @@ $(document).ready(function () {
             markers[index].setMap(null);
         });
     }
-});
 
-// create markers
-function createMarker(place, type, icon, markerList) {
-    var icon = {
-        url: icon,
-        scaledSize: new google.maps.Size(30, 30),
+
+    // create markers
+    function createMarker(place, type, icon, markerList, rating) {
+        var lat = place.geometry.location.lat();
+        var lng = place.geometry.location.lng();
+
+        var icon = {
+            url: icon,
+            scaledSize: new google.maps.Size(30, 30),
+        }
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: icon,
+            position: place.geometry.location,
+        });
+
+
+        markerList.push(marker);
+
+        // show name of place when mouse hovers over  marker
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.setContent(place.name + "<br>Rating: " + rating);
+            infowindow.open(map, this);
+        });
+
+
+        // populate destination input box with location clicked on map
+        google.maps.event.addListener(marker, 'click', function () {
+            // convert lat and long to address using geocoder
+            var address = geocodeLatLng(geocoder, lat, lng);
+            $('#destination-tourist').val(address);
+
+        });
     }
-    var marker = new google.maps.Marker({
-        map: map,
-        icon: icon,
-        position: place.geometry.location,
-    });
 
-    markerList.push(marker);
-    console.log(openingHours);
+    // function to geocode coordinates into address
+    function geocodeLatLng(geocoder, lat, lng) {
+        var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        geocoder.geocode({ location: latlng }, function (results, status) {
+            if (status === "OK") {
+                if (results[0]) {
+                    // populate origin input box with address 
+                    $('#origin-tourist').val(results[0].formatted_address);
+                    return results[0].formatted_address;
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        })
+    };
 
-    google.maps.event.addListener(marker, 'click', function () {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-    });
-}
-
+});
