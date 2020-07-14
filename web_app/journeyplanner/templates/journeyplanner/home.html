@@ -2,11 +2,7 @@
 {% load static %}
 <!-- want the code below to override the content block in base.html -->
 {% block content %}
-       <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap"
-        async defer>
-        </script>
-        <script src=" {% static 'journeyplanner/map.js' %}"></script>
+
 
 <div id="fullscreen-map">
     <div id="map"></div>
@@ -28,7 +24,11 @@
   <!-- <div id="show-map"><p>Show Map</p></div> -->
 </div>
 
-
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap"
+async defer>
+</script>
+<script src=" {% static 'journeyplanner/map.js' %}"></script>
 
 
 {% endblock content %}

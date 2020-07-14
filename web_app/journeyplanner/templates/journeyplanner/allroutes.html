@@ -28,6 +28,7 @@
         </div>
 
         <div class="form-group">
+            <!-- mobile datetime picker -->
             <div class="mobile-dt">
                 <label for="datetime-4">Date and Time:</label>
                 <div class="row">
@@ -35,6 +36,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- desktop date and time -->
         <div class="desktop-dt">
             <div class="row datetime">
                 <label>Date:</label>
@@ -57,37 +60,54 @@
             <div class="row results">
             </div>
             <div class="row from">
-                <div class="col-6">
+                <div class="col-4">
                     <p>From:</p>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <p id="origin-tab2"></p>
                 </div>
             </div>
             <div class="row from">
-                <div class="col-6">
+                <div class="col-4">
                     <p>To:</p>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <p id="destination-tab2"></p>
                 </div>
             </div>
-            <div class="row from">
-                <div class="col-6">
+
+            <!-- desktop date and time -->
+            <div class="row from desktop-dt">
+                <div class="col-4">
                     <p>On:</p>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <p><input type="text" id="datepicker-tab2-results-date"></p>
                 </div>
             </div>
-            <div class="row from">
-                <div class="col-6">
+            <div class="row from desktop-dt">
+                <div class="col-4">
                     <p>At:</p>
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <p><input type="text" id="datepicker-tab2-results-time"></p>
                 </div>
             </div>
+
+            <!-- mobile date and time -->
+            <div class="mobile-dt">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="datetime-4">On:</label>
+                    </div>
+                    <div class="col-8 results-dt-mob">
+                        <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab2-results" value="">
+                    </div>
+                </div>
+            </div>
+    
+
+
             <div class="row">
             <button type="submit" class="btn btn-primary" id="edit-journey-tab2">Edit journey details</button>
             </div>
@@ -95,6 +115,13 @@
         <div class="card results">
             <div class="row">
                 <div class="col-6" id="placeholder">Estimated Journey Time:</div>
+
+                <!-- show loader while user waiting for result -->
+                <div class="spinner-border text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  
+                <!-- show result -->
                 <div class="col-6" id="stop-to-stop-estimate"></div>
             </div>
             
