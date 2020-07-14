@@ -146,21 +146,29 @@ $(document).ready(function () {
         // populate destination input box with location clicked on map
         google.maps.event.addListener(marker, 'click', function () {
             // convert lat and long to address using geocoder
-            var address = geocodeLatLng(geocoder, lat, lng);
+            var address = geocodeLatLng(geocoder, lat, lng, "dest");
+            console.log(address);
             $('#destination-tourist').val(address);
 
         });
     }
 
     // function to geocode coordinates into address
-    function geocodeLatLng(geocoder, lat, lng) {
+    function geocodeLatLng(geocoder, lat, lng, dest="") {
         var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
         geocoder.geocode({ location: latlng }, function (results, status) {
             if (status === "OK") {
                 if (results[0]) {
                     // populate origin input box with address 
-                    $('#origin-tourist').val(results[0].formatted_address);
-                    return results[0].formatted_address;
+                    // $('#origin-tourist').val(results[0].formatted_address);
+                    if (dest === "dest") {
+                        $('#destination-tourist').val(results[0].formatted_address);
+                    } else {
+                        $('#origin-tourist').val(results[0].formatted_address);
+                    }
+                    // var address = results[0].formatted_address;
+                    // console.log(results[0].formatted_address);
+                    // return address;
                 } else {
                     window.alert("No results found");
                 }
