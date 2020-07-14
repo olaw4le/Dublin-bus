@@ -179,3 +179,65 @@ $(document).ready(function () {
     };
 
 });
+
+
+// when the user click the go button, the route function runs and the results div shows
+$(function () {
+
+    $('#go-tourist').on('click', function () {
+      var time, dateValue
+      // use different variables for date and time depending on screen size
+      if ($(window).width() < 992) {
+        var dateValue = $("#datetime-tourist").val();
+        var arr = dateValue.split('T');
+        date = arr[0];
+        time = arr[1];
+      } else {
+        dateValue = $("#datepicker-tourist").val();
+        time = $('#timepicker-tourist').val();
+  
+        // show date and time inputs on desktop results page for better user experience
+        // default date and time are those selected by user on input page
+        $("#datepicker-tourist-results-date").flatpickr({
+          altInput: true,
+          altFormat: "F j, Y",
+          dateFormat: 'yy-m-d',
+          defaultDate: dateValue,
+          minDate: "today"
+        });
+  
+        $('#datepicker-tourist-results-time').flatpickr({
+          enableTime: true,
+          defaultDate: time,
+          dateFormat: 'H:i',
+          noCalendar: true,
+          time_24hr: true,
+          minTime: "05:00",
+          minuteIncrement: 1
+        });
+      }
+  
+      // convert time to seconds since midnight
+      var timeSplit = time.split(':');
+      var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+  
+      // show results and routes
+    //   routes();
+      $(".form-area").hide();
+      if ($(window).width() < 992) {
+        $("#map-interface").css("top", "300px");
+      }
+      $("#route-results-tourist").show();
+  
+  
+    });
+  
+    // add on click to edit-journey button to hide results and show journey planner
+    $('.edit-journey').on('click', function () {
+      $(".form-area").show();
+      if ($(window).width() < 992) {
+        $("#map-interface").css("top", "0px");
+      }
+      $("#route-results-tourist").hide();
+    });
+  });
