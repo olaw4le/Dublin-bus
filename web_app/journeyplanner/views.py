@@ -3,7 +3,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
 sys.path.append("..")
-from data_analytics import linear_regression
+from data_analytics import linear_regression_weather
+from data_analytics import db_interface
 
 
 #showing how data can be added to a html page
@@ -75,7 +76,7 @@ def prediction(request):
         direction=request.POST["direction"]
         print("time from views.py", time)
 
-        result = linear_regression.generate_prediction(route, origin, destination, date, time, direction)
+        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         
 
 
