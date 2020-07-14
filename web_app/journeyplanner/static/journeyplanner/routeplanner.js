@@ -113,10 +113,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
       // markers for each step.
       if (status === 'OK') {
 
-        staringAddress = response.routes[0].legs[0].start_address;
-
-        endingAddress = response.routes[0].legs[0].end_address;
-
         //trimming the origin address
         startingAddress = response.routes[0].legs[0].start_address;
         address1 = startingAddress.split(',');
@@ -334,10 +330,10 @@ $(function () {
       $("#map-interface").css("top", "400px");
       $('#map').on('click', function () {
         $("#map-interface").css("top", "700px");
-    });
-    $('#map-interface').on('click', function () {
+      });
+      $('#map-interface').on('click', function () {
         $("#map-interface").css("top", "400px");
-    });
+      });
     }
     $("#route-results").show();
 

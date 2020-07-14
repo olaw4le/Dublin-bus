@@ -297,6 +297,8 @@ ul {
 }
 
 
+
+
 /* media queries to be kept at bottom of css file for ease of understanding */
 
 /* media queries to make interface responsive */
@@ -314,7 +316,7 @@ ul {
       #map-interface {
         top: 0px;
         left: 0px;
-        bottom: 0px;
+        bottom: 70px;
         width: 100%;
         height: calc(100vh - 85px);
         overflow-y: none;
@@ -328,7 +330,7 @@ ul {
       }
   
       /* mobile screen bottom nav */
-      .fixed-bottom  {
+      .fixed-bottom {
         display: block;
         height: 70px;
         width: 100vw; 
@@ -368,6 +370,7 @@ ul {
       .mobile-dt{
         display: block;
       }
+
   
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
