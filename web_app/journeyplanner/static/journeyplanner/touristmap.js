@@ -25,47 +25,6 @@ $(document).ready(function () {
 // https://developers.google.com/maps/documentation/javascript/places
 var dublin = { lat: 53.3155395, lng: -6.4161858 };
 
-// geolocation for tourists origin
-infoWindow = new google.maps.InfoWindow;
-var geocoder = new google.maps.Geocoder();
-var ending_lat;
-var ending_lng;
-
-// the below geolocation commented out so map doesn't move to france - uncomment to try in dublin
-
-// HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
-if (navigator.geolocation) {
-    console.log("inside if");
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-
-        // call geocoder function to convert coordinates to place name
-        geocodeLatLng(geocoder, pos.lat, pos.lng);
-        //  $('#origin-tourist').val(address);
-
-        // center map at users location
-        map.setCenter(pos);
-    }, function () {
-        handleLocationError(true, infoWindow, map.getCenter());
-    });
-} else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-
-};
-
-
 var markers = {};
 
 // loop through checkboxes and display markers on map using data attr
@@ -149,6 +108,61 @@ function createMarker(place, type, icon, markerList, rating) {
     });
 }
 
+
+// geolocation for tourists origin
+infoWindow = new google.maps.InfoWindow;
+var geocoder = new google.maps.Geocoder();
+var ending_lat;
+var ending_lng;
+var starting_lat;
+var starting_lng;
+var geolocation = false;
+
+// the below geolocation commented out so map doesn't move to france - uncomment to try in dublin
+
+// HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
+
+$('#geolocation-tourist').on('click', function(){
+    geolocation = true;
+    console.log(geolocation);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            starting_lat = pos.lat;
+            console.log(starting_lat);
+            starting_lng = pos.lng;
+            console.log(starting_lng);
+    
+            // call geocoder function to convert coordinates to place name
+            geocodeLatLng(geocoder, pos.lat, pos.lng);
+            //  $('#origin-tourist').val(address);
+    
+            // center map at users location
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+    
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    
+    };
+
+})
+
+
 // function to geocode coordinates into address
 function geocodeLatLng(geocoder, lat, lng, dest = "") {
     var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
@@ -174,20 +188,26 @@ function geocodeLatLng(geocoder, lat, lng, dest = "") {
 
 
 // add auto-complete option to origin in case user doesn't allow geolocation
-var input1 = document.getElementById('origin-tourist');
-var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
-origin = new google.maps.places.Autocomplete(input1, options);
+if (!geolocation) {
+    var input1 = document.getElementById('origin-tourist');
+    var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+    origin = new google.maps.places.Autocomplete(input1, options);
+}
+
 
 // The routes function that shows the route 
 function routes_tourist() {
     var markerArray = [];
 
-    //getting the lat and lng of the input address 
-    var starting = origin.getPlace();
+    if (! geolocation) {
+        //getting the lat and lng of the input address 
+        var starting = origin.getPlace();
 
-    //starting address latitude
-    var starting_lat = starting.geometry.location.lat();
-    var starting_lng = starting.geometry.location.lng();
+        //starting address latitude
+        var starting_lat = starting.geometry.location.lat();
+        var starting_lng = starting.geometry.location.lng();
+    }
+
 
     // Create a map and center it on starting point
     var map = new google.maps.Map(document.getElementById('map'), {
