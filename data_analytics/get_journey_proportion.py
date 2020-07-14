@@ -39,8 +39,8 @@ def stops_on_journey(start, end, seq):
     return seq[start_index, end_index + 1]
 
 
-def segments_on_journey(seq):
-    """return list of segments on passed route-stop-sequence"""
+def segments_from_stops(seq):
+    """return list of segments on passed ordered route-stop-sequence"""
 
     segments = []
 
@@ -49,3 +49,5 @@ def segments_on_journey(seq):
             segments.append("%d-%d" % (seq[i - 1], seq[i]))
 
     return segments
+
+
