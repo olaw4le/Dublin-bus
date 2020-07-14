@@ -18,7 +18,7 @@ port = os.getenv("port")
 sequence = ()
 
 
-def stops_on_route(route):
+def stops_on_route(route, main=False, direction=1):
     """query the database return a sequence of all stops on a given sub-route"""
 
     # create sql query
@@ -26,7 +26,14 @@ def stops_on_route(route):
 
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
-    return response[0][1][route]["stops"]
+
+    if main:
+        # return the 'main' sub-route in the passed direction
+        for sub_route in response[0][1].keys():
+            if (response[0][1][sub_route]["main"] == True) and (response[0][1][sub_route]["direction"] == direction):
+                return response[0][1][sub_route]["stops"]
+    else:
+        return response[0][1][route]["stops"]
 
 
 def stops_on_journey(start, end, seq):
@@ -49,5 +56,3 @@ def segments_from_stops(seq):
             segments.append("%d-%d" % (seq[i - 1], seq[i]))
 
     return segments
-
-
