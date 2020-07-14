@@ -51,11 +51,6 @@ $(document).ready(function () {
             $("#map-interface").css("top", "0px")
         }
     });
-
-
-
-
-
 });
 ;
 
@@ -65,6 +60,10 @@ $(window).resize(function () {
         $("#map-interface").show();
         $("#show-map").html("Show Map");
         $("#map-interface").css("top", "");
+
+        if ($('#tourist-nav').hasClass("active")) {
+            $("#map-interface").css("top", "0px");
+        }
     }
 });
 
