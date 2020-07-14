@@ -13,10 +13,14 @@ $(document).ready(function () {
     // When clicked the ID of the clicked element is checked and the
     // appropriate html is loaded and put in the interface
     $(".load-interface").click(function () {
-        navId = $(this).attr('id');
-        navId = navId.split("-")[0];
+        $('.nav-bottom').removeClass("active");
+        navIdFull = $(this).attr('id');
+        navId = navIdFull.split("-")[0];
 
         $("#map-interface-content").load("/" + navId, function () {
+            console.log("id: " + navIdFull);
+            console.log("id bottom: " + '#' + navId + '-nav');
+            $('#' + navId + '-nav').addClass("active");
             $(".datetime").val(currentDateTime());
         });
     });
