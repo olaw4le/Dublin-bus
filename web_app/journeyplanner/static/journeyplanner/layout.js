@@ -32,6 +32,8 @@ $(document).ready(function () {
 
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function () {
+        $('#map').off('click');
+        $('#map-interface').off('click');
         $('.nav-bottom').removeClass("active");
         navId = $(this).attr('id');
         $('#' + navId).addClass("active");
@@ -49,6 +51,10 @@ $(document).ready(function () {
             $("#map-interface").css("top", "0px")
         }
     });
+
+
+
+
 
 });
 ;
