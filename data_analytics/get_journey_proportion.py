@@ -1,3 +1,15 @@
+import db_interface as db
+import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+database = os.getenv("database")
+user = os.getenv("user")
+password = os.getenv("password")
+host = os.getenv("host")
+port = os.getenv("port")
+
 # 1. find segments in journey
 # 2. query database for segment proportions
 # 3. return sum of proportions
@@ -7,11 +19,16 @@ sequence = ()
 
 
 def stops_on_route(route):
-    """return a sequence of all stops on a given route"""
-    pass
+    """query the database return a sequence of all stops on a given sub-route"""
+
+    # create sql query
+    sql = db.construct_sql(table_name="routes", query_type="select_where", data={"ID": route.split("_")[0]})
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+    return response[0][1][route]["stops"]
 
 
-# select only stop numbers for this journey
 def stops_on_journey(start, end, seq):
     """return all stops on a given route-sequence between a
         start and end start (including the start & end stop)"""
