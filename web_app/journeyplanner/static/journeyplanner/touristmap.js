@@ -237,7 +237,9 @@ $(function () {
     $('.edit-journey').on('click', function () {
         $("#checkboxes").show();
         $(".form-area").show();
-        $("#map-interface").css("top", "500px");
+        if ($(window).width() < 992) {
+            $("#map-interface").css("top", "500px");
+        }
         $("#route-results-tourist").hide();
     });
 });

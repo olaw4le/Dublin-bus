@@ -33,8 +33,14 @@ $(document).ready(function () {
         $('#' + navId).addClass("active");
 
         // show map on input view of tourist map
-        if (navId === "tourist-nav") {
+        if (navId === "tourist-nav" && $(window).width() < 992) {
             $("#map-interface").css("top", "500px");
+            $('#map').on('click', function () {
+                $("#map-interface").css("top", "700px");
+            });
+            $('#map-interface').on('click', function () {
+                $("#map-interface").css("top", "400px");
+            });
         } else {
             $("#map-interface").css("top", "0px")
         }
