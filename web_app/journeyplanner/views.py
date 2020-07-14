@@ -3,9 +3,14 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
 sys.path.append("..")
+<<<<<<< HEAD
 from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
+=======
+from data_analytics import linear_regression_weather
+from data_analytics import db_interface
+>>>>>>> minor changes trying to get it working with django
 
 
 #showing how data can be added to a html page
@@ -79,10 +84,14 @@ def prediction(request):
         print("time from views.py", time)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
 =======
         result = linear_regression.generate_prediction(route, origin, destination, date, time, direction)
 >>>>>>> trying to get results showing again
+=======
+        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+>>>>>>> minor changes trying to get it working with django
         
 
 
