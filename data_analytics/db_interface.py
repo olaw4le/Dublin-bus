@@ -1,6 +1,6 @@
 """define functions for querying a postgreSQL database"""
 
-import psycopgs as ps
+import psycopg2 as ps
 
 
 def construct_sql(**kwargs):
