@@ -71,10 +71,8 @@ function routes() {
 
 
   // Create a map and center it on starting point
-  var map = new google.maps.Map(document.getElementById('map'), {
-    //          zoom: 14,
-    center: { lat: starting_lat, lng: starting_lng }
-  });
+  const center = new google.maps.LatLng(starting_lat, starting_lng);
+  map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
   var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });

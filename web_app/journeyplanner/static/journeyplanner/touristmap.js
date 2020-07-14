@@ -66,13 +66,11 @@ function callback(results, status, type) {
     }
 }
 
-
 function clearMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
     });
 }
-
 
 // create markers
 function createMarker(place, type, icon, markerList, rating) {
@@ -102,12 +100,10 @@ function createMarker(place, type, icon, markerList, rating) {
     google.maps.event.addListener(marker, 'click', function () {
         // convert lat and long to address using geocoder
         var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
-        console.log(address);
         $('#destination-tourist').val(address);
 
     });
 }
-
 
 // geolocation for tourists origin
 infoWindow = new google.maps.InfoWindow;
@@ -121,10 +117,8 @@ var geolocation = false;
 // the below geolocation commented out so map doesn't move to france - uncomment to try in dublin
 
 // HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
-
-$('#geolocation-tourist').on('click', function(){
+$('#geolocation-tourist').on('click', function () {
     geolocation = true;
-    console.log(geolocation);
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
@@ -133,14 +127,11 @@ $('#geolocation-tourist').on('click', function(){
             };
 
             starting_lat = pos.lat;
-            console.log(starting_lat);
             starting_lng = pos.lng;
-            console.log(starting_lng);
-    
+
             // call geocoder function to convert coordinates to place name
             geocodeLatLng(geocoder, pos.lat, pos.lng);
-            //  $('#origin-tourist').val(address);
-    
+
             // center map at users location
             map.setCenter(pos);
         }, function () {
@@ -150,18 +141,15 @@ $('#geolocation-tourist').on('click', function(){
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-    
+
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
             'Error: The Geolocation service failed.' :
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
-    
     };
-
 })
-
 
 // function to geocode coordinates into address
 function geocodeLatLng(geocoder, lat, lng, dest = "") {
@@ -194,12 +182,16 @@ if (!geolocation) {
     origin = new google.maps.places.Autocomplete(input1, options);
 }
 
-
-// The routes function that shows the route 
+// show route on map
 function routes_tourist() {
-    var markerArray = [];
 
-    if (! geolocation) {
+    // clear tourist markers from map
+    for (var type in markers) {
+        clearMarkers(markers[type]);
+    }
+
+
+    if (!geolocation) {
         //getting the lat and lng of the input address 
         var starting = origin.getPlace();
 
@@ -208,12 +200,9 @@ function routes_tourist() {
         var starting_lng = starting.geometry.location.lng();
     }
 
-
-    // Create a map and center it on starting point
-    var map = new google.maps.Map(document.getElementById('map'), {
-        //          zoom: 14,
-        center: { lat: starting_lat, lng: starting_lng }
-    });
+    // center map at starting point
+    const center = new google.maps.LatLng(starting_lat, starting_lng);
+    map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
     var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
@@ -228,11 +217,6 @@ function routes_tourist() {
 
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
-
-    // First, remove any existing markers from the map.
-    for (var i = 0; i < markerArray.length; i++) {
-        markerArray[i].setMap(null);
-    }
 
     // Retrieve the start and end locations and create a DirectionsRequest using
     // Bus directions.
@@ -262,26 +246,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 address2 = endingAddress.split(',');
                 address2 = address2[0];
 
-                //getting the value of the user selected time
-                // var time = $("#datetime-tourist").val();
-
-                // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
-
-                // dateArr = time.split('T');
-                // date = dateArr[0];
-                // dateElements = date.split('-');
-                // year = dateElements[0];
-                // month = dateElements[1];
-                // date = dateElements[2];
-                // dateToDisplay = date + "-" + month + "-" + year;
-
-                // time = dateArr[1];
-
                 // fill journey details into summary results
                 $("#origin-tab1").html(address1);
                 $("#destination-tab1").html(address2);
-                // $("#datetime-tab").html(dateToDisplay + ", " + time);
-
 
                 journeysteps = response.routes[0].legs[0].steps;
 
@@ -355,8 +322,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         instruction = instruction.split(',');
                         instruction = instruction[0];
 
-
-
                         journey_steps["route_number"] = Route_number;
                         journey_steps["arrival_stop"] = arrival_stop;
                         journey_steps["departure_stop"] = departure_stop;
@@ -411,7 +376,6 @@ function showSteps(directionResult, markerArray, stepDisplay, map) {
     }
 }
 
-
 function attachInstructionText(stepDisplay, marker, text, map) {
     google.maps.event.addListener(marker, 'click', function () {
         // Open an info window when the marker is clicked on, containing the text
@@ -420,8 +384,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
         stepDisplay.open(map, marker);
     });
 }
-
-
 
 
 // when the user click the go button, the route function runs and the results div shows
