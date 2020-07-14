@@ -1,6 +1,7 @@
 import pandas as pd
 import pickle
 import json
+import math
 import requests, json
 import urllib.request
 from datetime import datetime
@@ -14,20 +15,14 @@ from sklearn.linear_model import LinearRegression
 import warnings
 warnings.filterwarnings('ignore')
 
+
+
+
+
+
 def get_weather_from_db():
-    """
-    returns a tuple of the 'current' weather data from out postgres database.
-    returned values:
-    date: datetime (may return a tuple of ints)
-    timezone offset: int
-    temp: float
-    feels_like (temp): float
-    wind_speed: float
-    wind_deg (direction): int (in range 0:360)
-    weather_main: string
-    weather_description: string
-    rain_1h: float
-    """
+
+    """returns a tuple of the 'current' weather data from out postgres database."""
 
     # load environment
     database="postgres"
@@ -41,91 +36,154 @@ def get_weather_from_db():
     data = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
     return data[0]
-def time_group_function(row):
-            time_group_departure = []
-    #for row in test['TIME']:
-            #row = int(row)
-            if row < 0:
-                    print ("Error - negative time stamp")
-    
-            elif row <= 3600 or (row > 86400 and row <= 90000):
-                    time_group_departure.append('0')
-            elif row > 3600 and row <= 7200 or (row > 90000 and row <= 93600) :
-                    time_group_departure.append('1')
-            elif row > 7200 and row <= 10800:
-                    time_group_departure.append('2')
-            elif row >10800 and row <= 14400:
-                    time_group_departure.append('3')
-            elif row > 14400 and row <= 18000:
-                    time_group_departure.append('4')
-            
-            elif row > 18000 and row <= 21600:
-                    time_group_departure.append('5')
-            elif row > 21600 and row <=25200:
-                    time_group_departure.append('6')
-            elif row > 25200 and row <= 27000:
-                    time_group_departure.append('7')
-            elif row > 27000 and row <= 28800:
-                    time_group_departure.append('8')
-            elif row > 28800 and row <= 30600:
-                    time_group_departure.append('9')
-            
-            elif row > 30600 and row <= 32400:
-                    time_group_departure.append('10')
-            elif row > 32400 and row <= 36000:
-                    time_group_departure.append('11')
-            elif row > 36000 and row <= 39600:
-                    time_group_departure.append('12')
-            elif row > 39600 and row <= 43200:
-                    time_group_departure.append('13')
-            elif row > 43200 and row <= 46800:
-                    time_group_departure.append('14')
-            
-            elif row > 46800 and row <= 50400:
-                    time_group_departure.append('15')
-            elif row > 50400 and row <= 54000:
-                    time_group_departure.append('16')    
-            elif row > 54000 and row <= 57600:
-                    time_group_departure.append('17')
-            elif row > 57600 and row <= 59400:
-                    time_group_departure.append('18')
-            elif row > 59400 and row <= 61200:
-                    time_group_departure.append('19')
-    
-            elif row > 61200 and row <= 63000:
-                    time_group_departure.append('20')
-            elif row > 63000 and row <= 64800:
-                    time_group_departure.append('21')
-            elif row > 64800 and row <= 66600:
-                    time_group_departure.append('22')
-            elif row > 66600 and row <= 68400:
-                    time_group_departure.append('23')
-            elif row > 68400 and row <= 72000:
-                    time_group_departure.append('24')
-    
-            elif row > 72000 and row <= 75600:
-                    time_group_departure.append('25')
-            elif row > 75600 and row <= 79200:
-                    time_group_departure.append('26')
-            elif row > 79200 and row <= 82800:
-                    time_group_departure.append('27')
-            elif row > 82800 and row <= 86400:
-                    time_group_departure.append('28')
 
-            return time_group_departure[0]
+
+
+
+def time_group_function(row):
+
+        """given a time in seconds after midnight, returns a "time_group". a time_group is a portion of the day.
+
+        We have split the day into 29 portions.
+        These portions are 60 minutes at off peak travel times and 30 minutes during peak times"""
+
+        time_group_departure = []
+        if row < 0:
+                print ("Error - negative time stamp")
+        #from 00:00 to 01:00
+        elif row <= 3600 or (row > 86400 and row <= 90000):
+                time_group_departure.append('0')
+        #from 01:00 to 02:00
+        elif row > 3600 and row <= 7200 or (row > 90000 and row <= 93600) :
+                time_group_departure.append('1')
+        #from 02:00 to 03:00
+        elif row > 7200 and row <= 10800:
+                time_group_departure.append('2')
+        #from 03:00 to 04:00
+        elif row >10800 and row <= 14400:
+                time_group_departure.append('3')
+        #from 04:00 to 05:00
+        elif row > 14400 and row <= 18000:
+                time_group_departure.append('4')
+        
+        #from 05:00 to 06:00
+        elif row > 18000 and row <= 21600:
+                time_group_departure.append('5')
+        #from 06:00 to 07:00
+        elif row > 21600 and row <=25200:
+                time_group_departure.append('6')
+        #from 07:00 to 07:30
+        elif row > 25200 and row <= 27000:
+                time_group_departure.append('7')
+        #from 07:30 to 08:00
+        elif row > 27000 and row <= 28800:
+                time_group_departure.append('8')
+        #from 08:00 to 08:30
+        elif row > 28800 and row <= 30600:
+                time_group_departure.append('9')
+        #from 08:30 to 09:00
+        elif row > 30600 and row <= 32400:
+                time_group_departure.append('10')
+        #from 09:00 to 10:00
+        elif row > 32400 and row <= 36000:
+                time_group_departure.append('11')
+        #from 10:00 to 11:00
+        elif row > 36000 and row <= 39600:
+                time_group_departure.append('12')
+        #from 11:00 to 12:00
+        elif row > 39600 and row <= 43200:
+                time_group_departure.append('13')
+        #from 12:00 to 13:00
+        elif row > 43200 and row <= 46800:
+                time_group_departure.append('14')
+        
+        #from 13:00 to 14:00
+        elif row > 46800 and row <= 50400:
+                time_group_departure.append('15')
+        #from 14:00 to 15:00
+        elif row > 50400 and row <= 54000:
+                time_group_departure.append('16')
+        #from 15:00 to 16:00    
+        elif row > 54000 and row <= 57600:
+                time_group_departure.append('17')
+        #from 16:00 to 16:30
+        elif row > 57600 and row <= 59400:
+                time_group_departure.append('18')
+        #from 16:30 to 17:00
+        elif row > 59400 and row <= 61200:
+                time_group_departure.append('19')
+
+        #from 17:00 to 17:30
+        elif row > 61200 and row <= 63000:
+                time_group_departure.append('20')
+        #from 17:30 to 18:00
+        elif row > 63000 and row <= 64800:
+                time_group_departure.append('21')
+        #from 18:00 to 18:30
+        elif row > 64800 and row <= 66600:
+                time_group_departure.append('22')
+        #from 18:30 to 19:00
+        elif row > 66600 and row <= 68400:
+                time_group_departure.append('23')
+        #from 19:00 to 20:00
+        elif row > 68400 and row <= 72000:
+                time_group_departure.append('24')
+
+        #from 20:00 to 21:00
+        elif row > 72000 and row <= 75600:
+                time_group_departure.append('25')
+        #from 21:00 to 22:00
+        elif row > 75600 and row <= 79200:
+                time_group_departure.append('26')
+        #from 22:00 to 23:00
+        elif row > 79200 and row <= 82800:
+                time_group_departure.append('27')
+        #from 23:00 to 24:00
+        elif row > 82800 and row <= 86400:
+                time_group_departure.append('28')
+
+        return time_group_departure[0]
 
 def get_active_columns(test):
+
+    """Returns a list of the categorical columns in a given test dataframe that are "positive".
+
+    For example the test_dataframe fed to the pickle might have columns for the categorical feature "DAYOFWEEK" but in any given
+    instance of the dataframe only one of those 7 will be positive. If the day in question is a Monday then DAYOFWEEK_0 will be "positive" 
+    and the other six will be "negative". The same for weather_main, weather_description, MONTH and TIME_GROUP"""
+
     active_columns = []
+
+    #for each column in the dataframe...
     for column in test:
+        #...get a string of the "result" of the column - ie. "broken clouds" or "12" and then...
         ending_raw = str(list(test[column].unique()))
+
+        #...use a series of nonsense variables to remove unwanted characters and get an "ending"
         fee = ending_raw.replace("[", '')
         fi = fee.replace("'", '')
         ending_final = fi.replace("]", '')
+
+        #append that "ending" to the string of that column title to get a string that mimics the format of the one hot encoding variables
         string = str(column) + "_" + ending_final
+
+        #append that string to the list 
         active_columns.append(string)
+        
+    #return the list       
     return active_columns
 
 def generate_test_dataframe(route, direction, date, time):
+
+    """Returns a dataframe with the user entered trip details if given the route, direction, date and time
+    
+    This function is called from the generate_predictions function and in turn calls the get_weather_from_db function, 
+    the time_group_function  and the get_active_columns function
+    The list of columns in the dataframe varies per route, and the list of columns is stored in a json format on the database
+    Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
+    are added to a temporary dataframe.
+    The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
+    
     #get weather from database
     weather = get_weather_from_db()
 
@@ -135,205 +193,224 @@ def generate_test_dataframe(route, direction, date, time):
     main = weather[6]
     description = weather[7]
     wind_speed = weather[4]
-    # in m/s
     wind_deg = weather[5]
     rain = weather[8]
-    #create empty dataframe with correct headings
-    
+
+
+    #create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
     f = open('/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/result_templates.json',) 
-  
-    # returns JSON object as  
-    # a dictionary 
     templates = json.load(f) 
     template_name = str(route) + "_" + str(direction)
     features = templates[template_name]
-    #print(features)
+    #make a single row to contain the test data and put 0 in every column.
     row = [0]*len(features)
-
+    #create the dataframe
     test_frame = pd.DataFrame([row],columns=features)
 
     
-    #pop my user entered data into a dataframe
+    #now forget about the test dataframe for a while and pop my user entered data into a temporary dataframe...
     data = {"DAYOFSERVICE":[date], "TIME":[time]}
-    test = pd.DataFrame(data)
+    temp_dataframe = pd.DataFrame(data)
 
-    #add in the weather
+    #...add in the categorical features from the weather api request...
+    temp_dataframe['weather_main'] = main
+    temp_dataframe['weather_description'] = description
+
+    #...converting date to date format from string
+    date_list = []
+    for row in temp_dataframe['DAYOFSERVICE']:
+            x = datetime.strptime(row, '%Y-%m-%d')
+            date_list.append(x)
+
+    #add that date in date format to the temporary dataframe...
+    temp_dataframe['DAYOFSERVICE'] = date_list
+
+    #...creating month and day of the week feature from that date...
+    temp_dataframe['MONTH'] = temp_dataframe['DAYOFSERVICE'].dt.month
+    temp_dataframe['DAYOFWEEK'] = temp_dataframe['DAYOFSERVICE'].dt.dayofweek
+
+
+    #...creating Time Group Feature from the time....
+    time_group_departure = time_group_function(time)
+    temp_dataframe['TIME_GROUP'] = time_group_departure
+    
+    
+    #...drop the date and time features we don't need... 
+    temp_dataframe = temp_dataframe.drop(columns=['DAYOFSERVICE', 'TIME'])
+    
+    #remember that test dataframe we created at the beginning... well, now we...
+    #use the get_active_columns function to figure out the names of the categorical columns in the test dataframe that need to be 
+    #encoded to 1 (instead of 0) and then...
+    active_columns = get_active_columns(temp_dataframe)
+    
+    #... itterate through this one line test dataframe and if the column is in the list of active columns...
+    # ...assign the value of that column at index 0 (because there will only ever be one line) as 1
+    for column, row in test_frame.items():
+        if column in active_columns:
+                row.iloc[0] = 1
+
+    #add the continuous features directly to the test dataframe
     test_frame['temp']= temp
     test_frame['feels_like'] = feels_like
     test_frame['wind_speed'] = wind_speed
     test_frame['wind_deg'] = wind_deg
     test_frame['rain'] = rain
-    test['weather_main'] = main
-    test['weather_description'] = description
-
-    #converting date to date format from string
-    date_list = []
-
-    for row in test['DAYOFSERVICE']:
-            x = datetime.strptime(row, '%Y-%m-%d')
-            date_list.append(x)
-
-    test['DAYOFSERVICE'] = date_list
-
-    #creating month and day of the week feature
-    test['MONTH'] = test['DAYOFSERVICE'].dt.month
-    test['DAYOFWEEK'] = test['DAYOFSERVICE'].dt.dayofweek
-
-
-    #Creating Time Group Feature
-    time_group_departure = time_group_function(time)
-
-
-    test['TIME_GROUP'] = time_group_departure
     
     
-    #drop the date and time features we don't need
-
-    test = test.drop(columns=['DAYOFSERVICE', 'TIME'])
-    active_columns = []
-
-    active_columns = get_active_columns(test)
-    
-
-    for word in active_columns:
-        if active_columns in list(test_frame.columns):
-            test_frame[column] = [1]
-    
+    #and return the test dataframe to the pickled linear regression
     return test_frame
 
+def get_indices(startstop, endstop, dictionary, order_segment_list):
 
-def get_proportion(route, direction, startstop, endstop, weekday, month, time_group):
-        days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
-        months = {1: "January", 2: "Febuary", 3: "March", 4:"April", 5:"May", 6:"June", 7:"July", 8:"August", 9:"September", 10:"October", 11:"November", 12:"December"}
-        #call proportions file
-        proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
-        file_path = '/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/Proportions_files/' + proportions_name
+    """Returns the indices of the users boarding and alighting stop in an ordered list of the stops on that route.
+    
+    In this code the dictionary in question will be a dictionary with stop segments as keys and the proportion of the total journey
+    that this stop represents"""
 
-        f = open(file_path) 
-        # returns JSON object as  
-        # a dictionary 
-        proportions_json = json.load(f)
-        proportions_json1 = proportions_json['Day_of_week']
-        weekday_json = proportions_json1[days[weekday]]
-        month_json = weekday_json[months[month]]
-        time_group_json = month_json[str(time_group)]
-        stats = time_group_json['stats']
-        proportions = stats['proportions']
-        #print(proportions)
+    indices = []
+    for key, value in dictionary.items():
+        #split the key into the two stop numbers that form it
+        dict_stops = key.split("_")
+        #if the first stop number is the users boarding stop...
+        if dict_stops[0] == str(startstop):
+            #its the start index so add it to the list
+            start_index = order_segment_list.index(key)
+            indices.append(start_index)
+        #if the second stop number is the users alighting stop...
+        if dict_stops[1] == str(endstop):
+            #its the end index so add it to the list
+            end_index = order_segment_list.index(key)
+            indices.append(end_index)
+    #return the list      
+    return indices
 
-        #call the ordered list
-        proportion = 0
-        temp = startstop
-        for key, value in proportions.items():
-             x = key.split("_")
-             print(x[0])
-             if x[0] == str(temp):
-                proportion += value
-                temp = x[1]
-                if temp == str(endstop):
-                        print(proportion)
+def segment_calculation(startstop, endstop, dictionary):
+
+    """ """
+    
+    total = 0
+    count = 0
+    
+    
+    order_segment_list = []
+    #this part uses the dictionary keys in the order they occur in this dictionary at this point in time to create a list of the segments in order.
+    #I am of course aware that order in dictionaries can't be relied upon, but it doesn't really matter in this case, as it's only being used to itterate through itself
+    #I needed the exact list as it is in this dictionary, now, rather than using the master list of ordered stops to protect against missing segments.
+    order_segments_dict = (dictionary.keys())
+    for i in order_segments_dict:
+        order_segment_list.append(i)
+        
+    #get the indices of the users start and end stop in the above list
+    indices = get_indices(startstop, endstop, dictionary, order_segment_list)
+    
+    #
+    for i in range(indices[0], indices[1]+1):
+        value = dictionary[order_segment_list[i]]
+        #this is to handle the odd NaN value in our proporitons datasets. NaNs occur at an average incidence of 0.12% in the data.
+        if math.isnan(value):
+            pass #if a NaN is present we simply delete that segment from calculations as if it didn't exist, so there will be a small loss of accuracy
+        else: total += value
+    
+    return total
+
+def quickanddirty(route, direction, startstop, endstop):
+        """Returns proportion of the total journey that the user takes simply as percentage of how many of the stops on the route they travelled
+        
+        I don't like this function, because I don't see the point of training a linear regression model, and then using a blunt object like this to 
+        allocate the proportion. It is simply here as a failsafe. The main segment_calculation function contains its own checks and failsafes.
+        It can handle a NaN value in the proportions or a missed/skippedd segment... however...
+        One situation when this function may be needed is for example... the 41 bus route is 24 hours now and wasn't in 2018, so...
+        If linear regression will manage to return a 3am prediction... but the proportion function would fail as the 3am time_group is empty
+        However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate than at 6pm on a weekday"""
+
+        #get the master list of ordered stops
+        f = open('/Users/laura/Desktop/Trimester_3/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json',) 
+        ordered_stop_data = json.load(f)
+        #get the stops for the subroutes on that route as a dictionary
+        ordered_stop_data_route = ordered_stop_data[str(route)]
+
+        for key, value in ordered_stop_data_route.items():
+                #for the main (or majority subroute) in the given direction on that route...
+                if ordered_stop_data_route[key]['direction'] == direction and ordered_stop_data_route[key]['main'] == True:
+                        #find how many stops on the route, how many the user travelled, divide the later by the former
+                        main_route_stops = ordered_stop_data_route[key]['stops']
+                        main_route_length = len(main_route_stops)
+                        user_route_length = len(main_route_stops[main_route_stops.index(startstop):main_route_stops.index(endstop)+1])
+                        proportion = user_route_length/main_route_length
                         return proportion
 
+def get_proportion(route, direction, startstop, endstop, weekday, month, time_group):
 
+        """returns a proportion representing the amount of the total bus route journey that the users journey represents
+        
+        It will first attempt to do this using calculated proportions for that day of the week, month and time_group, but will resort to 
+        a simple percentage of the amount of the stops travelled compared to the amount of stops there are"""
 
-def get_route_file(route):
-    # master dictionary of route numbers and their corresponding master files
-    master_route_dict = {"18": "Eighteen_Master.csv", "17": "Seventeen_Master.csv", "84A": "EightyFourA_Master.csv",
-                         "70D": "SeventyD_Master.csv", "84X": "EightyFourX_Master.csv",
-                         "75": "SeventyFive_Master.csv", "84": "EightyFour_Master.csv",
-                         "79A": "SeventyNineA_Master.csv", "83A": "EightyThreeA_Master.csv",
-                         "79": "SeventyNine_Master.csv", "83": "EightyThree_Master.csv",
-                         "77A": "SeventySevenA_Master.csv", "11": "Eleven_Master.csv",
-                         "77X": "SeventySevenX_Master.csv", "15A": "FifteenA_Master.csv",
-                         "76A": "SeventySixA_Master.csv", "15B": "FifteenB_Master.csv",
-                         "76": "SeventySix_Master.csv", "15D": "FifteenD_Master.csv", "70": "Seventy_Master.csv",
-                         "15": "Fifteen_Master.csv", "16C": "SixteenC_Master.csv", "54A": "FiftyFourA_Master.csv",
-                         "16D": "SixteenD_Master.csv", "16": "Sixteen_Master.csv", "51D": "FiftyOneD_Master.csv",
-                         "68A": "SixtyEightA_Master.csv", "51X": "FiftyOneX_Master.csv",
-                         "68X": "SixtyEightX_Master.csv", "56A": "FiftySixA_Master.csv",
-                         "68": "SixtyEight_Master.csv", "53": "FiftyThree_Master.csv",
-                         "65B": "SixtyFiveB_Master.csv", "40B": "FortyB_Master.csv", "65": "SixtyFive_Master.csv",
-                         "40D": "FortyD_Master.csv", "69X": "SixtyNineX_Master.csv", "40E": "FortyE_Master.csv",
-                         "69": "SixtyNine_Master.csv", "45A": "FortyFiveA_Master.csv", "61": "SixtyOne_Master.csv",
-                         "44B": "FortyFourB_Master.csv", "67X": "SixtySevenX_Master.csv",
-                         "44": "FortyFour_Master.csv", "67": "SixtySeven_Master.csv", "49": "FortyNine_Master.csv",
-                         "66A": "SixtySixA_Master.csv", "41A": "FortyOneA_Master.csv",
-                         "66B": "SixtySixB_Master.csv", "41C": "FortyOneC_Master.csv",
-                         "66X": "SixtySixX_Master.csv", "41D": "FortyOneD_Master.csv", "66": "SixtySix_Master.csv",
-                         "41X": "FortyOneX_Master.csv", "63": "SixtyThree_Master.csv", "41": "FortyOne_Master.csv",
-                         "13": "Thirteen_Master.csv", "47": "FortySeven_Master.csv",
-                         "38A": "ThirtyEightA_Master.csv", "46A": "FortySixA_Master.csv",
-                         "38B": "ThirtyEightB_Master.csv", "46E": "FortySixE_Master.csv",
-                         "38D": "ThirtyEightD_Master.csv", "43": "FortyThree_Master.csv",
-                         "38": "ThirtyEight_Master.csv", "42D": "FortyTwoD_Master.csv",
-                         "39A": "ThirtyNineA_Master.csv", "42": "FortyTwo_Master.csv",
-                         "39X": "ThirtyNineX_Master.csv", "40": "Forty_Master.csv", "39": "ThirtyNine_Master.csv",
-                         "4": "Four_Master.csv", "31A": "ThirtyOneA_Master.csv", "14C": "FourteenC_Master.csv",
-                         "31B": "ThirtyOneB_Master.csv", "14": "Fourteen_Master.csv",
-                         "31D": "ThirtyOneD_Master.csv", "31": "ThirtyOne_Master.csv", "9": "Nine_Master.csv",
-                         "37": "ThirtySeven_Master.csv", "185": "OneEightyFive_Master.csv",
-                         "33A": "ThirtyThreeA_Master.csv", "184": "OneEightyFour_Master.csv",
-                         "33B": "ThirtyThreeB_Master.csv", "111": "OneEleven_Master.csv",
-                         "33D": "ThirtyThreeD_Master.csv", "151": "OneFiftyOne_Master.csv",
-                         "33E": "ThirtyThreeE_Master.csv", "150": "OneFifty_Master.csv",
-                         "33": "ThirtyThree_Master.csv", "145": "OneFortyFive_Master.csv",
-                         "32X": "ThirtyTwoX_Master.csv", "142": "OneFortyTwo_Master.csv",
-                         "32": "ThirtyTwo_Master.csv", "140": "OneForty_Master.csv",
-                         "25A": "TwentyFiveA_Master.csv", "114": "OneFourteen_Master.csv",
-                         "25B": "TwentyFiveB_Master.csv", "104": "OneOFour_Master.csv",
-                         "25D": "TwentyFiveD_Master.csv", "102": "OneOTwo_Master.csv",
-                         "25X": "TwentyFiveX_Master.csv", "116": "OneSixteen_Master.csv",
-                         "25": "TwentyFive_Master.csv", "161": "OneSixtyOne_Master.csv",
-                         "29A": "TwentyNineA_Master.csv", "130": "OneThirty_Master.csv",
-                         "27A": "TwentySevenA_Master.csv", "123": "OneTwentyThree_Master.csv",
-                         "27B": "TwentySevenB_Master.csv", "122": "OneTwentyTwo_Master.csv",
-                         "27X": "TwentySevenX_Master.csv", "120": "OneTwenty_Master.csv",
-                         "27": "TwentySeven_Master.csv", "1": "One_Master.csv", "26": "TwentySix_Master.csv",
-                         "7A": "SevenA_Master.csv", "270": "TwoSeventy_Master.csv", "7B": "SevenB_Master.csv",
-                         "238": "TwoThirtyEight_Master.csv", "7D": "SevenD_Master.csv",
-                         "239": "TwoThirtyNine_Master.csv", "7": "Seven_Master.csv",
-                         "236": "TwoThirtySix_Master.csv", "17A": "SeventeenA_Master.csv",
-                         "220": "TwoTwenty_Master.csv", "59": 'FiftyNine_Master.csv', "41B": 'FortyOneB_Master.csv',
-                         '118': 'OneEighteen_Master.csv', '33X': 'ThirtyThreeX_Master.csv'}
+        #dictionaries for use finding the relevant section of the code in the database
+        days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
+        months = {1: "January", 2: "Febuary", 3: "March", 4:"April", 5:"May", 6:"June", 7:"July", 8:"August", 9:"September", 10:"October", 11:"November", 12:"December"}
+        times = {0:"0", 1:"1", 2:"2", 3:"3", 4:"4", 5:"5", 6:"6", 7:"7", 8:"8", 9:"9", 10:"10", 11:"11", 12:"12", 13:"13", 14:"14", 15:"15", 16:"16", 17:"17", 18:"18", 19:"19", 20:"20", 21:"21", 22:"22", 23:"23", 24:"24", 25:"25", 26:"26", 27:"27", 28:"28"}
+        
+        #call proportions file in dictionary format - this proportions file returns a calculated average based on previous journies for a given...
+        #...month, week and time_group...
 
-    # calling the master route file for the given request
-    route_file = master_route_dict[str(route)]
-    file = "~/Desktop/Master-Route-Files/" + route_file
-    df = pd.read_csv(file, keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
-    return df
+        proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
+        file_path = '/Users/laura/Desktop/proportions_test/' + proportions_name
+        f = open(file_path) 
+        proportions_json = json.load(f)
+
+        #find relevant entry
+        access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
+        
+
+        #attempt to calculate the proportion using average segment time
+        try:
+                time_group_json = proportions_json[access_code]
+                proportions = time_group_json['proportions']
+                proportion = segment_calculation(startstop, endstop, proportions)
+
+        #otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
+        except:
+                print("Unable to access proportions data, getting nasty.")
+                proportion = quickanddirty(route, direction, startstop, endstop)
+
+        return proportion
 
 
 
 def generate_preditction(route, startstop, endstop, date, time, direction):
 
-    df = get_route_file(route)
+    """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
+    Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
+    """
+    #calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-    print(test)
 
-
-    #find my pickle
+    #loads the correct linear regression pickle using the route and direction
     pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
 
-    #get the prediction
-
+    #get the prediction from the pickle using the test dataframe generated above
     prediction = linear_regression.predict(test)
-    print(prediction)
+    print("Prediction from model: ", int(prediction[0]))
 
-    #get month, day_of_the_week and time_group
+    #get month, day_of_the_week and time_group from the date and time, these are needed for calculating the proportion of the total
+    # journey that the users trip represents. 
     date_time_obj = datetime.strptime(date, '%Y-%m-%d')
     weekday = date_time_obj.weekday()
     month = date_time_obj.month
     time_group = time_group_function(time)
     
 
-    #get the proportion
-    answer = get_proportion(route, direction, startstop, endstop, weekday, month, 8)
-    
-    #get proportion
-    result = answer * prediction[0]
-    print(result)
-    return result
+    #get the proportion using the get_proportion
+    proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
 
-generate_preditction(151, 2279, 301, "2020-07-11", 12345, 1)
+    #get proportion and multiply by the prediction
+    result = proportion * prediction[0]
+    print("Users proportion: ", proportion)
+    print("Users estimated journeytime: ", int(result))
+    minutes = int(result)//60
+    return minutes
+
+generate_preditction("220", 4687, 1827, "2020-02-03", 36500, 1)
