@@ -22,10 +22,14 @@ def stops_on_route(route, main=False, direction=1):
     """query the database return a sequence of all stops on a given sub-route"""
 
     # create sql query
-    sql = db.construct_sql(table_name="routes", query_type="select_where", data={"ID": route.split("_")[0]})
+    if main:
+        sql = db.construct_sql(table_name="routes", query_type="select_where", data={"ID": route})
+    else:
+        sql = db.construct_sql(table_name="routes", query_type="select_where", data={"ID": route.split("_")[0]})
 
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+    print(response)
 
     if main:
         # return the 'main' sub-route in the passed direction
@@ -74,4 +78,5 @@ def get_proportions(route, direction, segments, month, day, time):
     return response
 
 
-print(get_proportions(270, 2, segments_from_stops(stops_on_journey(3352, 3337, stops_on_route(270, main=True, direction=1))), 2, 2, 15))
+print(stops_on_route(270, main=True, direction=1))
+#print(get_proportions(270, 2, segments_from_stops(stops_on_journey(3352, 3337, stops_on_route(270, main=True, direction=1))), 2, 2, 15))
