@@ -143,6 +143,7 @@ $('#geolocation-tourist').on('click', function () {
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        $('#geo-error').show();
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
             'Error: The Geolocation service failed.' :
@@ -180,6 +181,9 @@ if (!geolocation) {
     var input1 = document.getElementById('origin-tourist');
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
+    $("#origin-tourist").on("input", function(){
+        $('#geo-error').hide();
+    });
 }
 
 // show route on map
@@ -201,7 +205,7 @@ function routes_tourist() {
     }
 
     // center map at starting point
-    const center = new google.maps.LatLng(starting_lat, starting_lng);
+    var center = new google.maps.LatLng(starting_lat, starting_lng);
     map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.

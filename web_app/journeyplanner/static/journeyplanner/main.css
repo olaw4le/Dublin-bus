@@ -296,6 +296,14 @@ ul {
   font-size: 1.3em;
 }
 
+#geo-error {
+  display:none;
+}
+
+#geo-button-spin {
+  display:none;
+}
+
 
 
 
