@@ -82,7 +82,7 @@ def proportions_to_db(route, **kwargs):
             print(db.execute_sql(sql, database, user, password, host, port))
 
 
-if __name__ is "__main__":
+if __name__ == "__main__":
 
     # read file path passed as arg
     file_path = sys.argv[1]
