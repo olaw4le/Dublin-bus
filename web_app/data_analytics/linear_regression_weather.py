@@ -198,7 +198,7 @@ def generate_test_dataframe(route, direction, date, time):
 
 
     #create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
-    f = open('/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/result_templates.json',) 
+    f = open('/Users/hannahbarrett/Documents/CompScience/ResearchPracticum/research-project/data_analytics/linear_regression/result_templates.json',) 
     templates = json.load(f) 
     template_name = str(route) + "_" + str(direction)
     features = templates[template_name]
@@ -324,7 +324,7 @@ def quickanddirty(route, direction, startstop, endstop):
         However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate than at 6pm on a weekday"""
 
         #get the master list of ordered stops
-        f = open('/Users/laura/Desktop/Trimester_3/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json',) 
+        f = open('/Users/hannahbarrett/Documents/CompScience/ResearchPracticum/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json',) 
         ordered_stop_data = json.load(f)
         #get the stops for the subroutes on that route as a dictionary
         ordered_stop_data_route = ordered_stop_data[str(route)]
@@ -387,7 +387,7 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     test = generate_test_dataframe(route, direction, date, time)
 
     #loads the correct linear regression pickle using the route and direction
-    pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
+    pickle_file = "/Users/hannahbarrett/Documents/CompScience/ResearchPracticum/research-project/data_analytics/linear_regression/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
 
