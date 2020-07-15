@@ -30,7 +30,7 @@ def stops_on_route(route, main=False, direction=1):
     if main:
         # return the 'main' sub-route in the passed direction
         for sub_route in response[0][1].keys():
-            if (response[0][1][sub_route]["main"] == True) and (response[0][1][sub_route]["direction"] == direction):
+            if response[0][1][sub_route]["main"] and (response[0][1][sub_route]["direction"] == direction):
                 return response[0][1][sub_route]["stops"]
     else:
         return response[0][1][route]["stops"]
@@ -56,3 +56,4 @@ def segments_from_stops(seq):
             segments.append("%d-%d" % (seq[i - 1], seq[i]))
 
     return segments
+
