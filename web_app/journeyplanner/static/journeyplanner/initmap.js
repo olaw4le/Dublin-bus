@@ -27,7 +27,13 @@ function initMap() {
 
     //showing the map
     map = new google.maps.Map(
-        document.getElementById('map'), { center: current, zoom: 16 });
+        document.getElementById('map'), { 
+            center: current, zoom: 16,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.BOTTOM_RIGHT
+              }
+        });
 
 
     // marker for the current location 

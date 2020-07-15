@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
@@ -35,6 +35,9 @@ var markers = {};
 $(".tourist-check").change(function () {
     if (this.checked) {
         var type = $(this).attr("data-type");
+        console.log(type);
+
+        $('#' + type + '-spin').show();
 
         var request = {
             location: dublin,
@@ -59,7 +62,7 @@ $(".tourist-check").change(function () {
 
 function callback(results, status, type) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-
+        $('#' + type + '-spin').hide();
         markers[type] = []
         for (var i = 0; i < results.length; i++) {
             var icon = results[i].icon

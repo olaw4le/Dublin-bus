@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    font-size: 1rem;
   }
 
   /* mobile bottom nav - hidden on larger screens */
@@ -28,7 +29,7 @@ html, body {
     left: 50px;
     bottom: 50px;
     width: 480px;
-    height: 550px;
+    height: 550px; /* need to fix */
     border: none;
     overflow-y: auto;
 
@@ -40,6 +41,8 @@ html, body {
 
   .navbar-brand {
     color: white;
+    padding-left: 30px;
+    font-size: 2em;
   }
 
    /*tabs on homepage on large screens*/
@@ -47,29 +50,15 @@ html, body {
     position: absolute;
     top: 3.5rem;
     left: 50px;
-    height: 50px;
+    height: 70px;
     width: 480px;
     background-color: white;
-    /* padding-left: 7px;
-    padding-right: 4px; */
+
   }
-/* 
-  .tab-wrapper {
-    background-color: #F5F5F5;
-    border-radius: 10px;
-  } */
 
   .nav-tabs .nav-item {
     width: 120px;
     height: 37px;
-    /* padding-left: 2px;
-    padding-right:2px;
-    padding-bottom: 4px;
-    padding-top: 4px;
-    margin-top: 5px; */
-    background-color: #F5F5F5;
-    /* text-align:center; */
-    /* border-radius: 5px; */
     
   }
 
@@ -91,8 +80,6 @@ html, body {
   .nav-tabs .nav-link.active {
     border: 0.05px solid #C0C0C0;
     background-color: #4484CE;
-    opacity: 0.8;
-    /* border-radius: 15px; */
     color: white;
   } 
 
@@ -100,27 +87,17 @@ html, body {
     vertical-align: middle;
   }
 
- 
-
-
   /* routeplanner tab */
   .form-area {
     margin: 5px 0px 0px 5px;
     padding: 5px;
   }
   
-  .form-group {
-    margin-bottom: 3px;
-  }
-
-
-  label {
-    margin-bottom: 3px;
-  }
-  
-  #go {
+  .go-button {
   margin-left:10px;
-  margin-top: 10px;
+  margin-top: 15px;
+  max-width: 80px;
+  min-width: 80px;
   }
 
   /* twitter feed on routeplanner tab */
@@ -138,7 +115,6 @@ html, body {
   #route-results-tourist {
     display: none;
   }
-
 
   #stop-to-stop-results {
     display: none;
@@ -163,38 +139,20 @@ html, body {
     margin-left: 18px;
   }
 
- 
   /* date and time pickers on desktop screens */
   .row.datetime {
-    width: 220px;
-    margin-left: 7px;
+    width: 400px;
+    margin-left: 5px;
     padding-left: 0px;
+    margin-bottom: 7px;
+    font-size: 1.1em;
   }
 
   .mobile-dt {
     display: none;
   }
 
-.to {
-    height: 30px;
-  }
-
-  .on {
-    height: 30px;
-    margin-bottom: 8px;
-  }
-
-  .from {
-    height: 30px; 
-  
-  }
-
-  .at {
-    height: 30px; 
-    margin-top: 5px;
-    }
-
-    #datepicker-tourist-results-time {
+  #datepicker-tourist-results-time {
     height: 30px;
   }
 
@@ -210,15 +168,6 @@ html, body {
     height: 30px;
   }
 
-  #estimator-go {
-    padding-top: 10px;
-  }
- 
-
- 
-  
-
-
   .btn-secondary {
     padding: 5px;
     margin-left: 20px;
@@ -229,7 +178,6 @@ html, body {
     height: 40px;
     margin-bottom: 7px;
   }
-
 
 /*the container must be positioned relative:*/
 .autocomplete {
@@ -292,26 +240,59 @@ ul {
 }
 
 #checkboxes {
-  margin-left: 30px;
-  font-size: 1.3em;
+  margin-left: 20px;
+  font-size: 1.1em;
+  margin-top: 5px;
 }
 
 #geo-error {
   display:none;
 }
 
-#geo-button-spin {
-  display:none;
-}
-
 #question {
   color: #4484CE;
+  margin-bottom: 8px;
 }
 
-#origin-tourist {
+/* all form input boxes for all tabs */
+.input-box {
+  max-width: 400px;
+  min-width: 400px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+h5 {
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.form-group {
+  font-size: 1.1em;
+}
+
+/* give all form labels a margin */
+label {
   margin-left: 15px;
 }
 
+label.dt-label {
+  margin-left: 11px;
+}
+
+#checkbox-card {
+  margin: 10px 10px 10px 10px;
+  padding-bottom: 10px;
+}
+
+#geolocation-tourist {
+  margin-bottom: 10px;
+}
+
+.spinner-border {
+  margin-left: 10px;
+  display: none;
+}
 
 
 
