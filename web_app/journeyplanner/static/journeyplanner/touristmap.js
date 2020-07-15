@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
 
     // flatpickr date https://flatpickr.js.org/options/
     $("#datepicker-tourist").flatpickr({
