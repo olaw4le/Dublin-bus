@@ -175,12 +175,12 @@ function geocodeLatLng(geocoder, lat, lng, dest = "") {
 };
 
 
-
 // add auto-complete option to origin in case user doesn't allow geolocation
 if (!geolocation) {
     var input1 = document.getElementById('origin-tourist');
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
+    // hide error when content of origin input box changed
     $("#origin-tourist").on("input", function(){
         $('#geo-error').hide();
     });
