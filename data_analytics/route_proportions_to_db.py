@@ -2,6 +2,7 @@ import db_interface as db
 import get_journey_proportion as gt
 import json
 import os
+import sys
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -40,10 +41,14 @@ def get_segment_names(route):
     return segments
 
 
-def proportions_to_db(route):
+def proportions_to_db(route, **kwargs):
+
+    if "fp" in kwargs:
+        fp = kwargs["fp"]
+    else:
+        fp = "%s_proportions.json" % route
 
     # read data
-    fp = "%s_proportions.json" % route
     with open(fp) as file:
         # convert json data to dict
         data = json.load(file)
@@ -78,6 +83,11 @@ def proportions_to_db(route):
 
 
 if __name__ is "__main__":
-    proportions_to_db("270_2")
 
+    # read file path passed as arg
+    file_path = sys.argv[1]
 
+    # get the route name by removing the string "_proportions.json" from the path basename...
+    route_name = os.path.basename(file_path)[:-17]
+
+    proportions_to_db(route_name, fp=file_path)
