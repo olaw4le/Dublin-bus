@@ -53,7 +53,25 @@ def segments_from_stops(seq):
 
     for i, stop in enumerate(seq):
         if i != 0:
-            segments.append("%d-%d" % (seq[i - 1], seq[i]))
+            segments.append("s%d-%d" % (seq[i - 1], seq[i]))
 
     return segments
 
+
+def get_proportions(route, direction, segments, month, day, time):
+
+    sql = "SELECT %s FROM %s WHERE Month = %d AND Weekday = %d AND TimeGroup = %d"
+    table_name = "route_%s_%s_proportions" % (str(route), str(direction))
+    attrs = ""
+    for s in segments:
+        attrs += "%s + "
+    attrs = attrs[:-2]
+    sql = sql % (table_name, attrs, month, day, time)
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+
+    return response
+
+
+print(get_proportions(270, 2, segments_from_stops(stops_on_journey(3352, 3337, stops_on_route(270, main=True, direction=1))), 2, 2, 15))
