@@ -251,8 +251,12 @@ ul {
 
 #question {
   color: #4484CE;
-  margin-bottom: 8px;
+  height: fit-content !important;
+  margin: 0px -15px !important;
+  padding: 0px !important;
 }
+
+
 
 /* all form input boxes for all tabs */
 .input-box {
@@ -284,9 +288,15 @@ label.dt-label {
   margin: 10px 10px 10px 10px;
   padding-bottom: 10px;
 }
-
+#origin-tourist {
+  padding-bottom: 5px !important;
+}
 #geolocation-tourist {
-  margin-bottom: 10px;
+  height: fit-content !important;
+  width: fit-content !important;
+  margin: 0px !important;
+  padding: 0px !important;
+
 }
 
 .spinner-border {
