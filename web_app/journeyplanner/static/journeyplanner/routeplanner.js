@@ -71,10 +71,8 @@ function routes() {
 
 
   // Create a map and center it on starting point
-  var map = new google.maps.Map(document.getElementById('map'), {
-    //          zoom: 14,
-    center: { lat: starting_lat, lng: starting_lng }
-  });
+  var center = new google.maps.LatLng(starting_lat, starting_lng);
+  map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
   var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
@@ -113,10 +111,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
       // markers for each step.
       if (status === 'OK') {
 
-        staringAddress = response.routes[0].legs[0].start_address;
-
-        endingAddress = response.routes[0].legs[0].end_address;
-
         //trimming the origin address
         startingAddress = response.routes[0].legs[0].start_address;
         address1 = startingAddress.split(',');
@@ -142,6 +136,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         // time = dateArr[1];
 
+        // fill journey details into summary results
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
         // $("#datetime-tab").html(dateToDisplay + ", " + time);
@@ -348,17 +343,19 @@ $(function () {
     routes();
     $(".form-area").hide();
     if ($(window).width() < 992) {
-      $("#map-interface").css("top", "300px");
-    }
+      $("#map-interface").css("top", "400px");
+  }
     $("#route-results").show();
 
 
   });
 
   // add on click to edit-journey button to hide results and show journey planner
-  $('#edit-journey').on('click', function () {
+  $('.edit-journey').on('click', function () {
     $(".form-area").show();
-    $("#map-interface").css("top", "0px");
+    if ($(window).width() < 992) {
+      $("#map-interface").css("top", "0px");
+    }
     $("#route-results").hide();
   });
 });

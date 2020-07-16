@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    font-size: 1rem;
   }
 
   /* mobile bottom nav - hidden on larger screens */
@@ -28,7 +29,7 @@ html, body {
     left: 50px;
     bottom: 50px;
     width: 480px;
-    height: 550px;
+    height: 550px; /* need to fix */
     border: none;
     overflow-y: auto;
 
@@ -40,6 +41,8 @@ html, body {
 
   .navbar-brand {
     color: white;
+    padding-left: 30px;
+    font-size: 2em;
   }
 
    /*tabs on homepage on large screens*/
@@ -47,29 +50,15 @@ html, body {
     position: absolute;
     top: 3.5rem;
     left: 50px;
-    height: 50px;
+    height: 70px;
     width: 480px;
     background-color: white;
-    /* padding-left: 7px;
-    padding-right: 4px; */
+
   }
-/* 
-  .tab-wrapper {
-    background-color: #F5F5F5;
-    border-radius: 10px;
-  } */
 
   .nav-tabs .nav-item {
     width: 120px;
     height: 37px;
-    /* padding-left: 2px;
-    padding-right:2px;
-    padding-bottom: 4px;
-    padding-top: 4px;
-    margin-top: 5px; */
-    background-color: #F5F5F5;
-    /* text-align:center; */
-    /* border-radius: 5px; */
     
   }
 
@@ -91,8 +80,6 @@ html, body {
   .nav-tabs .nav-link.active {
     border: 0.05px solid #C0C0C0;
     background-color: #4484CE;
-    opacity: 0.8;
-    /* border-radius: 15px; */
     color: white;
   } 
 
@@ -100,27 +87,17 @@ html, body {
     vertical-align: middle;
   }
 
- 
-
-
   /* routeplanner tab */
   .form-area {
     margin: 5px 0px 0px 5px;
     padding: 5px;
   }
   
-  .form-group {
-    margin-bottom: 3px;
-  }
-
-
-  label {
-    margin-bottom: 3px;
-  }
-  
-  #go {
+  .go-button {
   margin-left:10px;
-  margin-top: 10px;
+  margin-top: 15px;
+  max-width: 80px;
+  min-width: 80px;
   }
 
   /* twitter feed on routeplanner tab */
@@ -131,7 +108,11 @@ html, body {
   }
 
   /* route-plan-results*/
-    #route-results {
+  #route-results {
+    display: none;
+  }
+
+  #route-results-tourist {
     display: none;
   }
 
@@ -158,40 +139,34 @@ html, body {
     margin-left: 18px;
   }
 
-  #from {
-    height: 30px;
-  }
   /* date and time pickers on desktop screens */
   .row.datetime {
-    width: 220px;
-    margin-left: 7px;
+    width: 400px;
+    margin-left: 5px;
     padding-left: 0px;
+    margin-bottom: 7px;
+    font-size: 1.1em;
   }
 
   .mobile-dt {
     display: none;
   }
 
-  #to {
+  #datepicker-tourist-results-time {
     height: 30px;
   }
 
-  #on {
+  #datepicker-tourist-results-date {
     height: 30px;
   }
 
-  .row .from {
-  height: 30px; 
+  #datepicker-tab1-results-time {
+    height: 30px;
   }
 
-  #estimator-go {
-    padding-top: 10px;
+  #datepicker-tab1-results-date {
+    height: 30px;
   }
- 
-
- 
-  
-
 
   .btn-secondary {
     padding: 5px;
@@ -204,7 +179,6 @@ html, body {
     margin-bottom: 7px;
     margin-top: 7px;
   }
-
 
 /*the container must be positioned relative:*/
 .autocomplete {
@@ -266,6 +240,86 @@ ul {
   font-size: 0.9em;
 }
 
+#checkboxes {
+  margin-left: 20px;
+  font-size: 1.1em;
+  margin-top: 5px;
+}
+
+#geo-error {
+  display:none;
+}
+
+#question {
+  color: #4484CE;
+  height: fit-content !important;
+  padding: 0px 20px 5px 5px !important;
+}
+
+/* instructions to user on map interface */
+.instruction {
+  font-size: 0.9em;
+  margin-left: 15px;
+}
+
+
+
+/* all form input boxes for all tabs */
+.input-box {
+  max-width: 400px;
+  min-width: 400px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+h5 {
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.form-group {
+  font-size: 1.1em;
+}
+
+/* give all form labels a margin */
+label {
+  margin-left: 15px;
+}
+
+label.dt-label {
+  margin-left: 11px;
+}
+
+#checkbox-card {
+  margin: 10px 10px 10px 10px;
+  padding-bottom: 10px;
+}
+#origin-tourist {
+  padding-bottom: 5px !important;
+}
+#geolocation-tourist {
+  height: fit-content !important;
+  width: fit-content !important;
+  margin: 0px !important;
+  padding: 0px !important;
+
+}
+
+.spinner-border {
+  margin-left: 10px;
+  display: none;
+}
+
+.mobile-space{
+  display: none;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+
 
 /* media queries to be kept at bottom of css file for ease of understanding */
 
@@ -273,18 +327,21 @@ ul {
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
 
-    /* #fullscreen-map {
+    #fullscreen-map {
       height: calc(100vh - 85px);
   
-    } */
-
-    #map-wrapper {
-      height: 400px;
     }
+
+    .navbar-brand {
+      color: white;
+      padding-left: 10px;
+      font-size: 1.6em;
+    }
+
       #map-interface {
         top: 0px;
         left: 0px;
-        bottom: 0px;
+        bottom: 70px;
         width: 100%;
         height: calc(100vh - 85px);
         overflow-y: none;
@@ -298,7 +355,7 @@ ul {
       }
   
       /* mobile screen bottom nav */
-      .fixed-bottom  {
+      .fixed-bottom {
         display: block;
         height: 70px;
         width: 100vw; 
@@ -339,10 +396,12 @@ ul {
         display: block;
       }
 
-      .results-dt-mob {
-        padding-left: 0px;
+      .mobile-space {
+        display: block;
+        height: 80px;
       }
-     
+
+  
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
       #map-interface {

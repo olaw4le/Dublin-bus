@@ -10,19 +10,20 @@
 
 <div class="container form-area">
     <form onsubmit="return false">
+        <p class="instruction">Enter origin and destination locations and click 'go' to view directions and journey times.</p>
         <div class="form-group">
             <label for="origin">From:</label>
-            <input type="text" class="form-control col-6" id="origin" placeholder="Enter origin">
+            <input type="text" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
         </div>
         <div class="form-group">
             <label for="destination">To:</label>
-            <input type="text" class="form-control col-6" id="destination" placeholder="Enter destination">
+            <input type="text" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
         </div>
         <div>
             <!-- mobile datetime picker-->
             <div class="mobile-dt">
                 <label for="datetime-4">Date and Time:</label>
-                <div class="row">
+                <div class="row datetime">
                     <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
                 </div>
             </div>
@@ -30,20 +31,20 @@
             <!-- desktop date and time -->
             <div class="desktop-dt">
                 <div class="row datetime">
-                    <label>Date:</label>
+                    <label class="dt-label">Date and Time:</label>
                     <input type="text" id="datepicker-tab1">
                 </div>
                 <div class="row datetime">
-                    <label>Time:</label>
                     <input type="text"class="timepicker" id="timepicker-tab1">
                 </div>
             </div>
-            <button type="submit" class="btn btn-warning" id="go">Go</button>
+            <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
         </div>
     </form>
     <div class="container news">
         <p>dublin bus twitter feed and disruption alerts here</p>
     </div>
+    <div class="mobile-space"></div>
 </div>
 
 <div class="container" id="route-results">
@@ -99,7 +100,7 @@
 
 
         <div class="row">
-        <button type="submit" class="btn btn-warning p-1" id="edit-journey">Edit journey details</button>
+        <button type="submit" class="btn btn-warning p-1 edit-journey">Edit journey details</button>
         </div>
     </div>
 
@@ -122,6 +123,7 @@
             </ul>
         </div>
     </div>
+    <div class="mobile-space"></div>
 
 
         
