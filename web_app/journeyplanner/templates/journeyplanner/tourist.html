@@ -1,5 +1,7 @@
 {% load static %}
 <script src=" {% static 'journeyplanner/touristmap.js' %}"></script>
+
+<!-- checkboxes -->
 <div class="card" id="checkbox-card">
     <h5>Select to view tourist attractions on map</h5>
     <ul class="list-group list-group-flush" style="width: 90%;margin: auto;margin-bottom: 13px; margin-top:-10px; height:0;">
@@ -50,7 +52,7 @@
             </div>
                 
         </div>
-      
+        <!-- error if geolocation doesn't work -->
         <div>
             <p id="geo-error">There was an error finding your current location. Please enter the origin location.</p>
         </div>
@@ -60,12 +62,14 @@
             <input type="text" class="form-control col-6 input-box" id="destination-tourist" placeholder="Enter destination">
         </div>
         <div>
+            <!-- mobile datetime -->
             <div class="mobile-dt">
                 <label for="datetime-4">Date and Time:</label>
                 <div class="row datetime">
                     <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
                 </div>
             </div>
+            <!-- desktop datetime -->
             <div class="desktop-dt">
                 <div class="row datetime">
                     <label>Date and Time:</label>
@@ -138,23 +142,22 @@
 
     <!-- overall time -->
     <div class="card results">
-            <div id="overall-time">
-                <div class="row">
-                    <p id="journey-time">12:50 - 13:10</p>
-                </div>
+        <div id="overall-time">
+            <div class="row">
+                <p id="journey-time">12:50 - 13:10</p>
             </div>
-                <div class="row">
-                    <div class="col-8" id="overall-duration">
-                        <p>Total duration:    <span id="duration-val-tourist">20 mins</span></p>
-                    </div>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-8" id="overall-duration">
+                <p>Total duration:    <span id="duration-val-tourist">20 mins</span></p>
+            </div>
+        </div>
     </div>
 
-    <!-- estimate -->
+    <!-- estimate and directions -->
     <div class="card results">
         <div class="row">
-            <ul id="direction-tourist">
-            </ul>
+            <ul id="direction-tourist"></ul>
         </div>
     </div>
     <div class="mobile-space"></div>

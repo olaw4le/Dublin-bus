@@ -49,6 +49,12 @@ $(document).ready(function () {
 
 // Show interface if hidden when window resized and change button to say show map
 $(window).resize(function () {
+
+    if ($(window).width() <= 992){
+          if ($('#tourist-nav').hasClass("active")) {
+            $("#map-interface").css("top", "400px");
+        }
+    }
     if ($(window).width() >= 992) {
         $("#map-interface").show();
         $("#show-map").html("Show Map");

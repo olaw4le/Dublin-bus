@@ -37,12 +37,13 @@ var markers = {};
 var destination_latlng;
 var name;
 
-// loop through checkboxes and display markers on map using data attr
+// loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
     if (this.checked) {
         var type = $(this).attr("data-type");
         console.log(type);
 
+        // show spinner for clicked checkbox
         $('#' + type + '-spin').show();
 
         var request = {
@@ -56,7 +57,7 @@ $(".tourist-check").change(function () {
             callback(results, status, type)
         });
 
-        // hide markers when checkbox un-checked
+    // hide markers when checkbox un-checked
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
@@ -166,18 +167,13 @@ $('#geolocation-tourist').on('click', function () {
 })
 
 // function to geocode geolocation coordinates into address
-function geocodeLatLng(geocoder, lat, lng, dest = "") {
+function geocodeLatLng(geocoder, lat, lng) {
     var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
     geocoder.geocode({ location: latlng }, function (results, status) {
         if (status === "OK") {
             if (results[0]) {
-                // populate origin or destination inputs with geolocation 
-                if (dest === "dest") {
-                    $('#destination-tourist').val(results[0].formatted_address);
-                } else {
-                    $('#origin-tourist').val(results[0].formatted_address);
-
-                }
+                // populate origin input with geolocation 
+                $('#origin-tourist').val(results[0].formatted_address);
             } else {
                 window.alert("No results found");
             }
@@ -447,7 +443,7 @@ $(function () {
         // show results and routes
         routes_tourist();
         $(".form-area").hide();
-        $("#checkboxes").hide();
+        $("#checkbox-card").hide();
         if ($(window).width() < 992) {
             $("#map-interface").css("top", "400px");
         }
@@ -456,7 +452,7 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
-        $("#checkboxes").show();
+        $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {
             $("#map-interface").css("top", "400px");
