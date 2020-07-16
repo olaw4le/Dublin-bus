@@ -181,6 +181,15 @@ html, body {
     margin-bottom: 7px;
   }
 
+  /* remove margin on labels of summary results */
+  .results-label {
+    margin-left: 0px;
+  }
+
+  .results-dt-mob {
+    padding-left: 0px;
+  }
+
 /*the container must be positioned relative:*/
 .autocomplete {
   position: relative;
