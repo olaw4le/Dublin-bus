@@ -252,8 +252,7 @@ ul {
 #question {
   color: #4484CE;
   height: fit-content !important;
-  margin: 0px -15px !important;
-  padding: 0px !important;
+  padding: 0px 20px 5px 5px !important;
 }
 
 /* instructions to user on map interface */

@@ -33,8 +33,8 @@ $(document).ready(function () {
 var dublin = { lat: 53.3155395, lng: -6.4161858 };
 
 var markers = {};
-var destination_lat;
-var destination_lng;
+var destination_latlng;
+var name;
 
 // loop through checkboxes and display markers on map using data attr
 $(".tourist-check").change(function () {
@@ -101,6 +101,8 @@ function createMarker(place, type, icon, markerList, rating) {
 
     markerList.push(marker);
 
+    
+
     // show name of place when mouse hovers over  marker
     google.maps.event.addListener(marker, 'mouseover', function () {
         infowindow.setContent(place.name + "<br>Rating: " + rating);
@@ -109,16 +111,17 @@ function createMarker(place, type, icon, markerList, rating) {
 
 
     // populate destination input box with location clicked on map
-    google.maps.event.addListener(marker, 'click', (function (geocoder, ending_lat, ending_lng) {
+    google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
         return function () {
-            destination_lat = ending_lat;
-            destination_lng = ending_lng;
+            destination_latlng = new google.maps.LatLng(ending_lat, ending_lng);
+            console.log(destination_latlng);
             // convert lat and long to address using geocoder
-            var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
-            $('#destination-tourist').val(address);
+            // var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
+            name = placeName;
+            $('#destination-tourist').val(placeName);
             $('#destination-tourist').show();
         }
-    })(geocoder, ending_lat, ending_lng));
+    })(place.name, ending_lat, ending_lng));
 }
 
 // geolocation for tourists origin
@@ -242,7 +245,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
     // Bus directions.
     directionsService.route({
         origin: document.getElementById('origin-tourist').value,
-        destination: document.getElementById('destination-tourist').value,
+        destination: destination_latlng,
         travelMode: 'TRANSIT',
         transitOptions: {
             modes: ['BUS'],
@@ -268,7 +271,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                 // fill journey details into summary results
                 $("#origin-tab1").html(address1);
-                $("#destination-tab1").html(address2);
+                $("#destination-tab1").html(name);
 
                 journeysteps = response.routes[0].legs[0].steps;
 
