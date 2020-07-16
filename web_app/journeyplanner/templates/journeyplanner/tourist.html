@@ -1,1 +1,169 @@
-<p>tourist map</p>
+{% load static %}
+<script src=" {% static 'journeyplanner/touristmap.js' %}"></script>
+
+<!-- checkboxes -->
+<div class="card" id="checkbox-card">
+    <h5>Select to view tourist attractions on map</h5>
+    <ul class="list-group list-group-flush" style="width: 90%;margin: auto;margin-bottom: 13px; margin-top:-10px; height:0;">
+        <li class="list-group-item" style="height: 0px; padding:4px; "></li>
+    </ul>
+    <div id="checkboxes">
+        <div class="form-check flex">
+                <input type="checkbox" class="tourist-check form-check-input" id="coffee-shops" data-type="cafe">
+                <label class="form-check-label" for="coffee-shops">Food and Coffee</label>
+                <div class="spinner-border spinner-border-sm text-success" id="cafe-spin" role="status"></div>
+        </div>
+        <div class="form-check flex">
+            <input type="checkbox" class="tourist-check form-check-input" id="museums" data-type="museum">
+            <label class="form-check-label" for="museums">Museums</label>
+            <div class="spinner-border spinner-border-sm text-success" id="museum-spin" role="status"></div>
+        </div>
+        <div class="form-check flex">
+            <input type="checkbox" class="tourist-check form-check-input" id="art-galleries" data-type="art_gallery">
+            <label class="form-check-label" for="art-galleries">Art Galleries</label>
+            <div class="spinner-border spinner-border-sm text-success" id="art_gallery-spin" role="status"></div>
+        </div>
+        <div class="form-check flex">
+            <input type="checkbox" class="tourist-check form-check-input" id="parks" data-type="park">
+            <label class="form-check-label" for="parks">Parks</label>
+            <div class="spinner-border spinner-border-sm text-success" id="park-spin" role="status"></div>
+        </div>
+        <div class="form-check flex">
+            <input type="checkbox" class="tourist-check form-check-input" id="other-attractions" data-type="tourist_attraction">
+            <label class="form-check-label" for="other-attractions">Other attractions</label>
+            <div class="spinner-border spinner-border-sm text-success" id="tourist_attraction-spin" role="status"></div>
+        </div>
+    </div>
+</div>
+
+<!-- input boxes for origin, destination, date and time -->
+  <div class="container form-area">
+    <form onsubmit="return false">
+        <p></p>
+        <div class="form-group">
+            <label for="origin">From:</label>
+            <p class="instruction">(Type an origin location or use your current location.)</p>
+            <input type="text" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
+            <div class="row">
+                <button type="submit" class="col-4 btn btn-link align-top" id="geolocation-tourist">Use my location</button>
+                <button type="button" class="btn btn-default align-top" id="question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the tourist directions more helpful for you. Your location will not be stored or sent elsewhere.">
+                    <span class="fa fa-question-circle"></span>
+                </button>
+            </div>
+                
+        </div>
+        <!-- error if geolocation doesn't work -->
+        <div>
+            <p id="geo-error">There was an error finding your current location. Please enter the origin location.</p>
+        </div>
+        <div class="form-group">
+            <label for="destination">To:</label>
+            <p class="instruction">(Click a marker on the map you would like to travel to.)</p>
+            <input type="text" class="form-control col-6 input-box" id="destination-tourist" placeholder="Enter destination">
+        </div>
+        <div>
+            <!-- mobile datetime -->
+            <div class="mobile-dt">
+                <label for="datetime-4">Date and Time:</label>
+                <div class="row datetime">
+                    <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
+                </div>
+            </div>
+            <!-- desktop datetime -->
+            <div class="desktop-dt">
+                <div class="row datetime">
+                    <label>Date and Time:</label>
+                    <input type="text" id="datepicker-tourist">
+                </div>
+                <div class="row datetime">
+                    <input type="text"class="timepicker" id="timepicker-tourist">
+                </div>
+            </div>
+            <button type="submit" class="go-button btn btn-warning btn-lg" id="go-tourist">Go</button>
+        </div>
+        <div class="mobile-space"></div>
+    </form>
+</div>
+
+
+<!-- results view -->
+<div class="container" id="route-results-tourist">
+    <div class="card results">
+        <div class="row results">
+        </div>
+        <div class="row from">
+            <div class="col-6">
+                <p>From:</p>
+            </div>
+            <div class="col-6">
+                <p id="origin-tab1"></p>
+            </div>
+        </div>
+        <div class="row to">
+            <div class="col-6">
+                <p>To:</p>
+            </div>
+            <div class="col-6">
+                <p id="destination-tab1"></p>
+            </div>
+        </div>
+        <div class="row on desktop-dt">
+            <div class="col-4">
+                <p>On:</p>
+            </div>
+            <div class="col-8">
+                <p><input type="text" id="datepicker-tourist-results-date"></p>
+            </div>
+        </div>
+        <div class="row at desktop-dt">
+            <div class="col-4">
+                <p>At:</p>
+            </div>
+            <div class="col-8">
+                <p><input type="text" id="datepicker-tourist-results-time"></p>
+            </div>
+        </div>
+
+        <!-- mobile date and time -->
+        <div class="mobile-dt">
+            <div class="row">
+                <div class="col-4">
+                    <label for="datetime-4">On:</label>
+                </div>
+                <div class="col-8 results-dt-mob">
+                        <input class="datetime" type="datetime-local" name="datetime-4" id="datetime-tourist-results">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <button type="submit" class="btn btn-warning p-1 edit-journey">Edit journey details</button>
+        </div>
+    </div>
+
+    <!-- overall time -->
+    <div class="card results">
+        <div id="overall-time">
+            <div class="row">
+                <p id="journey-time">12:50 - 13:10</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8" id="overall-duration">
+                <p>Total duration:    <span id="duration-val-tourist">20 mins</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- estimate and directions -->
+    <div class="card results">
+        <div class="row">
+            <ul id="direction-tourist"></ul>
+        </div>
+    </div>
+    <div class="mobile-space"></div>
+
+
+        
+       
+
+</div>

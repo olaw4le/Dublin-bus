@@ -1,3 +1,28 @@
+
+$(document).ready(function () {
+
+  // flatpickr date https://flatpickr.js.org/options/
+  $("#datepicker-tab1").flatpickr({
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: 'yy-m-d',
+    defaultDate: new Date(),
+    minDate: "today"
+  });
+
+  // flatpickr time
+  $('#timepicker-tab1').flatpickr({
+    enableTime: true,
+    defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+    dateFormat: 'H:i',
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "05:00",
+    minuteIncrement: 1
+  });
+
+});
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
@@ -46,10 +71,8 @@ function routes() {
 
 
   // Create a map and center it on starting point
-  var map = new google.maps.Map(document.getElementById('map'), {
-    //          zoom: 14,
-    center: { lat: starting_lat, lng: starting_lng }
-  });
+  var center = new google.maps.LatLng(starting_lat, starting_lng);
+  map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
   var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
@@ -84,13 +107,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-   
+
       // markers for each step.
       if (status === 'OK') {
-
-        staringAddress = response.routes[0].legs[0].start_address;
-
-        endingAddress = response.routes[0].legs[0].end_address;
 
         //trimming the origin address
         startingAddress = response.routes[0].legs[0].start_address;
@@ -103,25 +122,26 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         address2 = address2[0];
 
         //getting the value of the user selected time
-        var time= $("#datetime-tab1").val();
+        // var time = $("#datetime-tab1").val();
 
-        var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
+        // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
 
-        dateArr = time.split('T');
-        date = dateArr[0];
-        dateElements = date.split('-');
-        year = dateElements[0];
-        month = dateElements[1];
-        date = dateElements[2];
-        dateToDisplay = date + "-" + month + "-" + year;
+        // dateArr = time.split('T');
+        // date = dateArr[0];
+        // dateElements = date.split('-');
+        // year = dateElements[0];
+        // month = dateElements[1];
+        // date = dateElements[2];
+        // dateToDisplay = date + "-" + month + "-" + year;
 
-        time = dateArr[1];
+        // time = dateArr[1];
 
+        // fill journey details into summary results
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
-        $("#datetime-tab").html(dateToDisplay + ", " + time);
+        // $("#datetime-tab").html(dateToDisplay + ", " + time);
 
-    
+
         journeysteps = response.routes[0].legs[0].steps;
 
         var direction_text = $("#direction");
@@ -151,12 +171,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var arrival_latlng;
           var departure_latlng;
 
-          var bus_details=[]; //array to store each bus journey 
-          var journey_steps={}; //array for each bus steps in the journey
+          var bus_details = []; //array to store each bus journey 
+          var journey_steps = {}; //array for each bus steps in the journey
 
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
-         
+
 
           //picture
           var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
@@ -187,38 +207,38 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
-            departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
-            arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
+            departure_latlng = journeysteps[i].start_location.lat() + ',' + journeysteps[i].start_location.lng();
+            arrival_latlng = journeysteps[i].end_location.lat() + ',' + journeysteps[i].start_location.lng();
 
             //trimming the instruction text
             instruction = instruction.split(',');
             instruction = instruction[0];
 
 
-            
-            journey_steps["route_number"]=Route_number;
-            journey_steps["arrival_stop"]=arrival_stop;
-            journey_steps["departure_stop"]=departure_stop;
-            journey_steps["num_stops"]=num_stops;
-            journey_steps["departure_latlng"]=departure_latlng;
-            journey_steps["arrival_latlng"]=arrival_latlng;
 
-        // Append the dictionary made for each bus
-        bus_details.push(journey_steps);
+            journey_steps["route_number"] = Route_number;
+            journey_steps["arrival_stop"] = arrival_stop;
+            journey_steps["departure_stop"] = departure_stop;
+            journey_steps["num_stops"] = num_stops;
+            journey_steps["departure_latlng"] = departure_latlng;
+            journey_steps["arrival_latlng"] = arrival_latlng;
 
-        //turning the list into a json
-        bus_details=JSON.stringify(bus_details);
+            // Append the dictionary made for each bus
+            bus_details.push(journey_steps);
 
-        // sending a post request to the server
-        $.ajax({
-        type:"POST",
-        url: "planner/",
-        data:{bus_details},
-              sucess:function(){
-                  alert("successfully posted")
+            //turning the list into a json
+            bus_details = JSON.stringify(bus_details);
+
+            // sending a post request to the server
+            $.ajax({
+              type: "POST",
+              url: "planner/",
+              data: { bus_details },
+              sucess: function () {
+                alert("successfully posted")
 
               }
-    }) 
+            })
 
             direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + duration + '</li>');
 
@@ -261,49 +281,83 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 }
 
 
-
-
-
-
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
-  
+
   $('#go').on('click', function () {
-    var datetimeValue = $("#datetime-tab1").val();
-    var arr = datetimeValue.split('T');
-    var date = arr[0];
-    var time = arr[1];
- 
-    console.log("date: " + date);
-    console.log("time: "+ time);
+    var time, date, datetimeValue;
+    // use different variables for date and time depending on screen size
+      if ($(window).width() < 992) {
+        datetimeValue = $("#datetime-tab1").val();
+        var arr = datetimeValue.split('T');
+        date = arr[0];
+        console.log("mobile date: " + date);
+        time = arr[1];
+      } else {
+        var date = $("#datepicker-tab1").val();
+        console.log("desktop date: " + date);
+        time = $('#timepicker-tab1').val();
+        console.log("desktop time: " + time);
+
+        // use date and time here to make properly formatted datetimeValue for mobile
+        datetimeValue = date + 'T' + time;
+      }
+      // show date and time inputs on desktop results page for better user experience
+      // default date and time are those selected by user on input page
+      $("#datepicker-tab1-results-date").flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: 'yy-m-d',
+        defaultDate: date,
+        minDate: "today",
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close date tab1");
+      },
+      });
+
+      $('#datepicker-tab1-results-time').flatpickr({
+        enableTime: true,
+        defaultDate: time,
+        dateFormat: 'H:i',
+        noCalendar: true,
+        time_24hr: true,
+        minTime: "05:00",
+        minuteIncrement: 1,
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close time tab1");
+      },
+      });
+
+    
+    $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
-    console.log("time: "+ time);
+    console.log("time: " + time);
     var timeSplit = time.split(':');
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-    console.log(timeSeconds); 
+    console.log(timeSeconds);
 
     // show results and routes
     routes();
     $(".form-area").hide();
     if ($(window).width() < 992) {
-        $("#map-interface").css("top", "300px");
-    }
+      $("#map-interface").css("top", "400px");
+  }
     $("#route-results").show();
-    
-    $('#map-interface').css("overflow-y", "scroll");
+
 
   });
 
   // add on click to edit-journey button to hide results and show journey planner
-  $('#edit-journey').on('click', function () {
+  $('.edit-journey').on('click', function () {
     $(".form-area").show();
-    $("#map-interface").css("top", "0px");
+    if ($(window).width() < 992) {
+      $("#map-interface").css("top", "0px");
+    }
     $("#route-results").hide();
-    //$("#route-results").attr
   });
-
-
 });
 
 
