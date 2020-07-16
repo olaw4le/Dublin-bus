@@ -1,8 +1,11 @@
 $(document).ready(function () {
 
+    $('#destination-tourist').hide();
+
+    // initialise all tooltips
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-      })
+    })
 
     // flatpickr date https://flatpickr.js.org/options/
     $("#datepicker-tourist").flatpickr({
@@ -30,6 +33,8 @@ $(document).ready(function () {
 var dublin = { lat: 53.3155395, lng: -6.4161858 };
 
 var markers = {};
+var destination_lat;
+var destination_lng;
 
 // loop through checkboxes and display markers on map using data attr
 $(".tourist-check").change(function () {
@@ -104,12 +109,16 @@ function createMarker(place, type, icon, markerList, rating) {
 
 
     // populate destination input box with location clicked on map
-    google.maps.event.addListener(marker, 'click', function () {
-        // convert lat and long to address using geocoder
-        var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
-        $('#destination-tourist').val(address);
-
-    });
+    google.maps.event.addListener(marker, 'click', (function (geocoder, ending_lat, ending_lng) {
+        return function () {
+            destination_lat = ending_lat;
+            destination_lng = ending_lng;
+            // convert lat and long to address using geocoder
+            var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
+            $('#destination-tourist').val(address);
+            $('#destination-tourist').show();
+        }
+    })(geocoder, ending_lat, ending_lng));
 }
 
 // geolocation for tourists origin
@@ -188,7 +197,7 @@ if (!geolocation) {
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
     // hide error when content of origin input box changed
-    $("#origin-tourist").on("input", function(){
+    $("#origin-tourist").on("input", function () {
         $('#geo-error').hide();
     });
 }
@@ -446,8 +455,6 @@ $(function () {
             $("#map-interface").css("top", "300px");
         }
         $("#route-results-tourist").show();
-
-
     });
 
     // add on click to edit-journey button to hide results and show journey planner

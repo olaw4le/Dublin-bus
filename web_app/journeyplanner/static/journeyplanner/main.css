@@ -256,6 +256,12 @@ ul {
   padding: 0px !important;
 }
 
+/* instructions to user on map interface */
+.instruction {
+  font-size: 0.8em;
+  margin-left: 15px;
+}
+
 
 
 /* all form input boxes for all tabs */
