@@ -15,7 +15,10 @@ urlpatterns = [
     path('tourist/', views.tourist, name = 'tourist'),
     url(r'^prediction/', views.prediction, name = 'prediction'),
     url(r'^planner/', views.planner, name = 'planner'),
+    url(r'^find_latlng/', views.find_latlng, name = 'latlng'),
+    url(r'^list_latlng/', views.list_latlng, name = 'stops_latlng'),
 ]
+
 
 
 
