@@ -122,24 +122,24 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         address2 = address2[0];
 
         //getting the value of the user selected time
-        var time = $("#datetime-tab1").val();
+        // var time = $("#datetime-tab1").val();
 
-        var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
+        // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
 
-        dateArr = time.split('T');
-        date = dateArr[0];
-        dateElements = date.split('-');
-        year = dateElements[0];
-        month = dateElements[1];
-        date = dateElements[2];
-        dateToDisplay = date + "-" + month + "-" + year;
+        // dateArr = time.split('T');
+        // date = dateArr[0];
+        // dateElements = date.split('-');
+        // year = dateElements[0];
+        // month = dateElements[1];
+        // date = dateElements[2];
+        // dateToDisplay = date + "-" + month + "-" + year;
 
-        time = dateArr[1];
+        // time = dateArr[1];
 
         // fill journey details into summary results
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
-        $("#datetime-tab").html(dateToDisplay + ", " + time);
+        // $("#datetime-tab").html(dateToDisplay + ", " + time);
 
 
         journeysteps = response.routes[0].legs[0].steps;
@@ -285,25 +285,35 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
   $('#go').on('click', function () {
-    var time, date
+    var time, date, datetimeValue;
     // use different variables for date and time depending on screen size
-    if ($(window).width() < 992) {
-      var datetimeValue = $("#datetime-tab1").val();
-      var arr = datetimeValue.split('T');
-      date = arr[0];
-      time = arr[1];
-    } else {
-      var dateValue = $("#datepicker-tab1").val();
-      time = $('#timepicker-tab1').val();
+      if ($(window).width() < 992) {
+        datetimeValue = $("#datetime-tab1").val();
+        var arr = datetimeValue.split('T');
+        date = arr[0];
+        console.log("mobile date: " + date);
+        time = arr[1];
+      } else {
+        var date = $("#datepicker-tab1").val();
+        console.log("desktop date: " + date);
+        time = $('#timepicker-tab1').val();
+        console.log("desktop time: " + time);
 
+        // use date and time here to make properly formatted datetimeValue for mobile
+        datetimeValue = date + 'T' + time;
+      }
       // show date and time inputs on desktop results page for better user experience
       // default date and time are those selected by user on input page
       $("#datepicker-tab1-results-date").flatpickr({
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: 'yy-m-d',
-        defaultDate: dateValue,
-        minDate: "today"
+        defaultDate: date,
+        minDate: "today",
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close date tab1");
+      },
       });
 
       $('#datepicker-tab1-results-time').flatpickr({
@@ -313,13 +323,21 @@ $(function () {
         noCalendar: true,
         time_24hr: true,
         minTime: "05:00",
-        minuteIncrement: 1
+        minuteIncrement: 1,
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close time tab1");
+      },
       });
-    }
+
+    
+    $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
+    console.log("time: " + time);
     var timeSplit = time.split(':');
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+    console.log(timeSeconds);
 
     // show results and routes
     routes();

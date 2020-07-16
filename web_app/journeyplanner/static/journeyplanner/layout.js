@@ -5,7 +5,10 @@ $(document).ready(function () {
     // function to populate datetime inputs with current date and time
     var currentDateTime = function () {
         var d = new Date();
-        var datestring = d.getFullYear() + "-" + "0" + (d.getMonth() + 1) + "-" + "0" + d.getDate() + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+        var month = ((d.getMonth()+1) < 10) ? "0" + (d.getMonth()+1) : (d.getMonth()+1);
+        var date = (d.getDate()  < 10) ? "0" + d.getDate() : d.getDate();
+        var datestring = d.getFullYear() + "-" + month + "-" + date + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+        console.log("full date " + datestring);
         return datestring;
     }
 
