@@ -108,14 +108,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-<<<<<<< HEAD
-
-||||||| 94a350c
-   
-=======
        console.log(response)
    
->>>>>>> tab1
       // markers for each step.
       if (status === 'OK') {
 
@@ -203,29 +197,15 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var arrival_latlng;
           var departure_latlng;
 
-<<<<<<< HEAD
-          var bus_details = []; //array to store each bus journey 
-          var journey_steps = {}; //array for each bus steps in the journey
-||||||| 94a350c
-          var bus_details=[]; //array to store each bus journey 
-          var journey_steps={}; //array for each bus steps in the journey
-=======
           
->>>>>>> tab1
 
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
-<<<<<<< HEAD
-
-||||||| 94a350c
-         
-=======
 
 
           
 
          
->>>>>>> tab1
 
           //picture
           var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
@@ -257,32 +237,14 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
-<<<<<<< HEAD
-            departure_latlng = journeysteps[i].start_location.lat() + ',' + journeysteps[i].start_location.lng();
-            arrival_latlng = journeysteps[i].end_location.lat() + ',' + journeysteps[i].start_location.lng();
-||||||| 94a350c
-            departure_latlng=journeysteps[i].start_location.lat()+ ',' + journeysteps[i].start_location.lng();
-            arrival_latlng=journeysteps[i].end_location.lat()+ ',' + journeysteps[i].start_location.lng();
-=======
             arrival_latlng=journeysteps[i].transit.arrival_stop.location.lat()+ ',' + journeysteps[i].transit.arrival_stop.location.lng();
             departure_latlng=journeysteps[i].transit.departure_stop.location.lat()+ ',' + journeysteps[i].transit.departure_stop.location.lng();
->>>>>>> tab1
 
             //trimming the instruction text
             instruction = instruction.split(',');
             instruction = instruction[0];
 
 
-<<<<<<< HEAD
-||||||| 94a350c
-            
-            journey_steps["route_number"]=Route_number;
-            journey_steps["arrival_stop"]=arrival_stop;
-            journey_steps["departure_stop"]=departure_stop;
-            journey_steps["num_stops"]=num_stops;
-            journey_steps["departure_latlng"]=departure_latlng;
-            journey_steps["arrival_latlng"]=arrival_latlng;
-=======
             
             journey_steps["route_number"]=Route_number;
             journey_steps["arrival_stop"]=arrival_stop;
@@ -293,52 +255,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           
           //turning the data to sent into json
             data=JSON.stringify(journey_steps);
->>>>>>> tab1
 
-<<<<<<< HEAD
-            journey_steps["route_number"] = Route_number;
-            journey_steps["arrival_stop"] = arrival_stop;
-            journey_steps["departure_stop"] = departure_stop;
-            journey_steps["num_stops"] = num_stops;
-            journey_steps["departure_latlng"] = departure_latlng;
-            journey_steps["arrival_latlng"] = arrival_latlng;
-
-            // Append the dictionary made for each bus
-            bus_details.push(journey_steps);
-
-            //turning the list into a json
-            bus_details = JSON.stringify(bus_details);
-
-            // sending a post request to the server
-            $.ajax({
-              type: "POST",
-              url: "planner/",
-              data: { bus_details },
-              sucess: function () {
-                alert("successfully posted")
-
-              }
-            })
-||||||| 94a350c
-        // Append the dictionary made for each bus
-        bus_details.push(journey_steps);
-
-        //turning the list into a json
-        bus_details=JSON.stringify(bus_details);
-
-        // sending a post request to the server
-        $.ajax({
-        type:"POST",
-        url: "planner/",
-        data:{bus_details},
-              sucess:function(){
-                  alert("successfully posted")
-
-              }
-    }) 
-=======
             
->>>>>>> tab1
 
             // sending a post request to the server
             $.ajax({
