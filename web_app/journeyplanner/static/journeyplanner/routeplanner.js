@@ -1,6 +1,10 @@
 
 $(document).ready(function () {
 
+//   for (var type in markers) {
+//     clearMarkers(markers[type]);
+// }
+
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
     altInput: true,

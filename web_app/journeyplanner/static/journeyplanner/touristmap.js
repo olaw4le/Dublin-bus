@@ -195,6 +195,7 @@ if (!geolocation) {
     });
 }
 
+
 // show route on map
 function routes_tourist() {
 
@@ -403,7 +404,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
     $('#go-tourist').on('click', function () {
-        console.log("inside click");
         var time, dateValue
         // use different variables for date and time depending on screen size
         if ($(window).width() < 992) {
