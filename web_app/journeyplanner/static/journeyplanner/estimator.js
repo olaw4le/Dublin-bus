@@ -137,15 +137,9 @@ function clearMarkers() {
   }
 
 
-<<<<<<< HEAD
-$(function () {
-||||||| 94a350c
-$(function() {
-=======
 $(function() {
     
  clearMarkers()
->>>>>>> tab1
 
     var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
         stations = data;
@@ -215,14 +209,8 @@ function route_list() {
 
 //getting the value of the selected sub route
 var sel_sub = "";
-<<<<<<< HEAD
-var direction = ""
-||||||| 94a350c
-var direction= ""
-=======
 var direction= ""
 var stop_list=[];
->>>>>>> tab1
 
 // function to populate the origin and destination
 function stops() {
@@ -252,52 +240,9 @@ function stops() {
             }
 
             // populating the inner html
-<<<<<<< HEAD
-            $("#estimator-origin").html(To)
-            $("#estimator-destination").html(To);
-||||||| 94a350c
           $("#estimator-origin").html(To) 
-          $("#estimator-destination").html(To);
-=======
-          $("#estimator-origin").html(To) 
->>>>>>> tab1
 
         }
-<<<<<<< HEAD
-        // else if(sel_sub != key){
-        //     // the stops the selected sub-routes goes through
-        //          bus_stops = routes.stops;
-        //          direction= routes.direction
-
-        //          // poppulating the origin and destination with the stops
-        //         for (i in bus_stops) {
-        //             To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
-
-        //         }
-        //         // populating the inner html
-        //         $("#estimator-origin").html(To);
-        //         $("#estimator-destination").html(To);
-
-
-        //     }
-||||||| 94a350c
-        // else if(sel_sub != key){
-        //     // the stops the selected sub-routes goes through
-        //          bus_stops = routes.stops;
-        //          direction= routes.direction
-    
-        //          // poppulating the origin and destination with the stops
-        //         for (i in bus_stops) {
-        //             To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
-    
-        //         }
-        //         // populating the inner html
-        //         $("#estimator-origin").html(To);
-        //         $("#estimator-destination").html(To);
-    
-    
-        //     }
-=======
     }  
 }
 var index;
@@ -322,15 +267,9 @@ var index;
            $("#estimator-destination").html(To)
         
 
->>>>>>> tab1
 
 
     }
-<<<<<<< HEAD
-
-||||||| 94a350c
-    
-=======
 
 
 function origin_marker(){
@@ -364,7 +303,6 @@ function origin_marker(){
             });
             }
       });
->>>>>>> tab1
 }
 
 
@@ -374,16 +312,10 @@ $("#estimator-route").on('keyup click change hover', route_list);
 // event listner to populate the origin and destination 
 $("#estimator-sub").change(stops);
 
-<<<<<<< HEAD
-var route, origin, destination;
-
-||||||| 94a350c
-=======
 $("#estimator-route").change(origin_marker);
 $("#estimator-origin").change(destination);
 
 
->>>>>>> tab1
 // go button for tab 2 to show and hide results
 $(function () {
 
@@ -470,14 +402,8 @@ $(function () {
 
             });
 
-<<<<<<< HEAD
-        // show results
-||||||| 94a350c
-    // show results
-=======
 
     // show results
->>>>>>> tab1
         $(".form-area").hide();
         if ($(window).width() < 992) {
             $("#map-interface").css("top", "400px");
