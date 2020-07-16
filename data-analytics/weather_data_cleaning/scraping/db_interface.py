@@ -17,11 +17,16 @@ def construct_sql(**kwargs):
         print("Error: No query type supplied")
         return False
 
+    if "column_names" in kwargs:
+        cols = ", ".join(kwargs["column_names"])
+    else:
+        cols = "*"
+
     # define template structures for sql queries
     templates = {
         "delete_all": "DELETE FROM %s",
-        "select_all": "SELECT * FROM %s",
-        "select_where": "SELECT * FROM %s WHERE %s",
+        "select_all": "SELECT FROM %s",
+        "select_where": "SELECT %s FROM %s WHERE %s",
         "insert": "INSERT INTO %s (%s) VALUES (%s)",
         "attr_names": """SELECT column_name FROM information_schema.columns WHERE table_name = '%s' ORDER BY ordinal_position"""
     }
@@ -89,7 +94,7 @@ def construct_sql(**kwargs):
         predicates = predicates[:-3]
 
         # combine the query template, table name, attribute names & attribute values
-        sql_query = templates[query_type] % (table_name, predicates)
+        sql_query = templates[query_type] % (cols, table_name, predicates)
 
         return sql_query
 
