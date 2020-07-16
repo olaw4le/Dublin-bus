@@ -39,6 +39,7 @@ $(document).ready(function () {
         // show map on input view of tourist map
         if (navId === "tourist-nav" && $(window).width() < 992) {
             $("#map-interface").css("top", "400px");
+
         } else {
             $("#map-interface").css("top", "0px")
         }
@@ -53,9 +54,9 @@ $(window).resize(function () {
         $("#show-map").html("Show Map");
         $("#map-interface").css("top", "");
 
-        if ($('#tourist-nav').hasClass("active")) {
-            $("#map-interface").css("top", "0px");
-        }
+        // if ($('#tourist-nav').hasClass("active")) {
+        //     $("#map-interface").css("top", "");
+        // }
     }
 });
 

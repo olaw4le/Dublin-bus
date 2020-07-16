@@ -309,6 +309,10 @@ label.dt-label {
   display: none;
 }
 
+.mobile-space{
+  display: none;
+}
+
 
 
 /* media queries to be kept at bottom of css file for ease of understanding */
@@ -317,14 +321,17 @@ label.dt-label {
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
 
-    /* #fullscreen-map {
+    #fullscreen-map {
       height: calc(100vh - 85px);
   
-    } */
-
-    #map-wrapper {
-      height: 400px;
     }
+
+    .navbar-brand {
+      color: white;
+      padding-left: 10px;
+      font-size: 1.6em;
+    }
+
       #map-interface {
         top: 0px;
         left: 0px;
@@ -381,6 +388,11 @@ label.dt-label {
   
       .mobile-dt{
         display: block;
+      }
+
+      .mobile-space {
+        display: block;
+        height: 80px;
       }
 
   
