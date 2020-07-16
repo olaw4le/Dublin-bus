@@ -147,12 +147,13 @@ $('#geolocation-tourist').on('click', function () {
 
             starting_lat = pos.lat;
             starting_lng = pos.lng;
+          
 
             // call geocoder function to convert coordinates to place name
             geocodeLatLng(geocoder, pos.lat, pos.lng);
 
             // center map at users location
-            map.setCenter(pos);
+            // map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
