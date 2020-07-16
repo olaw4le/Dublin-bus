@@ -323,8 +323,6 @@ label.dt-label {
   flex-direction: row;
 }
 
-
-
 /* media queries to be kept at bottom of css file for ease of understanding */
 
 /* media queries to make interface responsive */
@@ -414,6 +412,10 @@ label.dt-label {
         margin-bottom: 10px;
         margin-left: 5px;
       }
+      #geolocation-tourist {
+        margin: 0px 0px 0px 15px !important;
+      }
+     
 
   
     /* show map interface again when screen is stretched out */

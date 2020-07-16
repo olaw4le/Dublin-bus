@@ -52,6 +52,7 @@ var starting_lng;
 // destination location 
 var ending_lat;
 var ending_lng;
+var directionsRenderer;
 
 // The routes function that shows the route 
 function routes() {
@@ -75,7 +76,7 @@ function routes() {
   map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
-  var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+  directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
 
   // Instantiate an info window to hold step text.
   var stepDisplay = new google.maps.InfoWindow;
