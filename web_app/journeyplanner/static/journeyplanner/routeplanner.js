@@ -326,13 +326,7 @@ $(function () {
     $(".form-area").hide();
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "400px");
-      $('#map').on('click', function () {
-        $("#map-interface").css("top", "700px");
-      });
-      $('#map-interface').on('click', function () {
-        $("#map-interface").css("top", "400px");
-      });
-    }
+  }
     $("#route-results").show();
 
 

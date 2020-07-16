@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // hide destination box initially
     $('#destination-tourist').hide();
 
     // initialise all tooltips
@@ -64,7 +65,7 @@ $(".tourist-check").change(function () {
     }
 });
 
-
+//callback function which calls function to create markers
 function callback(results, status, type) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         $('#' + type + '-spin').hide();
@@ -72,12 +73,12 @@ function callback(results, status, type) {
         for (var i = 0; i < results.length; i++) {
             var icon = results[i].icon
             var rating = results[i].rating;
-            console.log(results[i]);
             createMarker(results[i], type, icon, markers[type], rating);
         }
     }
 }
 
+// clear markers from map when checkbox un-checked
 function clearMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
@@ -101,7 +102,6 @@ function createMarker(place, type, icon, markerList, rating) {
 
     markerList.push(marker);
 
-    
 
     // show name of place when mouse hovers over  marker
     google.maps.event.addListener(marker, 'mouseover', function () {
@@ -114,9 +114,6 @@ function createMarker(place, type, icon, markerList, rating) {
     google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
         return function () {
             destination_latlng = new google.maps.LatLng(ending_lat, ending_lng);
-            console.log(destination_latlng);
-            // convert lat and long to address using geocoder
-            // var address = geocodeLatLng(geocoder, ending_lat, ending_lng, "dest");
             name = placeName;
             $('#destination-tourist').val(placeName);
             $('#destination-tourist').show();
@@ -132,8 +129,6 @@ var ending_lng;
 var starting_lat;
 var starting_lng;
 var geolocation = false;
-
-// the below geolocation commented out so map doesn't move to france - uncomment to try in dublin
 
 // HTML5 geolocation from https://developers.google.com/maps/documentation/javascript/geolocation
 $('#geolocation-tourist').on('click', function () {
@@ -152,8 +147,6 @@ $('#geolocation-tourist').on('click', function () {
             // call geocoder function to convert coordinates to place name
             geocodeLatLng(geocoder, pos.lat, pos.lng);
 
-            // center map at users location
-            // map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -172,7 +165,7 @@ $('#geolocation-tourist').on('click', function () {
     };
 })
 
-// function to geocode coordinates into address
+// function to geocode geolocation coordinates into address
 function geocodeLatLng(geocoder, lat, lng, dest = "") {
     var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
     geocoder.geocode({ location: latlng }, function (results, status) {
@@ -456,7 +449,7 @@ $(function () {
         $(".form-area").hide();
         $("#checkboxes").hide();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "300px");
+            $("#map-interface").css("top", "400px");
         }
         $("#route-results-tourist").show();
     });
@@ -466,7 +459,7 @@ $(function () {
         $("#checkboxes").show();
         $(".form-area").show();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "500px");
+            $("#map-interface").css("top", "400px");
         }
         $("#route-results-tourist").hide();
     });

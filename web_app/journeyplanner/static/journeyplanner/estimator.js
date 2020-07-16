@@ -334,7 +334,7 @@ $(function () {
     // show results
         $(".form-area").hide();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "300px");
+            $("#map-interface").css("top", "400px");
         }
         $("#stop-to-stop-results").show();
 
