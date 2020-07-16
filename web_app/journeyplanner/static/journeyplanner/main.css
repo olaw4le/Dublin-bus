@@ -330,7 +330,8 @@ label.dt-label {
   @media only screen and (max-width: 992px) {
 
     #fullscreen-map {
-      height: calc(100vh - 85px);
+      /* height: calc(100vh - 85px); */
+      height: 400px;
   
     }
 
