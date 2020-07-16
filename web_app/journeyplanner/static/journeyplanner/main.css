@@ -313,6 +313,11 @@ label.dt-label {
   display: none;
 }
 
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
 
 
 /* media queries to be kept at bottom of css file for ease of understanding */
