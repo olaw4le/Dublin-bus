@@ -169,6 +169,16 @@ html, body {
     height: 30px;
   }
 
+  #datepicker-tab2-results-time {
+    height: 30px;
+  }
+
+  #datepicker-tab2-results-date {
+    height: 30px;
+  }
+
+ 
+
   .btn-secondary {
     padding: 5px;
     margin-left: 20px;
@@ -329,6 +339,15 @@ label.dt-label {
 .flex {
   display: flex;
   flex-direction: row;
+}
+
+.summary-results {
+  height: 30px;
+}
+
+.summary-results-dt {
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 /* media queries to be kept at bottom of css file for ease of understanding */
