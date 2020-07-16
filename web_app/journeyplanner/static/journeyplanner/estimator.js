@@ -4,8 +4,14 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 
+function clearMarkers() {
+    setMapOnAll(null);
+  }
+
 
 $(function() {
+    
+ clearMarkers()
 
 var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
     stations = data;
@@ -217,8 +223,6 @@ $(function () {
             // console.log(result);
 
         });
-
-
 
 
     // show results
