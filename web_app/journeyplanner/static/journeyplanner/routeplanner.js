@@ -8,6 +8,17 @@ $(document).ready(function () {
   $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
     removeLineFromMap);
 
+  // initialise all tooltips
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  // call geolocation function when button clicked
+  $('#geolocation-routeplanner').on('click', function(){
+    getGeolocation('origin');
+    $('.geo-spinner').show();
+});
+
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
     altInput: true,
@@ -51,7 +62,6 @@ function createMarker(place) {
   });
 }
 
-
 //the starting location   
 var starting_lat;
 var starting_lng;
@@ -67,8 +77,11 @@ function removeLineFromMap() {
     directionsRenderer.setDirections({ routes: [] });
   }
   // First, remove any existing markers from the map.
-  for (var i = 0; i < allMarkers.length; i++) {
-    allMarkers[i].setMap(null);
+  console.log(allMarkers);
+  if(allMarkers) {
+    for (var i = 0; i < allMarkers.length; i++) {
+      allMarkers[i].setMap(null);
+    }
   }
 }
 
@@ -139,20 +152,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         address2 = endingAddress.split(',');
         address2 = address2[0];
 
-        //getting the value of the user selected time
-        // var time = $("#datetime-tab1").val();
-
-        // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
-
-        // dateArr = time.split('T');
-        // date = dateArr[0];
-        // dateElements = date.split('-');
-        // year = dateElements[0];
-        // month = dateElements[1];
-        // date = dateElements[2];
-        // dateToDisplay = date + "-" + month + "-" + year;
-
-        // time = dateArr[1];
 
         // fill journey details into summary results
         $("#origin-tab1").html(address1);
@@ -173,17 +172,10 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         var input_time = arr[1];
 
 
-
         // convert time to seconds since midnight
         // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-
-
-
-
-
-
 
         var prediction = 0;
 
@@ -217,10 +209,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
-
-
-
-
 
 
           //picture

@@ -250,7 +250,7 @@ ul {
   display:none;
 }
 
-#question {
+.question {
   color: #4484CE;
   height: fit-content !important;
   padding: 0px 20px 5px 5px !important;
@@ -297,7 +297,7 @@ label.dt-label {
 #origin-tourist {
   padding-bottom: 5px !important;
 }
-#geolocation-tourist {
+.geolocation-option {
   height: fit-content !important;
   width: fit-content !important;
   margin: 0px !important;
@@ -317,6 +317,12 @@ label.dt-label {
 .flex {
   display: flex;
   flex-direction: row;
+}
+
+.geo-spinner {
+  display: none;
+  margin-left: 0px;
+  margin-top: 5px;
 }
 
 
