@@ -29,9 +29,10 @@ html, body {
     left: 50px;
     bottom: 50px;
     width: 480px;
-    height: 550px; /* need to fix */
+    height: calc(100vh - 200px);
     border: none;
     overflow-y: auto;
+    overflow-x: hidden;
 
   }
 
