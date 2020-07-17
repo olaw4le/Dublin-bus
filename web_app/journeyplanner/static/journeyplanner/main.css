@@ -246,7 +246,7 @@ ul {
   margin-top: 5px;
 }
 
-#geo-error {
+.geo-error {
   display:none;
 }
 

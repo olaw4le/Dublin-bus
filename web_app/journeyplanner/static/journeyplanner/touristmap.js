@@ -28,6 +28,21 @@ $(document).ready(function () {
         minuteIncrement: 1
     });
 
+    var input1 = document.getElementById("origin-tourist");
+    var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+    origin = new google.maps.places.Autocomplete(input1, options);
+    // hide error when content of origin input box changed
+    $("#origin-tourist").on("input", function () {
+        $('.geo-error').hide();
+    });
+
+
+    // call the geolocation function when button is clicked
+    $('#geolocation-tourist').on('click', function () {
+        getGeolocation('origin-tourist');
+        $('.geo-spinner').show();
+    });
+
 });
 
 // https://developers.google.com/maps/documentation/javascript/places
@@ -57,7 +72,7 @@ $(".tourist-check").change(function () {
             callback(results, status, type)
         });
 
-    // hide markers when checkbox un-checked
+        // hide markers when checkbox un-checked
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
@@ -122,7 +137,7 @@ function createMarker(place, type, icon, markerList, rating) {
     })(place.name, ending_lat, ending_lng));
 }
 
-// geolocation for tourists origin
+
 infoWindow = new google.maps.InfoWindow;
 
 var ending_lat;
@@ -131,11 +146,6 @@ var starting_lat;
 var starting_lng;
 
 
-// call the geolocation function when button is clicked
-$('#geolocation-tourist').on('click', function(){
-    getGeolocation('origin-tourist');
-    $('.geo-spinner').show();
-});
 
 
 // show route on map

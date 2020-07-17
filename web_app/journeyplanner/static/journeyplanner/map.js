@@ -59,7 +59,8 @@ function getGeolocation(inputID) {
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        $('#geo-error').show();
+        $('.geo-error').show();
+        $('.geo-spinner').hide();
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
             'Error: The Geolocation service failed.' :
@@ -67,16 +68,7 @@ function getGeolocation(inputID) {
         infoWindow.open(map);
     };
 
-    // add auto-complete option to origin in case user doesn't allow geolocation
-    if (!geolocation) {
-        var input1 = document.getElementById(inputID);
-        var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
-        origin = new google.maps.places.Autocomplete(input1, options);
-        // hide error when content of origin input box changed
-        $('#' + inputID).on("input", function () {
-            $('#geo-error').hide();
-        });
-    }
+
 }
 
 // function to geocode geolocation coordinates into address
@@ -96,3 +88,4 @@ function geocodeLatLng(geocoder, lat, lng, inputID) {
         }
     })
 };
+
