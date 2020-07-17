@@ -21,8 +21,6 @@ $(document).ready(function () {
         navId = navIdFull.split("-")[0];
 
         $("#map-interface-content").load("/" + navId, function () {
-            console.log("id: " + navIdFull);
-            console.log("id bottom: " + '#' + navId + '-nav');
             $('#' + navId + '-nav').addClass("active");
             $(".datetime").val(currentDateTime());
         });

@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    // remove tourist markers when user navigates to different tab using name spacing
+    $(document).off('click.tourist');
+    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #routeplanner-nav, #allroutes-nav", function(){
+        clearAllTouristMarkers(markers)
+    });
+
     // hide destination box initially
     $('#destination-tourist').hide();
 
@@ -79,11 +85,18 @@ function callback(results, status, type) {
     }
 }
 
-// clear markers from map when checkbox un-checked
+// clear markers for a specific Place Type from map when checkbox un-checked
 function clearMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
     });
+}
+
+// function to clear markers of all Place Types from tourist map
+function clearAllTouristMarkers(markers) {
+    for (var type in markers) {
+        clearMarkers(markers[type]);
+    }
 }
 
 // create markers
@@ -109,7 +122,6 @@ function createMarker(place, type, icon, markerList, rating) {
         infowindow.setContent(place.name + "<br>Rating: " + rating);
         infowindow.open(map, this);
     });
-
 
     // populate destination input box with location clicked on map
     google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
@@ -195,14 +207,11 @@ if (!geolocation) {
     });
 }
 
-
 // show route on map
 function routes_tourist() {
 
     // clear tourist markers from map
-    for (var type in markers) {
-        clearMarkers(markers[type]);
-    }
+    clearAllTouristMarkers(markers);
 
 
     if (!geolocation) {
@@ -460,3 +469,6 @@ $(function () {
         $("#route-results-tourist").hide();
     });
 });
+
+
+
