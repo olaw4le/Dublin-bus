@@ -1,6 +1,13 @@
 
 $(document).ready(function () {
 
+  // .off ensures onclicks are not added multiple times
+  $(document).off("click.routes");
+
+  // Remove routes when navigating to another tab
+  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
+    removeLineFromMap);
+
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
     altInput: true,
@@ -52,6 +59,18 @@ var starting_lng;
 // destination location 
 var ending_lat;
 var ending_lng;
+var directionsRenderer;
+var allMarkers = [];
+
+function removeLineFromMap() {
+  if (directionsRenderer) {
+    directionsRenderer.setDirections({ routes: [] });
+  }
+  // First, remove any existing markers from the map.
+  for (var i = 0; i < allMarkers.length; i++) {
+    allMarkers[i].setMap(null);
+  }
+}
 
 // The routes function that shows the route 
 function routes() {
@@ -75,7 +94,7 @@ function routes() {
   map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
-  var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+  directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
 
   // Instantiate an info window to hold step text.
   var stepDisplay = new google.maps.InfoWindow;
@@ -88,10 +107,7 @@ function routes() {
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
 
-  // First, remove any existing markers from the map.
-  for (var i = 0; i < markerArray.length; i++) {
-    markerArray[i].setMap(null);
-  }
+
 
   // Retrieve the start and end locations and create a DirectionsRequest using
   // Bus directions.
@@ -108,8 +124,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-       console.log(response)
-   
+      console.log(response)
+
       // markers for each step.
       if (status === 'OK') {
 
@@ -147,8 +163,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         journeysteps = response.routes[0].legs[0].steps;
 
         var direction_text = $("#direction");
-        var journey_list=[]
-        var bus_details=[]; //array to store each bus journey 
+        var journey_list = []
+        var bus_details = []; //array to store each bus journey 
 
 
         var datetimeValue = $("#datetime-tab1").val();
@@ -156,9 +172,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         var date1 = arr[0];
         var input_time = arr[1];
 
-      
 
-         // convert time to seconds since midnight
+
+        // convert time to seconds since midnight
         // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
@@ -169,7 +185,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
 
 
-        var prediction=0;
+        var prediction = 0;
 
 
         for (var i = 0; i < journeysteps.length; i++) {
@@ -197,15 +213,15 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           var arrival_latlng;
           var departure_latlng;
 
-          
+
 
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
 
 
-          
 
-         
+
+
 
           //picture
           var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
@@ -229,7 +245,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           }
 
           else if (travelMode == "TRANSIT") {
-            var journey_steps={}; //dictionary for each bus steps in the journey
+            var journey_steps = {}; //dictionary for each bus steps in the journey
             distance = journeysteps[i].distance.text;
             //duration=journeysteps[i].duration.text
             instruction = journeysteps[i].instructions;
@@ -237,51 +253,53 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
             departure_stop = journeysteps[i].transit.departure_stop.name;
             num_stops = journeysteps[i].transit.num_stops;
-            arrival_latlng=journeysteps[i].transit.arrival_stop.location.lat()+ ',' + journeysteps[i].transit.arrival_stop.location.lng();
-            departure_latlng=journeysteps[i].transit.departure_stop.location.lat()+ ',' + journeysteps[i].transit.departure_stop.location.lng();
+            arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
+            departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
 
             //trimming the instruction text
             instruction = instruction.split(',');
             instruction = instruction[0];
 
 
-            
-            journey_steps["route_number"]=Route_number;
-            journey_steps["arrival_stop"]=arrival_stop;
-            journey_steps["departure_stop"]=departure_stop;
-            journey_steps["num_stops"]=num_stops;
-            journey_steps["departure_latlng"]=departure_latlng;
-            journey_steps["arrival_latlng"]=arrival_latlng;
-          
-          //turning the data to sent into json
-            data=JSON.stringify(journey_steps);
 
-            
+            journey_steps["route_number"] = Route_number;
+            journey_steps["arrival_stop"] = arrival_stop;
+            journey_steps["departure_stop"] = departure_stop;
+            journey_steps["num_stops"] = num_stops;
+            journey_steps["departure_latlng"] = departure_latlng;
+            journey_steps["arrival_latlng"] = arrival_latlng;
+
+            //turning the data to sent into json
+            data = JSON.stringify(journey_steps);
+
+
 
             // sending a post request to the server
             $.ajax({
-              type:"POST",
+              type: "POST",
               url: "planner/",
-              data:{data,
-                date:date1,
-                time:timeSeconds,}
+              data: {
+                data,
+                date: date1,
+                time: timeSeconds,
+              }
+            })
+              .done(function (response) {
+                prediction = response
+                console.log(prediction)
+                alert("successfully posted")
+
+                console.log(prediction)
+
               })
-                .done(function(response){
-                      prediction= response
-                      console.log(prediction)
-                        alert("successfully posted")
-                      
-                        console.log(prediction)
 
-                    })
-                    
 
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
-      
+            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
+
 
           };
         };
-       ;
+        ;
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
@@ -305,6 +323,7 @@ function showSteps(directionResult, markerArray, stepDisplay, map) {
     marker.setPosition(myRoute.steps[i].start_location);
     attachInstructionText(
       stepDisplay, marker, myRoute.steps[i].instructions, map);
+    allMarkers.push(marker);
   }
 }
 
@@ -323,52 +342,56 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
   $('#go').on('click', function () {
+
+    removeLineFromMap();
+
+
     var time, date, datetimeValue;
     // use different variables for date and time depending on screen size
-      if ($(window).width() < 992) {
-        datetimeValue = $("#datetime-tab1").val();
-        var arr = datetimeValue.split('T');
-        date = arr[0];
-        console.log("mobile date: " + date);
-        time = arr[1];
-      } else {
-        var date = $("#datepicker-tab1").val();
-        console.log("desktop date: " + date);
-        time = $('#timepicker-tab1').val();
-        console.log("desktop time: " + time);
+    if ($(window).width() < 992) {
+      datetimeValue = $("#datetime-tab1").val();
+      var arr = datetimeValue.split('T');
+      date = arr[0];
+      console.log("mobile date: " + date);
+      time = arr[1];
+    } else {
+      var date = $("#datepicker-tab1").val();
+      console.log("desktop date: " + date);
+      time = $('#timepicker-tab1').val();
+      console.log("desktop time: " + time);
 
-        // use date and time here to make properly formatted datetimeValue for mobile
-        datetimeValue = date + 'T' + time;
-      }
-      // show date and time inputs on desktop results page for better user experience
-      // default date and time are those selected by user on input page
-      $("#datepicker-tab1-results-date").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: 'yy-m-d',
-        defaultDate: date,
-        minDate: "today",
-        onClose: function (selectedDates, dateStr, instance) {
-          // sendDateTimeChangePostRequest();
-          console.log("on close date tab1");
+      // use date and time here to make properly formatted datetimeValue for mobile
+      datetimeValue = date + 'T' + time;
+    }
+    // show date and time inputs on desktop results page for better user experience
+    // default date and time are those selected by user on input page
+    $("#datepicker-tab1-results-date").flatpickr({
+      altInput: true,
+      altFormat: "F j, Y",
+      dateFormat: 'yy-m-d',
+      defaultDate: date,
+      minDate: "today",
+      onClose: function (selectedDates, dateStr, instance) {
+        // sendDateTimeChangePostRequest();
+        console.log("on close date tab1");
       },
-      });
+    });
 
-      $('#datepicker-tab1-results-time').flatpickr({
-        enableTime: true,
-        defaultDate: time,
-        dateFormat: 'H:i',
-        noCalendar: true,
-        time_24hr: true,
-        minTime: "05:00",
-        minuteIncrement: 1,
-        onClose: function (selectedDates, dateStr, instance) {
-          // sendDateTimeChangePostRequest();
-          console.log("on close time tab1");
+    $('#datepicker-tab1-results-time').flatpickr({
+      enableTime: true,
+      defaultDate: time,
+      dateFormat: 'H:i',
+      noCalendar: true,
+      time_24hr: true,
+      minTime: "05:00",
+      minuteIncrement: 1,
+      onClose: function (selectedDates, dateStr, instance) {
+        // sendDateTimeChangePostRequest();
+        console.log("on close time tab1");
       },
-      });
+    });
 
-    
+
     $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
@@ -382,7 +405,7 @@ $(function () {
     $(".form-area").hide();
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "400px");
-  }
+    }
     $("#route-results").show();
 
 

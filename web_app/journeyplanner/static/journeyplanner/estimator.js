@@ -132,14 +132,14 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 
-function clearMarkers() {
-    setMapOnAll(null);
-  }
+// function clearMarkers() {
+//     setMapOnAll(null);
+//   }
 
 
 $(function() {
     
- clearMarkers()
+//  clearMarkers()
 
     var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
         stations = data;
