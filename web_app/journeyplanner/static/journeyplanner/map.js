@@ -33,6 +33,7 @@ function initMap() {
     });
 }
 
+// function to get users geolocation
 function getGeolocation(inputID) {
     geolocation = true;
     if (navigator.geolocation) {
