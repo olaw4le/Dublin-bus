@@ -39,12 +39,6 @@ def home(request):
     # posts variable will now be accessible from within home.html
     return render(request, 'journeyplanner/home.html', context) #render still returns a HttpResponse
 
-def about(request):
-    # can also pass dictionary in directly as arg
-    return render(request, 'journeyplanner/about.html', {'title': 'About'})
-
-# Create your views here.
-
 def routeplanner(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/routeplanner.html')
@@ -52,6 +46,10 @@ def routeplanner(request):
 def allroutes(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/allroutes.html')
+
+def realtime(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/realtime.html') 
 
 def leap(request):
     # can also pass dictionary in directly as arg

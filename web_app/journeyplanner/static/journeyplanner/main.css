@@ -28,7 +28,7 @@ html, body {
     top: 100px;
     left: 50px;
     bottom: 50px;
-    width: 480px;
+    width: 500px;
     height: 550px; /* need to fix */
     border: none;
     overflow-y: auto;
@@ -51,13 +51,13 @@ html, body {
     top: 3.5rem;
     left: 50px;
     height: 70px;
-    width: 480px;
+    width: 500px;
     background-color: white;
 
   }
 
   .nav-tabs .nav-item {
-    width: 120px;
+    width: 100px;
     height: 37px;
     
   }
