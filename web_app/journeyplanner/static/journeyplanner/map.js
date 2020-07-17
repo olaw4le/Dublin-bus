@@ -23,52 +23,15 @@ function initMap() {
 
     //showing the map
     map = new google.maps.Map(
-        document.getElementById('map'), { 
-            center: dublin, 
-            zoom: 14,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.TOP_RIGHT
-              }
-         });
-
-
-//     // marker for the current location 
-//     var current1 = new google.maps.Marker({
-//         position: current,
-//         map: map,
-//         title: "You are here!"
-//     });
-
-//     infowindow = new google.maps.InfoWindow();
-
-//     // request to find the nearest bus station 
-//     var request = {
-//         location: current,
-//         radius: '500',
-//         type: ['transit_station']
-//     };
-
-//     service = new google.maps.places.PlacesService(map);
-//     service.nearbySearch(request, callback);
-// }
-
-// function callback(results, status) {
-//     if (status == google.maps.places.PlacesServiceStatus.OK) {
-//         for (var i = 0; i < results.length; i++) {
-//             createMarker(results[i]);
-//         }
-//     }
+        document.getElementById('map'), {
+        center: dublin,
+        zoom: 12,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.TOP_RIGHT
+        }
+    });
 }
-
-// // Removes the markers from the map, but keeps them in the array.
-// function clearMarkers() {
-//     setMapOnAll(null);
-//   }
-
-// $("#nav-tab").click(clearMarkers)
-// $("#leap-tab").click(clearMarkers)
-// $("#tourist-tab").click(clearMarkers)
 
 function getGeolocation(inputID) {
     geolocation = true;
@@ -81,7 +44,7 @@ function getGeolocation(inputID) {
 
             starting_lat = pos.lat;
             starting_lng = pos.lng;
-          
+
 
             // call geocoder function to convert coordinates to place name
             geocodeLatLng(geocoder, pos.lat, pos.lng, inputID);
@@ -103,7 +66,7 @@ function getGeolocation(inputID) {
         infoWindow.open(map);
     };
 
-        // add auto-complete option to origin in case user doesn't allow geolocation
+    // add auto-complete option to origin in case user doesn't allow geolocation
     if (!geolocation) {
         var input1 = document.getElementById(inputID);
         var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
