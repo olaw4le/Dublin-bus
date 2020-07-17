@@ -64,12 +64,12 @@ function callback(results, status) {
     }
 }
 
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-    setMapOnAll(null);
-  }
+// // Removes the markers from the map, but keeps them in the array.
+// function clearMarkers() {
+//     setMapOnAll(null);
+//   }
 
-$("#nav-tab").click(clearMarkers)
-$("#leap-tab").click(clearMarkers)
-$("#tourist-tab").click(clearMarkers)
+// $("#nav-tab").click(clearMarkers)
+// $("#leap-tab").click(clearMarkers)
+// $("#tourist-tab").click(clearMarkers)
 
