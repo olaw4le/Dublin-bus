@@ -134,6 +134,7 @@ var starting_lng;
 // call the geolocation function when button is clicked
 $('#geolocation-tourist').on('click', function(){
     getGeolocation('origin-tourist');
+    $('.geo-spinner').show();
 });
 
 

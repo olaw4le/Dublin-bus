@@ -16,6 +16,7 @@ $(document).ready(function () {
   // call geolocation function when button clicked
   $('#geolocation-routeplanner').on('click', function(){
     getGeolocation('origin');
+    $('.geo-spinner').show();
 });
 
   // flatpickr date https://flatpickr.js.org/options/

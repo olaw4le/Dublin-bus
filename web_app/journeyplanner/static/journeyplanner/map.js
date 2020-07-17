@@ -86,6 +86,7 @@ function geocodeLatLng(geocoder, lat, lng, inputID) {
             if (results[0]) {
                 // populate origin input with geolocation 
                 $('#' + inputID).val(results[0].formatted_address);
+                $('.geo-spinner').hide();
             } else {
                 window.alert("No results found");
             }

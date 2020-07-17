@@ -319,6 +319,12 @@ label.dt-label {
   flex-direction: row;
 }
 
+.geo-spinner {
+  display: none;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
 
 
 /* media queries to be kept at bottom of css file for ease of understanding */
