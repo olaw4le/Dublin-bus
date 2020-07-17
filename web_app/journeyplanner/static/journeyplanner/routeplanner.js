@@ -47,6 +47,9 @@ var input2 = document.getElementById("destination");
 var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
 origin = new google.maps.places.Autocomplete(input1, options);
 destination = new google.maps.places.Autocomplete(input2, options);
+$("#origin").on("input", function () {
+  $('.geo-error').hide();
+});
 
 // function to create a marker for the bus station nearby from the user location 
 function createMarker(place) {
