@@ -26,9 +26,9 @@ html, body {
     position: absolute;
     display: block;
     top: 85px;
-    left: 50px;
+    left: 20px;
     bottom: 65px;
-    width: 480px;
+    width: 525px;
     height: calc(100vh - 200px);
     border: none;
     overflow-y: auto;
@@ -50,15 +50,15 @@ html, body {
    .nav-tabs {
     position: absolute;
     top: 40px;
-    left: 50px;
+    left: 20px;
     height: 70px;
-    width: 480px;
+    width: 525px;
     background-color: white;
 
   }
 
   .nav-tabs .nav-item {
-    width: 120px;
+    width: 105px;
     height: 37px;
     
   }
