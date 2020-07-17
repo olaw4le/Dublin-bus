@@ -119,10 +119,26 @@
                 <!-- show loader while user waiting for result -->
                 <div class="spinner-border text-secondary" role="status">
                     <span class="sr-only">Loading...</span>
-                  </div>
+                </div>
                   
                 <!-- show result -->
-                <div class="col-6" id="stop-to-stop-estimate"></div>
+                <div class="col-6" id="stop-to-stop-estimate">
+                    
+                    <div class="row" id="results-route-number">Route Number Goes Here</div>
+                    <div class="row" id="results-route-stops">Stops Numbers Go Here</div>
+                    <div class="row" id="results-description">Text Description Of Results Goes Here</div>
+                    
+                    <!-- define the canvas where the chart will be drawn -->
+                    <canvas id="results-canvas"></canvas>
+                    
+                    <!-- a toggle switch for changing between times-by-hour or times-by-day on graph -->
+                    <!-- source https://getbootstrap.com/docs/4.2/components/forms/#switches -->
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="results-canvas-toggle">
+                        <label class="custom-control-label" for="customSwitch1"></label>
+                    </div>
+                </div>
+
             </div>
             
         </div>
