@@ -28,29 +28,14 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 
-<<<<<<< HEAD
-||||||| c97969a
-function clearMarkers() {
-    setMapOnAll(null);
-  }
-
-
-=======
 // function clearMarkers() {
 //     setMapOnAll(null);
 //   }
 
 
->>>>>>> 4ae5d8b73474f5500b05c6a9b15d223112233060
 $(function() {
-<<<<<<< HEAD
-||||||| c97969a
-    
- clearMarkers()
-=======
     
 //  clearMarkers()
->>>>>>> 4ae5d8b73474f5500b05c6a9b15d223112233060
 
     var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
         stations = data;
