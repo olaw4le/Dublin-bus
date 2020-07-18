@@ -45,8 +45,9 @@
             <p class="instruction">(Type an origin location or use your current location.)</p>
             <input type="text" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
             <div class="row">
-                <button type="submit" class="col-4 btn btn-link align-top" id="geolocation-tourist">Use my location</button>
-                <button type="button" class="btn btn-default align-top" id="question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the tourist directions more helpful for you. Your location will not be stored or sent elsewhere.">
+                <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-tourist">Use my location</button>
+                <div class="spinner-border spinner-border-sm text-success geo-spinner" role="status"></div>
+                <button type="button" class="btn btn-default align-top question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the tourist directions more helpful for you. Your location will not be stored or sent elsewhere.">
                     <span class="fa fa-question-circle"></span>
                 </button>
             </div>
@@ -54,7 +55,7 @@
         </div>
         <!-- error if geolocation doesn't work -->
         <div>
-            <p id="geo-error">There was an error finding your current location. Please enter the origin location.</p>
+            <p class="geo-error">There was an error finding your current location. Please enter the origin location.</p>
         </div>
         <div class="form-group">
             <label for="destination">To:</label>
