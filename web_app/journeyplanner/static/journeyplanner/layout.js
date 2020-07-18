@@ -45,6 +45,35 @@ $(document).ready(function () {
             $("#map-interface").css("top", "0px")
         }
     });
+
+
+    $("#hide-menu").on('click', function(){
+        $("#hide-menu").hide();
+        $(".load-interface, #hide-menu").hide();
+        $("#show-menu").fadeIn(10);
+        $("#tab-menu").animate({
+            "max-width": "30px",
+            "width": "30px"
+          }, 200);
+    });
+    $("#show-menu").on('click', function(){
+        $("#show-menu").hide();
+        $("#hide-menu").show();
+        $("#tab-menu").animate({
+            "max-width": "150px",
+            "width": "150px"
+          }, 200, () => $(".load-interface, #hide-menu").show());
+    });
+
+    $(".load-interface").on('click', function() {
+        $(".load-interface").removeClass("active");
+        $(this).addClass("active");
+
+    });
+
+
+
+
 });
 ;
 
