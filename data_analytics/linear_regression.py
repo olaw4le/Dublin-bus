@@ -12,8 +12,8 @@ import os
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
 print("Files in %r: %s" % (cwd, files))
-
-
+path = cwd[:-7]
+print(path)
 def generate_preditction(route, startstop, endstop, date, time, direction):
         # master dictionary of route numbers and their corresponding master files
         master_route_dict = {"18": "Eighteen_Master.csv", "17": "Seventeen_Master.csv", "84A": "EightyFourA_Master.csv",
@@ -76,7 +76,7 @@ def generate_preditction(route, startstop, endstop, date, time, direction):
 
         #calling the master route file for the given request
         route_file = master_route_dict[str(route)]
-        file = "/Users/olawa/OneDrive/Desktop/Master-Route-Files/" + route_file
+        file = path + "/web_app/Master-Route-Files/" + route_file
         df = pd.read_csv(file, keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
 
         #dropping some columns we don't need (probably we will remove these from the database but we need to settle on final model first)
@@ -87,7 +87,7 @@ def generate_preditction(route, startstop, endstop, date, time, direction):
 
         #getting the main subroute (we will need to make provision for the subroutes)
 
-        subroutes = pd.read_csv(r"C:\Users\olawa\OneDrive\Desktop\research-project-master\research-project\data_analytics\routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
+        subroutes = pd.read_csv(f"{path}/data_analytics/routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
         only_route = subroutes[subroutes.LINEID==route]
         route_direction = only_route[only_route.DIRECTION==int(direction)]
         subroute_list = list(route_direction.MAINROUTE.unique())

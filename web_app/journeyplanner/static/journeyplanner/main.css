@@ -1,0 +1,477 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* mobile bottom nav - hidden on larger screens */
+  .fixed-bottom  {
+    display: none;
+  }
+
+  /*map */
+  #map {
+    height: 100%;
+    position: relative;
+  }
+
+  #fullscreen-map {
+    height: calc(100vh - 55px);
+    position: relative;
+  }
+
+  /*map interface*/
+  #map-interface {
+    z-index: 1000;
+    position: absolute;
+    display: block;
+    top: 100px;
+    left: 50px;
+    bottom: 50px;
+    width: 480px;
+    height: 550px; /* need to fix */
+    border: none;
+    overflow-y: auto;
+
+  }
+
+  .navbar {
+    background-color: #4484CE;
+  }
+
+  .navbar-brand {
+    color: white;
+    padding-left: 30px;
+    font-size: 2em;
+  }
+
+   /*tabs on homepage on large screens*/
+   .nav-tabs {
+    position: absolute;
+    top: 3.5rem;
+    left: 50px;
+    height: 70px;
+    width: 480px;
+    background-color: white;
+
+  }
+
+  .nav-tabs .nav-item {
+    width: 120px;
+    height: 37px;
+    
+  }
+
+  .nav-link {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 10px;
+    padding-top: 6px;
+    text-align: center;
+ 
+  }
+
+  .nav-tabs .nav-link {
+    border: 0.2px solid #C0C0C0;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+  }
+
+  .nav-tabs .nav-link.active {
+    border: 0.05px solid #C0C0C0;
+    background-color: #4484CE;
+    color: white;
+  } 
+
+  a .nav-item .nav-link {
+    vertical-align: middle;
+  }
+
+  /* routeplanner tab */
+  .form-area {
+    margin: 5px 0px 0px 5px;
+    padding: 5px;
+  }
+  
+  .go-button {
+  margin-left:10px;
+  margin-top: 15px;
+  max-width: 80px;
+  min-width: 80px;
+  }
+
+  /* twitter feed on routeplanner tab */
+  .news {
+    padding-top: 10px;
+    height: 480px;
+    width: 100%;
+  }
+
+  /* route-plan-results*/
+  #route-results {
+    display: none;
+  }
+
+  #route-results-tourist {
+    display: none;
+  }
+
+  #stop-to-stop-results {
+    display: none;
+  }
+
+  .card.results {
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* overall journey length on results tab1*/
+  #journey-time { 
+    margin-left: 30px;
+    margin-bottom: 0px;
+    font-size: 1.7em;
+    font-weight: 500;
+  }
+
+  #overall-duration{
+    margin-left: 18px;
+  }
+
+  /* date and time pickers on desktop screens */
+  .row.datetime {
+    width: 400px;
+    margin-left: 5px;
+    padding-left: 0px;
+    margin-bottom: 7px;
+    font-size: 1.1em;
+  }
+
+  .mobile-dt {
+    display: none;
+  }
+
+  #datepicker-tourist-results-time {
+    height: 30px;
+  }
+
+  #datepicker-tourist-results-date {
+    height: 30px;
+  }
+
+  #datepicker-tab1-results-time {
+    height: 30px;
+  }
+
+  #datepicker-tab1-results-date {
+    height: 30px;
+  }
+
+  .btn-secondary {
+    padding: 5px;
+    margin-left: 20px;
+  }
+
+  #edit-journey {
+    margin-left: 130px;
+    height: 40px;
+    margin-bottom: 7px;
+    margin-top: 7px;
+  }
+
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+ul {
+  list-style-type: none;
+  padding-left:10px;
+  font-size: 0.9em;
+}
+
+#checkboxes {
+  margin-left: 20px;
+  font-size: 1.1em;
+  margin-top: 5px;
+}
+
+.geo-error {
+  display:none;
+}
+
+.question {
+  color: #4484CE;
+  height: fit-content !important;
+  padding: 0px 20px 5px 5px !important;
+}
+
+/* instructions to user on map interface */
+.instruction {
+  font-size: 0.9em;
+  margin-left: 15px;
+}
+
+
+
+/* all form input boxes for all tabs */
+.input-box {
+  max-width: 400px;
+  min-width: 400px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+h5 {
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.form-group {
+  font-size: 1.1em;
+}
+
+/* give all form labels a margin */
+label {
+  margin-left: 15px;
+}
+
+label.dt-label {
+  margin-left: 11px;
+}
+
+#checkbox-card {
+  margin: 10px 10px 10px 10px;
+  padding-bottom: 10px;
+}
+#origin-tourist {
+  padding-bottom: 5px !important;
+}
+.geolocation-option {
+  height: fit-content !important;
+  width: fit-content !important;
+  margin: 0px !important;
+  padding: 0px !important;
+
+}
+
+.spinner-border {
+  margin-left: 10px;
+  display: none;
+}
+
+.mobile-space{
+  display: none;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.geo-spinner {
+  display: none;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
+
+
+/* media queries to be kept at bottom of css file for ease of understanding */
+
+/* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+    #fullscreen-map {
+      height: calc(100vh - 85px);
+  
+    }
+
+    .navbar-brand {
+      color: white;
+      padding-left: 10px;
+      font-size: 1.6em;
+    }
+
+      #map-interface {
+        top: 0px;
+        left: 0px;
+        bottom: 70px;
+        width: 100%;
+        height: calc(100vh - 85px);
+        overflow-y: none;
+      }
+      #map-button {
+        display: block;
+      }
+  
+      .nav-tabs {
+        display: none;
+      }
+  
+      /* mobile screen bottom nav */
+      .fixed-bottom {
+        display: block;
+        height: 70px;
+        width: 100vw; 
+      }
+      
+      .nav-item.nav-bottom {
+        width: 25%;
+      }
+  
+      .nav-link.nav-bottom {
+        font-size: 0.8rem;
+        /* text-align: center; */
+      }
+  
+      a.active {
+        background-color: #A9A9A9;
+      }
+  
+      #bottom-nav-div {
+        height: 70px;
+        padding: 0px;
+      }
+  
+      a.nav-item.nav-link.load-interface.nav-bottom {
+        height: 70px;
+        text-align: center;
+      }
+    
+      .word {
+        padding-top: 5px !important;
+      }
+
+      .desktop-dt {
+        display:none;
+      }
+  
+      .mobile-dt{
+        display: block;
+      }
+
+      .mobile-space {
+        display: block;
+        height: 80px;
+      }
+
+  
+    /* show map interface again when screen is stretched out */
+    @media only screen and (min-width: 992px) {
+      #map-interface {
+        z-index: 1000;
+        position: absolute;
+        display: block;
+        top: 90px;
+        left: 50px;
+        bottom: 50px;
+        width: 440px;
+        height: 550px;
+      }
+    }
+  }
+
+
+  .ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+  }
+  
+  .ui-autocomplete > li > div {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333333;
+    white-space: nowrap;
+  }
+  
+  .ui-state-hover,
+  .ui-state-active,
+  .ui-state-focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+  
+  .ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
