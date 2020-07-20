@@ -414,10 +414,16 @@ label.dt-label {
       #map-interface {
         top: 0px;
         left: 0px;
-        bottom: 70px;
-        width: 100%;
+        /* bottom: 70px; */
+        min-width: 100vw;
         height: calc(100vh - 85px);
         overflow-y: none;
+      }
+
+      #map-interface-content {
+        max-width: unset;
+        width: 100vw;
+        height: auto;
       }
       #map-button {
         display: block;
