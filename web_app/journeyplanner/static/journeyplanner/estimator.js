@@ -287,6 +287,7 @@ $(function () {
             }
         })
 
+<<<<<<< HEAD
             .done(function (result) {
                 console.log("successfully posted");
                 $(".spinner-border").hide();
@@ -294,6 +295,12 @@ $(function () {
                 // console.log(result);
 
             });
+=======
+        .done(function(result){
+            console.log("successfully posted");
+            $("#stop-to-stop-estimate").html(result + " minutes");
+            console.log(result);
+>>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1
 
 
     // show results

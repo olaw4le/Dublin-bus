@@ -8,6 +8,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
+<<<<<<< HEAD:data_analytics/linear_regression.py
 <<<<<<< HEAD
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
@@ -18,6 +19,9 @@ def generate_preditction(route, startstop, endstop, date, time, direction):
 =======
 def generate_prediction(route, startstop, endstop, date, time, direction):
 >>>>>>> fixing code after it was broken
+=======
+def generate_prediction(route, startstop, endstop, date, time, direction):
+>>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1:web_app/data_analytics/linear_regression.py
         # master dictionary of route numbers and their corresponding master files
         master_route_dict = {"18": "Eighteen_Master.csv", "17": "Seventeen_Master.csv", "84A": "EightyFourA_Master.csv",
                              "70D": "SeventyD_Master.csv", "84X": "EightyFourX_Master.csv",
@@ -94,11 +98,15 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
 
         #getting the main subroute (we will need to make provision for the subroutes)
 
+<<<<<<< HEAD:data_analytics/linear_regression.py
 <<<<<<< HEAD
         subroutes = pd.read_csv(f"{path}/data_analytics/routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
 =======
         subroutes = pd.read_csv("~/Desktop/Trimester_3/research-project/data_analytics/routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
 >>>>>>> fixing code after it was broken
+=======
+        subroutes = pd.read_csv("~/Desktop/Trimester_3/research-project/data_analytics/routes_subroutes-04072020.csv", keep_default_na=True, sep=',\s+', delimiter=',', skipinitialspace=True)
+>>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1:web_app/data_analytics/linear_regression.py
         only_route = subroutes[subroutes.LINEID==route]
         route_direction = only_route[only_route.DIRECTION==int(direction)]
         subroute_list = list(route_direction.MAINROUTE.unique())
