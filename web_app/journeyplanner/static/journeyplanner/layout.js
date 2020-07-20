@@ -2,6 +2,7 @@
 // .ready waits for DOM to be loaded before executing this function
 $(document).ready(function () {
 
+
     // function to populate datetime inputs with current date and time
     var currentDateTime = function () {
         var d = new Date();
@@ -20,10 +21,12 @@ $(document).ready(function () {
         $('.hide-slide-menu').removeClass("active");
         navIdFull = $(this).attr('id');
         navId = navIdFull.split("-")[0];
-        
+        console.log(navId);
+
         $("#map-interface-content").load("/" + navId, function () {
-            console.log(navId)
-            $('#' + navId + '-nav').addClass("active");
+            console.log("id" + navId);
+            $('#' + navId).addClass("active");
+            console.log(navId + '-tab');
             $('#' + navId + '-tab').addClass("active");
             $(".datetime").val(currentDateTime());
         });

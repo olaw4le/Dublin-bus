@@ -271,7 +271,6 @@ var route, origin, destination;
 $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
-
         if ($(window).width() < 992) {
             datetimeValue = $("#datetime-tab2").val();
             console.log("datetime value mobile: " + datetimeValue );

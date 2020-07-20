@@ -65,7 +65,7 @@ html, body {
     max-width: 150px;
     width: 150px;
     background-color: #F0F0F0;
-    height: calc(100vh - 154px);
+    height: calc(100vh - 134px);
     padding: 0px;
   }
 
@@ -133,8 +133,8 @@ html, body {
   
   /* go button on all tabs */
   .go-button {
-  margin-left:15px;
-  margin-top: 15px;
+  margin-left: 6px;
+  margin-top: 5px;
   margin-bottom: 20px;
   max-width: 80px;
   min-width: 80px;
@@ -186,7 +186,7 @@ html, body {
   /* date and time pickers on desktop screens */
   .row.datetime {
     width: 400px;
-    margin-left: 5px;
+    margin-left: 2px;
     margin-bottom: 7px;
     font-size: 1.1em;
   }
@@ -397,10 +397,11 @@ label.dt-label {
   text-align: center;
   background-color: 	rgb(194, 194, 194);
   height: 44px;
-  padding-bottom: 7px;
-  padding-top: 3px;
+  padding-bottom: 14px;
+  padding-top: 7px;
   margin-bottom: 10px;
   font-weight: 400;
+  text-align: middle;
 }
 
 
@@ -416,6 +417,10 @@ label.dt-label {
       /* height: calc(100vh - 85px); */
       height: 400px;
   
+    }
+
+    .tab-title {
+      display: none;
     }
 
     .navbar-brand {
@@ -505,7 +510,8 @@ label.dt-label {
        
       }
       #geolocation-tourist {
-        margin: 0px 0px 0px 15px !important;
+        margin: 0px !important;
+        padding-left: 5px;
       }
 
       .form-area {
@@ -519,7 +525,7 @@ label.dt-label {
       } */
 
       .row .datetime {
-        margin-left: 2px;
+        margin-left: 4px;
       }
 
       .container .news {

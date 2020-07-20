@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
 
+  // load twitter
   if(twttr){
     twttr.widgets.load();
   }

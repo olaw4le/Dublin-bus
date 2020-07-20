@@ -2,7 +2,7 @@
 <script src=" {% static 'journeyplanner/touristmap.js' %}"></script>
 
 <!-- checkboxes -->
-<div class="tab-title">Tourist Map</div>
+<h4 class="tab-title">Tourist Map</h4>
 <div class="card" id="checkbox-card">
     <h5>Select to view tourist attractions on map</h5>
     <ul class="list-group list-group-flush" style="width: 90%;margin: auto;margin-bottom: 13px; margin-top:-10px; height:0;">
@@ -47,7 +47,7 @@
             <input type="text" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top" id="geolocation-tourist">Use my location</button>
-                <button type="button" class="btn btn-default align-top" id="question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the tourist directions more helpful for you. Your location will not be stored or sent elsewhere.">
+                <button type="button" class="btn btn-default align-top" id="question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the directions more helpful for you. Your location will not be stored or sent elsewhere.">
                     <span class="fa fa-question-circle"></span>
                 </button>
             </div>
@@ -64,20 +64,18 @@
         </div>
         <div>
             <!-- mobile datetime -->
-            <div class="mobile-dt">
+            <div class="mobile-dt form-group">
                 <label for="datetime-4">Date and Time:</label>
-                <div class="row datetime">
-                    <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
-                </div>
+                    <input class="datetime datetime input-box form-control" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
             </div>
             <!-- desktop datetime -->
-            <div class="desktop-dt">
+            <div class="desktop-dt form-group">
                 <div class="row datetime">
                     <label>Date and Time:</label>
-                    <input type="text" id="datepicker-tourist">
+                    <input class="input-box form-control" type="text" id="datepicker-tourist">
                 </div>
-                <div class="row datetime">
-                    <input type="text"class="timepicker" id="timepicker-tourist">
+                <div class="row datetime form-group">
+                    <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tourist">
                 </div>
             </div>
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go-tourist">Go</button>
