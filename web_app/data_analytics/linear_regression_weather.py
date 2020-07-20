@@ -16,7 +16,8 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-import psycopg2 as ps
+# import psycopg2 as ps
+import pg8000 as ps
 
 
 def construct_sql(**kwargs):
