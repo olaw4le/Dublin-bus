@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^planner/', views.planner, name = 'planner'),
     url(r'^find_latlng/', views.find_latlng, name = 'latlng'),
     url(r'^list_latlng/', views.list_latlng, name = 'stops_latlng'),
+    url(r'^real_time/', views.real_time, name = 'real_time'),
 ]
 
 

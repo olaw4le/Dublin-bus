@@ -6,6 +6,8 @@ sys.path.append("..")
 from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
+import requests
+
 
 
 #showing how data can be added to a html page
@@ -148,8 +150,8 @@ def find_latlng(request):
         route_number=route.upper()
 
         # getting the suggested route file 
-        route_list=stops_latlng(route_number)
-        result =latlng(route_list,str(stop_id))
+        route_list= stops_latlng(route_number)
+        result = latlng(route_list,str(stop_id))
 
         print(result)
         
@@ -166,6 +168,26 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
+
+
+@csrf_exempt
+def real_time(request):
+    if request.method=="POST":
+        stop_number= request.POST["stopnumber"]
+        url= "https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid={}&format=json".format(stop_number)
+        r = requests.get(url=url)
+
+        data= r.json()
+        print(data)
+
+
+    return HttpResponse(json.dumps(data))
+
+
+
+
+
+
 
 
 
