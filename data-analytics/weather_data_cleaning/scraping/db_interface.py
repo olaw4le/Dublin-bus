@@ -1,6 +1,8 @@
 """define functions for querying a postgreSQL database"""
 
-import psycopg2 as ps
+# replaced due to issues with psycopg2 and MacOS
+# import psycopg2 as ps
+import pg8000 as ps
 
 
 def construct_sql(**kwargs):
