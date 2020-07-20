@@ -1,9 +1,11 @@
 
 $(document).ready(function () {
 
+  if(twttr){
+    twttr.widgets.load();
+  }
 
-
-  twttr.widgets.load();
+  
 
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
@@ -24,15 +26,34 @@ $(document).ready(function () {
     minTime: "05:00",
     minuteIncrement: 1
   });
-
+ 
 });
 
-//using google map autocomplete for the address          
-var input1 = document.getElementById('origin');
-var input2 = document.getElementById("destination");
-var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
-origin = new google.maps.places.Autocomplete(input1, options);
-destination = new google.maps.places.Autocomplete(input2, options);
+ //using google map autocomplete for the address          
+ var input1 = document.getElementById('origin');
+ var input2 = document.getElementById("destination");
+ var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+ var origin;
+ var destination;
+
+
+function WhenGoogleLoadedDo(fnt)
+   {
+   if(typeof google != 'undefined')
+      fnt();
+   else
+      setTimeout(function()
+         {(function(fnt)
+            {
+            WhenGoogleLoadedDo(fnt)
+            })(fnt)}, 500); // You can set timer as you wish //
+   }
+
+WhenGoogleLoadedDo( () => {
+  origin = new google.maps.places.Autocomplete(input1, options);
+  destination = new google.maps.places.Autocomplete(input2, options);
+});
+
 
 // function to create a marker for the bus station nearby from the user location 
 function createMarker(place) {
@@ -292,50 +313,50 @@ $(function () {
   $('#go').on('click', function () {
     var time, date, datetimeValue;
     // use different variables for date and time depending on screen size
-      if ($(window).width() < 992) {
-        datetimeValue = $("#datetime-tab1").val();
-        var arr = datetimeValue.split('T');
-        date = arr[0];
-        console.log("mobile date: " + date);
-        time = arr[1];
-      } else {
-        var date = $("#datepicker-tab1").val();
-        console.log("desktop date: " + date);
-        time = $('#timepicker-tab1').val();
-        console.log("desktop time: " + time);
+    if ($(window).width() < 992) {
+      datetimeValue = $("#datetime-tab1").val();
+      var arr = datetimeValue.split('T');
+      date = arr[0];
+      console.log("mobile date: " + date);
+      time = arr[1];
+    } else {
+      var date = $("#datepicker-tab1").val();
+      console.log("desktop date: " + date);
+      time = $('#timepicker-tab1').val();
+      console.log("desktop time: " + time);
 
-        // use date and time here to make properly formatted datetimeValue for mobile
-        datetimeValue = date + 'T' + time;
-      }
-      // show date and time inputs on desktop results page for better user experience
-      // default date and time are those selected by user on input page
-      $("#datepicker-tab1-results-date").flatpickr({
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: 'yy-m-d',
-        defaultDate: date,
-        minDate: "today",
-        onClose: function (selectedDates, dateStr, instance) {
-          // sendDateTimeChangePostRequest();
-          console.log("on close date tab1");
+      // use date and time here to make properly formatted datetimeValue for mobile
+      datetimeValue = date + 'T' + time;
+    }
+    // show date and time inputs on desktop results page for better user experience
+    // default date and time are those selected by user on input page
+    $("#datepicker-tab1-results-date").flatpickr({
+      altInput: true,
+      altFormat: "F j, Y",
+      dateFormat: 'yy-m-d',
+      defaultDate: date,
+      minDate: "today",
+      onClose: function (selectedDates, dateStr, instance) {
+        // sendDateTimeChangePostRequest();
+        console.log("on close date tab1");
       },
-      });
+    });
 
-      $('#datepicker-tab1-results-time').flatpickr({
-        enableTime: true,
-        defaultDate: time,
-        dateFormat: 'H:i',
-        noCalendar: true,
-        time_24hr: true,
-        minTime: "05:00",
-        minuteIncrement: 1,
-        onClose: function (selectedDates, dateStr, instance) {
-          // sendDateTimeChangePostRequest();
-          console.log("on close time tab1");
+    $('#datepicker-tab1-results-time').flatpickr({
+      enableTime: true,
+      defaultDate: time,
+      dateFormat: 'H:i',
+      noCalendar: true,
+      time_24hr: true,
+      minTime: "05:00",
+      minuteIncrement: 1,
+      onClose: function (selectedDates, dateStr, instance) {
+        // sendDateTimeChangePostRequest();
+        console.log("on close time tab1");
       },
-      });
+    });
 
-    
+
     $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
@@ -348,8 +369,8 @@ $(function () {
     routes();
     $(".form-area").hide();
     if ($(window).width() < 992) {
-      $("#map-interface").animate({top: "400px"}, 'fast');
-  }
+      $("#map-interface").animate({ top: "400px" }, 'fast');
+    }
     $("#route-results").show();
 
 

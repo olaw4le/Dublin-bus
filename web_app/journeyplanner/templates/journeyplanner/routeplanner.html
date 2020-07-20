@@ -7,7 +7,7 @@
 <!-- want the code below to override the content block in base.html -->
 <!-- input boxes for user to enter origin and destination locations -->
 <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
-<div class="tab-title">Route Planner</div>
+<h4 class="tab-title">Route Planner</h4>
 <div class="container form-area">
     <div class="input-area">
         <form onsubmit="return false">
@@ -20,27 +20,26 @@
                 <label for="destination">To:</label>
                 <input type="text" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
             </div>
-            <div>
+
                 <!-- mobile datetime picker-->
-                <div class="mobile-dt">
+                <div class="mobile-dt form-group">
                     <label for="datetime-4">Date and Time:</label>
-                    <div class="row datetime">
-                        <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
-                    </div>
+
+                        <input class="datetime input-box form-control" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
                 </div>
 
                 <!-- desktop date and time -->
-                <div class="desktop-dt">
+                <div class="desktop-dt form-group">
                     <div class="row datetime">
                         <label class="dt-label">Date and Time:</label>
-                        <input class="" type="text" id="datepicker-tab1">
+                        <input class="input-box form-control" type="text" id="datepicker-tab1">
                     </div>
                     <div class="row datetime">
-                        <input class="" type="text"class="timepicker" id="timepicker-tab1">
+                        <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tab1">
                     </div>
                 </div>
                 <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
-            </div>
+
         </form>
         <div class="container news">
             <div class="black_box">

@@ -20,7 +20,7 @@ $(document).ready(function () {
         $('.hide-slide-menu').removeClass("active");
         navIdFull = $(this).attr('id');
         navId = navIdFull.split("-")[0];
-
+        
         $("#map-interface-content").load("/" + navId, function () {
             console.log(navId)
             $('#' + navId + '-nav').addClass("active");

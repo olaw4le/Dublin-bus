@@ -497,11 +497,11 @@ label.dt-label {
 
       /* make input boxes narrower on mobile screen*/
       .input-box {
-        /* max-width: 300px;
-        min-width: 300px; */
-        width: 80%;
-        margin-bottom: 10px;
-        margin-left: 5px;
+        max-width: 70vw;
+        min-width: 300px;  
+        width: 70vw;
+        /* margin-bottom: 10px;
+        margin-left: 5px; */
        
       }
       #geolocation-tourist {
@@ -513,13 +513,13 @@ label.dt-label {
         max-width: unset;
       }
 
-      .datetime {
+      /* .datetime {
         width: 80%;
         padding-left: 0px;
-      }
+      } */
 
       .row .datetime {
-        margin-left: 0px;
+        margin-left: 2px;
       }
 
       .container .news {
