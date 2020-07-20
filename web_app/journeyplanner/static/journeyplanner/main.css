@@ -423,7 +423,7 @@ label.dt-label {
         display: block;
       }
   
-      .nav-tabs {
+      #tab-menu  {
         display: none;
       }
   

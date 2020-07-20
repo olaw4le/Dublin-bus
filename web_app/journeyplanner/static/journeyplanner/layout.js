@@ -17,11 +17,14 @@ $(document).ready(function () {
     // appropriate html is loaded and put in the interface
     $(".load-interface").click(function () {
         $('.nav-bottom').removeClass("active");
+        $('.hide-slide-menu').removeClass("active");
         navIdFull = $(this).attr('id');
         navId = navIdFull.split("-")[0];
 
         $("#map-interface-content").load("/" + navId, function () {
+            console.log(navId)
             $('#' + navId + '-nav').addClass("active");
+            $('#' + navId + '-tab').addClass("active");
             $(".datetime").val(currentDateTime());
         });
     });
@@ -33,9 +36,9 @@ $(document).ready(function () {
 
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function () {
-        $('.nav-bottom').removeClass("active");
-        navId = $(this).attr('id');
-        $('#' + navId).addClass("active");
+        // $('.nav-bottom').removeClass("active");
+        // navId = $(this).attr('id');
+        // $('#' + navId).addClass("active");
 
         // show map on input view of tourist map
         if (navId === "tourist-nav" && $(window).width() < 992) {
@@ -49,7 +52,7 @@ $(document).ready(function () {
 
     $("#hide-menu").on('click', function(){
         $("#hide-menu").hide();
-        $(".load-interface, #hide-menu").hide();
+        $(".hide-slide-menu, #hide-menu").hide();
         $("#show-menu").fadeIn(10);
         $("#tab-menu").animate({
             "max-width": "30px",
@@ -62,14 +65,10 @@ $(document).ready(function () {
         $("#tab-menu").animate({
             "max-width": "150px",
             "width": "150px"
-          }, 200, () => $(".load-interface, #hide-menu").show());
+          }, 200, () => $(".hide-slide-menu, #hide-menu").show());
     });
 
-    $(".load-interface").on('click', function() {
-        $(".load-interface").removeClass("active");
-        $(this).addClass("active");
 
-    });
 
 
 
