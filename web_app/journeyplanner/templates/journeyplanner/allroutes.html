@@ -1,11 +1,9 @@
 {% load static %}
 
- 
 <script src=" {% static 'journeyplanner/estimator.js' %}"></script>
 
-<!-- Scripts for drawing graphs are contanined in a separate js file for ease of reading - can be merged later -->
-<script src=" {% static 'journeyplanner/chartwidget.js' %}"></script>
-
+<!-- link js module containing tools for drawing charts -->
+<script src=" {% static 'journeyplanner/chartjs/chart.js/dist/Chart.bundle.min.js' %}"></script>
 
 
 <div class="container form-area">
@@ -144,6 +142,10 @@
                         <input type="checkbox" class="custom-control-input" id="results-canvas-toggle">
                         <label class="custom-control-label" for="customSwitch1"></label>
                     </div>
+
+                    <!-- Scripts for drawing graphs are contanined in a separate js file for ease of reading - can be merged later -->
+                    <script src=" {% static 'journeyplanner/chartwidget.js' %}"></script>
+
                 </div>
 
             </div>
