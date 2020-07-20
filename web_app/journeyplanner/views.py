@@ -3,12 +3,9 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
 sys.path.append("..")
-<<<<<<< HEAD
 #from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
-=======
->>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1
 from data_analytics import linear_regression_weather
 from data_analytics import db_interface
 
@@ -82,20 +79,11 @@ def prediction(request):
         time = request.POST["time"]
         direction=request.POST["direction"]
         print("time from views.py", time)
-<<<<<<< HEAD
-=======
-
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-        
-
-
->>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1
         print("routes:",route)
         print("origin:",origin)
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-<<<<<<< HEAD
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         
@@ -105,15 +93,10 @@ def prediction(request):
 
     return HttpResponse(result)
 
-=======
-        print("result", result)
-    return HttpResponse(result)
->>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-<<<<<<< HEAD
         data= json.loads(request.POST["data"])
 
         prediction=[] #list to store the calculated predictions
@@ -188,7 +171,3 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
-=======
-        data= request.POST["bus_details"]
-        return HttpResponse("")
->>>>>>> 1e26b711f5152ad25c5dcb42a1c6939ade4e47d1
