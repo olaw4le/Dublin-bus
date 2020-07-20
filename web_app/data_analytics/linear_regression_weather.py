@@ -17,7 +17,6 @@ warnings.filterwarnings('ignore')
 
 
 def get_weather_from_db():
-    print("hello from get_weather_from_db")
     """returns a tuple of the 'current' weather data from out postgres database."""
 
     # load environment
@@ -29,10 +28,10 @@ def get_weather_from_db():
     weather_api_key = "86baa129046e5cbaeb16af074356e579"
 
     sql = db.construct_sql(table_name="weather_data_current", query_type="select_all")
-    print("I am Sql", sql)
+    
     data = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
-    print ("I am data", data)
-    return data #[0]
+    
+    return data[0]
 
 
 def time_group_function(row):
@@ -40,7 +39,7 @@ def time_group_function(row):
 
         We have split the day into 29 portions.
         These portions are 60 minutes at off peak travel times and 30 minutes during peak times"""
-
+    row = int(row)
     time_group_departure = []
     if row < 0:
         print("Error - negative time stamp")
@@ -180,7 +179,6 @@ def generate_test_dataframe(route, direction, date, time):
 
     # get weather from database
     weather = get_weather_from_db()
-    print(weather)
     # extract required parameters
     temp = weather[2]
     feels_like = weather[3]
@@ -378,13 +376,13 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
-    print(route, direction, startstop, endstop, date, time)
+    
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-    print(test)
+    
     # loads the correct linear regression pickle using the route and direction
     pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/pickles/" + str(
         route) + "_direction" + str(direction) + ".pickle"
@@ -411,6 +409,3 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     print("Users estimated journeytime: ", int(result))
     minutes = int(result) // 60
     return minutes
-
-
-#generate_prediction("220", 4687, 1827, "2020-02-03", 36500, 1)
