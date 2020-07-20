@@ -1,6 +1,10 @@
 
 $(document).ready(function () {
 
+
+
+  twttr.widgets.load();
+
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
     altInput: true,

@@ -25,11 +25,11 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 40px;
+    top: 30px;
     left: 20px;
-    bottom: 40px;
+    bottom: 30px;
     width: auto;
-    height: calc(100vh - 154px);
+    height: calc(100vh - 134px);
     overflow-y: hidden;
     overflow-x: hidden;
     box-shadow: 3px 3px 5px #C0C0C0;;
@@ -39,7 +39,7 @@ html, body {
   #map-interface-content {
     max-width: 450px;
     width: 450px;
-    height: calc(100vh - 154px);
+    height: calc(100vh - 134px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0px;
@@ -60,18 +60,6 @@ html, body {
     padding-left: 30px;
     font-size: 2em;
   }
-
-
-   /*tabs on homepage on large screens*/
-   /* .nav-tabs {
-    position: absolute;
-    top: 40px;
-    left: 20px;
-    height: 70px;
-    width: 525px;
-    background-color: white;
-
-  } */
 
   #tab-menu{
     max-width: 150px;
@@ -108,8 +96,7 @@ html, body {
   .nav-tabs .nav-item {
     width: 105px;
     height: 37px;
-    font-weight: 500;
-    
+    font-weight: 500; 
   }
 
   .nav-link {
@@ -118,9 +105,7 @@ html, body {
     padding-bottom: 10px;
     padding-top: 6px;
     text-align: center;
- 
   }
-
 
   .nav-tabs .nav-link {
     border: 0.2px solid #C0C0C0;
@@ -233,7 +218,6 @@ html, body {
     height: 30px;
   }
 
- 
 
   .btn-secondary {
     padding: 5px;
@@ -410,7 +394,7 @@ label.dt-label {
 .tab-title {
   font-size: 1.7em;
   text-align: center;
-  background-color: #F0F0F0;
+  background-color: 	rgb(194, 194, 194);
   height: 44px;
   padding-bottom: 7px;
   padding-top: 3px;
