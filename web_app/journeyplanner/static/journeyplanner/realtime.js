@@ -43,7 +43,6 @@ var jqxhr = $.getJSON("static/bus_ routes_routes_stops.json", null, function (da
 
 // getting the real time bus info
 function bustime(){
-    var url= 'https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=124&format=json'
 
     var stopnumber=$("#Stop-number").val()
         

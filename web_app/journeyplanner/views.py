@@ -67,6 +67,11 @@ def tourist(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/tourist.html')
 
+def realtime(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/realtime.html')
+
+
 
 @csrf_exempt
 def prediction(request):
