@@ -37,7 +37,7 @@ $(document).ready(function () {
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function () {
         // $('.nav-bottom').removeClass("active");
-        // navId = $(this).attr('id');
+        navId = $(this).attr('id');
         // $('#' + navId).addClass("active");
 
         // show map on input view of tourist map

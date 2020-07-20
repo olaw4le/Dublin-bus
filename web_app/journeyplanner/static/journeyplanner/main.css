@@ -443,14 +443,15 @@ label.dt-label {
         top: 0px;
         left: 0px;
         min-width: 100vw;
-        height: calc(100vh - 85px);
-        overflow-y: none;
+        height: fit-content;
+        /* overflow-y: none; */
       }
 
       #map-interface-content {
         max-width: unset;
         width: 100vw;
         height: auto;
+        
       }
       #map-button {
         display: block;
