@@ -3,14 +3,11 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
 sys.path.append("..")
-<<<<<<< HEAD
-from data_analytics import linear_regression
+#from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
-=======
 from data_analytics import linear_regression_weather
 from data_analytics import db_interface
->>>>>>> minor changes trying to get it working with django
 
 
 #showing how data can be added to a html page
@@ -82,40 +79,24 @@ def prediction(request):
         time = request.POST["time"]
         direction=request.POST["direction"]
         print("time from views.py", time)
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-        result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
-=======
-        result = linear_regression.generate_prediction(route, origin, destination, date, time, direction)
->>>>>>> trying to get results showing again
-=======
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
->>>>>>> minor changes trying to get it working with django
-        
-
-
         print("routes:",route)
         print("origin:",origin)
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-<<<<<<< HEAD
-        # print("result", result)
+
+        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        
+
+
+        
+
     return HttpResponse(result)
-=======
-        print("result", result)
-<<<<<<< HEAD
-    return HttpResponse("")
->>>>>>> trying to get results showing again
-=======
-    return HttpResponse(result)
->>>>>>> fixing code after it was broken
+
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-<<<<<<< HEAD
         data= json.loads(request.POST["data"])
 
         prediction=[] #list to store the calculated predictions
@@ -190,14 +171,3 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
-
-
-
-
-
-
-
-=======
-        data= request.POST["bus_details"]
-        return HttpResponse("")
->>>>>>> fixing code after it was broken

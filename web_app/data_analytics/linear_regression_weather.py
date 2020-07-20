@@ -5,10 +5,8 @@ import math
 import requests
 import urllib.request
 from datetime import datetime
-import db_interface as db
+from data_analytics import db_interface as db
 import os
-# from dotenv import load_dotenv
-# import dotenv
 from sklearn.linear_model import LinearRegression
 
 # ignore warnings
@@ -16,12 +14,10 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-#import psycopg2 as ps
-#import pg8000 as ps
-
 
 
 def get_weather_from_db():
+    print("hello from get_weather_from_db")
     """returns a tuple of the 'current' weather data from out postgres database."""
 
     # load environment
@@ -33,8 +29,9 @@ def get_weather_from_db():
     weather_api_key = "86baa129046e5cbaeb16af074356e579"
 
     sql = db.construct_sql(table_name="weather_data_current", query_type="select_all")
+    print("I am Sql", sql)
     data = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
-    print (data)
+    print ("I am data", data)
     return data #[0]
 
 
@@ -183,7 +180,7 @@ def generate_test_dataframe(route, direction, date, time):
 
     # get weather from database
     weather = get_weather_from_db()
-
+    print(weather)
     # extract required parameters
     temp = weather[2]
     feels_like = weather[3]
@@ -195,7 +192,7 @@ def generate_test_dataframe(route, direction, date, time):
 
     # create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
     f = open(
-        '/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/linear_regression/result_templates.json', )
+        '/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/result_templates.json', )
     templates = json.load(f)
     template_name = str(route) + "_" + str(direction)
     features = templates[template_name]
@@ -381,14 +378,15 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
+    print(route, direction, startstop, endstop, date, time)
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-
+    print(test)
     # loads the correct linear regression pickle using the route and direction
-    pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/linear_regression/pickles/" + str(
+    pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/pickles/" + str(
         route) + "_direction" + str(direction) + ".pickle"
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
@@ -415,4 +413,4 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     return minutes
 
 
-generate_prediction("220", 4687, 1827, "2020-02-03", 36500, 1)
+#generate_prediction("220", 4687, 1827, "2020-02-03", 36500, 1)

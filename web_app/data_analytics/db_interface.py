@@ -6,6 +6,7 @@ import pg8000 as ps
 
 
 def construct_sql(**kwargs):
+    print("Hello from construct_sql")
 
     if "table_name" in kwargs:
         table_name = kwargs["table_name"]
@@ -65,7 +66,7 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (table_name, attr_names, attr_values)
-
+        print("sql_query", sql_query)
         return sql_query
 
     # if selecting with predicate
@@ -97,12 +98,13 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (cols, table_name, predicates)
-
+        print("SQL query", sql_query)
         return sql_query
 
     # if deleting/selecting *all* data from a table
     elif query_type in ["delete_all", "select_all", "attr_names"]:
         sql_query = templates[query_type] % table_name
+        print("SQL query #2", sql_query)
         return sql_query
 
     else:
@@ -111,7 +113,7 @@ def construct_sql(**kwargs):
 
 
 def execute_sql(sql_query, database, user, password, host, port, **kwargs):
-
+    print ("hello from execute_sql")
     # is function expected to produce output or not - depends on query type
     if ("retrieving_data" in kwargs) and type(kwargs["retrieving_data"] == bool):
         retrieving_data = kwargs["retrieving_data"]
@@ -137,7 +139,9 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
 
     # if retrieving data / expecting some kind of response...
     if retrieving_data:
+        print("yes I am retrieving data")
         response = cursor.fetchall()
+        print(response)
         connection.close()
         return response
 
