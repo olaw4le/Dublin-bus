@@ -201,6 +201,16 @@ function origin_marker(){
             });
             allMarkers.push(marker)
             }
+
+ google.maps.event.addListener(marker,'click',function() {
+       alert("i was click")
+     });
+
+
+
+
+
+
       });
 }
 
