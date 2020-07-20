@@ -197,17 +197,19 @@ function origin_marker(){
            var marker = new google.maps.Marker({
               position: new google.maps.LatLng(x[key].lat, x[key].lng),
               map: map,
-              title: "Stop" + key, 
+              title:key, 
             });
             allMarkers.push(marker)
+         
             }
 
- google.maps.event.addListener(marker,'click',function() {
-       alert("i was click")
-     });
+            for (var i in allMarkers ){
 
 
-
+            google.maps.event.addListener(allMarkers[i],'click',function() {
+                $('#estimator-origin').val(this.getTitle());
+                $('#estimator-origin').show();
+              });}
 
 
 
