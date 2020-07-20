@@ -30,9 +30,10 @@ html, body {
     bottom: 65px;
     width: auto;
     height: calc(100vh - 200px);
-    border: none;
-    overflow-y: auto;
+    /* border: 0.5px solid 	#C0C0C0; */
+    overflow-y: hidden;
     overflow-x: hidden;
+    box-shadow: 3px 3px 5px #C0C0C0;;
 
   }
 
@@ -42,6 +43,7 @@ html, body {
     height: calc(100vh - 200px);
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0px;
     }
 
   .navbar {
@@ -107,7 +109,7 @@ html, body {
   .nav-link {
     padding-left: 2px;
     padding-right: 2px;
-  3  padding-bottom: 10px;
+    padding-bottom: 10px;
     padding-top: 6px;
     text-align: center;
  
@@ -132,8 +134,10 @@ html, body {
 
   /* routeplanner tab */
   .form-area {
-    margin: 5px 0px 0px 5px;
-    padding: 5px;
+    margin-right: 5px;
+    padding-right: 10px;
+    padding: 0px;
+    /* padding: 5px; */
   }
   
   /* go button on all tabs */
@@ -154,6 +158,7 @@ html, body {
   /* route-plan-results*/
   #route-results {
     display: none;
+    padding: 0px;
   }
 
   #route-results-tourist {
@@ -167,8 +172,7 @@ html, body {
   .card.results {
     padding-top: 10px;
     padding-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
   }
 
   /* overall journey length on results tab1*/
@@ -393,6 +397,17 @@ label.dt-label {
   margin-bottom: 10px;
 }
 
+.tab-title {
+  font-size: 1.7em;
+  text-align: center;
+  background-color: #F0F0F0;
+  height: 44px;
+  padding-bottom: 7px;
+  padding-top: 3px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
 /* media queries to be kept at bottom of css file for ease of understanding */
 
 /* media queries to make interface responsive */
@@ -414,7 +429,6 @@ label.dt-label {
       #map-interface {
         top: 0px;
         left: 0px;
-        /* bottom: 70px; */
         min-width: 100vw;
         height: calc(100vh - 85px);
         overflow-y: none;
