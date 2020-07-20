@@ -3,6 +3,9 @@
  
 <script src=" {% static 'journeyplanner/estimator.js' %}"></script>
 
+<!-- Scripts for drawing graphs are contanined in a separate js file for ease of reading - can be merged later -->
+<script src=" {% static 'journeyplanner/chartwidget.js' %}"></script>
+
 
 
 <div class="container form-area">
@@ -129,7 +132,11 @@
                     <div class="row" id="results-description">Text Description Of Results Goes Here</div>
                     
                     <!-- define the canvas where the chart will be drawn -->
-                    <canvas id="results-canvas"></canvas>
+                    <!-- the canvas element must be the only element placed within a container
+                    div with style="position: relative;" for the chart to be responsive -->
+                    <div class="chart-container" style="position: relative;">
+                        <canvas id="results-canvas"></canvas>
+                    </div>
                     
                     <!-- a toggle switch for changing between times-by-hour or times-by-day on graph -->
                     <!-- source https://getbootstrap.com/docs/4.2/components/forms/#switches -->
