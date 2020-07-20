@@ -25,12 +25,11 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 85px;
+    top: 40px;
     left: 20px;
-    bottom: 65px;
+    bottom: 40px;
     width: auto;
-    height: calc(100vh - 200px);
-    /* border: 0.5px solid 	#C0C0C0; */
+    height: calc(100vh - 154px);
     overflow-y: hidden;
     overflow-x: hidden;
     box-shadow: 3px 3px 5px #C0C0C0;;
@@ -40,7 +39,7 @@ html, body {
   #map-interface-content {
     max-width: 450px;
     width: 450px;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 154px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0px;
@@ -55,9 +54,16 @@ html, body {
     padding-left: 30px;
     font-size: 2em;
   }
+  
+  .navbar-brand:hover {
+    color: white;
+    padding-left: 30px;
+    font-size: 2em;
+  }
+
 
    /*tabs on homepage on large screens*/
-   .nav-tabs {
+   /* .nav-tabs {
     position: absolute;
     top: 40px;
     left: 20px;
@@ -65,13 +71,13 @@ html, body {
     width: 525px;
     background-color: white;
 
-  }
+  } */
 
   #tab-menu{
     max-width: 150px;
     width: 150px;
     background-color: #F0F0F0;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 154px);
     padding: 0px;
   }
 
@@ -144,6 +150,7 @@ html, body {
   .go-button {
   margin-left:10px;
   margin-top: 15px;
+  margin-bottom: 20px;
   max-width: 80px;
   min-width: 80px;
   }
@@ -167,6 +174,7 @@ html, body {
 
   #stop-to-stop-results {
     display: none;
+    padding: 0px;
   }
 
   .card.results {
