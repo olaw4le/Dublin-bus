@@ -8,7 +8,7 @@ var longitude = "";
 
 $(function() {
     //jquery to acess the json file
-var jqxhr = $.getJSON("static/bus_ routes_routes_stops.json", null, function (data) {
+var jqxhr = $.getJSON("static/bus_routes_routes_stops.json", null, function (data) {
     stations = data.bus;
     // going through the list of objects in the json file
     for (var i = 0; i < stations.length; i++) {
@@ -80,5 +80,8 @@ function bustime(){
 
 
 $("#real-time-button").click(bustime)
+
+
+
     
 
