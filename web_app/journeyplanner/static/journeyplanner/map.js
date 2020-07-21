@@ -15,6 +15,8 @@ function initMap() {
 
     geocoder = new google.maps.Geocoder();
 
+    infowindow = new google.maps.InfoWindow();
+
     // Instantiate a directions service.
     directionsService = new google.maps.DirectionsService;
 

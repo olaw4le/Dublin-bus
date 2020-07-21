@@ -3,7 +3,8 @@ $(document).ready(function () {
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
     $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #routeplanner-nav, #allroutes-nav", function(){
-        clearAllTouristMarkers(markers)
+        clearAllTouristMarkers(markers);
+        removeLineFromTouristMap();
     });
 
     // hide destination box initially
@@ -56,6 +57,8 @@ var dublin = { lat: 53.3155395, lng: -6.4161858 };
 var markers = {};
 var destination_latlng;
 var name;
+var infowindow;
+var directionsRenderer;
 
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
@@ -94,7 +97,7 @@ function callback(results, status, type) {
         for (var i = 0; i < results.length; i++) {
             var icon = results[i].icon
             var rating = results[i].rating;
-            createMarker(results[i], type, icon, markers[type], rating);
+            createMarker(results[i], icon, markers[type], rating);
         }
     }
 }
@@ -113,8 +116,14 @@ function clearAllTouristMarkers(markers) {
     }
 }
 
+function removeLineFromTouristMap() {
+    if (directionsRenderer) {
+      directionsRenderer.setDirections({ routes: [] });
+    }
+  }
+
 // create markers
-function createMarker(place, type, icon, markerList, rating) {
+function createMarker(place, icon, markerList, rating) {
     ending_lat = place.geometry.location.lat();
     ending_lng = place.geometry.location.lng();
 
@@ -132,12 +141,17 @@ function createMarker(place, type, icon, markerList, rating) {
 
     markerList.push(marker);
 
+    console.log(place.name);
+
 
     // show name of place when mouse hovers over  marker
-    google.maps.event.addListener(marker, 'mouseover', function () {
-        infowindow.setContent(place.name + "<br>Rating: " + rating);
-        infowindow.open(map, this);
-    });
+    google.maps.event.addListener(marker, 'mouseover', (function(placeName, rating) {
+        return function() {
+            console.log("inside event: " + placeName);
+            infowindow.setContent(placeName + "<br>Rating: " + rating);
+            infowindow.open(map, this);
+        }
+    })(place.name, rating));
 
     // populate destination input box with location clicked on map
     google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
@@ -182,7 +196,7 @@ function routes_tourist() {
     map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
-    var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+    directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
 
     // Instantiate an info window to hold step text.
     var stepDisplay = new google.maps.InfoWindow;
