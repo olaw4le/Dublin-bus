@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    // Remove routes when navigating to another tab
+  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
+  removeLineFromMap);
+
+
     // flatpickr date https://flatpickr.js.org/options/
     $("#datepicker-tab2").flatpickr({
         altInput: true,
@@ -27,13 +32,9 @@ var route_number = "";
 var stop_name = "";
 var stations = "";
 var routes = ""
-
-
-
+var allMarkers = [];
 
 $(function() {
-  
-
     var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
         stations = data;
 
@@ -55,6 +56,24 @@ $(function() {
     });
 
 });
+
+
+function removeLineFromMap() {
+    if (directionsRenderer) {
+      directionsRenderer.setDirections({ routes: [] });
+    }
+    // First, remove any existing markers from the map.
+    console.log(allMarkers);
+    if(allMarkers) {
+      for (var i = 0; i < allMarkers.length; i++) {
+        allMarkers[i].setMap(null);
+      }
+    }
+  }
+
+
+
+
 
   
 // function to populate the sub_routes list			
@@ -144,8 +163,6 @@ var index;
         var To = "<option value=0>Stops</option>";
 
         starting_stop=$("#estimator-origin").val()
-        console.log(starting_stop)
-        console.log(stop_list) 
         index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
         destination_list=stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
@@ -158,16 +175,12 @@ var index;
 
            // populating the inner html with the destination
            $("#estimator-destination").html(To)
-        
-
-
-
     }
 
 
 function origin_marker(){
     var origin_stop=$("#estimator-origin").val()
-    var route=sel= $("#estimator-route").val();
+    var route=$("#estimator-route").val();
     
     
     $.ajax({
@@ -180,24 +193,75 @@ function origin_marker(){
           console.log("successfully posted");
           var x=JSON.parse(response)
 
-          var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 14,
-            center:{ lat: 53.350140, lng: -6.266155 }
-          })
-
           for (key in x) { 
            var marker = new google.maps.Marker({
               position: new google.maps.LatLng(x[key].lat, x[key].lng),
               map: map,
-              title: "Stop" + key,
-              
-
-             
+              title:key, 
             });
+            allMarkers.push(marker)
+         
             }
+
+            for (var i in allMarkers ){
+
+
+            google.maps.event.addListener(allMarkers[i],'click',function() {
+                $('#estimator-origin').val(this.getTitle());
+                $('#estimator-origin').show();
+              });}
+
+
+
       });
 }
 
+function initMap2() {
+    directionsService = new google.maps.DirectionsService;
+   
+    directionsDisplay = new google.maps.DirectionsRenderer({
+        map: map
+    });
+    calcRoute();
+    removeLineFromMap();
+}
+
+
+ // calculate route
+ function calcRoute() {
+ var route=$("#estimator-route").val();
+var start=$("#estimator-origin").val();
+var end= $("#estimator-destination").val()
+    $.ajax({
+        type:"POST",
+        url:"list_latlng/",
+        data:{route:route}
+      })
+
+      .done(function(response){
+          console.log("successfully posted");
+         var x=JSON.parse(response)
+
+         var start_latlng = {lat:x[start].lat,lng: x[start].lng};
+         var end_latlng = {lat:x[end].lat, lng:x[end].lng};
+         var request = {
+             origin: start_latlng,
+             destination: end_latlng,
+             travelMode: google.maps.TravelMode.DRIVING
+         };
+     
+         directionsService.route(request, function(result, status) {
+             if (status == google.maps.DirectionsStatus.OK) {
+                 directionsDisplay.setDirections(result);
+                 console.log(result)
+             }
+         });
+
+
+      })
+      removeLineFromMap()
+
+};
 
 // event listner to porpulate the route dropdown list)
 $("#estimator-route").on('keyup click change hover', route_list);
@@ -213,6 +277,9 @@ $("#estimator-origin").change(destination);
 $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
+
+        initMap2(); 
+        removeLineFromMap();      
 
         if ($(window).width() < 992) {
             datetimeValue = $("#datetime-tab2").val();
