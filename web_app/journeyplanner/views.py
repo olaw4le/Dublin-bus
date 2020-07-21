@@ -6,6 +6,8 @@ sys.path.append("..")
 #from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
+import requests
+
 posts = [
     {
         'from' :'Charlestown',
@@ -170,16 +172,6 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
-<<<<<<< HEAD
-||||||| 4ae5d8b
-
-
-
-
-
-
-
-=======
 
 
 @csrf_exempt
@@ -207,4 +199,3 @@ def real_time(request):
 
 
 
->>>>>>> feature-real-time-info
