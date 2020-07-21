@@ -169,7 +169,9 @@ html, body {
     padding-left: 10px;
     padding-right: 10px;
     margin: 15px;
-    width: 90vw;
+    /* width: 90vw; */
+    /* min-width: 300px;
+    max-width:  */
   }
 
   /* overall journey length on results tab1*/
@@ -565,6 +567,16 @@ label.dt-label {
     margin-left: 5px;
     margin-right: 5px;
    }
+
+   .card.results {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 15px;
+    width: 90vw;
+    min-width: 300px;
+
+  }
 
 
     
