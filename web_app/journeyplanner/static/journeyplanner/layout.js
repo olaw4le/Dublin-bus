@@ -21,13 +21,10 @@ $(document).ready(function () {
         $('.hide-slide-menu').removeClass("active");
         navIdFull = $(this).attr('id');
         navId = navIdFull.split("-")[0];
-        console.log(navId);
 
         $("#map-interface-content").load("/" + navId, function () {
-            console.log("id" + navId);
-            $('#' + navId).addClass("active");
-            console.log(navId + '-tab');
             $('#' + navId + '-tab').addClass("active");
+            $('#' + navId + '-nav').addClass("active");
             $(".datetime").val(currentDateTime());
         });
     });
@@ -41,7 +38,9 @@ $(document).ready(function () {
     $('.nav-bottom').on('click', function () {
         // $('.nav-bottom').removeClass("active");
         navId = $(this).attr('id');
-        // $('#' + navId).addClass("active");
+        $('#' + navId).addClass("active");
+        navIdForTab = navId.split("-")[0];
+        $('#' + navIdForTab + '-tab').addClass("active");
 
         // show map on input view of tourist map
         if ((navId === "tourist-nav" || navId === "allroutes-nav") && $(window).width() < 992) {
@@ -78,9 +77,10 @@ $(document).ready(function () {
 $(window).resize(function () {
 
     if ($(window).width() <= 992){
-          if ($('#tourist-nav').hasClass("active")) {
-            $("#map-interface").animate({ top: "400px" }, 400);
-        }
+          if ($('#tourist-nav').hasClass("active") || $('#allroutes-nav').hasClass("active")) {
+            $("#map-interface").css("top", 400);
+        } 
+
     }
     if ($(window).width() >= 992) {
         $("#map-interface").show();
