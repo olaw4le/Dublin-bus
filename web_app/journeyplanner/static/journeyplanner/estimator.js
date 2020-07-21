@@ -213,6 +213,7 @@ $("#estimator-origin").change(destination);
 $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
+        $(".spinner-border").show();
         if ($(window).width() < 992) {
             datetimeValue = $("#datetime-tab2").val();
             console.log("datetime value mobile: " + datetimeValue );
@@ -241,7 +242,6 @@ $(function () {
             minDate: "today",
             onClose: function (selectedDates, dateStr, instance) {
                 sendDateTimeChangePostRequest();
-                console.log("craoissant day");
             },
         });
 
@@ -255,7 +255,6 @@ $(function () {
             minuteIncrement: 1,
             onClose: function (selectedDates, dateStr, instance) {
                 sendDateTimeChangePostRequest();
-                console.log("craoissant time");
             },
         });
 
@@ -264,10 +263,9 @@ $(function () {
 
         // convert time to seconds since midnight
         // console.log("time: "+ input_time);
-        console.log("time: " + time);
         var timeSplit = time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-        console.log(timeSeconds);
+
 
         // sending a post request to the server
         route = $("#estimator-route").val();

@@ -65,7 +65,7 @@ html, body {
   #tab-menu{
     max-width: 150px;
     width: 150px;
-    background-color:#E8E8E8;
+    background-color:#E0E0E0;
     height: calc(100vh - 134px);
     padding: 0px;
   }
@@ -422,10 +422,14 @@ label.dt-label {
 
 #results-chart {
   width: 420px;
+  margin-top: 20px;
 }
 
 .chart {
-  width: 420px;
+  /* max-width: 380px;
+  min-width: 380px; */
+  width: 90%;
+  margin-left: 0px;
 }
   
 
