@@ -6,20 +6,8 @@ sys.path.append("..")
 #from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
-<<<<<<< HEAD
-from data_analytics import linear_regression_weather
-from data_analytics import db_interface
-||||||| 4ae5d8b
-=======
-import requests
-
->>>>>>> feature-real-time-info
-
-
-#showing how data can be added to a html page
 posts = [
     {
-        'route':'Route 9',
         'from' :'Charlestown',
         'to':'Limekiln Avenue',
         'time':'10:40'
