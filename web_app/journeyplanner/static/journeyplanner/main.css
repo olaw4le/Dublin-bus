@@ -312,7 +312,7 @@ ul {
   margin-top: 5px;
 }
 
-#geo-error {
+.geo-error {
   display:none;
 }
 
@@ -368,8 +368,7 @@ label.dt-label {
 #origin-tourist {
   padding-bottom: 5px !important;
 }
-
-#geolocation-tourist {
+.geolocation-option {
   height: fit-content !important;
   width: fit-content !important;
   margin: 0px !important;
@@ -396,6 +395,12 @@ label.dt-label {
 .summary-results {
   height: 30px;
 }
+.geo-spinner {
+  display: none;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
 
 .summary-results-dt {
   height: 30px;
