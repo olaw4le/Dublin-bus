@@ -48,7 +48,6 @@ $(document).ready(function () {
         getGeolocation('origin-tourist');
         $('.geo-spinner').show();
     });
-
 });
 
 // https://developers.google.com/maps/documentation/javascript/places
@@ -128,6 +127,8 @@ function createMarker(place, type, icon, markerList, rating) {
         icon: icon,
         position: place.geometry.location,
     });
+
+    map.setZoom(13); // need to do map offset
 
     markerList.push(marker);
 
