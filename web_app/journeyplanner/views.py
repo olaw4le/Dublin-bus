@@ -5,7 +5,7 @@ import sys
 sys.path.append("..")
 #from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
-
+import requests
 import json
 <<<<<<< HEAD
 import requests
