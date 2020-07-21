@@ -1,3 +1,5 @@
+var dublin = { lat: 53.349424, lng: -6.260452};
+
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
@@ -6,7 +8,8 @@ $(document).ready(function () {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
-
+    map.panTo(dublin)
+    map.panBy(-300, 0)
     // hide destination box initially
     $('#destination-tourist').hide();
 
@@ -52,7 +55,7 @@ $(document).ready(function () {
 });
 
 // https://developers.google.com/maps/documentation/javascript/places
-var dublin = { lat: 53.3155395, lng: -6.4161858 };
+
 
 var markers = {};
 var destination_latlng;
@@ -194,10 +197,10 @@ function routes_tourist() {
 
     // center map at starting point
     var center = new google.maps.LatLng(starting_lat, starting_lng);
-    map.panTo(center);
+    // map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
-    directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+    directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
     // Instantiate an info window to hold step text.
     var stepDisplay = new google.maps.InfoWindow;

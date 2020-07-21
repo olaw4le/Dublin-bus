@@ -130,10 +130,11 @@ function routes() {
 
   // Create a map and center it on starting point
   var center = new google.maps.LatLng(starting_lat, starting_lng);
-  map.panTo(center);
+
+  // map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
-  directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+  directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
   // Instantiate an info window to hold step text.
   var stepDisplay = new google.maps.InfoWindow;
@@ -168,6 +169,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
       // markers for each step.
       if (status === 'OK') {
 
+        map.fitBounds(response.routes[0].bounds);
+        if($(window).width() >= 992){
+          map.panBy(-600, 0);
+          map.setZoom(map.getZoom() - 1);
+        }
         //trimming the origin address
         startingAddress = response.routes[0].legs[0].start_address;
         address1 = startingAddress.split(',');
@@ -315,6 +321,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
+
+        google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
+          console.log("changed")
+          map.panBy(-600, 0);
+          map.setZoom(map.getZoom() - 1);
+        });
         showSteps(response, markerArray, stepDisplay, map);
       }
       else {
