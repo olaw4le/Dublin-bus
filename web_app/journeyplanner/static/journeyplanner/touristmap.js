@@ -59,6 +59,7 @@ var destination_latlng;
 var name;
 var infowindow;
 var directionsRenderer;
+var markerArray = [];
 
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
