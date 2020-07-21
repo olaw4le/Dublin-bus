@@ -45,7 +45,7 @@ $(document).ready(function () {
 
         // show map on input view of tourist map
         if (navId === "tourist-nav" && $(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
 
         } else {
             $("#map-interface").css("top", "0px")
@@ -71,11 +71,6 @@ $(document).ready(function () {
           }, 200, () => $(".hide-slide-menu, #hide-menu").show());
     });
 
-
-
-
-
-
 });
 ;
 
@@ -84,7 +79,7 @@ $(window).resize(function () {
 
     if ($(window).width() <= 992){
           if ($('#tourist-nav').hasClass("active")) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
         }
     }
     if ($(window).width() >= 992) {
