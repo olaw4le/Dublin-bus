@@ -44,7 +44,7 @@ $(document).ready(function () {
         // $('#' + navId).addClass("active");
 
         // show map on input view of tourist map
-        if (navId === "tourist-nav" && $(window).width() < 992) {
+        if ((navId === "tourist-nav" || navId === "allroutes-nav") && $(window).width() < 992) {
             $("#map-interface").animate({ top: "400px" }, 400);
 
         } else {

@@ -326,7 +326,7 @@ ul {
 /* instructions to user on map interface */
 .instruction {
   font-size: 0.9em;
-  margin-left: 15px;
+  margin-left: 10px;
   /* padding-top: 10px; */
 }
 
@@ -417,7 +417,6 @@ label.dt-label {
   font-weight: 400;
   text-align: middle;
 }
-
 
   
 
