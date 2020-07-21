@@ -5,10 +5,20 @@ import sys
 sys.path.append("..")
 #from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
-
+import requests
 import json
+<<<<<<< HEAD
 import requests
 
+=======
+from data_analytics import linear_regression_weather
+from data_analytics import get_direction
+from data_analytics import db_interface
+
+
+
+#showing how data can be added to a html page
+>>>>>>> returning prediction from tab1
 posts = [
     {
         'from' :'Charlestown',
