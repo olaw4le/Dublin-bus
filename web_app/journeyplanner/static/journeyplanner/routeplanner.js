@@ -1,12 +1,9 @@
-
 $(document).ready(function () {
 
   // load twitter
-  if(twttr){
+  if(typeof twttr != 'undefined'){
     twttr.widgets.load();
   }
-
-  
 
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
@@ -37,7 +34,7 @@ $(document).ready(function () {
  var origin;
  var destination;
 
-
+// wait until google is loaded
 function WhenGoogleLoadedDo(fnt)
    {
    if(typeof google != 'undefined')
@@ -47,7 +44,7 @@ function WhenGoogleLoadedDo(fnt)
          {(function(fnt)
             {
             WhenGoogleLoadedDo(fnt)
-            })(fnt)}, 500); // You can set timer as you wish //
+            })(fnt)}, 500); 
    }
 
 WhenGoogleLoadedDo( () => {
@@ -148,26 +145,10 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         address2 = endingAddress.split(',');
         address2 = address2[0];
 
-        //getting the value of the user selected time
-        // var time = $("#datetime-tab1").val();
-
-        // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
-
-        // dateArr = time.split('T');
-        // date = dateArr[0];
-        // dateElements = date.split('-');
-        // year = dateElements[0];
-        // month = dateElements[1];
-        // date = dateElements[2];
-        // dateToDisplay = date + "-" + month + "-" + year;
-
-        // time = dateArr[1];
 
         // fill journey details into summary results
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
-        // $("#datetime-tab").html(dateToDisplay + ", " + time);
-
 
         journeysteps = response.routes[0].legs[0].steps;
 
@@ -206,9 +187,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=20 height=20>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=20 height=20>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
 
           // going through the object to get the travel mode details 
 
@@ -370,7 +351,7 @@ $(function () {
     routes();
     $(".form-area").hide();
     if ($(window).width() < 992) {
-      $("#map-interface").animate({ top: "400px" }, 'fast');
+      $("#map-interface").animate({ top: "400px" }, 400);
     }
     $("#route-results").show();
 

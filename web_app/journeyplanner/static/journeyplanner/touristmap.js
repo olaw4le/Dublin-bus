@@ -454,7 +454,7 @@ $(function () {
         $(".form-area").hide();
         $("#checkbox-card").hide();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
         }
         $("#route-results-tourist").show();
     });
@@ -464,7 +464,7 @@ $(function () {
         $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
         }
         $("#route-results-tourist").hide();
     });

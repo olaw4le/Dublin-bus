@@ -5,7 +5,7 @@
 
 
 <h4 class="tab-title">Stop To Stop</h4>
-<div class="container form-area">
+<div class="container form-area" id="form-area-stop-to-stop">
     <form autocomplete="off" onsubmit="return false">
         <div class="autocomplete form-group" id="autocomplete">
             <label for="origin">Route:</label>
@@ -28,12 +28,11 @@
         </div>
 
         <div class="form-group">
+
             <!-- mobile datetime picker -->
             <div class="mobile-dt">
                 <label for="datetime-4">Date and Time:</label>
-                <div class="row datetime">
-                    <input type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab2" value="">
-                </div>
+                    <input class="datetime input-box form-control" type="datetime-local" data-clear-btn="true" name="datetime-4" class="datetime" id="datetime-tab2" value="">
             </div>
         </div>
 
@@ -41,11 +40,10 @@
         <div class="desktop-dt">
             <div class="row datetime">
                 <label class="dt-label">Date and Time:</label>
-                <input type="text" id="datepicker-tab2">
+                <input class="input-box form-control" type="text" id="datepicker-tab2">
             </div>
             <div class="row datetime">
-                <!-- <label>Time:</label> -->
-                <input type="text"class="timepicker" id="timepicker-tab2">
+                <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tab2">
             </div>
         </div>
         <button type="submit" class="go-button btn btn-warning btn-lg" id="stop-to-stop-go">Go</button>

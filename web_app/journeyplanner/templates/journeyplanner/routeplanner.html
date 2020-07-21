@@ -1,4 +1,3 @@
-
 {% load static %}
 <script src=" {% static 'journeyplanner/routeplanner.js' %}"></script>
 
@@ -11,39 +10,42 @@
 <div class="container form-area">
     <div class="input-area">
         <form onsubmit="return false">
-            <p class="instruction">Enter origin and destination locations and click 'go' to view directions and journey times.</p>
+            <p class="instruction" id="instruction-planner">Enter origin and destination locations and click 'go' to view directions and journey
+                times.</p>
             <div class="form-group">
                 <label for="origin">From:</label>
                 <input type="text" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
             </div>
             <div class="form-group">
                 <label for="destination">To:</label>
-                <input type="text" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
+                <input type="text" class="input-box form-control col-6" id="destination"
+                    placeholder="Enter destination">
             </div>
 
-                <!-- mobile datetime picker-->
-                <div class="mobile-dt form-group">
-                    <label for="datetime-4">Date and Time:</label>
+            <!-- mobile datetime picker-->
+            <div class="mobile-dt form-group">
+                <label for="datetime-4">Date and Time:</label>
+                   <input class="datetime input-box form-control" type="datetime-local" data-clear-btn="true"
+                    name="datetime-4" id="datetime-tab1" value="">
+            </div>
 
-                        <input class="datetime input-box form-control" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tab1" value="">
+            <!-- desktop date and time -->
+            <div class="desktop-dt form-group">
+                <div class="row datetime">
+                    <label class="dt-label">Date and Time:</label>
+                    <input class="input-box form-control" type="text" id="datepicker-tab1">
                 </div>
-
-                <!-- desktop date and time -->
-                <div class="desktop-dt form-group">
-                    <div class="row datetime">
-                        <label class="dt-label">Date and Time:</label>
-                        <input class="input-box form-control" type="text" id="datepicker-tab1">
-                    </div>
-                    <div class="row datetime">
-                        <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tab1">
-                    </div>
+                <div class="row datetime">
+                    <input class="input-box form-control" type="text" class="timepicker" id="timepicker-tab1">
                 </div>
-                <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
+            </div>
+            <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
 
         </form>
         <div class="container news">
             <div class="black_box">
-                <a class="twitter-timeline" data-width="700" data-height="500" href="https://twitter.com/dublinbusnews?ref_src=twsrc%5Etfw">Twitter Updates by Dublin Bus</a>
+                <a class="twitter-timeline" data-width="700" data-height="500"
+                    href="https://twitter.com/dublinbusnews?ref_src=twsrc%5Etfw">Twitter Updates by Dublin Bus</a>
             </div>
         </div>
         <div class="mobile-space"></div>
@@ -70,13 +72,13 @@
                 <p id="destination-tab1"></p>
             </div>
         </div>
-<!-- desktop date and time -->
+        <!-- desktop date and time -->
         <div class="row summary-results-dt desktop-dt">
             <div class="col-4">
                 <p>On:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab1-results-date"></p>
+                <p><input class="input-box form-control" type="text" id="datepicker-tab1-results-date"></p>
             </div>
         </div>
         <div class="row summary-results-dt desktop-dt">
@@ -84,18 +86,18 @@
                 <p>At:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab1-results-time"></p>
+                <p><input class="input-box form-control" type="text" id="datepicker-tab1-results-time"></p>
             </div>
         </div>
 
-<!-- mobile date and time -->
+        <!-- mobile date and time -->
         <div class="mobile-dt">
             <div class="row">
                 <div class="col-4">
                     <label for="datetime-4" class="results-label">On:</label>
                 </div>
                 <div class="col-8 results-dt-mob">
-                    <input class="datetime" type="datetime-local" name="datetime-4" id="datetime-tab1-results">
+                       <input class="datetime" type="datetime-local" name="datetime-4" id="datetime-tab1-results">
                 </div>
             </div>
         </div>
@@ -103,22 +105,22 @@
 
 
         <div class="row">
-        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Edit journey details</button>
+            <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Edit journey details</button>
         </div>
     </div>
 
     <!-- overall journey time and length -->
     <div class="card results">
-            <div id="overall-time">
-                <div class="row">
-                    <p id="journey-time">12:50 - 13:10</p>
-                </div>
+        <div id="overall-time">
+            <div class="row">
+                <p id="journey-time">12:50 - 13:10</p>
             </div>
-                <div class="row">
-                    <div class="col-8" id="overall-duration">
-                        <p>Total duration:    <span id="duration-val">20 mins</span></p>
-                    </div>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-8" id="overall-duration">
+                <p>Total duration: <span id="duration-val">20 mins</span></p>
+            </div>
+        </div>
     </div>
     <div class="card results">
         <div class="row">
@@ -129,7 +131,7 @@
     <div class="mobile-space"></div>
 
 
-        
-       
+
+
 
 </div>

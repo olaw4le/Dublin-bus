@@ -168,7 +168,8 @@ html, body {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    margin: 10px;
+    margin: 15px;
+    width: 90vw;
   }
 
   /* overall journey length on results tab1*/
@@ -239,6 +240,7 @@ html, body {
 
   .results-dt-mob {
     padding-left: 0px;
+    margin-left: -2px;
   }
 
 /*the container must be positioned relative:*/
@@ -297,8 +299,9 @@ input[type=submit] {
 
 ul {
   list-style-type: none;
-  padding-left:10px;
-  font-size: 0.9em;
+  padding-left: 30px;
+  padding-top: 10px;
+  font-size: 1.1em;
 }
 
 #checkboxes {
@@ -322,6 +325,11 @@ ul {
 .instruction {
   font-size: 0.9em;
   margin-left: 15px;
+  /* padding-top: 10px; */
+}
+
+#instruction-planner {
+  padding-top: 10px;
 }
 
 /* all form input boxes for all tabs */
@@ -351,7 +359,7 @@ label.dt-label {
 }
 
 #checkbox-card {
-  margin: 10px 10px 10px 10px;
+  margin: 15px 15px 15px 15px;
   padding-bottom: 10px;
 }
 
@@ -396,10 +404,9 @@ label.dt-label {
   font-size: 1.7em;
   text-align: center;
   background-color: 	rgb(194, 194, 194);
-  height: 44px;
+  height: 66px;
   padding-bottom: 14px;
-  padding-top: 7px;
-  margin-bottom: 10px;
+  padding-top: 17px;
   font-weight: 400;
   text-align: middle;
 }
@@ -519,6 +526,10 @@ label.dt-label {
         max-width: unset;
       }
 
+      #form-area-stop-to-stop {
+        padding-top: 15px;
+      }
+
       /* .datetime {
         width: 80%;
         padding-left: 0px;
@@ -540,7 +551,7 @@ label.dt-label {
           /* instructions to user on map interface */
     .instruction {
       font-size: 0.9em;
-      margin-left: 15px;
+      margin-left: 10px;
       width: 90vw;
     }
 
@@ -549,6 +560,13 @@ label.dt-label {
    margin-left: 5px;
    margin-right: 5px;
   }
+
+  #route-results-tourist {
+    margin-left: 5px;
+    margin-right: 5px;
+   }
+
+
     
 
       
