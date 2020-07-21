@@ -6,6 +6,7 @@ import pg8000 as ps
 
 
 def construct_sql(**kwargs):
+    print("Hello from construct_sql")
 
     if "table_name" in kwargs:
         table_name = kwargs["table_name"]
@@ -26,8 +27,8 @@ def construct_sql(**kwargs):
 
     # define template structures for sql queries
     templates = {
-        "delete_all": "DELETE FROM %s",
-        "select_all": "SELECT FROM %s",
+        "delete_all": "DELETE * FROM %s",
+        "select_all": "SELECT * FROM %s",
         "select_where": "SELECT %s FROM %s WHERE %s",
         "insert": "INSERT INTO %s (%s) VALUES (%s)",
         "attr_names": """SELECT column_name FROM information_schema.columns WHERE table_name = '%s' ORDER BY ordinal_position"""
@@ -65,7 +66,7 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (table_name, attr_names, attr_values)
-
+    
         return sql_query
 
     # if selecting with predicate
@@ -97,12 +98,13 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (cols, table_name, predicates)
-
+       
         return sql_query
 
     # if deleting/selecting *all* data from a table
     elif query_type in ["delete_all", "select_all", "attr_names"]:
         sql_query = templates[query_type] % table_name
+        
         return sql_query
 
     else:
@@ -111,7 +113,7 @@ def construct_sql(**kwargs):
 
 
 def execute_sql(sql_query, database, user, password, host, port, **kwargs):
-
+    
     # is function expected to produce output or not - depends on query type
     if ("retrieving_data" in kwargs) and type(kwargs["retrieving_data"] == bool):
         retrieving_data = kwargs["retrieving_data"]
@@ -137,7 +139,9 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
 
     # if retrieving data / expecting some kind of response...
     if retrieving_data:
+        
         response = cursor.fetchall()
+        
         connection.close()
         return response
 

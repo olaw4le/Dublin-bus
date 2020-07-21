@@ -3,9 +3,11 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
 sys.path.append("..")
-from data_analytics import linear_regression
+#from data_analytics import linear_regression
 from .route_details import stops_latlng, find_stop,latlng
 import json
+from data_analytics import linear_regression_weather
+from data_analytics import db_interface
 
 
 #showing how data can be added to a html page
@@ -68,6 +70,7 @@ def tourist(request):
 
 @csrf_exempt
 def prediction(request):
+    print(request.method)
     if request.method == "POST":
         route= request.POST["route"]
         origin= request.POST["origin"]
@@ -76,18 +79,20 @@ def prediction(request):
         time = request.POST["time"]
         direction=request.POST["direction"]
         print("time from views.py", time)
-
-        result = linear_regression.generate_preditction(route, origin, destination, date, time, direction)
-        
-
-
         print("routes:",route)
         print("origin:",origin)
         print("destination:",destination)
         print("direction:",direction)
         print("date",date)
-        # print("result", result)
+
+        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        
+
+
+        
+
     return HttpResponse(result)
+
 
 @csrf_exempt
 def planner(request):
@@ -166,10 +171,3 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
-
-
-
-
-
-
-
