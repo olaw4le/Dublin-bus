@@ -15,6 +15,12 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
+cwd = os.getcwd()  # Get the current working directory (cwd)
+files = os.listdir(cwd)  # Get all the files in that directory
+print("Files in %r: %s" % (cwd, files))
+path = cwd[:-7]
+print(path)
+
 
 def get_weather_from_db():
     """returns a tuple of the 'current' weather data from out postgres database."""
@@ -176,7 +182,7 @@ def generate_test_dataframe(route, direction, date, time):
     Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
     are added to a temporary dataframe.
     The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
-
+    print(route)
     # get weather from database
     weather = get_weather_from_db()
     # extract required parameters
@@ -189,8 +195,7 @@ def generate_test_dataframe(route, direction, date, time):
     rain = weather[8]
 
     # create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
-    f = open(
-        '/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/result_templates.json', )
+    f = open('/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/result_templates.json')
     templates = json.load(f)
     template_name = str(route) + "_" + str(direction)
     features = templates[template_name]
@@ -308,6 +313,8 @@ def segment_calculation(startstop, endstop, dictionary):
 
 
 def quickanddirty(route, direction, startstop, endstop):
+    print("hello, want it quick and dirty?")
+
     """Returns proportion of the total journey that the user takes simply as percentage of how many of the stops on the route they travelled
         
         I don't like this function, because I don't see the point of training a linear regression model, and then using a blunt object like this to 
@@ -318,20 +325,19 @@ def quickanddirty(route, direction, startstop, endstop):
         However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate than at 6pm on a weekday"""
 
     # get the master list of ordered stops
-    f = open(
-        '/Users/laura/Desktop/Trimester_3/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json', )
+    f = open(path + 'web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json')
     ordered_stop_data = json.load(f)
+    
     # get the stops for the subroutes on that route as a dictionary
     ordered_stop_data_route = ordered_stop_data[str(route)]
-
+    #print("ordered_stop_data_route", ordered_stop_data_route)
     for key, value in ordered_stop_data_route.items():
         # for the main (or majority subroute) in the given direction on that route...
-        if ordered_stop_data_route[key]['direction'] == direction and ordered_stop_data_route[key]['main'] == True:
+        if ordered_stop_data_route[key]['direction'] == int(direction) and ordered_stop_data_route[key]['main'] == True:
             # find how many stops on the route, how many the user travelled, divide the later by the former
             main_route_stops = ordered_stop_data_route[key]['stops']
             main_route_length = len(main_route_stops)
-            user_route_length = len(
-                main_route_stops[main_route_stops.index(startstop):main_route_stops.index(endstop) + 1])
+            user_route_length = len(main_route_stops[main_route_stops.index(int(startstop)):main_route_stops.index(int(endstop)) + 1])
             proportion = user_route_length / main_route_length
             return proportion
 
@@ -371,7 +377,6 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     except:
         print("Unable to access proportions data, getting nasty.")
         proportion = quickanddirty(route, direction, startstop, endstop)
-
     return proportion
 
 
@@ -384,8 +389,7 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     test = generate_test_dataframe(route, direction, date, time)
     
     # loads the correct linear regression pickle using the route and direction
-    pickle_file = "/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/pickles/" + str(
-        route) + "_direction" + str(direction) + ".pickle"
+    pickle_file = path + "web_app/data_analytics/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
 
