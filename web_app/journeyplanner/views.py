@@ -7,16 +7,10 @@ sys.path.append("..")
 from .route_details import stops_latlng, find_stop,latlng
 
 import json
-from data_analytics import linear_regression_weather
-from data_analytics import get_direction
-from data_analytics import db_interface
+import requests
 
-
-
-#showing how data can be added to a html page
 posts = [
     {
-        'route':'Route 9',
         'from' :'Charlestown',
         'to':'Limekiln Avenue',
         'time':'10:40'
@@ -69,6 +63,11 @@ def disruptions(request):
 def tourist(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/tourist.html')
+
+def realtime(request):
+    # can also pass dictionary in directly as arg
+    return render(request, 'journeyplanner/realtime.html')
+
 
 
 @csrf_exempt
@@ -156,8 +155,8 @@ def find_latlng(request):
         route_number=route.upper()
 
         # getting the suggested route file 
-        route_list=stops_latlng(route_number)
-        result =latlng(route_list,str(stop_id))
+        route_list= stops_latlng(route_number)
+        result = latlng(route_list,str(stop_id))
 
         print(result)
         
@@ -174,3 +173,30 @@ def list_latlng(request):
         # getting the suggested route file 
          route_list=stops_latlng(route_number)
     return HttpResponse(json.dumps(route_list))
+
+
+@csrf_exempt
+def real_time(request):
+    if request.method=="POST":
+        stop_number= request.POST["stopnumber"]
+        url= "https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid={}&format=json".format(stop_number)
+        r = requests.get(url=url)
+
+        data= r.json()
+        print(data)
+
+
+    return HttpResponse(json.dumps(data))
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 from vincenty import vincenty
 import json
 
-
+#function to find the coordinates of the stops a route goes through
 def stops_latlng(route_number):
     routefile = "journeyplanner/static/routes/{}.json".format(route_number)
 
@@ -19,7 +19,7 @@ def stops_latlng(route_number):
 
     return stops_coordinate
 
-
+#function to find the stop number when given the lat and lng 
 def find_stop(stopList, lat_lng):
     for key in stopList.keys():
         # Calculate the geographical distanc between 2 points using the vincenty formular and updating the list
@@ -35,8 +35,8 @@ def find_stop(stopList, lat_lng):
 
 
 # finding the lat and lng of a stop
-def latlng(stopList,route):
-    result=stopList[route]
+def latlng(stopList,stop):
+    result=stopList[stop]
     
     return result
 
