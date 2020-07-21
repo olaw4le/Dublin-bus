@@ -2,7 +2,7 @@ html, body {
     height: 100%;
     width: 100%;
     font-size: 1rem;
-    font-family: 'Rubik', serif;
+    font-family: 'Varela', serif;
   }
 
   /* mobile bottom nav - hidden on larger screens */
@@ -65,7 +65,7 @@ html, body {
   #tab-menu{
     max-width: 150px;
     width: 150px;
-    background-color: #F0F0F0;
+    background-color:#E8E8E8;
     height: calc(100vh - 134px);
     padding: 0px;
   }
@@ -86,8 +86,7 @@ html, body {
     background-color: rgb(194, 194, 194);
   }
   .slide-menu-item.active {
-    background-color: #4484CE;
-    color: white;
+    background-color: #ffc107;
   }
   .slide-menu-item.active:hover {
     background-color: #4484CE;
@@ -234,6 +233,7 @@ html, body {
     margin-left: 10px;
     height: 40px;
     margin-bottom: 7px;
+    margin-top: 5px;
   }
 
   /* remove margin on labels of summary results */
@@ -302,9 +302,9 @@ input[type=submit] {
 
 ul {
   list-style-type: none;
-  padding-left: 30px;
+  padding-left: 15px;
   padding-top: 10px;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 #checkboxes {
@@ -411,14 +411,22 @@ label.dt-label {
 .tab-title {
   font-size: 1.7em;
   text-align: center;
-  background-color: 	rgb(194, 194, 194);
+  background-color: #4484CE;
   height: 66px;
   padding-bottom: 14px;
   padding-top: 17px;
   font-weight: 400;
   text-align: middle;
+  color: white;
 }
 
+#results-chart {
+  width: 420px;
+}
+
+.chart {
+  width: 420px;
+}
   
 
 /* media queries to be kept at bottom of css file for ease of understanding */
@@ -468,7 +476,7 @@ label.dt-label {
       /* mobile screen bottom nav */
       .fixed-bottom {
         display: block;
-        height: 70px;
+        height: 80px;
         width: 100vw; 
       }
       
@@ -480,14 +488,14 @@ label.dt-label {
         font-size: 0.8rem;
       }
   
-  
+
       #bottom-nav-div {
-        height: 70px;
+        height: 80px;
         padding: 0px;
       }
   
       a.nav-item.nav-link.load-interface.nav-bottom {
-        height: 70px;
+        height: 80px;
         text-align: center;
         padding-top: 10px;
         background-color:	#DCDCDC;
