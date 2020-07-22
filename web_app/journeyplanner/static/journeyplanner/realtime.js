@@ -53,22 +53,28 @@ function bustime() {
         .done(function (response) {
             var x = JSON.parse(response)
             businfo = x.results
-            tableRows += "<tr><th>Route Number</th><th>Destination</th><th>Due time</th></tr>"
+            console.log(businfo);
+            if (businfo.length == 0) {
+                $('#real-time-table').hide();
+                $('#realtime-error').show();
+            } else {
+                $('#real-time-table').show();
+                $('#realtime-error').hide();
+                tableRows += "<tr><th>Route Number</th><th>Destination</th><th>Due time</th></tr>"
 
-            for (var i = 0; i < businfo.length; i++) {
-                var route_number = businfo[i].route;
-                var origin = businfo[i].origin
-                var destination = businfo[i].destination;
-                var due_time = businfo[i].duetime;
+                for (var i = 0; i < businfo.length; i++) {
+                    var route_number = businfo[i].route;
+                    var origin = businfo[i].origin
+                    var destination = businfo[i].destination;
+                    var due_time = businfo[i].duetime;
 
-                console.log(route_number)
-                console.log(destination)
-                console.log(due_time)
+                    tableRows += "<tr><td>" + route_number + "</td><td>" + destination + "</td><td>" + due_time + "mins" + "</td></tr>";
+                    $("#real-time-table").html(tableRows)
 
-                tableRows += "<tr><td>" + route_number + "</td><td>" + destination + "</td><td>" + due_time + "mins" + "</td></tr>";
-                $("#real-time-table").html(tableRows)
+                }
 
             }
+
 
         })
 }

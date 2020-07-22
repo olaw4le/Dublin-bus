@@ -430,6 +430,11 @@ label.dt-label {
   width: 420px;
 }
 
+#realtime-error {
+  display: none;
+  margin-left: 10px;
+}
+
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
