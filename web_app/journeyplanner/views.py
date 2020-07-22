@@ -69,6 +69,7 @@ def leap(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/leap.html')
 
+
 def disruptions(request):
     # can also pass dictionary in directly as arg
     return render(request, 'journeyplanner/disruptions.html')
@@ -148,7 +149,7 @@ def planner(request):
         # adding the calculated value to the list that will be sent back
         prediction.append(calculation)
 
-        print("prediction",calculation)
+        print("prediction", calculation)
 
     return HttpResponse(calculation)
     
@@ -196,5 +197,18 @@ def real_time(request):
 # csrf exemption is only temporary while running on local machine!!!
 @csrf_exempt
 def leap_login(request):
-    """"""
+
+    if request.method == "POST":
+        user = json.loads(request.POST["user"])
+        password = json.loads(request.POST["user"])
+
+        leap_session = leap.LeapSession()
+
+        # attempt to login to www.leapcard.ie with supplied credentials
+        # return error if credentials are incorrect
+        try:
+            leap_session.try_login(user, password)
+
+        except Exception as e:
+            return e
     pass
