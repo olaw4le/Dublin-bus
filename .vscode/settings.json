@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\olawa\\Anaconda3\\envs\\comp47350py37\\python.exe",
+    "python.pythonPath": "venv/bin/python3",
     "editor.fontSize": 16
 }
