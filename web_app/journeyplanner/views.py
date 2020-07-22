@@ -155,8 +155,8 @@ def find_latlng(request):
         route_number = route.upper()
 
         # getting the suggested route file 
-        route_list= stops_latlng(route_number)
-        result = latlng(route_list,str(stop_id))
+        route_list = stops_latlng(route_number)
+        result = latlng(route_list, str(stop_id))
 
         print(result)
         
@@ -193,7 +193,7 @@ def leap_login(request):
 
     if request.method == "POST":
         user = json.loads(request.POST["user"])
-        password = json.loads(request.POST["user"])
+        password = json.loads(request.POST["passwd"])
 
         leap_session = leap.LeapSession()
 
@@ -204,4 +204,12 @@ def leap_login(request):
 
         except Exception as e:
             return e
-    pass
+
+        # request the www.leapcard.ie account overview
+        overview = leap_session.get_card_overview()
+        stats = {"cardNumber": overview.card_num, "balance": overview.balance, "cardName": overview.card_label}
+
+        # convert stats to json format & return to user
+        return HttpResponse(json.dumps(stats))
+
+
