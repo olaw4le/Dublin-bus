@@ -20,6 +20,9 @@ function initMap() {
     // Instantiate a directions service.
     directionsService = new google.maps.DirectionsService;
 
+    directionsDisplay = new google.maps.DirectionsRenderer({
+        map: map})
+
     //the current location 
     // var dublin = { lat: 53.349424, lng: -6.260452};
 
