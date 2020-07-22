@@ -280,7 +280,9 @@ $(function () {
 
         // show error if user doesn't complete all fields
         if ($('#estimator-route').val() == "" || $("#estimator-sub option:selected").text() ==
-            'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' ||
+            'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' 
+            || $("#estimator-origin option:selected").text() == 'Stops' ||
+            $("#estimator-destination option:selected").text() == 'Stops' ||
             $("#estimator-destination option:selected").text() == 'Select stop:') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
