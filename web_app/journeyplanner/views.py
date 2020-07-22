@@ -95,10 +95,6 @@ def prediction(request):
         print("date",date)
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-        
-
-
-        
 
     return HttpResponse(result)
 
@@ -114,7 +110,7 @@ def planner(request):
         route= data["route_number"]
         date = request.POST["date"]
         time = request.POST["time"]
-        
+
         #direction= 2
         route_number=route.upper()
 
@@ -142,7 +138,7 @@ def planner(request):
         print(direction)
         #use the maachine learning module to calculate prediction 
         calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
-        
+
         #adding the calculated value to the list that will be sent back
         prediction.append(calculation)
 
@@ -192,18 +188,11 @@ def real_time(request):
         data= r.json()
         print(data)
 
-
     return HttpResponse(json.dumps(data))
 
 
-
-
-
-
-
-
-
-
-
-
-
+# csrf exemption is only temporary while running on local machine!!!
+@csrf_exempt
+def leap_login(request):
+    """"""
+    pass
