@@ -4,12 +4,15 @@ $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #routeplanner-nav, #allroutes-nav", function(){
+    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function(){
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
     map.panTo(dublin)
-    map.panBy(-300, 0)
+    if($(window).width() >= 992){
+        map.panBy(-300, 0);
+    }
+    
     // hide destination box initially
     $('#destination-tourist').hide();
 
@@ -140,8 +143,6 @@ function createMarker(place, icon, markerList, rating) {
         icon: icon,
         position: place.geometry.location,
     });
-
-    map.setZoom(13); // need to do map offset
 
     markerList.push(marker);
 

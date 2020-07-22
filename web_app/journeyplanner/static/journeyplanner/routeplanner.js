@@ -322,11 +322,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
 
-        google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
-          console.log("changed")
-          map.panBy(-600, 0);
-          map.setZoom(map.getZoom() - 1);
-        });
+        // google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
+        //   console.log("changed")
+        //   map.panBy(-600, 0);
+        //   map.setZoom(map.getZoom() - 1);
+        // });
         showSteps(response, markerArray, stepDisplay, map);
       }
       else {
