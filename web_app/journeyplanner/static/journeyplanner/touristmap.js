@@ -1,4 +1,4 @@
-var dublin = { lat: 53.349424, lng: -6.260452};
+var dublin = { lat:53.349424, lng: -6.363448826171867};
 
 $(document).ready(function () {
 
@@ -9,9 +9,6 @@ $(document).ready(function () {
         removeLineFromTouristMap();
     });
     map.panTo(dublin)
-    if($(window).width() >= 992){
-        map.panBy(-300, 0);
-    }
     
     // hide destination box initially
     $('#destination-tourist').hide();
