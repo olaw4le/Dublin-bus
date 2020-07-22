@@ -258,8 +258,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             instruction = instruction.split(',');
             instruction = instruction[0];
 
-            direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
-
           }
 
           else if (travelMode == "TRANSIT") {
@@ -289,6 +287,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
             //turning the data to sent into json
             data = JSON.stringify(journey_steps);
+          }
 
 
 
@@ -306,16 +305,48 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 prediction = response
                 console.log(prediction)
                 alert("successfully posted")
+                if (travelMode == "WALKING") {
+                  
 
-                console.log(prediction)
+                  distance = journeysteps[i].distance.text;
+                  duration = journeysteps[i].duration.text;
+                  instruction = journeysteps[i].instructions;
+      
+                  //trimming the instruction text
+                  instruction = instruction.split(',');
+                  instruction = instruction[0];
+      
+                  direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>'); }
+
+                  else if (travelMode == "TRANSIT") {
+                    for (i in prediction){
+                    distance = journeysteps[i].distance.text;
+                    //duration=journeysteps[i].duration.text
+                    instruction = journeysteps[i].instructions;
+                    Route_number = journeysteps[i].transit.line.short_name;
+                    arrival_stop = journeysteps[i].transit.arrival_stop.name;
+                    departure_stop = journeysteps[i].transit.departure_stop.name;
+                    num_stops = journeysteps[i].transit.num_stops;
+                    arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
+                    departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
+        
+                    //trimming the instruction text
+                    instruction = instruction.split(',');
+                    instruction = instruction[0];
+                  
+                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + i + '</li>');
+
+                  
+                  }}
+                
+
 
               })
 
 
-            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
+            
 
-
-          };
+          
         };
         ;
 
