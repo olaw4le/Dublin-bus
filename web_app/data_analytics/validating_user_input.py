@@ -130,14 +130,27 @@ def get_bus_times(trip_ids, first_stop, departure_time):
 day_of_week = get_weekday(date)
 name_day_of_week = get_name_day_of_week(day_of_week)
 date_int = get_integer_date(date)
+
+# first query to db... look in calendar_dates to see if the date in question is there...
 exception_code = is_exception(date_int)
+
+# second query to db ... if it isn't ... use the date to get the service_id from calendar
 service_id = get_service_id(date_int, name_day_of_week, exception_code)
+
 time_range = [time, time+3600]
 departure_time = get_range(time_range)
+
+# third query to db ... get the big route_id from routes using the short route-id from user
 route_id = get_route_id(route)
+
+# fourth query to db ... get the trip_ids from trips using serice_id, direction and route_id
 trip_ids = get_trip_ids(service_id, route_id, direction)
+
+# I think this will be replaced by simple searching for the old stop no (eg. 226) at the end of the new stop number (eg 8220DB000226) ...
 first_stop = stop_formatter(start_stop)
 last_stop = stop_formatter(end_stop)
+
+#fifth query to db ... in stop_times: use the trip_ids, the first stop number and the time ranges to get possible options
 possible_buses = get_bus_times(trip_ids, first_stop, departure_time)
 
 if len(possible_buses) > 0:
