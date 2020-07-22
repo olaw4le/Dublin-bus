@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^find_latlng/', views.find_latlng, name = 'latlng'),
     url(r'^list_latlng/', views.list_latlng, name = 'stops_latlng'),
     url(r'^real_time/', views.real_time, name = 'real_time'),
+    url(r'^leap_login/', views.leap_login, name='leap_login')
 ]
 
 
