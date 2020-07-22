@@ -38,7 +38,6 @@ $(document).ready(function () {
     dateFormat: 'H:i',
     noCalendar: true,
     time_24hr: true,
-    minTime: "05:00",
     minuteIncrement: 1
   });
 
@@ -416,7 +415,6 @@ $(function () {
         dateFormat: 'H:i',
         noCalendar: true,
         time_24hr: true,
-        minTime: "05:00",
         minuteIncrement: 1,
         onClose: function (selectedDates, dateStr, instance) {
           // sendDateTimeChangePostRequest();
