@@ -1,29 +1,27 @@
-<p>leap card </p>
 {% load static %}
  
 <script src=" {% static 'journeyplanner/leapcard.js' %}"></script>
 
-
+<h4 class="tab-title">Leap Card</h4>
 <!-- leapcard login form -->
 <div class="container form-area" id="leap-login-container">
     <form autocomplete="off" onsubmit="return false">
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="username" class="form-control" id="leap-user" placeholder="Enter your username">
+            <input type="username" class="input-box form-control" id="leap-user" placeholder="Enter your username">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" id="leap-password" placeholder="********">
+            <input type="password" class="input-box form-control" id="leap-password" placeholder="********">
         </div>
         <small id="leap-account-needed" class="form-text text-muted">Cards must be registered on www.leapcard.ie to use this service</small>
-        <button type="submit" name="leap-login" class="btn btn-primary">Login</button>
-        <button type="submit" name="leap-login-with-save" class="btn btn-secondary">Save Login</button>
-
+        <button type="submit" name="leap-login" class="btn btn-primary" id="leap-login-button">Login</button>
+        <!-- <button type="submit" name="leap-login-with-save" class="btn btn-secondary">Save Login</button> -->
     </form>
 </div>
 
 <!-- leapcard overview-->
-<div class="container" id="leap-overview-container">
+<div class="container leap-result" id="leap-overview-container">
     <table class="table" id="my-leap-cards">
         <tr>
             <th scope="col">My Leap Cards</th>
@@ -33,7 +31,7 @@
 </div>
 
 <!-- leapcard detailed info-->
-<div class="container" id="leap-detailed-container">
+<div class="container leap-result" id="leap-detailed-container">
 
     <div class="card results">
 
@@ -74,7 +72,7 @@
         </div>
 
     </div>
-    <table class="table" id="my-leap-card-details">
+    <table class="table leap-result" id="my-leap-card-details">
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Service</th>
