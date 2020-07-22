@@ -7,7 +7,7 @@ from .route_details import stops_latlng, find_stop,latlng
 import requests
 import json
 import requests
-import pyleapcard as leap
+from pyleapcard import *
 
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
@@ -192,10 +192,10 @@ def real_time(request):
 def leap_login(request):
 
     if request.method == "POST":
-        user = json.loads(request.POST["user"])
-        password = json.loads(request.POST["passwd"])
+        user = request.POST["user"]
+        password = request.POST["passwd"]
 
-        leap_session = leap.LeapSession()
+        leap_session = LeapSession()
 
         # attempt to login to www.leapcard.ie with supplied credentials
         # return error if credentials are incorrect
@@ -203,11 +203,13 @@ def leap_login(request):
             leap_session.try_login(user, password)
 
         except Exception as e:
+            print(e)
             return e
 
         # request the www.leapcard.ie account overview
         overview = leap_session.get_card_overview()
-        stats = {"cardNumber": overview.card_num, "balance": overview.balance, "cardName": overview.card_label}
+        stats = {"cardNumber": overview.card_num, "cardBalance": overview.balance, "cardName": overview.card_label,
+                 "cardType": overview.card_type, "cardExpiry": overview.expiry_date}
 
         # convert stats to json format & return to user
         return HttpResponse(json.dumps(stats))
