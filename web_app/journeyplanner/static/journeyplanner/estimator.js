@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
-  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
-  removeLineFromMap);
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
+        removeLineFromMap);
 
 
     // flatpickr date https://flatpickr.js.org/options/
@@ -34,7 +34,7 @@ var stations = "";
 var routes = ""
 var allMarkers = [];
 
-$(function() {
+$(function () {
     var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
         stations = data;
 
@@ -60,22 +60,22 @@ $(function() {
 
 function removeLineFromMap() {
     if (directionsRenderer) {
-      directionsRenderer.setDirections({ routes: [] });
+        directionsRenderer.setDirections({ routes: [] });
     }
     // First, remove any existing markers from the map.
     console.log(allMarkers);
-    if(allMarkers) {
-      for (var i = 0; i < allMarkers.length; i++) {
-        allMarkers[i].setMap(null);
-      }
+    if (allMarkers) {
+        for (var i = 0; i < allMarkers.length; i++) {
+            allMarkers[i].setMap(null);
+        }
     }
-  }
+}
 
 
 
 
 
-  
+
 // function to populate the sub_routes list			
 function route_list() {
 
@@ -107,7 +107,7 @@ function route_list() {
 
         //turning the into an array
         list = list.trim().split(" ");
-        result=list
+        result = list
 
         //popuplating the sub route select list
         for (var i = 0; i < list.length; i++) {
@@ -121,8 +121,8 @@ function route_list() {
 
 //getting the value of the selected sub route
 var sel_sub = "";
-var direction= ""
-var stop_list=[];
+var direction = ""
+var stop_list = [];
 
 // function to populate the origin and destination
 function stops() {
@@ -133,7 +133,7 @@ function stops() {
 
     // going through the sub-routes the selected route has 
     for (key in routes) {
-   
+
         // if the user selected sub-route is found 
         if (sel_sub == key) {
 
@@ -152,73 +152,74 @@ function stops() {
             }
 
             // populating the inner html
-          $("#estimator-origin").html(To) 
+            $("#estimator-origin").html(To)
 
         }
-    }  
+    }
 }
 var index;
-    // function to populate the remaining destination stop
-    function destination(){
-        var To = "<option value=0>Stops</option>";
+// function to populate the remaining destination stop
+function destination() {
+    var To = "<option value=0>Stops</option>";
 
-        starting_stop=$("#estimator-origin").val()
-        index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
-        destination_list=stop_list.slice(index + 1) //displaying the stops after the selected stops 
+    starting_stop = $("#estimator-origin").val()
+    index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
+    destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
-        console.log(destination_list)
+    console.log(destination_list)
 
-        for (var i = 0; i < destination_list.length; i++) {
-            To += "<option  value=" + destination_list[i] + ">" + destination_list[i] + "</option>";
+    for (var i = 0; i < destination_list.length; i++) {
+        To += "<option  value=" + destination_list[i] + ">" + destination_list[i] + "</option>";
 
-        }
-
-           // populating the inner html with the destination
-           $("#estimator-destination").html(To)
     }
 
+    // populating the inner html with the destination
+    $("#estimator-destination").html(To)
+}
 
-function origin_marker(){
-    var origin_stop=$("#estimator-origin").val()
-    var route=$("#estimator-route").val();
-    
-    
+
+function origin_marker() {
+    var origin_stop = $("#estimator-origin").val()
+    var route = $("#estimator-route").val();
+
+
     $.ajax({
-        type:"POST",
-        url:"list_latlng/",
-        data:{route:route}
-      })
+        type: "POST",
+        url: "list_latlng/",
+        data: { route: route }
+    })
 
-      .done(function(response){
-          console.log("successfully posted");
-          var x=JSON.parse(response)
+        .done(function (response) {
+            console.log("successfully posted");
+            var x = JSON.parse(response)
 
-          for (key in x) { 
-           var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(x[key].lat, x[key].lng),
-              map: map,
-              title:key, 
-            });
-            allMarkers.push(marker)
-         
+            for (key in x) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(x[key].lat, x[key].lng),
+                    map: map,
+                    title: key,
+                });
+                allMarkers.push(marker)
+
             }
 
-            for (var i in allMarkers ){
+            for (var i in allMarkers) {
 
 
-            google.maps.event.addListener(allMarkers[i],'click',function() {
-                $('#estimator-origin').val(this.getTitle());
-                $('#estimator-origin').show();
-              });}
+                google.maps.event.addListener(allMarkers[i], 'click', function () {
+                    $('#estimator-origin').val(this.getTitle());
+                    $('#estimator-origin').show();
+                });
+            }
 
 
 
-      });
+        });
 }
 
 function initMap2() {
     directionsService = new google.maps.DirectionsService;
-   
+
     directionsDisplay = new google.maps.DirectionsRenderer({
         map: map
     });
@@ -227,39 +228,39 @@ function initMap2() {
 }
 
 
- // calculate route
- function calcRoute() {
- var route=$("#estimator-route").val();
-var start=$("#estimator-origin").val();
-var end= $("#estimator-destination").val()
+// calculate route
+function calcRoute() {
+    var route = $("#estimator-route").val();
+    var start = $("#estimator-origin").val();
+    var end = $("#estimator-destination").val()
     $.ajax({
-        type:"POST",
-        url:"list_latlng/",
-        data:{route:route}
-      })
+        type: "POST",
+        url: "list_latlng/",
+        data: { route: route }
+    })
 
-      .done(function(response){
-          console.log("successfully posted");
-         var x=JSON.parse(response)
+        .done(function (response) {
+            console.log("successfully posted");
+            var x = JSON.parse(response)
 
-         var start_latlng = {lat:x[start].lat,lng: x[start].lng};
-         var end_latlng = {lat:x[end].lat, lng:x[end].lng};
-         var request = {
-             origin: start_latlng,
-             destination: end_latlng,
-             travelMode: google.maps.TravelMode.DRIVING
-         };
-     
-         directionsService.route(request, function(result, status) {
-             if (status == google.maps.DirectionsStatus.OK) {
-                 directionsDisplay.setDirections(result);
-                 console.log(result)
-             }
-         });
+            var start_latlng = { lat: x[start].lat, lng: x[start].lng };
+            var end_latlng = { lat: x[end].lat, lng: x[end].lng };
+            var request = {
+                origin: start_latlng,
+                destination: end_latlng,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                    console.log(result)
+                }
+            });
 
 
-      })
-      removeLineFromMap()
+        })
+    removeLineFromMap()
 
 };
 
@@ -278,97 +279,109 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
-        $(".spinner-border").show();
-
-        initMap2(); 
-        removeLineFromMap();      
-
-        if ($(window).width() < 992) {
-            datetimeValue = $("#datetime-tab2").val();
-            console.log("datetime value mobile: " + datetimeValue );
-            var arr = datetimeValue.split('T');
-            date = arr[0];
-            console.log("mobile date: " + date);
-            time = arr[1];
-            console.log("mobile time: " + time);
+        // show error if user doesn't complete all fields
+        if ($('#estimator-route').val() == "" || $("#estimator-sub option:selected").text() ==
+            'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' ||
+            $("#estimator-destination option:selected").text() == 'Select stop:') {
+            $('#stop-to-stop-incomplete-form-error').show();
         } else {
-            var date = $("#datepicker-tab2").val();
-            console.log("desktop date: " + date);
-            time = $('#timepicker-tab2').val();
-            console.log("desktop time: " + time);
+            $(".spinner-border").show();
 
-            // use date and time here to make properly formatted datetimeValue for mobile
-            datetimeValue = date + 'T' + time;
-            console.log("datetimevalue test: " + datetimeValue);
-        }
-        // show date and time inputs on desktop results page for better user experience
-        // default date and time are those selected by user on input page
-        $("#datepicker-tab2-results-date").flatpickr({
-            altInput: true,
-            altFormat: "F j, Y",
-            dateFormat: 'yy-m-d',
-            defaultDate: date,
-            minDate: "today",
-            onClose: function (selectedDates, dateStr, instance) {
-                sendDateTimeChangePostRequest();
-            },
-        });
+            initMap2();
+            removeLineFromMap();
 
-        $('#datepicker-tab2-results-time').flatpickr({
-            enableTime: true,
-            defaultDate: time,
-            dateFormat: 'H:i',
-            noCalendar: true,
-            time_24hr: true,
-            minTime: "05:00",
-            minuteIncrement: 1,
-            onClose: function (selectedDates, dateStr, instance) {
-                sendDateTimeChangePostRequest();
-            },
-        });
+            if ($(window).width() < 992) {
+                datetimeValue = $("#datetime-tab2").val();
+                console.log("datetime value mobile: " + datetimeValue);
+                var arr = datetimeValue.split('T');
+                date = arr[0];
+                console.log("mobile date: " + date);
+                time = arr[1];
+                console.log("mobile time: " + time);
+            } else {
+                var date = $("#datepicker-tab2").val();
+                console.log("desktop date: " + date);
+                time = $('#timepicker-tab2').val();
+                console.log("desktop time: " + time);
 
-
-        $(".datetime").val(datetimeValue);
-
-        // convert time to seconds since midnight
-        var timeSplit = time.split(':');
-        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-
-
-        // sending a post request to the server
-        route = $("#estimator-route").val();
-        origin = $("#estimator-origin").val();
-        destination = $("#estimator-destination").val();
-        $.ajax({
-            type: "POST",
-            url: "prediction/",
-            data: {
-                date: date,
-                time: timeSeconds,
-                route: route,
-                origin: origin,
-                destination: destination,
-                direction: direction
+                // use date and time here to make properly formatted datetimeValue for mobile
+                datetimeValue = date + 'T' + time;
             }
-        })
+            // show date and time inputs on desktop results page for better user experience
+            // default date and time are those selected by user on input page
+            $("#datepicker-tab2-results-date").flatpickr({
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: 'yy-m-d',
+                defaultDate: date,
+                minDate: "today",
+                onClose: function (selectedDates, dateStr, instance) {
+                    sendDateTimeChangePostRequest();
+                },
+            });
 
-            .done(function (result) {
-                console.log("successfully posted");
-                $(".spinner-border").hide();
-                $("#stop-to-stop-estimate").html(result + " minutes");
+            $('#datepicker-tab2-results-time').flatpickr({
+                enableTime: true,
+                defaultDate: time,
+                dateFormat: 'H:i',
+                noCalendar: true,
+                time_24hr: true,
+                minTime: "05:00",
+                minuteIncrement: 1,
+                onClose: function (selectedDates, dateStr, instance) {
+                    sendDateTimeChangePostRequest();
+                },
             });
 
 
-    // show results
-        $(".form-area").hide();
-        if ($(window).width() < 992) {
-            $("#map-interface").animate({top: "400px"}, 'fast');
-        }
-        $("#stop-to-stop-results").show();
+            $(".datetime").val(datetimeValue);
 
-        // set the value of the html for the summary results using the html id
-        $("#origin-tab2").html("Stop " + $("#estimator-origin").val());
-        $("#destination-tab2").html("Stop " + $("#estimator-destination").val());
+            // convert time to seconds since midnight
+            var timeSplit = time.split(':');
+            var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+
+
+            // sending a post request to the server
+            route = $("#estimator-route").val();
+            origin = $("#estimator-origin").val();
+            destination = $("#estimator-destination").val();
+            $.ajax({
+                type: "POST",
+                url: "prediction/",
+                data: {
+                    date: date,
+                    time: timeSeconds,
+                    route: route,
+                    origin: origin,
+                    destination: destination,
+                    direction: direction
+                }
+            })
+
+                .done(function (result) {
+                    console.log("successfully posted");
+                    $(".spinner-border").hide();
+                    $("#stop-to-stop-estimate").html(result + " minutes");
+                });
+
+
+            // show results
+            $(".form-area").hide();
+            if ($(window).width() < 992) {
+                $("#map-interface").animate({ top: "400px" }, 'fast');
+            }
+            $("#stop-to-stop-results").show();
+
+            // set the value of the html for the summary results using the html id
+            $("#origin-tab2").html("Stop " + $("#estimator-origin").val());
+            $("#destination-tab2").html("Stop " + $("#estimator-destination").val());
+
+        }
+
+
+
+
+
     });
 
     // add on click to edit-journey button to hide results and show journey planner
@@ -379,7 +392,7 @@ $(function () {
         $("#stop-to-stop-results").hide();
     });
 
-// call post request function when mobile datetime value changed
+    // call post request function when mobile datetime value changed
     $("#datetime-tab2-results").on("change", function () {
         sendDateTimeChangePostRequest();
     });

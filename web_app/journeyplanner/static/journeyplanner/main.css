@@ -443,6 +443,12 @@ label.dt-label {
   color: red;
   margin-left: 5px;
 }
+
+#stop-to-stop-incomplete-form-error {
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
   
 
 /* media queries to be kept at bottom of css file for ease of understanding */
