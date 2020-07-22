@@ -2,6 +2,7 @@
 // .ready waits for DOM to be loaded before executing this function
 $(document).ready(function () {
 
+
     // function to populate datetime inputs with current date and time
     var currentDateTime = function () {
         var d = new Date();
@@ -17,12 +18,12 @@ $(document).ready(function () {
     // appropriate html is loaded and put in the interface
     $(".load-interface").click(function () {
         $('.nav-bottom').removeClass("active");
+        $('.hide-slide-menu').removeClass("active");
         navIdFull = $(this).attr('id');
         navId = navIdFull.split("-")[0];
 
         $("#map-interface-content").load("/" + navId, function () {
-            console.log("id: " + navIdFull);
-            console.log("id bottom: " + '#' + navId + '-nav');
+            $('#' + navId + '-tab').addClass("active");
             $('#' + navId + '-nav').addClass("active");
             $(".datetime").val(currentDateTime());
         });
@@ -35,18 +36,40 @@ $(document).ready(function () {
 
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function () {
-        $('.nav-bottom').removeClass("active");
+        // $('.nav-bottom').removeClass("active");
         navId = $(this).attr('id');
         $('#' + navId).addClass("active");
+        navIdForTab = navId.split("-")[0];
+        $('#' + navIdForTab + '-tab').addClass("active");
 
         // show map on input view of tourist map
-        if (navId === "tourist-nav" && $(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+        if ((navId === "tourist-nav" || navId === "allroutes-nav") && $(window).width() < 992) {
+            $("#map-interface").animate({ top: "400px" }, 400);
 
         } else {
             $("#map-interface").css("top", "0px")
         }
     });
+
+
+    $("#hide-menu").on('click', function(){
+        $("#hide-menu").hide();
+        $(".hide-slide-menu, #hide-menu").hide();
+        $("#show-menu").fadeIn(10);
+        $("#tab-menu").animate({
+            "max-width": "30px",
+            "width": "30px"
+          }, 200);
+    });
+    $("#show-menu").on('click', function(){
+        $("#show-menu").hide();
+        $("#hide-menu").show();
+        $("#tab-menu").animate({
+            "max-width": "150px",
+            "width": "150px"
+          }, 200, () => $(".hide-slide-menu, #hide-menu").show());
+    });
+
 });
 ;
 
@@ -54,9 +77,10 @@ $(document).ready(function () {
 $(window).resize(function () {
 
     if ($(window).width() <= 992){
-          if ($('#tourist-nav').hasClass("active")) {
-            $("#map-interface").css("top", "400px");
-        }
+          if ($('#tourist-nav').hasClass("active") || $('#allroutes-nav').hasClass("active")) {
+            $("#map-interface").css("top", 400);
+        } 
+
     }
     if ($(window).width() >= 992) {
         $("#map-interface").show();

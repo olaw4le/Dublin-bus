@@ -309,7 +309,6 @@ $(function () {
             minDate: "today",
             onClose: function (selectedDates, dateStr, instance) {
                 sendDateTimeChangePostRequest();
-                console.log("craoissant day");
             },
         });
 
@@ -323,7 +322,6 @@ $(function () {
             minuteIncrement: 1,
             onClose: function (selectedDates, dateStr, instance) {
                 sendDateTimeChangePostRequest();
-                console.log("craoissant time");
             },
         });
 
@@ -332,10 +330,9 @@ $(function () {
 
         // convert time to seconds since midnight
         // console.log("time: "+ input_time);
-        console.log("time: " + time);
         var timeSplit = time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-        console.log(timeSeconds);
+
 
         // sending a post request to the server
         route = $("#estimator-route").val();
@@ -366,7 +363,7 @@ $(function () {
     // show results
         $(".form-area").hide();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({top: "400px"}, 'fast');
         }
         $("#stop-to-stop-results").show();
 

@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     width: 100%;
     font-size: 1rem;
+    font-family: 'Varela', serif;
   }
 
   /* mobile bottom nav - hidden on larger screens */
@@ -16,7 +17,7 @@ html, body {
   }
 
   #fullscreen-map {
-    height: calc(100vh - 55px);
+    height: calc(100vh - 74px);
     position: relative;
   }
 
@@ -25,15 +26,25 @@ html, body {
     z-index: 1000;
     position: absolute;
     display: block;
-    top: 100px;
-    left: 50px;
-    bottom: 50px;
-    width: 500px;
-    height: 550px; /* need to fix */
-    border: none;
-    overflow-y: auto;
+    top: 30px;
+    left: 20px;
+    bottom: 30px;
+    width: auto;
+    height: calc(100vh - 134px);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    box-shadow: 3px 3px 5px #C0C0C0;;
 
   }
+
+  #map-interface-content {
+    max-width: 450px;
+    width: 450px;
+    height: calc(100vh - 134px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px;
+    }
 
   .navbar {
     background-color: #4484CE;
@@ -45,21 +56,47 @@ html, body {
     font-size: 2em;
   }
 
-   /*tabs on homepage on large screens*/
-   .nav-tabs {
-    position: absolute;
-    top: 3.5rem;
-    left: 50px;
-    height: 70px;
-    width: 500px;
-    background-color: white;
+  .navbar-brand:hover {
+    color: white;
+    padding-left: 30px;
+    font-size: 2em;
+  }
 
+  #tab-menu{
+    max-width: 150px;
+    width: 150px;
+    background-color:#E0E0E0;
+    height: calc(100vh - 134px);
+    padding: 0px;
+  }
+
+  .slide-menu-item {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    font-weight: 500;
+  }
+
+  .slide-menu-item:hover {
+
+    background-color: rgb(194, 194, 194);
+  }
+  .slide-menu-item.active {
+    background-color: #ffc107;
+  }
+  .slide-menu-item.active:hover {
+    background-color: #4484CE;
+    color: #D3D3D3;
   }
 
   .nav-tabs .nav-item {
-    width: 100px;
+    width: 105px;
     height: 37px;
-    
+    font-weight: 500; 
   }
 
   .nav-link {
@@ -68,7 +105,6 @@ html, body {
     padding-bottom: 10px;
     padding-top: 6px;
     text-align: center;
- 
   }
 
   .nav-tabs .nav-link {
@@ -79,7 +115,7 @@ html, body {
 
   .nav-tabs .nav-link.active {
     border: 0.05px solid #C0C0C0;
-    background-color: #4484CE;
+    background-color: #4484CE !important;
     color: white;
   } 
 
@@ -89,13 +125,17 @@ html, body {
 
   /* routeplanner tab */
   .form-area {
-    margin: 5px 0px 0px 5px;
-    padding: 5px;
+    margin-right: 5px;
+    padding-right: 10px;
+    padding: 0px;
+    padding-left: 15px;
   }
   
+  /* go button on all tabs */
   .go-button {
-  margin-left:10px;
-  margin-top: 15px;
+  margin-left: 6px;
+  margin-top: 5px;
+  margin-bottom: 20px;
   max-width: 80px;
   min-width: 80px;
   }
@@ -105,26 +145,33 @@ html, body {
     padding-top: 10px;
     height: 480px;
     width: 100%;
+    padding-left: 3px;
   }
 
   /* route-plan-results*/
   #route-results {
     display: none;
+    padding: 0px;
   }
 
   #route-results-tourist {
     display: none;
+    padding:0px;
   }
 
   #stop-to-stop-results {
     display: none;
+    padding: 0px;
   }
 
   .card.results {
     padding-top: 10px;
     padding-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-right: 10px;
+    margin: 15px;
+    /* width: 90vw; */
+    /* min-width: 300px;
+    max-width:  */
   }
 
   /* overall journey length on results tab1*/
@@ -142,8 +189,7 @@ html, body {
   /* date and time pickers on desktop screens */
   .row.datetime {
     width: 400px;
-    margin-left: 5px;
-    padding-left: 0px;
+    margin-left: 2px;
     margin-bottom: 7px;
     font-size: 1.1em;
   }
@@ -168,16 +214,36 @@ html, body {
     height: 30px;
   }
 
+  #datepicker-tab2-results-time {
+    height: 30px;
+  }
+
+  #datepicker-tab2-results-date {
+    height: 30px;
+  }
+
+
   .btn-secondary {
     padding: 5px;
     margin-left: 20px;
   }
 
-  #edit-journey {
-    margin-left: 130px;
+  /* edit journey button */
+  .edit-journey {
+    margin-left: 10px;
     height: 40px;
     margin-bottom: 7px;
-    margin-top: 7px;
+    margin-top: 5px;
+  }
+
+  /* remove margin on labels of summary results */
+  .results-label {
+    margin-left: 0px;
+  }
+
+  .results-dt-mob {
+    padding-left: 0px;
+    margin-left: -2px;
   }
 
 /*the container must be positioned relative:*/
@@ -236,8 +302,9 @@ input[type=submit] {
 
 ul {
   list-style-type: none;
-  padding-left:10px;
-  font-size: 0.9em;
+  padding-left: 15px;
+  padding-top: 10px;
+  font-size: 1em;
 }
 
 #checkboxes {
@@ -250,6 +317,7 @@ ul {
   display:none;
 }
 
+/* question mark for geolocation info */
 .question {
   color: #4484CE;
   height: fit-content !important;
@@ -259,10 +327,13 @@ ul {
 /* instructions to user on map interface */
 .instruction {
   font-size: 0.9em;
-  margin-left: 15px;
+  margin-left: 10px;
+  /* padding-top: 10px; */
 }
 
-
+#instruction-planner {
+  padding-top: 10px;
+}
 
 /* all form input boxes for all tabs */
 .input-box {
@@ -291,9 +362,10 @@ label.dt-label {
 }
 
 #checkbox-card {
-  margin: 10px 10px 10px 10px;
+  margin: 15px 15px 15px 15px;
   padding-bottom: 10px;
 }
+
 #origin-tourist {
   padding-bottom: 5px !important;
 }
@@ -302,6 +374,7 @@ label.dt-label {
   width: fit-content !important;
   margin: 0px !important;
   padding: 0px !important;
+  padding-left: 10px !important;
 
 }
 
@@ -314,11 +387,15 @@ label.dt-label {
   display: none;
 }
 
+/* to align spinners beside checkboxes */
 .flex {
   display: flex;
   flex-direction: row;
 }
 
+.summary-results {
+  height: 30px;
+}
 .geo-spinner {
   display: none;
   margin-left: 0px;
@@ -326,6 +403,35 @@ label.dt-label {
 }
 
 
+.summary-results-dt {
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.tab-title {
+  font-size: 1.7em;
+  text-align: center;
+  background-color: #4484CE;
+  height: 66px;
+  padding-bottom: 14px;
+  padding-top: 17px;
+  font-weight: 400;
+  text-align: middle;
+  color: white;
+}
+
+#results-chart {
+  width: 420px;
+  margin-top: 20px;
+}
+
+.chart {
+  /* max-width: 380px;
+  min-width: 380px; */
+  width: 90%;
+  margin-left: 0px;
+}
+  
 
 /* media queries to be kept at bottom of css file for ease of understanding */
 
@@ -334,8 +440,13 @@ label.dt-label {
   @media only screen and (max-width: 992px) {
 
     #fullscreen-map {
-      height: calc(100vh - 85px);
+      /* height: calc(100vh - 85px); */
+      height: 400px;
   
+    }
+
+    .tab-title {
+      display: none;
     }
 
     .navbar-brand {
@@ -347,23 +458,29 @@ label.dt-label {
       #map-interface {
         top: 0px;
         left: 0px;
-        bottom: 70px;
-        width: 100%;
-        height: calc(100vh - 85px);
-        overflow-y: none;
+        min-width: 100vw;
+        height: fit-content;
+        /* overflow-y: none; */
+      }
+
+      #map-interface-content {
+        max-width: unset;
+        width: 100vw;
+        height: auto;
+        
       }
       #map-button {
         display: block;
       }
   
-      .nav-tabs {
+      #tab-menu  {
         display: none;
       }
   
       /* mobile screen bottom nav */
       .fixed-bottom {
         display: block;
-        height: 70px;
+        height: 80px;
         width: 100vw; 
       }
       
@@ -373,21 +490,23 @@ label.dt-label {
   
       .nav-link.nav-bottom {
         font-size: 0.8rem;
-        /* text-align: center; */
       }
   
-      a.active {
-        background-color: #A9A9A9;
-      }
-  
+
       #bottom-nav-div {
-        height: 70px;
+        height: 80px;
         padding: 0px;
       }
   
       a.nav-item.nav-link.load-interface.nav-bottom {
-        height: 70px;
+        height: 80px;
         text-align: center;
+        padding-top: 10px;
+        background-color:	#DCDCDC;
+      }
+
+      a.nav-item.nav-link.load-interface.nav-bottom.active {
+        background-color: #A9A9A9;
       }
     
       .word {
@@ -407,7 +526,83 @@ label.dt-label {
         height: 80px;
       }
 
-  
+      /* make input boxes narrower on mobile screen*/
+      .input-box {
+        max-width: 70vw;
+        min-width: 300px;  
+        width: 70vw;
+        /* margin-bottom: 10px;
+        margin-left: 5px; */
+       
+      }
+      #geolocation-tourist {
+        margin: 0px !important;
+        padding-left: 5px;
+      }
+
+      .form-area {
+        margin: 0px;
+        max-width: unset;
+      }
+
+      #form-area-stop-to-stop {
+        padding-top: 15px;
+      }
+
+      /* .datetime {
+        width: 80%;
+        padding-left: 0px;
+      } */
+
+      .row .datetime {
+        margin-left: 4px;
+      }
+
+      .container .news {
+        /* margin-left: 10px;
+        margin-right: 10px; */
+        padding: 0px;
+        width: 90%;
+        margin-left: 7px;
+        margin-right: 3px;
+      }
+
+          /* instructions to user on map interface */
+    .instruction {
+      font-size: 0.9em;
+      margin-left: 10px;
+      width: 90vw;
+    }
+
+     /* route-plan-results*/
+  #route-results {
+   margin-left: 5px;
+   margin-right: 5px;
+  }
+
+  #route-results-tourist {
+    margin-left: 5px;
+    margin-right: 5px;
+   }
+
+   .card.results {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 15px;
+    width: 90vw;
+    min-width: 300px;
+
+  }
+
+
+    
+
+      
+
+
+   
+
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
       #map-interface {

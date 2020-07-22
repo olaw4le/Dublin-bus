@@ -1,5 +1,15 @@
+var dublin = { lat:53.349424, lng: -6.363448826171867};
+
 $(document).ready(function () {
 
+    // remove tourist markers when user navigates to different tab using name spacing
+    $(document).off('click.tourist');
+    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function(){
+        clearAllTouristMarkers(markers);
+        removeLineFromTouristMap();
+    });
+    map.panTo(dublin)
+    
     // hide destination box initially
     $('#destination-tourist').hide();
 
@@ -42,15 +52,17 @@ $(document).ready(function () {
         getGeolocation('origin-tourist');
         $('.geo-spinner').show();
     });
-
 });
 
 // https://developers.google.com/maps/documentation/javascript/places
-var dublin = { lat: 53.3155395, lng: -6.4161858 };
+
 
 var markers = {};
 var destination_latlng;
 var name;
+var infowindow;
+var directionsRenderer;
+var markerArray = [];
 
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
@@ -89,20 +101,33 @@ function callback(results, status, type) {
         for (var i = 0; i < results.length; i++) {
             var icon = results[i].icon
             var rating = results[i].rating;
-            createMarker(results[i], type, icon, markers[type], rating);
+            createMarker(results[i], icon, markers[type], rating);
         }
     }
 }
 
-// clear markers from map when checkbox un-checked
+// clear markers for a specific Place Type from map when checkbox un-checked
 function clearMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
     });
 }
 
+// function to clear markers of all Place Types from tourist map
+function clearAllTouristMarkers(markers) {
+    for (var type in markers) {
+        clearMarkers(markers[type]);
+    }
+}
+
+function removeLineFromTouristMap() {
+    if (directionsRenderer) {
+      directionsRenderer.setDirections({ routes: [] });
+    }
+  }
+
 // create markers
-function createMarker(place, type, icon, markerList, rating) {
+function createMarker(place, icon, markerList, rating) {
     ending_lat = place.geometry.location.lat();
     ending_lng = place.geometry.location.lng();
 
@@ -118,13 +143,17 @@ function createMarker(place, type, icon, markerList, rating) {
 
     markerList.push(marker);
 
+    console.log(place.name);
+
 
     // show name of place when mouse hovers over  marker
-    google.maps.event.addListener(marker, 'mouseover', function () {
-        infowindow.setContent(place.name + "<br>Rating: " + rating);
-        infowindow.open(map, this);
-    });
-
+    google.maps.event.addListener(marker, 'mouseover', (function(placeName, rating) {
+        return function() {
+            console.log("inside event: " + placeName);
+            infowindow.setContent(placeName + "<br>Rating: " + rating);
+            infowindow.open(map, this);
+        }
+    })(place.name, rating));
 
     // populate destination input box with location clicked on map
     google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
@@ -152,9 +181,7 @@ var starting_lng;
 function routes_tourist() {
 
     // clear tourist markers from map
-    for (var type in markers) {
-        clearMarkers(markers[type]);
-    }
+    clearAllTouristMarkers(markers);
 
 
     if (!geolocation) {
@@ -168,10 +195,10 @@ function routes_tourist() {
 
     // center map at starting point
     var center = new google.maps.LatLng(starting_lat, starting_lng);
-    map.panTo(center);
+    // map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
-    var directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+    directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
     // Instantiate an info window to hold step text.
     var stepDisplay = new google.maps.InfoWindow;
@@ -356,7 +383,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
     $('#go-tourist').on('click', function () {
-        console.log("inside click");
         var time, dateValue
         // use different variables for date and time depending on screen size
         if ($(window).width() < 992) {
@@ -398,7 +424,7 @@ $(function () {
         $(".form-area").hide();
         $("#checkbox-card").hide();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
         }
         $("#route-results-tourist").show();
     });
@@ -408,8 +434,11 @@ $(function () {
         $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {
-            $("#map-interface").css("top", "400px");
+            $("#map-interface").animate({ top: "400px" }, 400);
         }
         $("#route-results-tourist").hide();
     });
 });
+
+
+

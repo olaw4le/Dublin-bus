@@ -2,6 +2,7 @@
 <script src=" {% static 'journeyplanner/touristmap.js' %}"></script>
 
 <!-- checkboxes -->
+<h4 class="tab-title">Tourist Map</h4>
 <div class="card" id="checkbox-card">
     <h5>Select to view tourist attractions on map</h5>
     <ul class="list-group list-group-flush" style="width: 90%;margin: auto;margin-bottom: 13px; margin-top:-10px; height:0;">
@@ -42,12 +43,12 @@
         <p></p>
         <div class="form-group">
             <label for="origin">From:</label>
-            <p class="instruction">(Type an origin location or use your current location.)</p>
+            <p class="instruction">(Type an origin location or use your current location)</p>
             <input type="text" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-tourist">Use my location</button>
                 <div class="spinner-border spinner-border-sm text-success geo-spinner" role="status"></div>
-                <button type="button" class="btn btn-default align-top question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the tourist directions more helpful for you. Your location will not be stored or sent elsewhere.">
+                <button type="button" class="btn btn-default align-top question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the directions more helpful for you. Your location will not be stored or sent elsewhere.">
                     <span class="fa fa-question-circle"></span>
                 </button>
             </div>
@@ -59,25 +60,23 @@
         </div>
         <div class="form-group">
             <label for="destination">To:</label>
-            <p class="instruction">(Click a marker on the map you would like to travel to.)</p>
+            <p class="instruction">(Click a marker on the map you would like to travel to)</p>
             <input type="text" class="form-control col-6 input-box" id="destination-tourist" placeholder="Enter destination">
         </div>
         <div>
             <!-- mobile datetime -->
-            <div class="mobile-dt">
+            <div class="mobile-dt form-group">
                 <label for="datetime-4">Date and Time:</label>
-                <div class="row datetime">
-                    <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
-                </div>
+                    <input class="datetime datetime input-box form-control" type="datetime-local" data-clear-btn="true" name="datetime-4" id="datetime-tourist" value="">
             </div>
             <!-- desktop datetime -->
-            <div class="desktop-dt">
+            <div class="desktop-dt form-group">
                 <div class="row datetime">
                     <label>Date and Time:</label>
-                    <input type="text" id="datepicker-tourist">
+                    <input class="input-box form-control" type="text" id="datepicker-tourist">
                 </div>
-                <div class="row datetime">
-                    <input type="text"class="timepicker" id="timepicker-tourist">
+                <div class="row datetime form-group">
+                    <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tourist">
                 </div>
             </div>
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go-tourist">Go</button>
@@ -92,23 +91,24 @@
     <div class="card results">
         <div class="row results">
         </div>
-        <div class="row from">
-            <div class="col-6">
+        <div class="row summary-results from">
+            <div class="col-4">
                 <p>From:</p>
             </div>
-            <div class="col-6">
+            <div class="col-8">
                 <p id="origin-tab1"></p>
             </div>
         </div>
-        <div class="row to">
-            <div class="col-6">
+        <div class="row summary-results to">
+            <div class="col-4">
                 <p>To:</p>
             </div>
-            <div class="col-6">
+            <div class="col-8">
                 <p id="destination-tab1"></p>
             </div>
         </div>
-        <div class="row on desktop-dt">
+        <!-- desktop date and time -->
+        <div class="row summary-results-dt desktop-dt">
             <div class="col-4">
                 <p>On:</p>
             </div>
@@ -116,7 +116,7 @@
                 <p><input type="text" id="datepicker-tourist-results-date"></p>
             </div>
         </div>
-        <div class="row at desktop-dt">
+        <div class="row summary-results-dt desktop-dt">
             <div class="col-4">
                 <p>At:</p>
             </div>
@@ -129,7 +129,7 @@
         <div class="mobile-dt">
             <div class="row">
                 <div class="col-4">
-                    <label for="datetime-4">On:</label>
+                    <label for="datetime-4" class="results-label">On:</label>
                 </div>
                 <div class="col-8 results-dt-mob">
                         <input class="datetime" type="datetime-local" name="datetime-4" id="datetime-tourist-results">
@@ -137,7 +137,7 @@
             </div>
         </div>
         <div class="row">
-        <button type="submit" class="btn btn-warning p-1 edit-journey">Edit journey details</button>
+        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Edit journey details</button>
         </div>
     </div>
 

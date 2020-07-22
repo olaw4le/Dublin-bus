@@ -1,6 +1,9 @@
-
 $(document).ready(function () {
 
+  // load twitter
+  if(typeof twttr != 'undefined'){
+    twttr.widgets.load();
+  }
   // .off ensures onclicks are not added multiple times
   $(document).off("click.routes");
 
@@ -38,18 +41,38 @@ $(document).ready(function () {
     minTime: "05:00",
     minuteIncrement: 1
   });
-
+ 
 });
 
-//using google map autocomplete for the address          
-var input1 = document.getElementById('origin');
-var input2 = document.getElementById("destination");
-var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
-origin = new google.maps.places.Autocomplete(input1, options);
-destination = new google.maps.places.Autocomplete(input2, options);
+ //using google map autocomplete for the address          
+ var input1 = document.getElementById('origin');
+ var input2 = document.getElementById("destination");
+ var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+ var origin;
+ var destination;
+
+// wait until google is loaded
+function WhenGoogleLoadedDo(fnt)
+   {
+   if(typeof google != 'undefined')
+      fnt();
+   else
+      setTimeout(function()
+         {(function(fnt)
+            {
+            WhenGoogleLoadedDo(fnt)
+            })(fnt)}, 500); 
+   }
+
+WhenGoogleLoadedDo( () => {
+  origin = new google.maps.places.Autocomplete(input1, options);
+  destination = new google.maps.places.Autocomplete(input2, options);
+});
+
 $("#origin").on("input", function () {
   $('.geo-error').hide();
 });
+
 
 // function to create a marker for the bus station nearby from the user location 
 function createMarker(place) {
@@ -107,10 +130,11 @@ function routes() {
 
   // Create a map and center it on starting point
   var center = new google.maps.LatLng(starting_lat, starting_lng);
-  map.panTo(center);
+
+  // map.panTo(center);
 
   // Create a renderer for directions and bind it to the map.
-  directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+  directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
   // Instantiate an info window to hold step text.
   var stepDisplay = new google.maps.InfoWindow;
@@ -145,6 +169,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
       // markers for each step.
       if (status === 'OK') {
 
+        map.fitBounds(response.routes[0].bounds);
+        if($(window).width() >= 992){
+          map.panBy(-600, 0);
+          map.setZoom(map.getZoom() - 1);
+        }
         //trimming the origin address
         startingAddress = response.routes[0].legs[0].start_address;
         address1 = startingAddress.split(',');
@@ -159,8 +188,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         // fill journey details into summary results
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
-        // $("#datetime-tab").html(dateToDisplay + ", " + time);
-
 
         journeysteps = response.routes[0].legs[0].steps;
 
@@ -215,9 +242,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
 
           //picture
-          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=20 height=20>");
-          var walking = ("<img src=static/journeyplanner/icons/walking.png width=20 height=20>");
-          var road = ("<img src=static/journeyplanner/icons/road.png width=20 height=20>");
+          var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
+          var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
+          var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
 
           // going through the object to get the travel mode details 
 
@@ -294,6 +321,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         //showing the response on the map. 	 
         directionsRenderer.setDirections(response);
+
+        // google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
+        //   console.log("changed")
+        //   map.panBy(-600, 0);
+        //   map.setZoom(map.getZoom() - 1);
+        // });
         showSteps(response, markerArray, stepDisplay, map);
       }
       else {
@@ -395,7 +428,7 @@ $(function () {
     routes();
     $(".form-area").hide();
     if ($(window).width() < 992) {
-      $("#map-interface").css("top", "400px");
+      $("#map-interface").animate({ top: "400px" }, 400);
     }
     $("#route-results").show();
 

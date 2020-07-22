@@ -15,6 +15,8 @@ function initMap() {
 
     geocoder = new google.maps.Geocoder();
 
+    infowindow = new google.maps.InfoWindow();
+
     // Instantiate a directions service.
     directionsService = new google.maps.DirectionsService;
 
@@ -22,7 +24,11 @@ function initMap() {
         map: map})
 
     //the current location 
-    var dublin = { lat: 53.3155395, lng: -6.4161858 };
+    // var dublin = { lat: 53.349424, lng: -6.260452};
+
+    var dublin = { lat:53.349424, lng: -6.363448826171867};
+
+   
 
     //showing the map
     map = new google.maps.Map(
