@@ -2,20 +2,21 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
-sys.path.append("..")
-#from data_analytics import linear_regression
-from .route_details import stops_latlng, find_stop,latlng
+# from data_analytics import linear_regression
+from .route_details import stops_latlng, find_stop, latlng
 import requests
 import json
 import requests
+import pyleapcard as leap
 
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
 from data_analytics import db_interface
 
+sys.path.append("..")
 
 
-#showing how data can be added to a html page
+# showing how data can be added to a html page
 posts = [
     {
         'from' :'Charlestown',
