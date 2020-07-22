@@ -402,9 +402,26 @@ label.dt-label {
   color: red;
   margin-left: 5px;
 }
+
+/* leap card */
+#leap-login-container {
+  margin-top: 10px;
+}
+
+.leap-result {
+  display: none;
+}
+
+#leap-login-button {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+#leap-account-needed{
+  margin-left: 5px;
+}
   
 
-/* media queries to be kept at bottom of css file for ease of understanding */
 
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
@@ -438,6 +455,7 @@ label.dt-label {
         max-width: unset;
         width: 100vw;
         height: auto;
+        min-height: calc(100vh - 144px);
         
       }
       #map-button {
