@@ -420,9 +420,17 @@ label.dt-label {
 #leap-account-needed{
   margin-left: 5px;
 }
+
+/*realtime info */
+#real-time {
+  margin-top: 10px;
+}
+
+#realtime-input {
+  width: 420px;
+}
+
   
-
-
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {

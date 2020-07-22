@@ -1,40 +1,57 @@
 {% load static %}
 
- 
+
 <script src=" {% static 'journeyplanner/realtime.js' %}"></script>
 
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
+<h4 class="tab-title">Real-Time Information</h4>
+  <!-- <div class="card-header" id="headingOne">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           Search By Stop Number
         </button>
       </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-      <div class="input-group mb-3">
-  <input type="text" class="form-control" id="Stop-number" placeholder="Search.." aria-label="Search.." aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" id="real-time-button" type="button">Search</button>
-  </div>
-</div>
+    </div> -->
 
 
+  <div class="container form-area" id="real-time">
+    <form autocomplete="off" onsubmit="return false">
+      <div class="form-group">
+        <label for="Stop-number">Enter a stop number:</label>
+        <div class="input-group mb-3" id="realtime-input">
+          <input type="text" required="required" class="input-box form-control" id="Stop-number" placeholder="Search.."
+            aria-label="Search.." aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-secondary" id="real-time-button">Search</button>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- <button type="submit" name="leap-login" class="btn btn-primary" id="leap-login-button">Login</button> -->
+    </form>
   </div>
-  
+
+
+  <!-- <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="Stop-number" placeholder="Search.." aria-label="Search.."
+            aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" id="real-time-button" type="button">Search</button>
+          </div>
+        </div> -->
+
+
+
+
 
 <div class="table-responsive">
   <table class="table" id="real-time-table">
-   <thead>
-  </thead>
-  <tbody>
-    <tr>
-    </tr>
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+      </tr>
     </tbody>
   </table>
 </div>
