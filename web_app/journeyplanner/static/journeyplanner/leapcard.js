@@ -32,7 +32,7 @@ function leap_login(){
 function displayOverview(overviewData) {
 
     $("#card-name").html(overviewData.cardName);
-    var a = $("#card-balance").html(overviewData.cardBalance);
+    var a = $("#card-balance").html("€" + overviewData.cardBalance);
     var a = $("#card-type").html(overviewData.cardType);
     var a = $("#card-number").html(overviewData.cardNumber);
     var a = $("#card-expiry").html(overviewData.cardExpiry);
