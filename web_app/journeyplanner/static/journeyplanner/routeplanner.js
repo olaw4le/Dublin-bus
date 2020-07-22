@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // load twitter
-  if(typeof twttr != 'undefined'){
+  if (typeof twttr != 'undefined') {
     twttr.widgets.load();
   }
   // .off ensures onclicks are not added multiple times
@@ -17,10 +17,10 @@ $(document).ready(function () {
   })
 
   // call geolocation function when button clicked
-  $('#geolocation-routeplanner').on('click', function(){
+  $('#geolocation-routeplanner').on('click', function () {
     getGeolocation('origin');
     $('.geo-spinner').show();
-});
+  });
 
   // flatpickr date https://flatpickr.js.org/options/
   $("#datepicker-tab1").flatpickr({
@@ -41,30 +41,30 @@ $(document).ready(function () {
     minTime: "05:00",
     minuteIncrement: 1
   });
- 
+
 });
 
- //using google map autocomplete for the address          
- var input1 = document.getElementById('origin');
- var input2 = document.getElementById("destination");
- var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
- var origin;
- var destination;
+//using google map autocomplete for the address          
+var input1 = document.getElementById('origin');
+var input2 = document.getElementById("destination");
+var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+var origin;
+var destination;
+
 
 // wait until google is loaded
-function WhenGoogleLoadedDo(fnt)
-   {
-   if(typeof google != 'undefined')
-      fnt();
-   else
-      setTimeout(function()
-         {(function(fnt)
-            {
-            WhenGoogleLoadedDo(fnt)
-            })(fnt)}, 500); 
-   }
+function WhenGoogleLoadedDo(fnt) {
+  if (typeof google != 'undefined')
+    fnt();
+  else
+    setTimeout(function () {
+      (function (fnt) {
+        WhenGoogleLoadedDo(fnt)
+      })(fnt)
+    }, 500);
+}
 
-WhenGoogleLoadedDo( () => {
+WhenGoogleLoadedDo(() => {
   origin = new google.maps.places.Autocomplete(input1, options);
   destination = new google.maps.places.Autocomplete(input2, options);
 });
@@ -104,7 +104,7 @@ function removeLineFromMap() {
   }
   // First, remove any existing markers from the map.
   console.log(allMarkers);
-  if(allMarkers) {
+  if (allMarkers) {
     for (var i = 0; i < allMarkers.length; i++) {
       allMarkers[i].setMap(null);
     }
@@ -120,13 +120,22 @@ function routes() {
   var ending = destination.getPlace();
 
   //starting address latitude
+
+  if (!starting) {
+    $('.invalid-location-error').show();
+    return false;
+  } else {
   starting_lat = starting.geometry.location.lat();
   starting_lng = starting.geometry.location.lng();
+  }
 
-  //destination address longitude   
+  if (!ending) {
+    $('.invalid-location-error').show();
+    return false;
+  } else {
   ending_lat = ending.geometry.location.lat();
   ending_lng = ending.geometry.location.lng();
-
+  }
 
   // Create a map and center it on starting point
   var center = new google.maps.LatLng(starting_lat, starting_lng);
@@ -141,6 +150,7 @@ function routes() {
 
   // Display the route between the initial start and end selections.
   calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map);
+  return true;
 }
 
 
@@ -170,7 +180,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
       if (status === 'OK') {
 
         map.fitBounds(response.routes[0].bounds);
-        if($(window).width() >= 992){
+        if ($(window).width() >= 992) {
           map.panBy(-600, 0);
           map.setZoom(map.getZoom() - 1);
         }
@@ -328,6 +338,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         //   map.setZoom(map.getZoom() - 1);
         // });
         showSteps(response, markerArray, stepDisplay, map);
+
       }
       else {
         window.alert('Directions request failed due to ' + status);
@@ -367,70 +378,76 @@ $(function () {
 
   $('#go').on('click', function () {
 
+  
+      var time, date, datetimeValue;
+      // use different variables for date and time depending on screen size
+      if ($(window).width() < 992) {
+        datetimeValue = $("#datetime-tab1").val();
+        var arr = datetimeValue.split('T');
+        date = arr[0];
+        console.log("mobile date: " + date);
+        time = arr[1];
+      } else {
+        var date = $("#datepicker-tab1").val();
+        console.log("desktop date: " + date);
+        time = $('#timepicker-tab1').val();
+        console.log("desktop time: " + time);
+
+        // use date and time here to make properly formatted datetimeValue for mobile
+        datetimeValue = date + 'T' + time;
+      }
+      // show date and time inputs on desktop results page for better user experience
+      // default date and time are those selected by user on input page
+      $("#datepicker-tab1-results-date").flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: 'yy-m-d',
+        defaultDate: date,
+        minDate: "today",
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close date tab1");
+        },
+      });
+
+      $('#datepicker-tab1-results-time').flatpickr({
+        enableTime: true,
+        defaultDate: time,
+        dateFormat: 'H:i',
+        noCalendar: true,
+        time_24hr: true,
+        minTime: "05:00",
+        minuteIncrement: 1,
+        onClose: function (selectedDates, dateStr, instance) {
+          // sendDateTimeChangePostRequest();
+          console.log("on close time tab1");
+        },
+      });
+
+
+      $(".datetime").val(datetimeValue);
+
+      // convert time to seconds since midnight
+      console.log("time: " + time);
+      var timeSplit = time.split(':');
+      var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+      console.log(timeSeconds);
+
+      // show results and routes
+      var success = routes();
+      if(success){
+        $(".form-area").hide();
+        if ($(window).width() < 992) {
+          $("#map-interface").animate({ top: "400px" }, 400);
+        }
+        $("#route-results").show();}
+
+
+
+
+
+
     removeLineFromMap();
-
-
-    var time, date, datetimeValue;
-    // use different variables for date and time depending on screen size
-    if ($(window).width() < 992) {
-      datetimeValue = $("#datetime-tab1").val();
-      var arr = datetimeValue.split('T');
-      date = arr[0];
-      console.log("mobile date: " + date);
-      time = arr[1];
-    } else {
-      var date = $("#datepicker-tab1").val();
-      console.log("desktop date: " + date);
-      time = $('#timepicker-tab1').val();
-      console.log("desktop time: " + time);
-
-      // use date and time here to make properly formatted datetimeValue for mobile
-      datetimeValue = date + 'T' + time;
-    }
-    // show date and time inputs on desktop results page for better user experience
-    // default date and time are those selected by user on input page
-    $("#datepicker-tab1-results-date").flatpickr({
-      altInput: true,
-      altFormat: "F j, Y",
-      dateFormat: 'yy-m-d',
-      defaultDate: date,
-      minDate: "today",
-      onClose: function (selectedDates, dateStr, instance) {
-        // sendDateTimeChangePostRequest();
-        console.log("on close date tab1");
-      },
-    });
-
-    $('#datepicker-tab1-results-time').flatpickr({
-      enableTime: true,
-      defaultDate: time,
-      dateFormat: 'H:i',
-      noCalendar: true,
-      time_24hr: true,
-      minTime: "05:00",
-      minuteIncrement: 1,
-      onClose: function (selectedDates, dateStr, instance) {
-        // sendDateTimeChangePostRequest();
-        console.log("on close time tab1");
-      },
-    });
-
-
-    $(".datetime").val(datetimeValue);
-
-    // convert time to seconds since midnight
-    console.log("time: " + time);
-    var timeSplit = time.split(':');
-    var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-    console.log(timeSeconds);
-
-    // show results and routes
-    routes();
-    $(".form-area").hide();
-    if ($(window).width() < 992) {
-      $("#map-interface").animate({ top: "400px" }, 400);
-    }
-    $("#route-results").show();
 
 
   });

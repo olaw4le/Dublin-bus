@@ -431,6 +431,18 @@ label.dt-label {
   width: 90%;
   margin-left: 0px;
 }
+
+#tourist-destination-error {
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
+
+.invalid-location-error{
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
   
 
 /* media queries to be kept at bottom of css file for ease of understanding */
@@ -595,6 +607,8 @@ label.dt-label {
 
   }
 
+
+  
 
     
 
