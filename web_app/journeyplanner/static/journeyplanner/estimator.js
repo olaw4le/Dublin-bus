@@ -388,7 +388,7 @@ $(function () {
     $('#edit-journey-tab2').on('click', function () {
         console.log("inside edit-journey-results");
         $(".form-area").show();
-        $("#map-interface").css("top", "0px");
+        // $("#map-interface").css("top", "0px");
         $("#stop-to-stop-results").hide();
     });
 
