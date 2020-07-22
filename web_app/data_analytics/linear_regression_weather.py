@@ -21,17 +21,18 @@ print("Files in %r: %s" % (cwd, files))
 path = cwd[:-7]
 print(path)
 
+# load environment
+database = "postgres"
+user = "postgres"
+password = "YZuB%F34qYSbpp7J"
+host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
+port = 5432
+weather_api_key = "86baa129046e5cbaeb16af074356e579"
 
 def get_weather_from_db():
     """returns a tuple of the 'current' weather data from out postgres database."""
 
-    # load environment
-    database = "postgres"
-    user = "postgres"
-    password = "YZuB%F34qYSbpp7J"
-    host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-    port = 5432
-    weather_api_key = "86baa129046e5cbaeb16af074356e579"
+    
 
     sql = db.construct_sql(table_name="weather_data_current", query_type="select_all")
     
@@ -195,14 +196,17 @@ def generate_test_dataframe(route, direction, date, time):
     rain = weather[8]
 
     # create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
-    f = open('/Users/laura/Desktop/Trimester_3/research-project/web_app/data_analytics/result_templates.json')
-    templates = json.load(f)
+
     template_name = str(route) + "_" + str(direction)
-    features = templates[template_name]
+    # construct sql query
+    sql = db.construct_sql(table_name="model_features", query_type="select_where", column_names=["features"], data={"id": template_name})
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
+  
     # make a single row to contain the test data and put 0 in every column.
-    row = [0] * len(features)
+    row = [0] * len(response)
     # create the dataframe
-    test_frame = pd.DataFrame([row], columns=features)
+    test_frame = pd.DataFrame([row], columns=response)
 
     # now forget about the test dataframe for a while and pop my user entered data into a temporary dataframe...
     data = {"DAYOFSERVICE": [date], "TIME": [time]}
@@ -359,19 +363,61 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     # call proportions file in dictionary format - this proportions file returns a calculated average based on previous journies for a given...
     # ...month, week and time_group...
 
-    proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
-    file_path = '/Users/laura/Desktop/proportions_test/' + proportions_name
-    f = open(file_path)
-    proportions_json = json.load(f)
+    # construct sql query
+    table_name = "route_%s_%s_proportions" % (route.upper(), direction)
+    sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+    sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
+    # execute sql query
+    response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
+    response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
+    
+    list_of_values = list(response_values[4:])
+    list_of_keys = list(response_keys[4:])
+    print(list_of_values)
+    print(list_of_keys)
+    
+    
+
+    
+        
+    #proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
+    #file_path = '/Users/laura/Desktop/proportions_test/' + proportions_name
+    #f = open(file_path)
+    #proportions_json = json.load(f)
 
     # find relevant entry
-    access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
+    #access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
 
     # attempt to calculate the proportion using average segment time
     try:
-        time_group_json = proportions_json[access_code]
-        proportions = time_group_json['proportions']
-        proportion = segment_calculation(startstop, endstop, proportions)
+        for item in list_of_keys:
+            match = str(item).split("_")[0][3:]
+        #print(match)
+            if startstop == match:
+                index1 = list_of_keys.index(item)
+            if endstop == match:
+                index2 = list_of_keys.index(item)
+
+        total = 0
+        print(index1, index2)
+
+        for i in range(index1, index2 + 1):
+            if list_of_values[i] is not None: # this is to handle the odd NaN value in our proporitons datasets. 
+        # NaNs occur at an average incidence
+        # of 0.12% in the data.
+                value = list_of_values[i]
+                print(value)
+                print(type(value))
+        
+            
+                total += value
+                print(total)
+        proportion = total
+        if proportion > 0:
+            return proportion
+        else:
+            1/0
+        
 
     # otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
     except:

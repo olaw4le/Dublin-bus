@@ -79,7 +79,7 @@ def get_proportions(route, direction, segments, month, day, time):
 
 
 # ---- EXAMPLE USAGE ----
-# all_stops = stops_on_route("270", main=True, direction=2)
-# sub_stops = stops_on_journey(3333, 7026, all_stops)
-# sub_segments = segments_from_stops(sub_stops)
-# print(get_proportions(270, 2, sub_segments, "January", "Monday", 15))
+all_stops = stops_on_route("270", main=True, direction=2)
+sub_stops = stops_on_journey(3333, 7026, all_stops)
+sub_segments = segments_from_stops(sub_stops)
+print(get_proportions(270, 2, sub_segments, "January", "Monday", 15))
