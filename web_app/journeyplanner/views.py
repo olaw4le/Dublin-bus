@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponse
 import sys
-# from data_analytics import linear_regression
-from .route_details import stops_latlng, find_stop, latlng
+sys.path.append("..")
+from .route_details import stops_latlng, find_stop,latlng
 import requests
 import json
 import requests
@@ -87,7 +87,6 @@ def realtime(request):
 
 @csrf_exempt
 def prediction(request):
-    print(request.method)
     if request.method == "POST":
         route= request.POST["route"]
         origin= request.POST["origin"]
@@ -95,15 +94,9 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
-        print("time from views.py", time)
-        print("routes:",route)
-        print("origin:",origin)
-        print("destination:",destination)
-        print("direction:",direction)
-        print("date",date)
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-
+        print("Users estimated journey in minutes (from views.py)", result)
     return HttpResponse(result)
 
 
@@ -142,14 +135,14 @@ def planner(request):
         origin=find_stop(route_list,(departure_lat,departure_lng))
         arrival=find_stop(route_list,(arrival_lat,arrival_lng))
         direction = get_direction.get_direction_from_stops(route, origin, arrival)
-        print(direction)
-        # use the machine learning module to calculate prediction
+        #use the maachine learning module to calculate prediction 
+
         calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
 
         # adding the calculated value to the list that will be sent back
         prediction.append(calculation)
-
-        print("prediction", calculation)
+           
+        print("prediction (from views.py)", calculation)
 
     return HttpResponse(calculation)
     
