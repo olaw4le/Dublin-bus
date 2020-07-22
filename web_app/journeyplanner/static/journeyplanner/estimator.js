@@ -278,6 +278,8 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
+        $(".spinner-border").show();
+
         initMap2(); 
         removeLineFromMap();      
 
@@ -329,7 +331,6 @@ $(function () {
         $(".datetime").val(datetimeValue);
 
         // convert time to seconds since midnight
-        // console.log("time: "+ input_time);
         var timeSplit = time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
@@ -355,8 +356,6 @@ $(function () {
                 console.log("successfully posted");
                 $(".spinner-border").hide();
                 $("#stop-to-stop-estimate").html(result + " minutes");
-                // console.log(result);
-
             });
 
 
@@ -367,30 +366,9 @@ $(function () {
         }
         $("#stop-to-stop-results").show();
 
-        //getting the value of the user selected time
-        //var time = $("#datetime-tab2").val();
-
-
-        // var dateArr, date, dateElements, year, month, date, time, dateToDisplay;
-
-        // dateArr = time.split('T');
-        // date = dateArr[0];
-        // dateElements = date.split('-');
-        // year = dateElements[0];
-        // month = dateElements[1];
-        // date = dateElements[2];
-        // dateToDisplay = date + "-" + month + "-" + year;
-
-        // time = dateArr[1];
-
-        // set the value of the html for the results using the html id
+        // set the value of the html for the summary results using the html id
         $("#origin-tab2").html("Stop " + $("#estimator-origin").val());
         $("#destination-tab2").html("Stop " + $("#estimator-destination").val());
-        // $("#datetime-tab").html(dateToDisplay + ", " + time)
-
-
-
-
     });
 
     // add on click to edit-journey button to hide results and show journey planner
@@ -406,15 +384,10 @@ $(function () {
         sendDateTimeChangePostRequest();
     });
 
-
-
-
 });
 
 
-
-// these need to be the results ids??? 
-
+// post request sent again when date and time changed on results page
 function sendDateTimeChangePostRequest() {
 
     $("#stop-to-stop-estimate").hide();
@@ -435,6 +408,8 @@ function sendDateTimeChangePostRequest() {
         // use date and time here to make properly formatted datetimeValue for mobile
         datetimeValue = date + 'T' + time;
     }
+
+    // populate the values of the date and time pickers
     $(".datetime").val(datetimeValue);
     $("#datepicker-tab2-results-date").val(date);
     $("#datepicker-tab2-results-time").val(time);
@@ -460,7 +435,6 @@ function sendDateTimeChangePostRequest() {
         $(".spinner-border").hide();
         $("#stop-to-stop-estimate").show();
         $("#stop-to-stop-estimate").html(result + " minutes");
-        // console.log(result);
 
     });
 }

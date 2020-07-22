@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="origin">From:</label>
             <p class="instruction">(Type an origin location or use your current location)</p>
-            <input type="text" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
+            <input type="text" required="required" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-routeplanner">Use my location</button>
                 <div class="spinner-border spinner-border-sm text-success geo-spinner" role="status"></div>
@@ -28,7 +28,7 @@
         
         <div class="form-group">
             <label for="destination">To:</label>
-            <input type="text" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
+            <input type="text" required="required" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
         </div>
         <div>
             <!-- mobile datetime picker-->
@@ -51,6 +51,8 @@
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
 
         </form>
+
+        <!-- dublin bus twitter feed -->
         <div class="container news">
             <div class="black_box">
                 <a class="twitter-timeline" data-width="700" data-height="500"
