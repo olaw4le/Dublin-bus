@@ -448,6 +448,7 @@ label.dt-label {
   
     }
 
+    /* hide tab title on mobiles */
     .tab-title {
       display: none;
     }
@@ -463,7 +464,6 @@ label.dt-label {
         left: 0px;
         min-width: 100vw;
         height: fit-content;
-        /* overflow-y: none; */
       }
 
       #map-interface-content {
@@ -477,6 +477,7 @@ label.dt-label {
         display: block;
       }
   
+      /* hide tab menu sidebar on mobile */
       #tab-menu  {
         display: none;
       }
@@ -484,8 +485,9 @@ label.dt-label {
       /* mobile screen bottom nav */
       .fixed-bottom {
         display: block;
-        height: 80px;
+        height: 85px;
         width: 100vw; 
+        min-width: 320px;
       }
       
       .nav-item.nav-bottom {
@@ -498,12 +500,14 @@ label.dt-label {
   
 
       #bottom-nav-div {
-        height: 80px;
+        height: 85px;
         padding: 0px;
+        min-width: 320px;
       }
   
       a.nav-item.nav-link.load-interface.nav-bottom {
-        height: 80px;
+        height: 85px;
+        width: 100%;
         text-align: center;
         padding-top: 10px;
         background-color:	#DCDCDC;
