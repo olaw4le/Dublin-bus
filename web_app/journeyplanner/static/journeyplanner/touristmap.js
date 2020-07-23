@@ -1,5 +1,5 @@
 var dublin = { lat: 53.349424, lng: -6.363448826171867 };
-
+var mobileDublin = { lat: 53.350152, lng: -6.260416 };
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
@@ -9,6 +9,11 @@ $(document).ready(function () {
         removeLineFromTouristMap();
     });
     map.panTo(dublin)
+    map.setZoom(12);
+    
+    if ($(window).width() <= 992) {
+        map.panTo(mobileDublin);
+    }
 
     // hide destination box initially
     $('#destination-tourist').hide();
@@ -65,6 +70,16 @@ var markerArray = [];
 
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
+
+    if ($(window).width() <= 992) {
+        map.panTo(mobileDublin);
+        map.setZoom(13);
+    } else {
+        map.panTo(dublin);
+        map.setZoom(13);
+        map.panBy(300, 0);
+    }
+    
     if (this.checked) {
         var type = $(this).attr("data-type");
         console.log(type);
@@ -106,7 +121,7 @@ function callback(results, status, type) {
 }
 
 // clear markers for a specific Place Type from map when checkbox un-checked
-function clearMarkers(markers) {
+function clearTouristMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
     });
@@ -115,13 +130,19 @@ function clearMarkers(markers) {
 // function to clear markers of all Place Types from tourist map
 function clearAllTouristMarkers(markers) {
     for (var type in markers) {
-        clearMarkers(markers[type]);
+        clearTouristMarkers(markers[type]);
     }
 }
 
 function removeLineFromTouristMap() {
     if (directionsRenderer) {
         directionsRenderer.setDirections({ routes: [] });
+    }
+    console.log(markerArray);
+    if (markerArray) {
+      for (var i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+      }
     }
 }
 
@@ -228,6 +249,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
             // markers for each step.
             if (status === 'OK') {
+
+                map.fitBounds(response.routes[0].bounds);
+                if ($(window).width() >= 992) {
+                  map.panBy(-600, 0);
+                  map.setZoom(map.getZoom() - 1);
+                }
 
                 //trimming the origin address
                 startingAddress = response.routes[0].legs[0].start_address;
