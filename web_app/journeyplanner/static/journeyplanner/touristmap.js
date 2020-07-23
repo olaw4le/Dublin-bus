@@ -1,16 +1,20 @@
+// initialise center of map for both desktop and mobile screens
 var dublin = { lat: 53.349424, lng: -6.363448826171867 };
 var mobileDublin = { lat: 53.350152, lng: -6.260416 };
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
+    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
+
+    // center the map and set the zoom
     map.panTo(dublin)
     map.setZoom(12);
-    
+
+    // on mobile, pan to a slightly different coordinate in dublin
     if ($(window).width() <= 992) {
         map.panTo(mobileDublin);
     }
@@ -18,7 +22,7 @@ $(document).ready(function () {
     // hide destination box initially
     $('#destination-tourist').hide();
 
-    // initialise all tooltips
+    // initialise tooltip for geolocation information
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
@@ -42,9 +46,11 @@ $(document).ready(function () {
         minuteIncrement: 1
     });
 
+    // use autocomplete for origin and destination
     var input1 = document.getElementById("origin-tourist");
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
+
     // hide error when content of origin input box changed
     $("#origin-tourist").on("input", function () {
         $('.geo-error').hide();
@@ -58,9 +64,8 @@ $(document).ready(function () {
     });
 });
 
+// use the Google Place API to display tourist attractions on the map
 // https://developers.google.com/maps/documentation/javascript/places
-
-
 var markers = {};
 var destination_latlng;
 var name;
@@ -68,9 +73,18 @@ var infowindow;
 var directionsRenderer;
 var markerArray = [];
 
+// prevent the enter button working on the autocomplete dropdown
+// this is done to prevent the geolocation button underneath being selected when enter is clicked
+$(".form-control").keydown(function (e) {
+    if (e.keyCode == 13) {
+        return false;
+    }
+});
+
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
 
+    // center to correct area of map depending on screen size 
     if ($(window).width() <= 992) {
         map.panTo(mobileDublin);
         map.setZoom(13);
@@ -79,10 +93,9 @@ $(".tourist-check").change(function () {
         map.setZoom(13);
         map.panBy(300, 0);
     }
-    
+
     if (this.checked) {
         var type = $(this).attr("data-type");
-        console.log(type);
 
         // show spinner for clicked checkbox
         $('#' + type + '-spin').show();
@@ -127,26 +140,27 @@ function clearTouristMarkers(markers) {
     });
 }
 
-// function to clear markers of all Place Types from tourist map
+// clear markers of all Place Types from tourist map
 function clearAllTouristMarkers(markers) {
     for (var type in markers) {
         clearTouristMarkers(markers[type]);
     }
 }
 
+// remove route line and all markers from tourist map
 function removeLineFromTouristMap() {
     if (directionsRenderer) {
         directionsRenderer.setDirections({ routes: [] });
     }
-    console.log(markerArray);
     if (markerArray) {
-      for (var i = 0; i < markerArray.length; i++) {
-        markerArray[i].setMap(null);
-      }
+        for (var i = 0; i < markerArray.length; i++) {
+            markerArray[i].setMap(null);
+        }
     }
 }
 
-// create markers
+// create markers, add event listeners to show info window on hover and on-clicks
+// use IIFE to ensure the correct information is associated with each on-click event
 function createMarker(place, icon, markerList, rating) {
     ending_lat = place.geometry.location.lat();
     ending_lng = place.geometry.location.lng();
@@ -163,10 +177,7 @@ function createMarker(place, icon, markerList, rating) {
 
     markerList.push(marker);
 
-    console.log(place.name);
-
-
-    // show name of place when mouse hovers over  marker
+    // show name of place and rating when mouse hovers over marker
     google.maps.event.addListener(marker, 'mouseover', (function (placeName, rating) {
         return function () {
             console.log("inside event: " + placeName);
@@ -195,9 +206,6 @@ var ending_lng;
 var starting_lat;
 var starting_lng;
 
-
-
-
 // show route on map
 function routes_tourist() {
 
@@ -215,8 +223,8 @@ function routes_tourist() {
     }
 
     // center map at starting point
-    var center = new google.maps.LatLng(starting_lat, starting_lng);
-    // map.panTo(center);
+    // var center = new google.maps.LatLng(starting_lat, starting_lng);
+    // // map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
     directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
@@ -252,8 +260,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                 map.fitBounds(response.routes[0].bounds);
                 if ($(window).width() >= 992) {
-                  map.panBy(-600, 0);
-                  map.setZoom(map.getZoom() - 1);
+                    map.panBy(-600, 0);
+                    map.setZoom(map.getZoom() - 1);
                 }
 
                 //trimming the origin address
@@ -413,10 +421,8 @@ $(function () {
 
         // display error if user does not select a destination on map
         if ($("#destination-tourist").is(":hidden")) {
-
             $('#tourist-destination-error').show();
         } else {
-
             var time, dateValue
             // use different variables for date and time depending on screen size
             if ($(window).width() < 992) {
@@ -469,7 +475,40 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
-        removeLineFromTouristMap()
+
+        if ($(window).width() <= 992) {
+            map.panTo(mobileDublin);
+            map.setZoom(13);
+        } else {
+            map.panTo(dublin);
+            map.setZoom(13);
+            map.panBy(300, 0);
+        }
+
+        $('.tourist-check').each(function (index, obj) {
+            if (this.checked) {
+                var type = $(this).attr("data-type");
+
+                // show spinner for clicked checkbox
+                $('#' + type + '-spin').show();
+
+                var request = {
+                    location: dublin,
+                    radius: '50000',
+                    type: type
+                };
+
+                service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, function (results, status) {
+                    callback(results, status, type)
+                });
+
+            }
+
+
+
+        });
+
         $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {

@@ -1,19 +1,18 @@
 $(document).ready(function () {
 
-  
-
-  // load twitter
+  // load twitter to display the twitter widget whenever this tab is clicked
   if (typeof twttr != 'undefined') {
     twttr.widgets.load();
   }
+
   // .off ensures onclicks are not added multiple times
   $(document).off("click.routes");
 
-  // Remove routes when navigating to another tab
+  // Remove routes on map when navigating to another tab
   $(document).on("click.routes", "#routeplanner-nav, .edit-journey, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
     removeLineFromMap);
 
-  // initialise all tooltips
+  // initialise tooltip for info regarding geolocation
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
@@ -45,7 +44,7 @@ $(document).ready(function () {
 
 });
 
-//using google map autocomplete for the address          
+//google map autocomplete for origin and destination       
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
 var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
@@ -53,7 +52,15 @@ var origin;
 var destination;
 
 
-// wait until google is loaded
+// prevent the enter button working on the autocomplete dropdown
+// this is done to prevent the geolocation button underneath being selected when enter is clicked
+$(".form-control").keydown(function(e){
+  if(e.keyCode == 13) {
+      return false;
+  }
+});
+
+// wait until google is loaded before showing autocomplete options
 function WhenGoogleLoadedDo(fnt) {
   if (typeof google != 'undefined')
     fnt();
@@ -65,28 +72,17 @@ function WhenGoogleLoadedDo(fnt) {
     }, 500);
 }
 
+// when google is loaded show autocomplete options 
 WhenGoogleLoadedDo(() => {
   origin = new google.maps.places.Autocomplete(input1, options);
   destination = new google.maps.places.Autocomplete(input2, options);
 });
 
+// hide geolocation error once user enters a location in the input box
 $("#origin").on("input", function () {
   $('.geo-error').hide();
 });
 
-// function to create a marker for the bus station nearby from the user location 
-function createMarker(place) {
-  var marker = new google.maps.Marker({
-    map: map,
-    icon: "http://maps.google.com/mapfiles/ms/micons/bus.png",
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', function () {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
 
 //the starting location   
 var starting_lat;
@@ -98,12 +94,11 @@ var ending_lng;
 var directionsRenderer;
 var allMarkers = [];
 
+// remove route line and markers from map 
 function removeLineFromMap() {
   if (directionsRenderer) {
     directionsRenderer.setDirections({ routes: [] });
   }
-  // First, remove any existing markers from the map.
-  console.log(allMarkers);
   if (allMarkers) {
     for (var i = 0; i < allMarkers.length; i++) {
       allMarkers[i].setMap(null);
@@ -111,7 +106,7 @@ function removeLineFromMap() {
   }
 }
 
-// The routes function that shows the route 
+// display route on map
 function routes() {
   var markerArray = [];
 
@@ -119,8 +114,7 @@ function routes() {
   var starting = origin.getPlace();
   var ending = destination.getPlace();
 
-  //starting address latitude
-
+  // display error to user if valid starting location not entered
   if (!starting) {
     $('.invalid-location-error').show();
     return false;
@@ -129,6 +123,7 @@ function routes() {
   starting_lng = starting.geometry.location.lng();
   }
 
+  // display error to user if valid ending location not entered
   if (!ending) {
     $('.invalid-location-error').show();
     return false;
@@ -137,10 +132,7 @@ function routes() {
   ending_lng = ending.geometry.location.lng();
   }
 
-  // Create a map and center it on starting point
-  var center = new google.maps.LatLng(starting_lat, starting_lng);
-
-  // map.panTo(center);
+  // var center = new google.maps.LatLng(starting_lat, starting_lng);
 
   // Create a renderer for directions and bind it to the map.
   directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
@@ -441,11 +433,7 @@ $(function () {
         }
         $("#route-results").show();}
 
-
-
-
-
-
+    // remove line from map when user clicks go
     removeLineFromMap();
 
 
