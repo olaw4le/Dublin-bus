@@ -8,7 +8,7 @@ $(document).ready(function () {
   $(document).off("click.routes");
 
   // Remove routes when navigating to another tab
-  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
+  $(document).on("click.routes", "#routeplanner-nav, .edit-journey, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
     removeLineFromMap);
 
   // initialise all tooltips
