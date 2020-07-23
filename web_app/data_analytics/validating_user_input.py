@@ -150,7 +150,7 @@ trip_ids = get_trip_ids(service_id, route_id, direction)
 first_stop = stop_formatter(start_stop)
 last_stop = stop_formatter(end_stop)
 
-#fifth query to db ... in stop_times: use the trip_ids, the first stop number and the time ranges to get possible options
+# fifth query to db ... in stop_times: use the trip_ids, the first stop number and the time ranges to get possible options
 possible_buses = get_bus_times(trip_ids, first_stop, departure_time)
 
 if len(possible_buses) > 0:
