@@ -4,5 +4,5 @@ Django==3.0.7
 pip==20.0.2
 pytz==2020.1
 setuptools==47.1.1.post20200604
-sqlparse==0.3.1
+pi==0.3.1
 wheel==0.34.2

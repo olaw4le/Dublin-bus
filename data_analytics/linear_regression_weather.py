@@ -198,7 +198,7 @@ def generate_test_dataframe(route, direction, date, time):
 
 
     #create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
-    f = open('/Users/laura/Desktop/Trimester_3/research-project/data_analytics/linear_regression/result_templates.json',) 
+    f = open('/Desktop/result_templates.json',) 
     templates = json.load(f) 
     template_name = str(route) + "_" + str(direction)
     features = templates[template_name]

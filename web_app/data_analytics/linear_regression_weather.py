@@ -17,9 +17,7 @@ warnings.filterwarnings('ignore')
 
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
-print("Files in %r: %s" % (cwd, files))
 path = cwd[:-7]
-print(path)
 
 # load environment
 database = "postgres"
@@ -31,8 +29,6 @@ weather_api_key = "86baa129046e5cbaeb16af074356e579"
 
 def get_weather_from_db():
     """returns a tuple of the 'current' weather data from out postgres database."""
-
-    
 
     sql = db.construct_sql(table_name="weather_data_current", query_type="select_all")
     
@@ -183,7 +179,7 @@ def generate_test_dataframe(route, direction, date, time):
     Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
     are added to a temporary dataframe.
     The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
-    print(route)
+    print("Route", route)
     # get weather from database
     weather = get_weather_from_db()
     # extract required parameters
@@ -283,7 +279,7 @@ def get_indices(startstop, endstop, dictionary, order_segment_list):
 
 
 def segment_calculation(startstop, endstop, dictionary):
-    """ """
+    """not used since change to databse, will keep for now in case we use as a backup"""
 
     total = 0
     count = 0
@@ -317,8 +313,6 @@ def segment_calculation(startstop, endstop, dictionary):
 
 
 def quickanddirty(route, direction, startstop, endstop):
-    print("hello, want it quick and dirty?")
-
     """Returns proportion of the total journey that the user takes simply as percentage of how many of the stops on the route they travelled
         
         I don't like this function, because I don't see the point of training a linear regression model, and then using a blunt object like this to 
@@ -373,12 +367,8 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     
     list_of_values = list(response_values[4:])
     list_of_keys = list(response_keys[4:])
-    print(list_of_values)
-    print(list_of_keys)
     
-    
-
-    
+    #below commented code is being kept until we decide if we keep the proportions data locally as a backup
         
     #proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
     #file_path = '/Users/laura/Desktop/proportions_test/' + proportions_name
@@ -392,36 +382,32 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     try:
         for item in list_of_keys:
             match = str(item).split("_")[0][3:]
-        #print(match)
+
             if startstop == match:
                 index1 = list_of_keys.index(item)
             if endstop == match:
                 index2 = list_of_keys.index(item)
 
         total = 0
-        print(index1, index2)
 
         for i in range(index1, index2 + 1):
             if list_of_values[i] is not None: # this is to handle the odd NaN value in our proporitons datasets. 
         # NaNs occur at an average incidence
         # of 0.12% in the data.
                 value = list_of_values[i]
-                print(value)
-                print(type(value))
-        
             
                 total += value
-                print(total)
         proportion = total
         if proportion > 0:
             return proportion
         else:
-            1/0
-        
+            print("Unable to access proportions data, using simple percentage of route")
+            proportion = quickanddirty(route, direction, startstop, endstop)
+            return proportion
 
     # otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
     except:
-        print("Unable to access proportions data, getting nasty.")
+        print("Unable to access proportions data, using simple percentage of route")
         proportion = quickanddirty(route, direction, startstop, endstop)
     return proportion
 

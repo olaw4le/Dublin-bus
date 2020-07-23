@@ -1,15 +1,15 @@
-var dublin = { lat:53.349424, lng: -6.363448826171867};
+var dublin = { lat: 53.349424, lng: -6.363448826171867 };
 
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function(){
+    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
     map.panTo(dublin)
-    
+
     // hide destination box initially
     $('#destination-tourist').hide();
 
@@ -34,7 +34,6 @@ $(document).ready(function () {
         dateFormat: 'H:i',
         noCalendar: true,
         time_24hr: true,
-        minTime: "05:00",
         minuteIncrement: 1
     });
 
@@ -122,9 +121,9 @@ function clearAllTouristMarkers(markers) {
 
 function removeLineFromTouristMap() {
     if (directionsRenderer) {
-      directionsRenderer.setDirections({ routes: [] });
+        directionsRenderer.setDirections({ routes: [] });
     }
-  }
+}
 
 // create markers
 function createMarker(place, icon, markerList, rating) {
@@ -147,8 +146,8 @@ function createMarker(place, icon, markerList, rating) {
 
 
     // show name of place when mouse hovers over  marker
-    google.maps.event.addListener(marker, 'mouseover', (function(placeName, rating) {
-        return function() {
+    google.maps.event.addListener(marker, 'mouseover', (function (placeName, rating) {
+        return function () {
             console.log("inside event: " + placeName);
             infowindow.setContent(placeName + "<br>Rating: " + rating);
             infowindow.open(map, this);
@@ -162,6 +161,7 @@ function createMarker(place, icon, markerList, rating) {
             name = placeName;
             $('#destination-tourist').val(placeName);
             $('#destination-tourist').show();
+            $('#tourist-destination-error').hide();
         }
     })(place.name, ending_lat, ending_lng));
 }
@@ -383,50 +383,61 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
     $('#go-tourist').on('click', function () {
-        var time, dateValue
-        // use different variables for date and time depending on screen size
-        if ($(window).width() < 992) {
-            var dateValue = $("#datetime-tourist").val();
-            var arr = dateValue.split('T');
-            date = arr[0];
-            time = arr[1];
+
+        // display error if user does not select a destination on map
+        if ($("#destination-tourist").is(":hidden")) {
+
+            $('#tourist-destination-error').show();
         } else {
-            dateValue = $("#datepicker-tourist").val();
-            time = $('#timepicker-tourist').val();
 
-            // show date and time inputs on desktop results page for better user experience
-            // default date and time are those selected by user on input page
-            $("#datepicker-tourist-results-date").flatpickr({
-                altInput: true,
-                altFormat: "F j, Y",
-                dateFormat: 'yy-m-d',
-                defaultDate: dateValue,
-                minDate: "today"
-            });
+            var time, dateValue
+            // use different variables for date and time depending on screen size
+            if ($(window).width() < 992) {
+                var dateValue = $("#datetime-tourist").val();
+                var arr = dateValue.split('T');
+                date = arr[0];
+                time = arr[1];
+            } else {
+                dateValue = $("#datepicker-tourist").val();
+                time = $('#timepicker-tourist').val();
 
-            $('#datepicker-tourist-results-time').flatpickr({
-                enableTime: true,
-                defaultDate: time,
-                dateFormat: 'H:i',
-                noCalendar: true,
-                time_24hr: true,
-                minTime: "05:00",
-                minuteIncrement: 1
-            });
+                // show date and time inputs on desktop results page for better user experience
+                // default date and time are those selected by user on input page
+                $("#datepicker-tourist-results-date").flatpickr({
+                    altInput: true,
+                    altFormat: "F j, Y",
+                    dateFormat: 'yy-m-d',
+                    defaultDate: dateValue,
+                    minDate: "today"
+                });
+
+                $('#datepicker-tourist-results-time').flatpickr({
+                    enableTime: true,
+                    defaultDate: time,
+                    dateFormat: 'H:i',
+                    noCalendar: true,
+                    time_24hr: true,
+                    minuteIncrement: 1
+                });
+            }
+
+            // convert time to seconds since midnight
+            var timeSplit = time.split(':');
+            var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+
+            // show results and routes
+            routes_tourist();
+            $(".form-area").hide();
+            $("#checkbox-card").hide();
+            if ($(window).width() < 992) {
+                $("#map-interface").animate({ top: "400px" }, 400);
+            }
+            $("#route-results-tourist").show();
+
         }
 
-        // convert time to seconds since midnight
-        var timeSplit = time.split(':');
-        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
-        // show results and routes
-        routes_tourist();
-        $(".form-area").hide();
-        $("#checkbox-card").hide();
-        if ($(window).width() < 992) {
-            $("#map-interface").animate({ top: "400px" }, 400);
-        }
-        $("#route-results-tourist").show();
+
     });
 
     // add on click to edit-journey button to hide results and show journey planner
