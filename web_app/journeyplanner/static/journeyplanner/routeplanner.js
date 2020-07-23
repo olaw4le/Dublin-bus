@@ -207,39 +207,42 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
-        var prediction = 0;
 
 
+         // the route distance
+         var distance = '';
+
+         // the route instruction example (walk , take bus)
+         var instruction = '';
+
+         // the departing stop
+         var departure_stop = '';
+
+         // the arival stop	
+         var arrival_stop = '';
+
+         // the number of stops between arrival and departing stop
+         var num_stops = '';
+
+         // the walking duration , we will predict the bus one 
+         var duration = '';
+
+         // the bus number user take
+         var Route_number = '';
+
+         var arrival_latlng;
+         var departure_latlng;
+
+
+
+        //  // going through the repsone recieved from google
+        //  var travelMode = journeysteps[i].travel_mode;
+
+        var journeyTime=0;
         for (var i = 0; i < journeysteps.length; i++) {
-          // the route distance
-          var distance = '';
-
-          // the route instruction example (walk , take bus)
-          var instruction = '';
-
-          // the departing stop
-          var departure_stop = '';
-
-          // the arival stop	
-          var arrival_stop = '';
-
-          // the number of stops between arrival and departing stop
-          var num_stops = '';
-
-          // the walking duration , we will predict the bus one 
-          var duration = '';
-
-          // the bus number user take
-          var Route_number = '';
-
-          var arrival_latlng;
-          var departure_latlng;
-
-
-
+          
           // going through the repsone recieved from google
           var travelMode = journeysteps[i].travel_mode;
-
 
           //picture
           var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
@@ -254,9 +257,16 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             duration = journeysteps[i].duration.text;
             instruction = journeysteps[i].instructions;
 
+            journeyTime += parseInt(duration[0])
+
+
+            console.log(journeyTime)
+
             //trimming the instruction text
             instruction = instruction.split(',');
             instruction = instruction[0];
+
+            // direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
           }
 
@@ -286,11 +296,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             journey_steps["arrival_latlng"] = arrival_latlng;
 
             //turning the data to sent into json
-            data = JSON.stringify(journey_steps);
+            var data = JSON.stringify(journey_steps);}
           }
 
 
-
+            var prediction=0;
             // sending a post request to the server
             $.ajax({
               type: "POST",
@@ -303,10 +313,18 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             })
               .done(function (response) {
                 prediction = response
-                console.log(prediction)
+                console.log(prediction) 
+              
                 alert("successfully posted")
-                if (travelMode == "WALKING") {
+                for (var i = 0; i < journeysteps.length; i++) {
+
+                  for (var j = 0; j < prediction.length; i++){
+                    journeyTime +=parseInt(i)
                   
+                // going through the repsone recieved from google
+                var travelMode = journeysteps[i].travel_mode;
+
+                if (travelMode == "WALKING") {
 
                   distance = journeysteps[i].distance.text;
                   duration = journeysteps[i].duration.text;
@@ -316,38 +334,40 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                   instruction = instruction.split(',');
                   instruction = instruction[0];
       
-                  direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>'); }
+                  direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
+      
+                }
+      
+                else if (travelMode == "TRANSIT") {
+                  var journey_steps = {}; //dictionary for each bus steps in the journey
+                  distance = journeysteps[i].distance.text;
+                  //duration=journeysteps[i].duration.text
+                  instruction = journeysteps[i].instructions;
+                  Route_number = journeysteps[i].transit.line.short_name;
+                  arrival_stop = journeysteps[i].transit.arrival_stop.name;
+                  departure_stop = journeysteps[i].transit.departure_stop.name;
+                  num_stops = journeysteps[i].transit.num_stops;
+                  arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
+                  departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
+      
+                  //trimming the instruction text
+                  instruction = instruction.split(',');
+                  instruction = instruction[0];
 
-                  else if (travelMode == "TRANSIT") {
-                    for (i in prediction){
-                    distance = journeysteps[i].distance.text;
-                    //duration=journeysteps[i].duration.text
-                    instruction = journeysteps[i].instructions;
-                    Route_number = journeysteps[i].transit.line.short_name;
-                    arrival_stop = journeysteps[i].transit.arrival_stop.name;
-                    departure_stop = journeysteps[i].transit.departure_stop.name;
-                    num_stops = journeysteps[i].transit.num_stops;
-                    arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
-                    departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
-        
-                    //trimming the instruction text
-                    instruction = instruction.split(',');
-                    instruction = instruction[0];
-                  
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + i + '</li>');
-
-                  
-                  }}
-                
+                  direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' + j+" mins"+'</li>');
 
 
+                }
+      
+              }}
               })
 
 
-            
 
-          
-        };
+
+            // direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
+
+        
         ;
 
         //showing the response on the map. 	 
