@@ -232,6 +232,7 @@ $(document).ready(function () {
   
            var arrival_latlng;
            var departure_latlng;
+           var list=[]
   
   
   
@@ -294,13 +295,16 @@ $(document).ready(function () {
               journey_steps["num_stops"] = num_stops;
               journey_steps["departure_latlng"] = departure_latlng;
               journey_steps["arrival_latlng"] = arrival_latlng;
-              
-  
+
+
+              list.push(journey_steps)
+
               //turning the data to sent into json
               var data = JSON.stringify(journey_steps);}
-
-              console.log("data",data)
             }
+            var data = JSON.stringify(list);
+
+            console.log("data",list)
   
     
               var prediction=0;
@@ -318,10 +322,13 @@ $(document).ready(function () {
               })
              
                 .done(function (response) {
-                  prediction = response
-                  console.log(prediction) 
+                  prediction1 = JSON.parse(response)
+                  console.log(prediction1) 
+
+                for (var j = 0; j < prediction1.length; j++){
               
-                journeyTime+= parseInt(prediction)
+                journeyTime+= parseInt(prediction1[j])
+                  }
 
                 var b = input_time.split(':');
                 var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime,'minutes').format("HH:mm");
@@ -331,6 +338,7 @@ $(document).ready(function () {
                 $("#journey-time").html(input_time+' - '+theFutureTime)
 
                   for (var i = 0; i < journeysteps.length; i++) {
+                    for (var k = 0; k < prediction1.length; k++){
                     
                   // going through the repsone recieved from google
                   var travelMode = journeysteps[i].travel_mode;
@@ -368,11 +376,13 @@ $(document).ready(function () {
                     // for (var j = 0; j < prediction.length; i++){
                     //   journeyTime +=parseInt(j)
                     //   console.log(j)
+                    var x=0;
+                    
+                      
+                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +prediction1[k]+" mins"+'</li>');
   
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +prediction+" mins"+'</li>');
-  
-  
-                  }
+                    }
+                    }
         
                 }
                 })        
