@@ -5,12 +5,12 @@
 <!-- input boxes for user to enter origin and destination locations -->
 <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
 <h4 class="tab-title">Route Planner</h4>
-<div class="container form-area">
+<div class="container form-area" id="routeplanner-form">
     <form onsubmit="return false">
-        <p class="instruction" id="instruction-planner">Enter origin and destination locations and click 'go' to view directions and journey times.</p>
+        <!-- <p class="instruction" id="instruction-planner">Enter origin and destination locations and click 'go' to view directions and journey times.</p> -->
         <div class="form-group">
             <label for="origin">From:</label>
-            <p class="instruction">(Type an origin location or use your current location)</p>
+            <!-- <p class="instruction">(Type an origin location or use your current location)</p> -->
             <input type="text" required="required" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-routeplanner">Use my location</button>

@@ -113,7 +113,6 @@ html, body {
   /* go button on all tabs */
   .go-button {
   margin-left: 6px;
-  margin-top: 5px;
   margin-bottom: 20px;
   max-width: 80px;
   min-width: 80px;
@@ -325,10 +324,10 @@ label.dt-label {
 /* 'use my location' button */
 .geolocation-option {
   height: fit-content !important;
-  width: fit-content !important;
-  margin: 0px !important;
   padding: 0px !important;
-  padding-left: 10px !important;
+  padding-left: 20px !important;
+  text-align: left;
+  min-width: 150px;
 
 }
 
@@ -435,6 +434,9 @@ label.dt-label {
   margin-left: 25px;
 }
 
+#routeplanner-form {
+  margin-top: 10px;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
@@ -531,7 +533,7 @@ label.dt-label {
       /* make input boxes narrower on mobile screen*/
       .input-box {
         max-width: 70vw;
-        min-width: 300px;  
+        min-width: 270px;  
         width: 70vw;
         /* margin-bottom: 10px;
         margin-left: 5px; */

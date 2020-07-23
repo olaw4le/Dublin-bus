@@ -267,7 +267,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             instruction = instruction.split(',');
             instruction = instruction[0];
 
-            direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
+            direction_text.append('<li><p>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</p></li>');
 
           }
 
@@ -321,7 +321,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
               })
 
 
-            direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:</b>' + prediction + '</li>');
+            direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b> Duration: </b>' + prediction + '</p></li>');
 
 
           };
