@@ -469,6 +469,7 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+        removeLineFromTouristMap()
         $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {

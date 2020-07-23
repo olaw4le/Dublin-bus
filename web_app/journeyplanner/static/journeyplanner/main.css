@@ -146,7 +146,11 @@ html, body {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    margin: 15px;
+    margin: 5px 15px 15px 15px;
+  }
+
+  .results-page-dt {
+    height: 30px;
   }
 
   /* overall journey length on results tab1*/
@@ -180,10 +184,11 @@ html, body {
 
   /* edit journey button */
   .edit-journey {
-    margin-left: 10px;
-    height: 40px;
-    margin-bottom: 7px;
-    margin-top: 5px;
+    margin-left: 30px;
+    height: 30px;
+    /* margin-bottom: 7px; */
+    /* margin-top: 5px; */
+    width: 100px;
   }
 
   /* remove margin on labels of summary results */
@@ -590,7 +595,7 @@ label.dt-label {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    margin: 15px;
+    margin: 5px 15px 15px 15px;
     width: 90vw;
     min-width: 300px;
 
