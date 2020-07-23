@@ -515,6 +515,7 @@ label.dt-label {
         width: 100%;
         text-align: center;
         padding-top: 10px;
+        padding-left: 10px;
         background-color:	#DCDCDC;
       }
 
@@ -605,6 +606,15 @@ label.dt-label {
     width: 480px;
   }
 
+/* change font of bottom nav when mobile screens get below 400px */
+  @media only screen and (max-width: 400px){
+
+    a.nav-item.nav-link.load-interface.nav-bottom{
+      font-size: 0.65em;
+    }
+  }
+  
+  
 
   
 
