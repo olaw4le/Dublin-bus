@@ -103,7 +103,6 @@ def prediction(request):
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-<<<<<<< HEAD
         data= json.loads(request.POST["data"])
         
 
@@ -146,60 +145,16 @@ def planner(request):
         
         #adding the calculated value to the list that will be sent back
             prediction.append(calculation)
-=======
-        data = json.loads(request.POST["data"])
 
-        prediction = [] # list to store the calculated predictions
-      
-        buses = len(data)
-        route = data["route_number"]
-        date = request.POST["date"]
-        time = request.POST["time"]
-
-        # direction = 2
-        route_number = route.upper()
-
-        # departure stops lat and lng
-        departure=data["departure_latlng"]
-        x=departure.split(",")
-        departure_lat = float(x[0])
-        departure_lng = float(x[1])
-
-        # arrival stops lat and lng
-        arrival=data["arrival_latlng"]
-        y=arrival.split(",")
-        arrival_lat = float(y[0])
-        arrival_lng = float(y[1])
-
-        route_number = route.upper()
-        # getting the suggested route file 
-        route_list = stops_latlng(route_number)
-
-        # getting the origin and destination stop number using the vincenty formular
-        origin=find_stop(route_list,(departure_lat,departure_lng))
-        arrival=find_stop(route_list,(arrival_lat,arrival_lng))
-        direction = get_direction.get_direction_from_stops(route, origin, arrival)
-        #use the maachine learning module to calculate prediction 
-
-        calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
->>>>>>> dev
-
-        # adding the calculated value to the list that will be sent back
-        prediction.append(calculation)
+    
            
-<<<<<<< HEAD
-            print("prediction",calculation)
-            print("prediction list",prediction)
+        print("prediction",calculation)
+        print("prediction list",prediction)
 
 
        
         
     return HttpResponse(json.dumps(prediction))
-=======
-        print("prediction (from views.py)", calculation)
-
-    return HttpResponse(calculation)
->>>>>>> dev
     
 
 @csrf_exempt
