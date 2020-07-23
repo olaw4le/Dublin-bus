@@ -33,8 +33,7 @@ html, body {
     height: calc(100vh - 134px);
     overflow-y: hidden;
     overflow-x: hidden;
-    box-shadow: 3px 3px 5px #C0C0C0;;
-
+    box-shadow: 4px 4px 8px #B8B8B8;
   }
 
   #map-interface-content {
@@ -65,7 +64,7 @@ html, body {
   #tab-menu{
     max-width: 150px;
     width: 150px;
-    background-color:#E0E0E0;
+    background-color:#D0D0D0;
     height: calc(100vh - 134px);
     overflow-y: auto;
     padding: 0px;
