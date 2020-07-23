@@ -12,6 +12,8 @@ from pyleapcard import *
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
 from data_analytics import db_interface
+from data_analytics import get_journey_proportion as jp
+from data_analytics.to_time_group import to_time_group
 
 sys.path.append("..")
 
@@ -225,5 +227,41 @@ def leap_login(request):
 
         # convert stats to json format & return to user
         return HttpResponse(json.dumps(stats))
+
+
+# csrf exemption is only temporary while running on local machine!!!
+@csrf_exempt
+def get_stats(request):
+
+    if request.method == "POST":
+
+        d = request.POST["date"]
+        t = request.POST["timeSeconds"]
+        route = request.POST["route"]
+        origin = request.POST["origin"]
+        destination = request.POST["destination"]
+        direction = request.POST["direction"]
+
+        # extract the month & weekday from the date
+        month = ""
+        weekday = ""
+
+        # convert the time into 'timegroups'
+        group = str(to_time_group(int(t)))
+
+        # determine the segments on this route
+        all_stops = jp.stops_on_route(str(route), main=True, direction=direction)
+        sub_stops = jp.stops_on_journey(origin, destination, all_stops)
+        sub_segments = jp.segments_from_stops(sub_stops)
+
+        # for an hour either side of the searched time groups - estimate the journey time based on historical averages
+        groups_to_check = []
+
+        response = {
+
+        }
+        for i in groups_to_check:
+            jp.get_95_percentile(route, direction, sub_segments, month, weekday, i)
+
 
 
