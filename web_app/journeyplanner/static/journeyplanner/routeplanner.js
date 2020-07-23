@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+  
+
   // load twitter
   if (typeof twttr != 'undefined') {
     twttr.widgets.load();
@@ -71,7 +73,6 @@ WhenGoogleLoadedDo(() => {
 $("#origin").on("input", function () {
   $('.geo-error').hide();
 });
-
 
 // function to create a marker for the bus station nearby from the user location 
 function createMarker(place) {

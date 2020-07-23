@@ -102,7 +102,7 @@ $(".tourist-check").change(function () {
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
-        clearMarkers(typeMarkers);
+        clearTouristMarkers(typeMarkers);
 
     }
 });
