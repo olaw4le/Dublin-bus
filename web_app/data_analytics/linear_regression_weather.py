@@ -356,17 +356,17 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
     # call proportions file in dictionary format - this proportions file returns a calculated average based on previous journies for a given...
     # ...month, week and time_group...
-
+    try:
     # construct sql query
-    table_name = "route_%s_%s_proportions" % (route.upper(), direction)
-    sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
-    sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
-    # execute sql query
-    response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
-    response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
-    
-    list_of_values = list(response_values[4:])
-    list_of_keys = list(response_keys[4:])
+        table_name = "route_%s_%s_proportions" % (route.upper(), direction)
+        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+        sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
+        # execute sql query
+        response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
+        response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
+
+        list_of_values = list(response_values[4:])
+        list_of_keys = list(response_keys[4:])
     
     #below commented code is being kept until we decide if we keep the proportions data locally as a backup
         
@@ -379,7 +379,7 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     #access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
 
     # attempt to calculate the proportion using average segment time
-    try:
+    
         for item in list_of_keys:
             match = str(item).split("_")[0][3:]
 
