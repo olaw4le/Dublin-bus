@@ -44,7 +44,7 @@
         <div class="form-group">
             <label for="origin">From:</label>
             <p class="instruction">(Type an origin location or use your current location)</p>
-            <input type="text" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
+            <input type="text" required="required" class="col-6 form-control input-box" id="origin-tourist" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-tourist">Use my location</button>
                 <div class="spinner-border spinner-border-sm text-success geo-spinner" role="status"></div>
@@ -79,6 +79,7 @@
                     <input class="input-box form-control" type="text"class="timepicker" id="timepicker-tourist">
                 </div>
             </div>
+            <p id="tourist-destination-error">Please select a destination on the map</p>
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go-tourist">Go</button>
         </div>
         <div class="mobile-space"></div>

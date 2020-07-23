@@ -6,7 +6,6 @@ import pg8000 as ps
 
 
 def construct_sql(**kwargs):
-    print("Hello from construct_sql")
 
     if "table_name" in kwargs:
         table_name = kwargs["table_name"]
