@@ -233,6 +233,7 @@ $(document).ready(function () {
            var arrival_latlng;
            var departure_latlng;
            var list=[]
+           var list1=[]
   
   
   
@@ -290,10 +291,12 @@ $(document).ready(function () {
 
 
               list.push(journey_steps)
+              list1.push(Route_number)
 
               //turning the data to sent into json
               var data = JSON.stringify(journey_steps);}
             }
+
             var data = JSON.stringify(list);
 
             console.log("data",list)
@@ -317,33 +320,45 @@ $(document).ready(function () {
                   prediction1 = JSON.parse(response)
                   console.log(prediction1) 
 
+                  function bus_time(k){
+             
+                    return prediction1[k]
+                    }
+
+                    var number=0
+
+                // adding the predicted time to the total time
                 for (var j = 0; j < prediction1.length; j++){
               
                 journeyTime+= parseInt(prediction1[j])
-
-
-            
-                  
-                  }
+                console.log(journeyTime)
+                    }
                   
 
                 var b = input_time.split(':');
                 var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime,'minutes').format("HH:mm");
                 console.log(theFutureTime)
+// setting the total time and predicted arrival time in the html
 
                 $("#duration-val").html(journeyTime +' mins')
                 $("#journey-time").html(input_time+' - '+theFutureTime)
 
-                  for (var i = 0; i < journeysteps.length; i++) {
-                     //picture
+                
+
+            for (var i = 0; i < journeysteps.length; i++) {
+
+              
+
+              console.log('number',number)
             var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
             var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
             var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
                    
-                  // going through the repsone recieved from google
-                  var travelMode = journeysteps[i].travel_mode;
+            // going through the repsone recieved from google
+            var travelMode = journeysteps[i].travel_mode;
   
                   if (travelMode == "WALKING") {
+                    
   
                     distance = journeysteps[i].distance.text;
                     duration = journeysteps[i].duration.text;
@@ -362,11 +377,6 @@ $(document).ready(function () {
                     distance = journeysteps[i].distance.text;
 
 
-                    function bus_time(i){
-                    return prediction1[i]
-                    }
-                  
-
                     instruction = journeysteps[i].instructions;
                     Route_number = journeysteps[i].transit.line.short_name;
                     arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -379,16 +389,25 @@ $(document).ready(function () {
                     instruction = instruction.split(',');
                     instruction = instruction[0];
 
-                    var x=0;
-                      
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +bus_time(i)+" mins"+'</li>');
-  
+
                     
-                    }
-        
+    
+
+
+                    
+
+                     
+                      
+                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +bus_time(number)+" mins"+'</li>');
+   
+                    number +=1
                 }
-                })        
-          ;
+                
+              
+              }
+                
+                console.log(number)
+                })       
   
           //showing the response on the map. 	 
           directionsRenderer.setDirections(response);
