@@ -206,6 +206,7 @@ html, body {
 .autocomplete {
   position: relative;
   display: inline-block;
+  margin-bottom: 5px;
 }
 
 input {
