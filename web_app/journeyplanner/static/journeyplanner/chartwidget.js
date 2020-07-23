@@ -14,10 +14,29 @@ var borderColours = ["rgb(184, 202, 204)", "rgb(64, 204, 219)"];
 var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
 
 function getSearchParams() {
+    //var d = $("#date-picker").val();
+    //var t = $("#time-picker").val();
+    // 2020-07-23T17:09
+    var params = new Object();
+        params["route"] = $("#estimator-route").val();
+        params["start"] = $("#estimator-origin").val();
+        params["end"] = $("#estimator-destination").val();
+        params["dt"] = $("#datetime-tab2").val();
+
+    return params;
 }
 
 
 function makePredictionRequest() {
+
+    var params = getSearchParams()
+
+    // request to get the bus time table, this should be done in the django app
+    $.ajax({
+        type:"POST",
+        url:"leap_login/",
+        data:{user:this_user, passwd:this_passwd}
+    })
 }
 
 
