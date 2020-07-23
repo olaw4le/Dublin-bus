@@ -359,12 +359,16 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     try:
     # construct sql query
         table_name = "route_%s_%s_proportions" % (route.upper(), direction)
+        print("table_name", table_name)
         sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+        print("sql_values", sql_values)
         sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
+        print("Sql keys", sql_keys)
         # execute sql query
         response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
+        print("response_values", response_values)
         response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
-
+        print("response_keys", response_keys)
         list_of_values = list(response_values[4:])
         list_of_keys = list(response_keys[4:])
     
