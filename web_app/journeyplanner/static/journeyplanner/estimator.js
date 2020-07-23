@@ -89,7 +89,7 @@ function route_list() {
         stations = data;
 
         // populating the sub route select list 
-        var To = "<option value=0>Sub Route</option>";
+        var To = "<option value=0>-- Select --</option>";
         for (var key in stations) {
 
 
