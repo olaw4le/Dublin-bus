@@ -321,19 +321,7 @@ $(document).ready(function () {
               
                 journeyTime+= parseInt(prediction1[j])
 
-                for (var i = 0; i < journeysteps.length; i++) {
-                  // going through the repsone recieved from google
-                  var travelMode = journeysteps[i].travel_mode;
 
-                  if (travelMode == "TRANSIT") {
-                  duration=journeysteps[i].duration.text
-
-                  duration1=prediction1[j]
-
-                  console.log(duration1)
-                  }
-
-                }
             
                   
                   }
@@ -374,12 +362,10 @@ $(document).ready(function () {
                     distance = journeysteps[i].distance.text;
 
 
-                    function bus_time(){
-
-                    for (var j = 0; j < prediction1.length; j++){
-                    return prediction1[j++]
+                    function bus_time(i){
+                    return prediction1[i]
                     }
-                  }
+                  
 
                     instruction = journeysteps[i].instructions;
                     Route_number = journeysteps[i].transit.line.short_name;
@@ -395,7 +381,7 @@ $(document).ready(function () {
 
                     var x=0;
                       
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +bus_time()+" mins"+'</li>');
+                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +bus_time(i)+" mins"+'</li>');
   
                     
                     }
