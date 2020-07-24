@@ -148,7 +148,7 @@ def planner(request):
 
     
            
-        print("prediction",calculation)
+        
         print("prediction list",prediction)
 
 
