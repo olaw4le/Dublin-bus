@@ -78,8 +78,55 @@ def get_proportions(route, direction, segments, month, day, time):
     return sum(response[0])
 
 
+def get_mean_time(route, direction, segments, month, day, time):
+
+    # create sql query
+    table_name = "route_%s_%s_means" % (str(route), str(direction))
+    sql = db.construct_sql(table_name=table_name, query_type="select_where",
+                           data={"month": month, "weekday": day, "timegroup": str(time)},
+                           column_names=segments)
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+
+    # return the sum of all proportions
+    return sum(response[0])
+
+
+def get_standard_dev(route, direction, segments, month, day, time):
+
+    # get the standard deviations
+    # create sql query
+    table_name = "route_%s_%s_standard_dev" % (str(route), str(direction))
+    sql = db.construct_sql(table_name=table_name, query_type="select_where",
+                           data={"month": month, "weekday": day, "timegroup": str(time)},
+                           column_names=segments)
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+
+    # return the sum of all proportions
+    print(response)
+    return sum(response[0])
+
+
+def get_95_percentile(route, direction, segments, month, day, time):
+    """calculate the 95th percentile from the means & standard deviations for each segment"""
+
+    means = get_mean_time(route, direction, segments, month, day, time)
+    std_dev = get_standard_dev(route, direction, segments, month, day, time)
+
+    return means + (1.645 * std_dev)
+
+
+"""
 # ---- EXAMPLE USAGE ----
-all_stops = stops_on_route("270", main=True, direction=2)
-sub_stops = stops_on_journey(3333, 7026, all_stops)
+all_stops = stops_on_route("145", main=True, direction=1)
+print(all_stops)
+sub_stops = stops_on_journey(4320, 334, all_stops)
+print(sub_stops)
 sub_segments = segments_from_stops(sub_stops)
-print(get_proportions(270, 2, sub_segments, "January", "Monday", 15))
+print(sub_segments)
+print(get_proportions("145", 1, sub_segments, "January", "Monday", 15))
+print(get_95_percentile("145", 1, sub_segments, "January", "Monday", 15))
+"""
