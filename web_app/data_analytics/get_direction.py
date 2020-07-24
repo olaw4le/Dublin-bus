@@ -25,5 +25,5 @@ def get_direction_from_stops(route, stop_1, stop_2):
             if int(stop_1) in stops_dict[route][key]['stops']:
                 print("found stop on list!")
                 return(stops_dict[route][key]['direction']) 
-        else:
-            return EnvironmentError
+    else:
+        return EnvironmentError
