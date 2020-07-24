@@ -276,7 +276,7 @@ def get_stats(request):
             time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
 
             # add the estimated journey time to this the response dict (convert into minutes)
-            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) / 60
+            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
 
         return HttpResponse(json.dumps(response))
 
