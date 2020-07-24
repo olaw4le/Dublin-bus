@@ -123,6 +123,8 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
     try:
         connection = ps.connect(database=database, user=user, password=password, host=host, port=port)
     except Exception as e:
+        print("Failed to connect to database")
+        print(e)
         return e
 
     cursor = connection.cursor()
@@ -133,6 +135,7 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
         connection.commit()
     except Exception as e:
         connection.close()
+        print("Failed to execute sql query")
         print(e)
         return e
 
