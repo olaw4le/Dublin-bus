@@ -72,17 +72,11 @@ function bustime() {
                     $("#real-time-table").html(tableRows)
 
                 }
-
             }
-
-
         })
 }
 
-
-// $("#real-time-button").click(bustime)
 $("#real-time-button").on('click', function () {
-    // $("#real-time-table").html(tableRows);
     bustime();
 
 });
