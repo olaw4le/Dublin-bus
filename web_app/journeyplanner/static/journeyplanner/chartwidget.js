@@ -56,12 +56,44 @@ function makeStatsRequest() {
     .done(function(response){
         var data = JSON.parse(response);
 
+        var infoObject = new Object();
+            infoObject["data"] = data;
+            infoObject["route"] = params.route;
+            infoObject["start"] = params.start;
+            infoObject["end"] = params.end;
+
+        updateTextInfo(infoObject);
         drawBarChart(data);
         })
 }
 
 
-function updateTextInfo() {
+// display a textual description of the data contained in the graph
+function updateTextInfo(data) {
+
+    //$("#results-route-number").html(data.route);
+    //$("#results-route-stops").html(data.start + '-' + data.end);
+
+
+    // get the 95% journey time for this time group
+    var day_time = Object.keys(data.data)[2];
+    var journey_time = data.data[day_time];
+    var fastest_time = day_time;
+
+    for (var key in data.data) {
+        if (data.data[key] < journey_time) {
+            fastest_time = key
+        }
+    }
+
+    // if there's a faster time than the 'search time' add that to the description
+    if (day_time == fastest_time) {
+        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes.");
+    } else {
+        var timeDelta = journey_time - data.data[day_time];
+        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes. You could expect to save "  + timeDelta + "minutes by making this trip at " + fastest_time + "instead.");
+    }
+
 }
 
 
@@ -93,7 +125,6 @@ function drawBarChart(data) {
     var labels = Object.keys(data);
 
     bars =  new DataSet(data);
-    console.log(bars)
     var someChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -107,15 +138,25 @@ function drawBarChart(data) {
                     },
                     scales: {
                         yAxes: [{
+                            scaleLabel: {
+                                labelString: "Travel Time (Minutes)",
+                                display: true
+                            },
                             stacked: false,
                             display: true,
                             gridLineWidth: 0,
-                            minorTickInterval: null
+                            minorTickInterval: null,
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }],
                         xAxes: [{
                             stacked: false,
                             display: true,
                             gridLineWidth: 0,
+                            gridLines: {
+                                display: false
+                            }
                         }]
                     }
                 }
@@ -126,6 +167,6 @@ function drawBarChart(data) {
 
 
 // var sampleData = [{x: "2016-12-25", y: 4}, {x: "2016-12-26", y: 20}, {x: "2016-12-27", y: 10}, {x: "2016-12-28", y: 7}, {x: "2016-12-29", y: 3}];
-var sampleData = {"13:30": 4, "14:00": 20, "14:30": 10, "15:00": 7, "15:30": 3};
+//var sampleData = {"13:30": 4, "14:00": 20, "14:30": 10, "15:00": 7, "15:30": 3};
 
-drawBarChart(sampleData)
+//drawBarChart(sampleData)
