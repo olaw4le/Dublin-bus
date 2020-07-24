@@ -77,8 +77,28 @@ var sel_route = "";
 var direction = ""
 var stop_list = [];
 
-// function to populate the sub_routes list			
-function route_list() {
+// function to populate the origin and destination
+function stops() {
+    var To = "<option value=0>Stops</option>";
+
+    // getting the value of the selected route
+    sel_route= $("#estimator-route").val();
+
+    console.log("route",sel_route)
+
+    $.getJSON("static/new_ordered_stops.json", null, function (data) {
+       stations = data;
+       var key;
+     //getting the value of the selected route
+      var list = ''
+
+       for (key in stations) {
+        var x = key.split("_");
+        var y= (x[0]+" "+stations[key].headsign)
+        
+           
+        if (sel_route ==y) {
+            
 
             routes = stations[key].stops
             direction=key.charAt(key.length-1);
@@ -90,9 +110,10 @@ function route_list() {
 
                 for (var key3 in routes[key2]){
 
-        // populating the sub route select list 
-        var To = "<option value=0>-- Select --</option>";
-        for (var key in stations) {
+                   var x=Object.values(routes[key2])
+                   var y = JSON.stringify(x);
+                   y= y.replace(/[[\]]/g,'')
+                   y=y.replace(/['"]+/g, '')
 
 
                    list += (key3+" "+y)+ ",";
@@ -115,35 +136,13 @@ function route_list() {
             stop_list.push(list[i])
         }
 
-        document.getElementById("estimator-sub").innerHTML = To;
-  }
-    };
-
-
-//getting the value of the selected sub route
-var sel_sub = "";
-var direction = ""
-var stop_list = [];
-
-// function to populate the origin and destination
-function stops() {
-    var To = "<option value=0>-- Select --</option>";
-
-    // getting the value of the selected sub-route
-    sel_sub = $("#estimator-sub").val();
-
-    // going through the sub-routes the selected route has 
-    for (key in routes) {
-
-        // if the user selected sub-route is found 
-        if (sel_sub == key) {
 
         $("#estimator-origin").html(To) ;
     
         }}
-    }
+    })
 
-
+}
 
 
 
@@ -151,7 +150,7 @@ var index;
 
 // function to populate the remaining destination stop
 function destination() {
-    var To = "<option value=0>-- Select --</option>";
+    var To = "<option value=0>Stops</option>";
 
     starting_stop = $("#estimator-origin").val();
     index = stop_list.indexOf(String(starting_stop)) //finding the index of the selected stop
@@ -212,11 +211,8 @@ function initMap2() {
         map: map
     });
     calcRoute();
-    makeStatsRequest();
-
     removeLineFromMap();
 }
-
 
 // calculate route
 function calcRoute() {
