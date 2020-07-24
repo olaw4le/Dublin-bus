@@ -278,6 +278,37 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 $("#origin-tab1").html(address1);
                 $("#destination-tab1").html(name);
 
+                // fill date and time details into summary results
+                if ($(window).width() < 992) {
+                    datetimeValue = $("#datetime-tourist").val();
+                    var arr = datetimeValue.split('T');
+                    date = arr[0];
+                    time = arr[1];
+                  } else {
+                    date = $("#datepicker-tourist").val();
+                    time = $('#timepicker-tourist').val();
+              
+                    // use date and time here to make properly formatted datetimeValue for mobile
+                    datetimeValue = date + 'T' + time;
+                  }
+          
+                  dateElements = date.split('-');
+                  year = dateElements[0];
+                  month = dateElements[1];
+                  date = dateElements[2];
+                  dateToDisplay = date + "-" + month + "-" + year;
+          
+                  // display information to user
+                  $("#origin-tab1").html(address1);
+                  $("#destination-tab1").html(address2);
+                  $(".datetime-results-tourist").html(dateToDisplay + ", " + time);
+
+
+
+
+
+
+
                 journeysteps = response.routes[0].legs[0].steps;
 
                 var direction_text = $("#direction-tourist");
@@ -410,7 +441,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
-                        
+
                         prediction1 = JSON.parse(response)
                         console.log(prediction1)
 
