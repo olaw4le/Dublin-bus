@@ -197,6 +197,9 @@ def generate_test_dataframe(route, direction, date, time):
     # construct sql query
     sql = db.construct_sql(table_name="model_features", query_type="select_where", column_names=["features"], data={"id": template_name})
     # execute sql query
+    print("sql")
+    print(sql)
+
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
   
     # make a single row to contain the test data and put 0 in every column.
