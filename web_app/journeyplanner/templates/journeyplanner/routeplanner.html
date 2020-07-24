@@ -120,20 +120,27 @@
      
     </div>
 
+    <!-- spinner to show while user waits for results -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-info prediction-spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
     <!-- overall journey time and length -->
-    <div class="card results">
+    <div class="card results results-card">
         <div id="overall-time">
             <div class="row">
-                <p id="journey-time">12:50 - 13:10</p>
+                <p id="journey-time"></p>
             </div>
         </div>
         <div class="row">
             <div class="col-8" id="overall-duration">
-                <p>Total duration: <span id="duration-val">20 mins</span></p>
+                <p>Total duration: <span id="duration-val"></span></p>
             </div>
         </div>
     </div>
-    <div class="card results">
+    <div class="card results results-card">
         <div class="row">
             <ul id="direction">
             </ul>

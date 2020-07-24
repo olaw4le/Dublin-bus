@@ -84,18 +84,18 @@ $("#origin").on("input", function () {
 
 
 // function to create a marker for the bus station nearby from the user location 
-function createMarker(place) {
-  var marker = new google.maps.Marker({
-    map: map,
-    icon: "http://maps.google.com/mapfiles/ms/micons/bus.png",
-    position: place.geometry.location
-  });
+// function createMarker(place) {
+//   var marker = new google.maps.Marker({
+//     map: map,
+//     icon: "http://maps.google.com/mapfiles/ms/micons/bus.png",
+//     position: place.geometry.location
+//   });
 
-  google.maps.event.addListener(marker, 'click', function () {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
+//   google.maps.event.addListener(marker, 'click', function () {
+//     infowindow.setContent(place.name);
+//     infowindow.open(map, this);
+//   });
+// }
 
 
 //the starting location   
@@ -338,6 +338,10 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         })
 
           .done(function (response) {
+
+            $('.prediction-spinner').hide();
+            $('.results-card').show();
+
             prediction1 = JSON.parse(response)
             console.log(prediction1)
 
@@ -389,7 +393,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 instruction = instruction.split(',');
                 instruction = instruction[0];
 
-                direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
+                direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b> Duration:</b>&nbsp;' + duration + '</li>');
 
               }
 
@@ -409,15 +413,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 //trimming the instruction text
                 instruction = instruction.split(',');
                 instruction = instruction[0];
-
-
-
-
-
-
-
-
-
 
                 direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b>Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
@@ -477,6 +472,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
   $('#go').on('click', function () {
+
+    $('.prediction-spinner').show();
+    $('.results-card').hide();
 
     removeLineFromMap();
 
@@ -538,6 +536,7 @@ $(function () {
     // show results and routes
     var success = routes();
     if (success) {
+
       $(".form-area").hide();
       if ($(window).width() < 992) {
         $("#map-interface").animate({ top: "400px" }, 400);

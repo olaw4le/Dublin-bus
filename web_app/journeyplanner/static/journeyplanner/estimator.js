@@ -71,10 +71,6 @@ function removeLineFromMap() {
 }
 
 
-
-
-
-
 // function to populate the sub_routes list			
 function route_list() {
 
