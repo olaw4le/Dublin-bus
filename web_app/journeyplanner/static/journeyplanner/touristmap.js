@@ -1,19 +1,29 @@
+// initialise center of map for both desktop and mobile screens
 var dublin = { lat: 53.349424, lng: -6.363448826171867 };
+var mobileDublin = { lat: 53.350152, lng: -6.260416 };
 
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
+    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
+
+    // center the map and set the zoom
     map.panTo(dublin)
+    map.setZoom(12);
+
+    // on mobile, pan to a slightly different coordinate in dublin
+    if ($(window).width() <= 992) {
+        map.panTo(mobileDublin);
+    }
 
     // hide destination box initially
     $('#destination-tourist').hide();
 
-    // initialise all tooltips
+    // initialise tooltip for geolocation information
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
@@ -37,9 +47,11 @@ $(document).ready(function () {
         minuteIncrement: 1
     });
 
+    // use autocomplete for origin and destination
     var input1 = document.getElementById("origin-tourist");
     var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
     origin = new google.maps.places.Autocomplete(input1, options);
+
     // hide error when content of origin input box changed
     $("#origin-tourist").on("input", function () {
         $('.geo-error').hide();
@@ -53,9 +65,8 @@ $(document).ready(function () {
     });
 });
 
+// use the Google Place API to display tourist attractions on the map
 // https://developers.google.com/maps/documentation/javascript/places
-
-
 var markers = {};
 var destination_latlng;
 var name;
@@ -63,11 +74,29 @@ var infowindow;
 var directionsRenderer;
 var markerArray = [];
 
+// prevent the enter button working on the autocomplete dropdown
+// this is done to prevent the geolocation button underneath being selected when enter is clicked
+$(".form-control").keydown(function (e) {
+    if (e.keyCode == 13) {
+        return false;
+    }
+});
+
 // loop through checkboxes and display markers on map using data attribute
 $(".tourist-check").change(function () {
+
+    // center to correct area of map depending on screen size 
+    if ($(window).width() <= 992) {
+        map.panTo(mobileDublin);
+        map.setZoom(13);
+    } else {
+        map.panTo(dublin);
+        map.setZoom(13);
+        map.panBy(300, 0);
+    }
+
     if (this.checked) {
         var type = $(this).attr("data-type");
-        console.log(type);
 
         // show spinner for clicked checkbox
         $('#' + type + '-spin').show();
@@ -83,11 +112,11 @@ $(".tourist-check").change(function () {
             callback(results, status, type)
         });
 
-        // hide markers when checkbox un-checked
+    // hide markers when checkbox un-checked
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
-        clearMarkers(typeMarkers);
+        clearTouristMarkers(typeMarkers);
 
     }
 });
@@ -106,26 +135,33 @@ function callback(results, status, type) {
 }
 
 // clear markers for a specific Place Type from map when checkbox un-checked
-function clearMarkers(markers) {
+function clearTouristMarkers(markers) {
     $.each(markers, function (index) {
         markers[index].setMap(null);
     });
 }
 
-// function to clear markers of all Place Types from tourist map
+// clear markers of all Place Types from tourist map
 function clearAllTouristMarkers(markers) {
     for (var type in markers) {
-        clearMarkers(markers[type]);
+        clearTouristMarkers(markers[type]);
     }
 }
 
+// remove route line and all markers from tourist map
 function removeLineFromTouristMap() {
     if (directionsRenderer) {
         directionsRenderer.setDirections({ routes: [] });
     }
+    if (markerArray) {
+        for (var i = 0; i < markerArray.length; i++) {
+            markerArray[i].setMap(null);
+        }
+    }
 }
 
-// create markers
+// create markers, add event listeners to show info window on hover and on-clicks
+// use IIFE to ensure the correct information is associated with each on-click event
 function createMarker(place, icon, markerList, rating) {
     ending_lat = place.geometry.location.lat();
     ending_lng = place.geometry.location.lng();
@@ -142,10 +178,7 @@ function createMarker(place, icon, markerList, rating) {
 
     markerList.push(marker);
 
-    console.log(place.name);
-
-
-    // show name of place when mouse hovers over  marker
+    // show name of place and rating when mouse hovers over marker
     google.maps.event.addListener(marker, 'mouseover', (function (placeName, rating) {
         return function () {
             console.log("inside event: " + placeName);
@@ -174,9 +207,6 @@ var ending_lng;
 var starting_lat;
 var starting_lng;
 
-
-
-
 // show route on map
 function routes_tourist() {
 
@@ -192,10 +222,6 @@ function routes_tourist() {
         var starting_lat = starting.geometry.location.lat();
         var starting_lng = starting.geometry.location.lng();
     }
-
-    // center map at starting point
-    var center = new google.maps.LatLng(starting_lat, starting_lng);
-    // map.panTo(center);
 
     // Create a renderer for directions and bind it to the map.
     directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
@@ -229,6 +255,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             // markers for each step.
             if (status === 'OK') {
 
+                map.fitBounds(response.routes[0].bounds);
+                if ($(window).width() >= 992) {
+                    map.panBy(-600, 0);
+                    map.setZoom(map.getZoom() - 1);
+                }
+
                 //trimming the origin address
                 startingAddress = response.routes[0].legs[0].start_address;
                 address1 = startingAddress.split(',');
@@ -240,224 +272,257 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 address2 = address2[0];
 
                 // fill journey details into summary results
+                $("#origin-tourist-summary").html(address1);
+                $("#destination-tourist-summary").html(name);
+
+                // fill date and time details into summary results
+                if ($(window).width() < 992) {
+                    datetimeValue = $("#datetime-tourist").val();
+                    var arr = datetimeValue.split('T');
+                    date = arr[0];
+                    time = arr[1];
+                } else {
+                    date = $("#datepicker-tourist").val();
+                    time = $('#timepicker-tourist').val();
+
+                    // use date and time here to make properly formatted datetimeValue for mobile
+                    datetimeValue = date + 'T' + time;
+                }
+
+                dateElements = date.split('-');
+                year = dateElements[0];
+                month = dateElements[1];
+                date = dateElements[2];
+                dateToDisplay = date + "-" + month + "-" + year;
+
+                // display information to user
                 $("#origin-tab1").html(address1);
-                $("#destination-tab1").html(name);
+                $("#destination-tab1").html(address2);
+                $(".datetime-results-tourist").html(dateToDisplay + ", " + time);
+
+
 
                 journeysteps = response.routes[0].legs[0].steps;
 
                 var direction_text = $("#direction-tourist");
 
-                
-           // the route distance
-           var distance = '';
-  
-           // the route instruction example (walk , take bus)
-           var instruction = '';
-  
-           // the departing stop
-           var departure_stop = '';
-  
-           // the arival stop	
-           var arrival_stop = '';
-  
-           // the number of stops between arrival and departing stop
-           var num_stops = '';
-  
-           // the walking duration , we will predict the bus one 
-           var duration = '';
-  
-           // the bus number user take
-           var Route_number = '';
-  
-           var arrival_latlng;
-           var departure_latlng;
-           var list=[]
-           var list1=[]
 
-           var datetimeValue = $("#datetime-tourist").val();
-          var arr = datetimeValue.split('T');
-          var date1 = arr[0];
-          var input_time = arr[1];
+                // the route distance
+                var distance = '';
 
-          // convert time to seconds since midnight
-          // console.log("time: "+ input_time);
-          var timeSplit = input_time.split(':');
-          var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+                // the route instruction example (walk , take bus)
+                var instruction = '';
 
+                // the departing stop
+                var departure_stop = '';
 
+                // the arival stop	
+                var arrival_stop = '';
+
+                // the number of stops between arrival and departing stop
+                var num_stops = '';
+
+                // the walking duration , we will predict the bus one 
+                var duration = '';
+
+                // the bus number user take
+                var Route_number = '';
+
+                var arrival_latlng;
+                var departure_latlng;
+                var list = []
+                var list1 = []
+
+                var datetimeValue = $("#datetime-tourist").val();
+                var arr = datetimeValue.split('T');
+                var date1 = arr[0];
+                var input_time = arr[1];
+
+                // convert time to seconds since midnight
+                // console.log("time: "+ input_time);
+                var timeSplit = input_time.split(':');
+                var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
 
-  
-  
-  
-          //  // going through the repsone recieved from google
-          //  var travelMode = journeysteps[i].travel_mode;
-  
-          var journeyTime=0;
-          for (var i = 0; i < journeysteps.length; i++) {
-            
-            // going through the repsone recieved from google
-            var travelMode = journeysteps[i].travel_mode;
-  
-            // going through the object to get the travel mode details 
-  
-            if (travelMode == "WALKING") {
-  
-              duration = journeysteps[i].duration.text;
-  
-              journeyTime += parseInt(duration[0])
-  
-  
-              console.log(journeyTime)
-  
-              //trimming the instruction text
-              instruction = instruction.split(',');
-              instruction = instruction[0];
-  
-  
-            }
-  
-            else if (travelMode == "TRANSIT") {
-              var journey_steps = {}; //dictionary for each bus steps in the journey
-              distance = journeysteps[i].distance.text;
-              //duration=journeysteps[i].duration.text
-              instruction = journeysteps[i].instructions;
-              Route_number = journeysteps[i].transit.line.short_name;
-              arrival_stop = journeysteps[i].transit.arrival_stop.name;
-              departure_stop = journeysteps[i].transit.departure_stop.name;
-              num_stops = journeysteps[i].transit.num_stops;
-              arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
-              departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
-  
-              //trimming the instruction text
-              instruction = instruction.split(',');
-              instruction = instruction[0];
-  
-  
-  
-              journey_steps["route_number"] = Route_number;
-              journey_steps["arrival_stop"] = arrival_stop;
-              journey_steps["departure_stop"] = departure_stop;
-              journey_steps["num_stops"] = num_stops;
-              journey_steps["departure_latlng"] = departure_latlng;
-              journey_steps["arrival_latlng"] = arrival_latlng;
 
 
-              list.push(journey_steps)
-              list1.push(Route_number)
 
-              //turning the data to sent into json
-              var data = JSON.stringify(journey_steps);}
-            }
 
-            var data = JSON.stringify(list);
 
-            console.log("data",list)
-  
-    
-              var prediction=0;
-              // sending a post request to the server
-              $.ajax({
-                type: "POST",
-                url: "planner/",
-                data: {
-                  data,
-                  date: date1,
-                  time: timeSeconds,
-                
-                }
-                
-              })
-             
-                .done(function (response) {
-                  prediction1 = JSON.parse(response)
-                  console.log(prediction1) 
+                //  // going through the repsone recieved from google
+                //  var travelMode = journeysteps[i].travel_mode;
 
-                  function bus_time(k){
-             
-                    return prediction1[k]
+                var journeyTime = 0;
+                for (var i = 0; i < journeysteps.length; i++) {
+
+                    // going through the repsone recieved from google
+                    var travelMode = journeysteps[i].travel_mode;
+
+                    // going through the object to get the travel mode details 
+
+                    if (travelMode == "WALKING") {
+
+                        duration = journeysteps[i].duration.text;
+
+                        journeyTime += parseInt(duration[0])
+
+
+                        console.log(journeyTime)
+
+                        //trimming the instruction text
+                        instruction = instruction.split(',');
+                        instruction = instruction[0];
+
+
                     }
 
-                    var number=0
+                    else if (travelMode == "TRANSIT") {
+                        var journey_steps = {}; //dictionary for each bus steps in the journey
+                        distance = journeysteps[i].distance.text;
+                        //duration=journeysteps[i].duration.text
+                        instruction = journeysteps[i].instructions;
+                        Route_number = journeysteps[i].transit.line.short_name;
+                        arrival_stop = journeysteps[i].transit.arrival_stop.name;
+                        departure_stop = journeysteps[i].transit.departure_stop.name;
+                        num_stops = journeysteps[i].transit.num_stops;
+                        arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
+                        departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
 
-                // adding the predicted time to the total time
-                for (var j = 0; j < prediction1.length; j++){
-              
-                journeyTime+= parseInt(prediction1[j])
-                console.log(journeyTime)
+                        //trimming the instruction text
+                        instruction = instruction.split(',');
+                        instruction = instruction[0];
+
+
+
+                        journey_steps["route_number"] = Route_number;
+                        journey_steps["arrival_stop"] = arrival_stop;
+                        journey_steps["departure_stop"] = departure_stop;
+                        journey_steps["num_stops"] = num_stops;
+                        journey_steps["departure_latlng"] = departure_latlng;
+                        journey_steps["arrival_latlng"] = arrival_latlng;
+
+
+                        list.push(journey_steps)
+                        list1.push(Route_number)
+
+                        //turning the data to sent into json
+                        var data = JSON.stringify(journey_steps);
                     }
-                  
-
-                var b = input_time.split(':');
-                var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime,'minutes').format("HH:mm");
-                console.log(theFutureTime)
-// setting the total time and predicted arrival time in the html
-
-                $("#duration-val-tourist").html(journeyTime +' mins')
-                $("#journey-time").html(input_time+' - '+theFutureTime)
-
-                
-
-            for (var i = 0; i < journeysteps.length; i++) {
-
-            var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
-            var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
-            var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
-                   
-            // going through the repsone recieved from google
-            var travelMode = journeysteps[i].travel_mode;
-  
-                  if (travelMode == "WALKING") {
-                    
-  
-                    distance = journeysteps[i].distance.text;
-                    duration = journeysteps[i].duration.text;
-                    instruction = journeysteps[i].instructions;
-        
-                    //trimming the instruction text
-                    instruction = instruction.split(',');
-                    instruction = instruction[0];
-        
-                    direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
-        
-                  }
-        
-                  else if (travelMode == "TRANSIT") {
-                    var journey_steps = {}; //dictionary for each bus steps in the journey
-                    distance = journeysteps[i].distance.text;
-
-
-                    instruction = journeysteps[i].instructions;
-                    Route_number = journeysteps[i].transit.line.short_name;
-                    arrival_stop = journeysteps[i].transit.arrival_stop.name;
-                    departure_stop = journeysteps[i].transit.departure_stop.name;
-                    num_stops = journeysteps[i].transit.num_stops;
-                    arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
-                    departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
-      
-                    //trimming the instruction text
-                    instruction = instruction.split(',');
-                    instruction = instruction[0];
-
-
-                    
-    
-
-
-                    
-
-                     
-                      
-                    direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' +bus_time(number)+" mins"+'</li>');
-   
-                    number +=1
                 }
-                
-              
-              }
-                
-                console.log(number)
-                }) 
+
+                var data = JSON.stringify(list);
+
+                console.log("data", list)
+
+
+                var prediction = 0;
+                // sending a post request to the server
+                $.ajax({
+                    type: "POST",
+                    url: "planner/",
+                    data: {
+                        data,
+                        date: date1,
+                        time: timeSeconds,
+
+                    }
+
+                })
+
+                    .done(function (response) {
+
+                        // hide spinner when post request is done
+                        $('.prediction-spinner').hide();
+                        $('.results-card').show();
+
+                        prediction1 = JSON.parse(response)
+                        console.log(prediction1)
+
+                        function bus_time(k) {
+
+                            return prediction1[k]
+                        }
+
+                        var number = 0
+
+                        // adding the predicted time to the total time
+                        for (var j = 0; j < prediction1.length; j++) {
+
+                            journeyTime += parseInt(prediction1[j])
+                            console.log(journeyTime)
+                        }
+
+
+                        var b = input_time.split(':');
+                        var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime, 'minutes').format("HH:mm");
+                        console.log(theFutureTime)
+                        // setting the total time and predicted arrival time in the html
+
+                        $("#duration-val-tourist").html(journeyTime + ' mins')
+                        $("#journey-time").html(input_time + ' - ' + theFutureTime)
+
+
+
+                        for (var i = 0; i < journeysteps.length; i++) {
+
+                            var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
+                            var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
+                            var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
+
+                            // going through the repsone recieved from google
+                            var travelMode = journeysteps[i].travel_mode;
+
+                            if (travelMode == "WALKING") {
+
+
+                                distance = journeysteps[i].distance.text;
+                                duration = journeysteps[i].duration.text;
+                                instruction = journeysteps[i].instructions;
+
+                                //trimming the instruction text
+                                instruction = instruction.split(',');
+                                instruction = instruction[0];
+
+                                direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
+
+                            }
+
+                            else if (travelMode == "TRANSIT") {
+                                var journey_steps = {}; //dictionary for each bus steps in the journey
+                                distance = journeysteps[i].distance.text;
+
+
+                                instruction = journeysteps[i].instructions;
+                                Route_number = journeysteps[i].transit.line.short_name;
+                                arrival_stop = journeysteps[i].transit.arrival_stop.name;
+                                departure_stop = journeysteps[i].transit.departure_stop.name;
+                                num_stops = journeysteps[i].transit.num_stops;
+                                arrival_latlng = journeysteps[i].transit.arrival_stop.location.lat() + ',' + journeysteps[i].transit.arrival_stop.location.lng();
+                                departure_latlng = journeysteps[i].transit.departure_stop.location.lat() + ',' + journeysteps[i].transit.departure_stop.location.lng();
+
+                                //trimming the instruction text
+                                instruction = instruction.split(',');
+                                instruction = instruction[0];
+
+
+
+
+
+
+
+
+
+
+                                direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' + bus_time(number) + " mins" + '</li>');
+
+                                number += 1
+                            }
+
+
+                        }
+
+                        console.log(number)
+                    })
 
 
                 //showing the response on the map. 	 
@@ -500,12 +565,14 @@ $(function () {
 
     $('#go-tourist').on('click', function () {
 
+        // show loader while prediction is loading
+        $('.prediction-spinner').show();
+        $('.results-card').hide();
+
         // display error if user does not select a destination on map
         if ($("#destination-tourist").is(":hidden")) {
-
             $('#tourist-destination-error').show();
         } else {
-
             var time, dateValue
             // use different variables for date and time depending on screen size
             if ($(window).width() < 992) {
@@ -516,25 +583,6 @@ $(function () {
             } else {
                 dateValue = $("#datepicker-tourist").val();
                 time = $('#timepicker-tourist').val();
-
-                // show date and time inputs on desktop results page for better user experience
-                // default date and time are those selected by user on input page
-                $("#datepicker-tourist-results-date").flatpickr({
-                    altInput: true,
-                    altFormat: "F j, Y",
-                    dateFormat: 'yy-m-d',
-                    defaultDate: dateValue,
-                    minDate: "today"
-                });
-
-                $('#datepicker-tourist-results-time').flatpickr({
-                    enableTime: true,
-                    defaultDate: time,
-                    dateFormat: 'H:i',
-                    noCalendar: true,
-                    time_24hr: true,
-                    minuteIncrement: 1
-                });
             }
 
             // convert time to seconds since midnight
@@ -558,6 +606,40 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+
+        if ($(window).width() <= 992) {
+            map.panTo(mobileDublin);
+            map.setZoom(13);
+        } else {
+            map.panTo(dublin);
+            map.setZoom(13);
+            map.panBy(300, 0);
+        }
+
+        $('.tourist-check').each(function (index, obj) {
+            if (this.checked) {
+                var type = $(this).attr("data-type");
+
+                // show spinner for clicked checkbox
+                $('#' + type + '-spin').show();
+
+                var request = {
+                    location: dublin,
+                    radius: '50000',
+                    type: type
+                };
+
+                service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, function (results, status) {
+                    callback(results, status, type)
+                });
+
+            }
+
+
+
+        });
+
         $("#checkbox-card").show();
         $(".form-area").show();
         if ($(window).width() < 992) {

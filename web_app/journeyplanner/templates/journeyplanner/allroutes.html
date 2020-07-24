@@ -15,19 +15,19 @@
         <div class="form-group">
             <label for="Sub">Sub Route:</label>
             <select required class="input-box form-control col-6" id="estimator-sub" placeholder="Sub route">
-                <option value="0">Select route:</option>
+                <option value="0">-- Select --</option>
             </select>
         </div>
         <div class="form-group">
             <label for="destination">Origin Stop:</label>
             <select required class="input-box form-control col-6" id="estimator-origin" placeholder="Select stop number">
-                <option value="0">Select stop:</option>
+                <option value="0">-- Select --</option>
             </select>
         </div>
         <div class="form-group">
             <label for="destination">Destination Stop:</label>
             <select required class="input-box form-control col-6" id="estimator-destination" placeholder="Select stop number">
-                <option value="0">Select stop:</option>
+                <option value="0">-- Select --</option>
             </select>
         </div>
 
@@ -58,6 +58,9 @@
 </div>
 
 <div class="container" id="stop-to-stop-results">
+    <div class="row">
+        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Back</button>
+    </div>
     <div class="card results">
         <div class="row results">
         </div>
@@ -84,7 +87,7 @@
                 <p>On:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab2-results-date"></p>
+                <p><input type="text" id="datepicker-tab2-results-date" class="results-page-dt"></p>
             </div>
         </div>
         <div class="row summary-results-dt desktop-dt">
@@ -92,7 +95,7 @@
                 <p>At:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab2-results-time"></p>
+                <p><input type="text" id="datepicker-tab2-results-time" class="results-page-dt"></p>
             </div>
         </div>
 
@@ -111,10 +114,7 @@
 
 
 
-        <div class="row">
-            <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Edit journey
-                details</button>
-        </div>
+      
     </div>
 
     <!-- estimate -->

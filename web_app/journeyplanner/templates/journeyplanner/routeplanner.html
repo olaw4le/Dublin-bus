@@ -5,12 +5,12 @@
 <!-- input boxes for user to enter origin and destination locations -->
 <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
 <h4 class="tab-title">Route Planner</h4>
-<div class="container form-area">
+<div class="container form-area" id="routeplanner-form">
     <form onsubmit="return false">
-        <p class="instruction" id="instruction-planner">Enter origin and destination locations and click 'go' to view directions and journey times.</p>
+        <!-- <p class="instruction" id="instruction-planner">Enter origin and destination locations and click 'go' to view directions and journey times.</p> -->
         <div class="form-group">
             <label for="origin">From:</label>
-            <p class="instruction">(Type an origin location or use your current location)</p>
+            <!-- <p class="instruction">(Type an origin location or use your current location)</p> -->
             <input type="text" required="required" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
             <div class="row">
                 <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-routeplanner">Use my location</button>
@@ -65,6 +65,9 @@
 </div>
 
 <div class="container" id="route-results">
+    <div class="row">
+        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Back</button>
+    </div>
     <div class="card results">
         <div class="row results">
         </div>
@@ -90,49 +93,56 @@
                 <p>On:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab1-results-date"></p>
+                <!-- <p><input type="text" id="datepicker-tab1-results-date" class="results-page-dt"></p> -->
+                <p class="datetime-results-tab1"></p>
             </div>
         </div>
-        <div class="row summary-results-dt desktop-dt">
+        <!-- <div class="row summary-results-dt desktop-dt">
             <div class="col-4">
                 <p>At:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab1-results-time"></p>
+                <p><input type="text" id="datepicker-tab1-results-time" class="results-page-dt"></p>
             </div>
-        </div>
+        </div> -->
 
         <!-- mobile date and time -->
         <div class="mobile-dt">
             <div class="row">
                 <div class="col-4">
-                    <label for="datetime-4" class="results-label">On:</label>
+                    <p>On:</p>
                 </div>
-                <div class="col-8 results-dt-mob">
-                       <input class="datetime" type="datetime-local" name="datetime-4" id="datetime-tab1-results">
+                <div class="col-8">
+                    <!-- <p><input type="text" id="datepicker-tab1-results-date" class="results-page-dt"></p> -->
+                    <p class="datetime-results-tab1"></p>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Edit journey details</button>
+     
+    </div>
+
+    <!-- spinner to show while user waits for results -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-info prediction-spinner" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
 
     <!-- overall journey time and length -->
-    <div class="card results">
+    <div class="card results results-card">
         <div id="overall-time">
             <div class="row">
-                <p id="journey-time">12:50 - 13:10</p>
+                <p id="journey-time"></p>
             </div>
         </div>
         <div class="row">
             <div class="col-8" id="overall-duration">
-                <p>Total duration: <span id="duration-val">20 mins</span></p>
+                <p>Total duration: <span id="duration-val"></span></p>
             </div>
         </div>
     </div>
-    <div class="card results">
+    <div class="card results results-card">
         <div class="row">
             <ul id="direction">
             </ul>
