@@ -452,9 +452,10 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     """
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-    print(test)
+    for column,row in test.items():
+        print (column, row)
     # loads the correct linear regression pickle using the route and direction
-    pickle_file = path + "web_app/data_analytics/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
+    pickle_file = path + "web_app/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
     print(pickle_file)
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
