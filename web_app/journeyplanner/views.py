@@ -238,16 +238,17 @@ def get_stats(request):
     if request.method == "POST":
 
         date_str = request.POST["date"]
-        time_str = request.POST["timeSeconds"]
+        time_str = request.POST["time"]
         route = request.POST["route"]
-        origin = request.POST["origin"]
-        destination = request.POST["destination"]
+        origin = request.POST["start"]
+        destination = request.POST["end"]
         direction = request.POST["direction"]
 
         # extract the month & weekday from the date
         # need to do this for each time tested...
-        time_obj = time(second=int(time_str))
-        date_obj = datetime.fromisoformat("%s %s" %(date_str, time_obj.strftime("%H:%M:%S")))
+        # time_obj = time(second=int(time_str))
+        time_obj = time.fromisoformat("%s:00" % time_str)
+        date_obj = datetime.fromisoformat("%s %s" % (date_str, time_obj.strftime("%H:%M:%S")))
 
         "2020-07-23"    # date format
         "73740"         # time format
@@ -256,9 +257,6 @@ def get_stats(request):
         all_stops = jp.stops_on_route(str(route), main=True, direction=direction)
         sub_stops = jp.stops_on_journey(origin, destination, all_stops)
         sub_segments = jp.segments_from_stops(sub_stops)
-
-        # convert the time into 'timegroups'
-        group = str(to_time_group(int(time_str)))
 
         # for an hour either side of the searched time groups - estimate the journey time based on historical averages
         offsets = [-3600, -1800, 0, 1800, 3600]
@@ -278,7 +276,8 @@ def get_stats(request):
             time_group = to_time_group(str(dt.total_seconds() -
                                            datetime.fromisoformat(dt.strftime("%Y-%m-%d")).total_seconds()))
 
+            # add the estimated journey time to this the response dict
             response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group)
 
-        return response
+        return HttpResponse(json.dumps(response))
 
