@@ -209,6 +209,35 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         $("#origin-tab1").html(address1);
         $("#destination-tab1").html(address2);
 
+        // get date and time details to fill into summary results
+        var date, dateElements, year, month, date, time, dateToDisplay;
+
+
+        if ($(window).width() < 992) {
+          datetimeValue = $("#datetime-tab1").val();
+          var arr = datetimeValue.split('T');
+          date = arr[0];
+          time = arr[1];
+        } else {
+          date = $("#datepicker-tab1").val();
+          time = $('#timepicker-tab1').val();
+    
+          // use date and time here to make properly formatted datetimeValue for mobile
+          datetimeValue = date + 'T' + time;
+        }
+
+        dateElements = date.split('-');
+        year = dateElements[0];
+        month = dateElements[1];
+        date = dateElements[2];
+        dateToDisplay = date + "-" + month + "-" + year;
+
+        // display information to user
+        $("#origin-tab1").html(address1);
+        $("#destination-tab1").html(address2);
+        $(".datetime-results-tab1").html(dateToDisplay + ", " + time);
+
+
         journeysteps = response.routes[0].legs[0].steps;
 
         var direction_text = $("#direction");
