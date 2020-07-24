@@ -484,7 +484,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 instruction = instruction[0];
 
                                 direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
-
+                                
                             }
 
                             else if (travelMode == "TRANSIT") {
@@ -505,15 +505,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 instruction = instruction[0];
 
 
-
-
-
-
-
-
-
-
-                                direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' + bus_time(number) + " mins" + '</li>');
+                                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b> Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
                                 number += 1
                             }
