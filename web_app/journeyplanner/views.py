@@ -102,8 +102,6 @@ def prediction(request):
 
 
         journey_fare = get_fare(route, direction, origin, destination)
-        print(route, direction, origin, destination)
-
         results_dict = {"result" : result, "fare" : journey_fare}
         
     return JsonResponse(results_dict)
@@ -116,6 +114,7 @@ def planner(request):
         
 
         prediction=[] #list to store the calculated predictions
+        total_fare = []
 
         for i in data:
             
@@ -155,8 +154,13 @@ def planner(request):
         #adding the calculated value to the list that will be sent back
             prediction.append(calculation)
 
-    
-           
+        # #get the fare for each leg of the journey
+            journey_fare = get_fare(route, direction, origin, arrival)
+            print("fare")
+            print(journey_fare)
+            total_fare.append(journey_fare)
+            print("total fare")
+            print(total_fare)
         
         print("prediction list",prediction)
 
