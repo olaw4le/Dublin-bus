@@ -10,6 +10,9 @@ path = cwd[:-7] #UNCOMMENT THE [:-7] IF RUNNING FROM WITHIN DJANGO ++++++=====++
 
 
 def get_direction_from_stops(route, stop_1, stop_2):
+    route = route.upper()
+    print("in get direction")
+    print(route, stop_1, stop_2)
     import json
     stops_file = f"{path}/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json"
     with open(stops_file) as f:
@@ -22,5 +25,5 @@ def get_direction_from_stops(route, stop_1, stop_2):
             if int(stop_1) in stops_dict[route][key]['stops']:
                 print("found stop on list!")
                 return(stops_dict[route][key]['direction']) 
-            else:
-                return EnvironmentError
+    else:
+        return EnvironmentError

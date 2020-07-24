@@ -197,6 +197,9 @@ def generate_test_dataframe(route, direction, date, time):
     # construct sql query
     sql = db.construct_sql(table_name="model_features", query_type="select_where", column_names=["features"], data={"id": template_name})
     # execute sql query
+    print("sql")
+    print(sql)
+
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
   
     # make a single row to contain the test data and put 0 in every column.
@@ -356,17 +359,23 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
     # call proportions file in dictionary format - this proportions file returns a calculated average based on previous journies for a given...
     # ...month, week and time_group...
-
+    try:
     # construct sql query
-    table_name = "route_%s_%s_proportions" % (route.upper(), direction)
-    sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
-    sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
-    # execute sql query
-    response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
-    response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
-    
-    list_of_values = list(response_values[4:])
-    list_of_keys = list(response_keys[4:])
+        table_name = "route_%s_%s_proportions" % (route.lower(), direction)
+        print(table_name)
+        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+        
+        sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
+       
+        
+        response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
+        
+        response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
+        
+        list_of_values = list(response_values[3:])
+        print(list_of_values)
+        list_of_keys = list(response_keys[3:])
+        print(list_of_keys)
     
     #below commented code is being kept until we decide if we keep the proportions data locally as a backup
         
@@ -379,14 +388,36 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     #access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
 
     # attempt to calculate the proportion using average segment time
-    try:
+    
         for item in list_of_keys:
-            match = str(item).split("_")[0][3:]
+            print("item", item)
+            print(list_of_keys.index(item))
+            print(len(list_of_keys)-1)
+            if list_of_keys.index(item) != len(list_of_keys)-1:
+                match = str(item).split("_")[0][3:]
+                print("match", match)
 
-            if startstop == match:
-                index1 = list_of_keys.index(item)
-            if endstop == match:
-                index2 = list_of_keys.index(item)
+                print("startstop", startstop)
+                if startstop == match:
+                    print("startstop", startstop)
+                    index1 = list_of_keys.index(item)
+                    print(index1)
+                if endstop == match:
+                    index2 = list_of_keys.index(item)
+                    print(index2)
+            if list_of_keys.index(item) == len(list_of_keys)-1:
+                match = str(item).split("_")[0][3:]
+                print(match)
+                match_end = str(item).split("_")[1][:-2]
+                print(match_end)
+                if startstop == match:
+                    print("startstop", startstop)
+                    index1 = list_of_keys.index(item)
+                    print(index1)
+                if endstop == match or match_end:
+                    index2 = list_of_keys.index(item)
+                    print(index2)
+            
 
         total = 0
 
@@ -395,10 +426,12 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         # NaNs occur at an average incidence
         # of 0.12% in the data.
                 value = list_of_values[i]
-            
+                print(value)
                 total += value
+                print(total)
         proportion = total
         if proportion > 0:
+            print(proportion)
             return proportion
         else:
             print("Unable to access proportions data, using simple percentage of route")
