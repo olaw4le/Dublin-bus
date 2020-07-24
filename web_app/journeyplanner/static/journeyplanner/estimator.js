@@ -440,9 +440,9 @@ function sendDateTimeChangePostRequest() {
         data: {
             date: date,
             time: timeSeconds,
-            route: route[0],
-            origin: origin[0],
-            destination: destination[0],
+            route: route,
+            origin: origin,
+            destination: destination,
             direction: direction
         }
     }).done(function (result) {
