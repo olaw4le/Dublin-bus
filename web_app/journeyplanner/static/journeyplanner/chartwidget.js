@@ -13,30 +13,51 @@
 var borderColours = ["rgb(184, 202, 204)", "rgb(64, 204, 219)"];
 var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
 
+
+// function for reading in the parameters used for generating the graphs
 function getSearchParams() {
-    //var d = $("#date-picker").val();
-    //var t = $("#time-picker").val();
-    // 2020-07-23T17:09
     var params = new Object();
         params["route"] = $("#estimator-route").val();
+        params["direction"] = "1";                           // placeholder values !!!
         params["start"] = $("#estimator-origin").val();
         params["end"] = $("#estimator-destination").val();
-        params["dt"] = $("#datetime-tab2").val();
+
+        // get the date & time
+        if ($(window).width() < 992) {
+            // if used on mobile
+            var datetimeValue = $("#datetime-tab2").val();
+            var arr = datetimeValue.split('T');
+            params["date"] = arr[0];
+            params["time"] = arr[1];
+        } else {
+            // for other devices...
+            params["date"] = $("#datepicker-tab2").val();
+            params["time"] = $('#timepicker-tab2').val();
+        }
 
     return params;
 }
 
 
-function makePredictionRequest() {
+// function for requesting graph data from web server
+function makeStatsRequest() {
 
+    // red the search parameters
     var params = getSearchParams()
 
-    // request to get the bus time table, this should be done in the django app
+    // make the request
     $.ajax({
         type:"POST",
-        url:"leap_login/",
-        data:{user:this_user, passwd:this_passwd}
+        url:"get_stats/",
+        data:{date:params.date, time:params.time, route:params.route, direction:params.direction, end:params.end, start:params.start}
     })
+
+    // when response received
+    .done(function(response){
+        var data = JSON.parse(response);
+
+        drawBarChart(data);
+        })
 }
 
 
