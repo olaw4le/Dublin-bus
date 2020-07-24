@@ -1,6 +1,7 @@
 // initialise center of map for both desktop and mobile screens
 var dublin = { lat: 53.349424, lng: -6.363448826171867 };
 var mobileDublin = { lat: 53.350152, lng: -6.260416 };
+
 $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
@@ -111,7 +112,7 @@ $(".tourist-check").change(function () {
             callback(results, status, type)
         });
 
-        // hide markers when checkbox un-checked
+    // hide markers when checkbox un-checked
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
@@ -222,10 +223,6 @@ function routes_tourist() {
         var starting_lng = starting.geometry.location.lng();
     }
 
-    // center map at starting point
-    // var center = new google.maps.LatLng(starting_lat, starting_lng);
-    // // map.panTo(center);
-
     // Create a renderer for directions and bind it to the map.
     directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
@@ -275,8 +272,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 address2 = address2[0];
 
                 // fill journey details into summary results
-                $("#origin-tab1").html(address1);
-                $("#destination-tab1").html(name);
+                $("#origin-tourist-summary").html(address1);
+                $("#destination-tourist-summary").html(name);
 
                 // fill date and time details into summary results
                 if ($(window).width() < 992) {
@@ -284,28 +281,24 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     var arr = datetimeValue.split('T');
                     date = arr[0];
                     time = arr[1];
-                  } else {
+                } else {
                     date = $("#datepicker-tourist").val();
                     time = $('#timepicker-tourist').val();
-              
+
                     // use date and time here to make properly formatted datetimeValue for mobile
                     datetimeValue = date + 'T' + time;
-                  }
-          
-                  dateElements = date.split('-');
-                  year = dateElements[0];
-                  month = dateElements[1];
-                  date = dateElements[2];
-                  dateToDisplay = date + "-" + month + "-" + year;
-          
-                  // display information to user
-                  $("#origin-tab1").html(address1);
-                  $("#destination-tab1").html(address2);
-                  $(".datetime-results-tourist").html(dateToDisplay + ", " + time);
+                }
 
+                dateElements = date.split('-');
+                year = dateElements[0];
+                month = dateElements[1];
+                date = dateElements[2];
+                dateToDisplay = date + "-" + month + "-" + year;
 
-
-
+                // display information to user
+                $("#origin-tab1").html(address1);
+                $("#destination-tab1").html(address2);
+                $(".datetime-results-tourist").html(dateToDisplay + ", " + time);
 
 
 
@@ -590,25 +583,6 @@ $(function () {
             } else {
                 dateValue = $("#datepicker-tourist").val();
                 time = $('#timepicker-tourist').val();
-
-                // show date and time inputs on desktop results page for better user experience
-                // default date and time are those selected by user on input page
-                $("#datepicker-tourist-results-date").flatpickr({
-                    altInput: true,
-                    altFormat: "F j, Y",
-                    dateFormat: 'yy-m-d',
-                    defaultDate: dateValue,
-                    minDate: "today"
-                });
-
-                $('#datepicker-tourist-results-time').flatpickr({
-                    enableTime: true,
-                    defaultDate: time,
-                    dateFormat: 'H:i',
-                    noCalendar: true,
-                    time_24hr: true,
-                    minuteIncrement: 1
-                });
             }
 
             // convert time to seconds since midnight

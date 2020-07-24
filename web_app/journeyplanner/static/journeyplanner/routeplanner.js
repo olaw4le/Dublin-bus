@@ -525,35 +525,7 @@ $(function () {
       // use date and time here to make properly formatted datetimeValue for mobile
       datetimeValue = date + 'T' + time;
     }
-    // show date and time inputs on desktop results page for better user experience
-    // default date and time are those selected by user on input page
-    $("#datepicker-tab1-results-date").flatpickr({
-      altInput: true,
-      altFormat: "F j, Y",
-      dateFormat: 'yy-m-d',
-      defaultDate: date,
-      minDate: "today",
-      onClose: function (selectedDates, dateStr, instance) {
-        // sendDateTimeChangePostRequest();
-        console.log("on close date tab1");
-      },
-    });
-
-    $('#datepicker-tab1-results-time').flatpickr({
-      enableTime: true,
-      defaultDate: time,
-      dateFormat: 'H:i',
-      noCalendar: true,
-      time_24hr: true,
-      minTime: "05:00",
-      minuteIncrement: 1,
-      onClose: function (selectedDates, dateStr, instance) {
-        // sendDateTimeChangePostRequest();
-        console.log("on close time tab1");
-      },
-    });
-
-
+ 
     $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
