@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import sys
 sys.path.append("..")
 from .route_details import stops_latlng, find_stop,latlng
@@ -8,6 +8,7 @@ import requests
 import json
 import requests
 from pyleapcard import *
+from .fare import get_fare
 
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
@@ -98,8 +99,14 @@ def prediction(request):
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         print("Users estimated journey in minutes (from views.py)", result)
+
+
+        journey_fare = get_fare(route, direction, origin, destination)
+        print(route, direction, origin, destination)
+
+        results_dict = {"result" : result, "fare" : journey_fare}
         
-    return HttpResponse(result)
+    return JsonResponse(results_dict)
 
 
 @csrf_exempt

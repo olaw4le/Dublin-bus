@@ -235,7 +235,7 @@ function calcRoute() {
     })
 
         .done(function (response) {
-            console.log("successfully posted");
+       
             var x = JSON.parse(response)
 
             var start_latlng = { lat: x[start].lat, lng: x[start].lng };
@@ -352,10 +352,19 @@ $(function () {
                 }
             })
 
-                .done(function (result) {
+                .done(function (response) {
+                    console.log("response")
+                    console.log(response);
+                    console.log("successfully posted");
+                    var fare = response.fare;
+                    if (fare) {
+                        $('#stop-to-stop-fare').html(fare);
+                    } else{
+                        $('#stop-to-stop-fare').html("Unavailable");
+                    }
                     console.log("successfully posted");
                     $(".spinner-border").hide();
-                    $("#stop-to-stop-estimate").html(result + " minutes");
+                    $("#stop-to-stop-estimate").html(response.result + " minutes");
                 });
 
 
