@@ -446,17 +446,20 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
-    
+    print(route, startstop, endstop, date, time, direction)
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-    
+    for column,row in test.items():
+        print (column, row)
     # loads the correct linear regression pickle using the route and direction
-    pickle_file = path + "web_app/data_analytics/pickles/" + str(route) + "_direction" + str(direction) + ".pickle"
+    pickle_file = path + "web_app/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
+    print(pickle_file)
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
+    print(linear_regression)
 
     # get the prediction from the pickle using the test dataframe generated above
     prediction = linear_regression.predict(test)

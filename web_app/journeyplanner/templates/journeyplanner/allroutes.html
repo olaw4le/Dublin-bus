@@ -13,15 +13,24 @@
             <input required="required" class="input-box form-control" id="estimator-route" placeholder="Enter route">
         </div>
         <div class="form-group">
+<<<<<<< HEAD
+=======
+            <label for="Sub">Sub Route:</label>
+            <select required class="input-box form-control col-6" id="estimator-sub" placeholder="Sub route">
+                <option value="0">-- Select --</option>
+            </select>
+        </div>
+        <div class="form-group">
+>>>>>>> 9769ffe96638db01a7c21939e285b8a4dc827d9a
             <label for="destination">Origin Stop:</label>
             <select required class="input-box form-control col-6" id="estimator-origin" placeholder="Select stop number">
-                <option value="0">Select stop:</option>
+                <option value="0">-- Select --</option>
             </select>
         </div>
         <div class="form-group">
             <label for="destination">Destination Stop:</label>
             <select required class="input-box form-control col-6" id="estimator-destination" placeholder="Select stop number">
-                <option value="0">Select stop:</option>
+                <option value="0">-- Select --</option>
             </select>
         </div>
 
@@ -52,6 +61,9 @@
 </div>
 
 <div class="container" id="stop-to-stop-results">
+    <div class="row">
+        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Back</button>
+    </div>
     <div class="card results">
         <div class="row results">
         </div>
@@ -78,7 +90,7 @@
                 <p>On:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab2-results-date"></p>
+                <p><input type="text" id="datepicker-tab2-results-date" class="results-page-dt"></p>
             </div>
         </div>
         <div class="row summary-results-dt desktop-dt">
@@ -86,7 +98,7 @@
                 <p>At:</p>
             </div>
             <div class="col-8">
-                <p><input type="text" id="datepicker-tab2-results-time"></p>
+                <p><input type="text" id="datepicker-tab2-results-time" class="results-page-dt"></p>
             </div>
         </div>
 
@@ -105,10 +117,7 @@
 
 
 
-        <div class="row">
-            <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Edit journey
-                details</button>
-        </div>
+      
     </div>
 
     <!-- estimate -->
@@ -127,13 +136,11 @@
 
         <div id="results-chart">
             <!-- route number goes here -->
-            <div class="row chart" id="results-route-number">44X</div>
+            <div class="row chart" id="results-route-number"></div>
             <!-- stop numbers go here -->
-            <div class="row chart" id="results-route-stops">Stop 2930 - Stop 2189</div>
+            <div class="row chart" id="results-route-stops"></div>
             <!-- Text Description Of Results Goes Here -->
-            <div class="row chart" id="results-description"> At this time 95% of journeys take 10 minutes, you could
-                save
-                up to 3 minutes taking the journey at 15:00</div>
+            <div class="row chart" id="results-description"></div>
 
             <!-- define the canvas where the chart will be drawn -->
             <!-- the canvas element must be the only element placed within a container
@@ -148,9 +155,6 @@
                 <input type="checkbox" class="custom-control-input" id="results-canvas-toggle">
                 <label class="custom-control-label" for="customSwitch1"></label>
             </div>
-
-            <!-- Scripts for drawing graphs are contanined in a separate js file for ease of reading - can be merged later -->
-            <script src=" {% static 'journeyplanner/chartwidget.js' %}"></script>
 
         </div>
 
