@@ -94,9 +94,11 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
+        print("From prediction(views.py): ", route, origin, destination, date, time)
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         print("Users estimated journey in minutes (from views.py)", result)
+        
     return HttpResponse(result)
 
 
