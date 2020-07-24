@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b993cac-3106-4c47-8c5b-c002ba1d4056" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/templates/journeyplanner/allroutes.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/templates/journeyplanner/allroutes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

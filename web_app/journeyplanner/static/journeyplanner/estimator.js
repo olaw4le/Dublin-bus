@@ -34,15 +34,17 @@ var routes = ""
 var allMarkers = [];
 
 $(function () {
-    var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
+    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
         stations = data;
 
         for (var key in stations) {
-            route_number += key + " ";
+            var x = key.split("_");
+            route_number += (x[0]+" "+stations[key].headsign)+ ",";
         }
+        console.log(route_number)
 
         //turning the into an array
-        route_number = route_number.trim().split(" ");
+        route_number = route_number.trim().split(",");
     });
 
     $("#estimator-route").autocomplete({
@@ -70,56 +72,8 @@ function removeLineFromMap() {
     }
 }
 
-
-
-
-
-
-// function to populate the sub_routes list			
-function route_list() {
-
-    sel = $("#estimator-route").val();
-    console.log(sel)
-
-    //getting the value of the selected route
-    var list = ''
-
-    //jquery to open the json file 
-    $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
-        stations = data;
-
-        // populating the sub route select list 
-        var To = "<option value=0>Sub Route</option>";
-        for (var key in stations) {
-
-
-            if (sel.toString() == key.toString()) {
-
-                routes = stations[key]
-
-                for (var key2 in routes) {
-                    console.log(key2)
-                    list += key2 + " ";
-                }
-            }
-        }
-
-        //turning the into an array
-        list = list.trim().split(" ");
-        result = list
-
-        //popuplating the sub route select list
-        for (var i = 0; i < list.length; i++) {
-            To += "<option  value=" + list[i] + ">" + list[i] + "</option>";
-        }
-
-        document.getElementById("estimator-sub").innerHTML = To;
-
-    });
-}
-
-//getting the value of the selected sub route
-var sel_sub = "";
+//getting the value of the selected  route
+var sel_route = "";
 var direction = ""
 var stop_list = [];
 
@@ -127,48 +81,87 @@ var stop_list = [];
 function stops() {
     var To = "<option value=0>Stops</option>";
 
-    // getting the value of the selected sub-route
-    sel_sub = $("#estimator-sub").val();
+    // getting the value of the selected route
+    sel_route= $("#estimator-route").val();
 
-    // going through the sub-routes the selected route has 
-    for (key in routes) {
+    console.log("route",sel_route)
 
-        // if the user selected sub-route is found 
-        if (sel_sub == key) {
+    $.getJSON("static/new_ordered_stops.json", null, function (data) {
+       stations = data;
+       var key;
+     //getting the value of the selected route
+      var list = ''
 
-            // the stops the selected sub-routes goes through
-            bus_stops = routes[key].stops;
+       for (key in stations) {
+        var x = key.split("_");
+        var y= (x[0]+" "+stations[key].headsign)
+        
+           
+        if (sel_route ==y) {
+            
 
-            direction = routes[key].direction
+            routes = stations[key].stops
+            direction=key.charAt(key.length-1);
+            console.log("direction",direction)
+            
+           
+
+            for (var key2 in routes) {
+
+                for (var key3 in routes[key2]){
+
+                   var x=Object.values(routes[key2])
+                   var y = JSON.stringify(x);
+                   y= y.replace(/[[\]]/g,'')
+                   y=y.replace(/['"]+/g, '')
 
 
-            // poppulating the origin and destination with the stops
-            for (var i = 0; i < bus_stops.length; i++) {
-                To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
+                   list += (key3+" "+y)+ ",";
 
-                stop_list.push(bus_stops[i])
 
+                 
+                 
+    
+                }            
             }
 
-            // populating the inner html
-            $("#estimator-origin").html(To)
+        //turning the into an array
+        list = list.trim().split(",");
+        result = list
+        
 
+        //popuplating the sub route select list
+        for (var i = 0; i < list.length; i++) {
+            To += "<option>  " + list[i] + "</option>";
+            stop_list.push(list[i])
         }
-    }
+
+
+        $("#estimator-origin").html(To) ;
+    
+        }}
+    })
+
 }
+
+
+
 var index;
+
 // function to populate the remaining destination stop
 function destination() {
     var To = "<option value=0>Stops</option>";
 
-    starting_stop = $("#estimator-origin").val()
-    index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
+    starting_stop = $("#estimator-origin").val();
+    index = stop_list.indexOf(String(starting_stop)) //finding the index of the selected stop
+    console.log(index)
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
     console.log(destination_list)
+    
 
     for (var i = 0; i < destination_list.length; i++) {
-        To += "<option  value=" + destination_list[i] + ">" + destination_list[i] + "</option>";
+        To += "<option>" + destination_list[i] + "</option>";
 
     }
 
@@ -179,13 +172,18 @@ function destination() {
 
 function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
+    var x = origin_stop.split(" ");
+    origin_stop=x[0]
+    
     var route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
 
 
     $.ajax({
         type: "POST",
         url: "list_latlng/",
-        data: { route: route }
+        data: { route: route}
     })
 
         .done(function (response) {
@@ -201,16 +199,6 @@ function origin_marker() {
                 allMarkers.push(marker)
 
             }
-
-            for (var i in allMarkers) {
-
-
-                google.maps.event.addListener(allMarkers[i], 'click', function () {
-                    $('#estimator-origin').val(this.getTitle());
-                    $('#estimator-origin').show();
-                });
-            }
-
 
 
         });
@@ -230,8 +218,15 @@ function initMap2() {
 // calculate route
 function calcRoute() {
     var route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
     var start = $("#estimator-origin").val();
+    var x = start.split(" ");
+    start=x[0]
     var end = $("#estimator-destination").val()
+    var x = end.split(" ");
+    end=x[0]
+
     $.ajax({
         type: "POST",
         url: "list_latlng/",
@@ -264,11 +259,7 @@ function calcRoute() {
 };
 
 // event listner to porpulate the route dropdown list)
-$("#estimator-route").on('keyup click change hover', route_list);
-
-// event listner to populate the origin and destination 
-$("#estimator-sub").change(stops);
-
+$("#estimator-route").on('keyup click change hover', stops);
 $("#estimator-route").change(origin_marker);
 $("#estimator-origin").change(destination);
 
@@ -343,8 +334,19 @@ $(function () {
 
             // sending a post request to the server
             route = $("#estimator-route").val();
+            var x = route.split(" ");
+            route=x[0]
             origin = $("#estimator-origin").val();
+            var x = origin.split(" ");
+            origin=x[0]
             destination = $("#estimator-destination").val();
+            var x = destination.split(" ");
+            destination=x[0]
+
+            console.log("route",route)
+            console.log("origin",origin)
+            console.log("destination",destination)
+            console.log("direction",direction)
             $.ajax({
                 type: "POST",
                 url: "prediction/",
@@ -438,9 +440,9 @@ function sendDateTimeChangePostRequest() {
         data: {
             date: date,
             time: timeSeconds,
-            route: route,
-            origin: origin,
-            destination: destination,
+            route: route[0],
+            origin: origin[0],
+            destination: destination[0],
             direction: direction
         }
     }).done(function (result) {
