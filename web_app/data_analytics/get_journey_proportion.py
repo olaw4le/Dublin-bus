@@ -43,10 +43,8 @@ def stops_on_journey(start, end, seq):
     """return all stops on a given route-sequence between a
         start and end start (including the start & end stop)"""
 
-    start_index = seq.index(start)
-    end_index = seq.index(end)
-    print(start_index)
-    print(end_index)
+    start_index = seq.index(int(start))
+    end_index = seq.index(int(end))
 
     return seq[start_index: end_index + 1]
 
@@ -90,6 +88,9 @@ def get_mean_time(route, direction, segments, month, day, time):
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
     # return the sum of all proportions
+    print(sql)
+    print("this is the response")
+    print(response)
     return sum(response[0])
 
 
@@ -106,6 +107,7 @@ def get_standard_dev(route, direction, segments, month, day, time):
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
     # return the sum of all proportions
+    print("this is the response")
     print(response)
     return sum(response[0])
 
