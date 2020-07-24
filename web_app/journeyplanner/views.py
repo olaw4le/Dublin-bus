@@ -254,7 +254,7 @@ def get_stats(request):
         "73740"         # time format
 
         # determine the segments on this route
-        all_stops = jp.stops_on_route(str(route), main=True, direction=direction)
+        all_stops = jp.stops_on_route(str(route), main=True, direction=int(direction))
         sub_stops = jp.stops_on_journey(origin, destination, all_stops)
         sub_segments = jp.segments_from_stops(sub_stops)
 
@@ -270,14 +270,13 @@ def get_stats(request):
 
             time_str = dt.strftime("%H:%M")
             month = dt.strftime("%B")
-            weekday = dt.strftime("A")
+            weekday = dt.strftime("%A")
 
             # get the daytime as number of seconds since midnight & convert into 'time group'
-            time_group = to_time_group(str(dt.total_seconds() -
-                                           datetime.fromisoformat(dt.strftime("%Y-%m-%d")).total_seconds()))
+            time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
 
-            # add the estimated journey time to this the response dict
-            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group)
+            # add the estimated journey time to this the response dict (convert into minutes)
+            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
 
         return HttpResponse(json.dumps(response))
 
