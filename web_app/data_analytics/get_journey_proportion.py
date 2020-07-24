@@ -1,4 +1,4 @@
-import db_interface as db
+from data_analytics import db_interface as db
 import json
 import os
 from dotenv import load_dotenv
