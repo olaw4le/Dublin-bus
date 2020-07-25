@@ -9,7 +9,7 @@ $(document).ready(function () {
   $(document).off("click.routes");
 
   // Remove routes when navigating to another tab
-  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #tourist-nav,#tourist-tab,#leap-tab",
+  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
   removeLineFromMap);
 
   // initialise tooltip for info regarding geolocation
