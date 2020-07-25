@@ -470,11 +470,21 @@ var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
 
 // function for reading in the parameters used for generating the graphs
 function getSearchParams() {
+    route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
+    origin = $("#estimator-origin").val();
+    var x = origin.split(" ");
+    origin=x[0]
+    destination = $("#estimator-destination").val();
+    var x = destination.split(" ");
+    destination=x[0]
+
     var params = new Object();
-        params["route"] = $("#estimator-route").val();
+        params["route"] = route;
         params["direction"] = "1";                           // placeholder values !!!
-        params["start"] = $("#estimator-origin").val();
-        params["end"] = $("#estimator-destination").val();
+        params["start"] = origin;
+        params["end"] = destination;
 
         // get the date & time
         if ($(window).width() < 992) {
@@ -574,7 +584,7 @@ function DataSet(data) {
 function drawBarChart(data) {
 
     // get the chart container from the info.html page
-    var ctx = document.getElementById("results-canvas");
+    var ctx = $("#results-canvas");
     var bars = [];
     var labels = Object.keys(data);
 
@@ -618,3 +628,4 @@ function drawBarChart(data) {
     return someChart;
 
 }
+$('#stop-to-stop-go').on('click',makeStatsRequest)
