@@ -8,9 +8,9 @@ $(document).ready(function () {
   // .off ensures onclicks are not added multiple times
   $(document).off("click.routes");
 
-  // Remove routes on map when navigating to another tab
-  $(document).on("click.routes", "#routeplanner-nav, .edit-journey, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
-    removeLineFromMap);
+  // Remove routes when navigating to another tab
+  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #tourist-nav,#tourist-tab,#leap-tab",
+  removeLineFromMap);
 
   // initialise tooltip for info regarding geolocation
   $(function () {

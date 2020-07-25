@@ -1,8 +1,34 @@
+function removeLineFromMap() {
+    if (directionsRenderer) {
+        directionsRenderer.setDirections({ routes: [] });
+    }
+    // First, remove any existing markers from the map.
+    console.log(allMarkers);
+    if (allMarkers) {
+        for (var i = 0; i < allMarkers.length; i++) {
+            allMarkers[i].setMap(null);
+        }
+    }
+}
+function clearMarkers() {
+    if (directionsDisplay != null) {
+        directionsDisplay.setMap(null);
+        directionsDisplay = null;
+    }
+  }
+
+
+ 
+
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
-    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
-        removeLineFromMap);
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #tourist-nav,#tourist-tab,#leap-tab",
+    removeLineFromMap);
+ 
+ 
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #tourist-nav,#tourist-tab,#leap-tab",
+  clearMarkers);
 
 
     // flatpickr date https://flatpickr.js.org/options/
@@ -58,19 +84,6 @@ $(function () {
 
 });
 
-
-function removeLineFromMap() {
-    if (directionsRenderer) {
-        directionsRenderer.setDirections({ routes: [] });
-    }
-    // First, remove any existing markers from the map.
-    console.log(allMarkers);
-    if (allMarkers) {
-        for (var i = 0; i < allMarkers.length; i++) {
-            allMarkers[i].setMap(null);
-        }
-    }
-}
 
 //getting the value of the selected  route
 var sel_route = "";
@@ -204,15 +217,15 @@ function origin_marker() {
         });
 }
 
-function initMap2() {
-    directionsService = new google.maps.DirectionsService;
+// function initMap2() {
+//     directionsService = new google.maps.DirectionsService;
 
-    directionsDisplay = new google.maps.DirectionsRenderer({
-        map: map
-    });
-    calcRoute();
-    removeLineFromMap();
-}
+//     directionsDisplay = new google.maps.DirectionsRenderer({
+//         map: map
+//     });
+//     calcRoute();
+
+// }
 
 // calculate route
 function calcRoute() {
@@ -238,22 +251,27 @@ function calcRoute() {
 
             var start_latlng = { lat: x[start].lat, lng: x[start].lng };
             var end_latlng = { lat: x[end].lat, lng: x[end].lng };
+
             var request = {
                 origin: start_latlng,
                 destination: end_latlng,
                 travelMode: google.maps.TravelMode.DRIVING
             };
+                directionsService = new google.maps.DirectionsService;
 
+                 directionsDisplay = new google.maps.DirectionsRenderer({
+                    map: map
+    })
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
-                    console.log(result)
                 }
+                removeLineFromMap()
             });
 
 
         })
-    removeLineFromMap()
+   
 
 };
 
@@ -268,6 +286,8 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
+       
+
         // show error if user doesn't complete all fields
         if ($('#estimator-route').val() == "" || $("#estimator-sub option:selected").text() ==
             'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' 
@@ -276,7 +296,7 @@ $(function () {
         } else {
             $(".spinner-border").show();
 
-            initMap2();
+            calcRoute();
             removeLineFromMap();
 
             if ($(window).width() < 992) {
@@ -476,13 +496,13 @@ function getSearchParams() {
     origin = $("#estimator-origin").val();
     var x = origin.split(" ");
     origin=x[0]
-    destination = $("#estimator-destination").val();
+    var destination = $("#estimator-destination").val();
     var x = destination.split(" ");
     destination=x[0]
 
     var params = new Object();
         params["route"] = route;
-        params["direction"] = "1";                           // placeholder values !!!
+        params["direction"] = direction;                           // placeholder values !!!
         params["start"] = origin;
         params["end"] = destination;
 
