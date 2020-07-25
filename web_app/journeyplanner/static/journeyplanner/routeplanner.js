@@ -367,11 +367,36 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         })
 
           .done(function (response) {
+          
+            // parse the response
+            response = JSON.parse(response)
 
+            // hide the spinner and show the results
             $('.prediction-spinner').hide();
             $('.results-card').show();
+            $('#journey-planner-fare').show();
 
-            prediction1 = JSON.parse(response)
+            let fare = response.fare;
+            console.log("Fare")
+            console.log(fare)
+            $('#fare-result-tab1').html("");
+            fare.forEach(element => {
+              if (element) {
+                $('#fare-result-tab1').append('<li>' + element["route"] + " " + element["fare"] + "</li>");
+                console.log(element["fare"] + element["route"])
+              } else {
+                $('#fare-result-tab1').append('<li> NAH </li>');
+              }
+            });
+
+
+
+            // get prediction from dict returned
+            response = response.prediction;
+            
+            // prediction1 = JSON.parse(response)
+            prediction1 = response
+            console.log("prediction")
             console.log(prediction1)
 
             function bus_time(k) {

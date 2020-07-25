@@ -355,7 +355,7 @@ $(function () {
                 .done(function (response) {
 
                     // display fare to user and display 'unavailable' when no fare given
-                    var fare = response.fare;
+                    var fare = response.fare.fare;
                     if (fare) {
                         $('#stop-to-stop-fare').html(fare);
                     } else{

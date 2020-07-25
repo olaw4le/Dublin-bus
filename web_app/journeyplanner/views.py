@@ -112,8 +112,10 @@ def planner(request):
     if request.method == "POST":
         data= json.loads(request.POST["data"])
         
-
+        prediction_and_fare = {}
         prediction=[] #list to store the calculated predictions
+        
+        # list of fare dictionaries containing fare, route and url for each bug leg of journey
         total_fare = []
 
         for i in data:
@@ -156,18 +158,21 @@ def planner(request):
 
         # #get the fare for each leg of the journey
             journey_fare = get_fare(route, direction, origin, arrival)
-            print("fare")
-            print(journey_fare)
             total_fare.append(journey_fare)
-            print("total fare")
-            print(total_fare)
+            
+
         
         print("prediction list",prediction)
 
+        
+
 
        
-        
-    return HttpResponse(json.dumps(prediction))
+    prediction_and_fare["fare"] = total_fare
+    prediction_and_fare["prediction"] = prediction
+    print("prediction and fare dict")
+    print(prediction_and_fare)
+    return JsonResponse(json.dumps(prediction_and_fare), safe=False)
     
 
 @csrf_exempt
