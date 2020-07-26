@@ -563,9 +563,18 @@ function DataSet(data) {
     // formats the passed data as an object w/ instance variables to be passed
     // to the Chart() object constructor
     this.label = "Journey Duration";
-    // this.fill = fill;
-    this.backgroundColor = [fillColours[0], fillColours[0], fillColours[1], fillColours[0], fillColours[0]];
-    this.borderColor = [borderColours[0], borderColours[0], borderColours[1], borderColours[0], borderColours[0]];
+    // set background & border colours of middle (IE.current time value) as different to others
+    this.backgroundColor = [];
+    this.borderColor= [];
+    for (var i = 0; i < data.length; i++) {
+        if (i == data.length/2) {
+            this.backgroundColor.push(fillColours[1]);
+            this.borderColor.push(borderColours[1]);
+        } else {
+            this.backgroundColor.push(fillColours[0]);
+            this.borderColor.push(borderColours[0]);
+        }
+    }
     this.borderWidth = 1;
     this.barPercentage = 0.95;     // sets the relative width of bars in a bar chart
     this.categoryPercentage = 1;   // sets the relative width of bars in a bar chart
