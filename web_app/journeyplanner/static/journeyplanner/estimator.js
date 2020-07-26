@@ -535,9 +535,9 @@ function makeStatsRequest() {
 
     // make the request
     $.ajax({
-        type: "POST",
-        url: "get_stats/",
-        data: { date: params.date, time: params.time, route: params.route, direction: params.direction, end: params.end, start: params.start }
+        type:"POST",
+        url:"get_stats/",
+        data:{date:params.date, time:params.time, route:params.route, direction:params.direction, end:params.end, start:params.start}
     })
 
         // when response received
