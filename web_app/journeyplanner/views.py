@@ -316,17 +316,21 @@ def get_stats(request):
         sub_stops = jp.stops_on_journey(origin, destination, all_stops)
         sub_segments = jp.segments_from_stops(sub_stops)
 
+        # template for the response json
+        response = {
+            hourly: {},
+            daily: {}
+        }
+
         # for an hour either side of the searched time groups - estimate the journey time based on historical averages
         offsets = [-3600, -1800, 0, 1800, 3600]
-
-        response = {}
 
         for n in offsets:
             # create a time delta object representing a difference of n seconds
             offset = timedelta(0, n)
             dt = date_obj + offset
 
-            time_str = dt.strftime("%H:%M")
+            time_str = round_time(dt.strftime("%H:%M"))
             month = dt.strftime("%B")
             weekday = dt.strftime("%A")
 
@@ -334,7 +338,27 @@ def get_stats(request):
             time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
 
             # add the estimated journey time to this the response dict (convert into minutes)
-            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
+            response["hourly"][time_str] = jp.get_95_percentile(route, direction, sub_segments,
+                                                                month, weekday, time_group) // 60
+
+        # for 3 days either side of the searched day - estimate journey duration at this time of day
+        offsets = [-3, -2, -1, 0, 1, 2, 3]
+
+        for n in offsets:
+            # create a time delta object representing a difference of n seconds
+            offset = timedelta(n)
+            dt = date_obj + offset
+
+            weekday_short = dt.strftime("%a")
+            month = dt.strftime("%B")
+            weekday = dt.strftime("%A")
+
+            # get the daytime as number of seconds since midnight & convert into 'time group'
+            time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
+
+            # add the estimated journey time to this the response dict (convert into minutes)
+            response["daily"][weekday_short] = jp.get_95_percentile(route, direction, sub_segments,
+                                                                    month, weekday, time_group) // 60
 
         return HttpResponse(json.dumps(response))
 
