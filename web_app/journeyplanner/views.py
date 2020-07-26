@@ -100,15 +100,15 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
-        print("From prediction(views.py): ", route, origin, destination, date, time)
+        # print("From prediction(views.py): ", route, origin, destination, date, time)
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-        print("Users estimated journey in minutes (from views.py)", result)
+        # print("Users estimated journey in minutes (from views.py)", result)
 
 
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
-        
+
     return JsonResponse(results_dict)
 
 
@@ -116,10 +116,10 @@ def prediction(request):
 def planner(request):
     if request.method == "POST":
         data= json.loads(request.POST["data"])
-        
+
         prediction_and_fare = {}
         prediction=[] #list to store the calculated predictions
-        
+
         # list of fare dictionaries containing fare, route and url for each bug leg of journey
         total_fare = []
 
@@ -130,7 +130,7 @@ def planner(request):
             time = request.POST["time"]
             duration=i["duration"]
 
-            print("duration",duration)
+            # print("duration",duration)
 
             #direction= 2
             route_number=route.upper()
@@ -154,27 +154,24 @@ def planner(request):
                 route_list=stops_latlng(route_number)
             except:
                 route_list= 0
-                
-            
+
             try:
                 #getting the orging and destination stop number using the vincenty formular
                 origin=find_stop(route_list,(departure_lat,departure_lng))
                 arrival=find_stop(route_list,(arrival_lat,arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
-                print(direction)
+                # print(direction)
 
             except:
                 direction = None
                 origin=0
                 arrival=0
 
-  
-
             #use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
-                print('prediction from module',prediction)
+                # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
 
@@ -183,20 +180,17 @@ def planner(request):
             #     pass
                 
 
-
-        # #get the fare for each leg of the journey
+            # #get the fare for each leg of the journey
             journey_fare = get_fare(route, direction, origin, arrival)
             total_fare.append(journey_fare)
-            
 
-        
-        print("prediction list",prediction)
+            # print("prediction list",prediction)
 
-    
+
     prediction_and_fare["fare"] = total_fare
     prediction_and_fare["prediction"] = prediction
-    print("prediction and fare dict")
-    print(prediction_and_fare)
+    # print("prediction and fare dict")
+    # print(prediction_and_fare)
     return JsonResponse(json.dumps(prediction_and_fare), safe=False)
     
 
@@ -211,7 +205,7 @@ def find_latlng(request):
         route_list = stops_latlng(route_number)
         result = latlng(route_list, str(stop_id))
 
-        print(result)
+        # print(result)
         
     return HttpResponse(json.dumps(result))
 
