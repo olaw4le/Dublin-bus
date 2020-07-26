@@ -98,10 +98,10 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction=request.POST["direction"]
-        print("From prediction(views.py): ", route, origin, destination, date, time)
+        # print("From prediction(views.py): ", route, origin, destination, date, time)
 
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-        print("Users estimated journey in minutes (from views.py)", result)
+        # print("Users estimated journey in minutes (from views.py)", result)
 
     return HttpResponse(result)
 
@@ -121,7 +121,7 @@ def planner(request):
             time = request.POST["time"]
             duration=i["duration"]
 
-            print("duration",duration)
+            # print("duration",duration)
 
             #direction= 2
             route_number=route.upper()
@@ -145,29 +145,29 @@ def planner(request):
                 route_list=stops_latlng(route_number)
             except:
                 route_list= 0
-            
+
 
             try:
                 #getting the orging and destination stop number using the vincenty formular
                 origin=find_stop(route_list,(departure_lat,departure_lng))
                 arrival=find_stop(route_list,(arrival_lat,arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
-                print(direction)
+                # print(direction)
 
             except:
                 origin=0
                 arrival=0
 
-        
+
             #use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
-                print('prediction from module',prediction)
+                # print('prediction from module',prediction)
             except:
-               prediction.append(duration)
-               print('prediction from google',prediction)
-                
+                prediction.append(duration)
+                # print('prediction from google',prediction)
+
 
 
            
