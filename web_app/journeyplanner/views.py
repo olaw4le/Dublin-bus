@@ -235,6 +235,27 @@ def leap_login(request):
 @csrf_exempt
 def get_stats(request):
 
+    def round_time(time_str):
+        """ takes a passed 24 hr time in the string format 'HH:MM' and returns a
+        string representation of that time rounded to the nearest 30 minutes"""
+
+        split_str = time_str.split(":")
+        hours, minutes = split_str[0], int(split_str[1])
+
+        # if minutes is closer to half-hour than full hour then round to half-hour
+        if 15 < minutes < 45:
+            minutes = "30"
+        # else round to nearest hour
+        else:
+            if minutes >= 45:
+                if hours != 23:
+                    hours = str(hours + 1).zfill(2)
+                else:
+                    hours = "00"
+            minutes = "00"
+
+        return "%s:%s" % (hours, minutes)
+
     if request.method == "POST":
 
         date_str = request.POST["date"]
