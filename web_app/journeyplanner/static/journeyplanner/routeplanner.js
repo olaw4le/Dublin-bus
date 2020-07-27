@@ -443,7 +443,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 instruction = instruction.split(',');
                 instruction = instruction[0];
 
-                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b>Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
+                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b> Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
                 number += 1
               }
@@ -553,6 +553,7 @@ $(function () {
 
   // add on click to edit-journey button to hide results and show journey planner
   $('.edit-journey').on('click', function () {
+    removeLineFromMap();
     $(".form-area").show();
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "0px");

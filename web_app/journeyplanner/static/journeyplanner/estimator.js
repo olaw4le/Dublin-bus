@@ -387,7 +387,7 @@ $(function () {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({ top: "400px" }, 'fast');
+                $("#map-interface").animate({ top: "350px" }, 'fast');
             }
             $("#stop-to-stop-results").show();
 
