@@ -119,7 +119,9 @@ def planner(request):
             route= i["route_number"]
             date = request.POST["date"]
             time = request.POST["time"]
-            print("route",route)
+            duration=i["duration"]
+
+            print("duration",duration)
 
             #direction= 2
             route_number=route.upper()
@@ -139,18 +141,36 @@ def planner(request):
 
             route_number=route.upper()
             # getting the suggested route file
-            route_list=stops_latlng(route_number)
+            try:
+                route_list=stops_latlng(route_number)
+            except:
+                pass
+            finally:
+                route_list= 0
 
-            #getting the orging and destination stop number using the vincenty formular
-            origin=find_stop(route_list,(departure_lat,departure_lng))
-            arrival=find_stop(route_list,(arrival_lat,arrival_lng))
-            direction = get_direction.get_direction_from_stops(route, origin, arrival)
-            print(direction)
+            try:
+                #getting the orging and destination stop number using the vincenty formular
+                origin=find_stop(route_list,(departure_lat,departure_lng))
+                arrival=find_stop(route_list,(arrival_lat,arrival_lng))
+                direction = get_direction.get_direction_from_stops(route, origin, arrival)
+                print(direction)
+
+            except:
+                pass
+
+            finally:
+                origin=0
+                arrival=0
             #use the maachine learning module to calculate prediction
-            calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+            try:
+                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+                prediction.append(calculation)
+            except:
+                pass
 
             #adding the calculated value to the list that will be sent back
-            prediction.append(calculation)
+            finally:
+                prediction.append(duration)
 
 
            
