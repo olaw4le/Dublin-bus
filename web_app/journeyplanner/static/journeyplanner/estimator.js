@@ -508,7 +508,7 @@ function makeStatsRequest() {
         var data = JSON.parse(response);
 
         var infoObject = new Object();
-            infoObject["data"] = data;
+            infoObject["data"] = data.daily;
             infoObject["route"] = params.route;
             infoObject["start"] = params.start;
             infoObject["end"] = params.end;
@@ -576,6 +576,7 @@ function DataSet(data) {
 
     this.data = arr;
 }
+
 
 function drawBarChart(data) {
 
