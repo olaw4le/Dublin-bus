@@ -58,6 +58,8 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 var allMarkers = [];
+// an object to hold key-pair values <headsign>:<route_id> - similar to a python dict
+var routeNames = {};
 
 $(function () {
     var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
@@ -65,12 +67,19 @@ $(function () {
 
         for (var key in stations) {
             var x = key.split("_");
-            route_number += (x[0]+" "+stations[key].headsign)+ ",";
+
+            // extract the headsign
+            var headSign = stations[key].headsign;
+
+            route_number += (x[0]+" "+ headSign)+ ",";
+
+            // populate routeNames
+            routeNames[headSign] = key;
         }
-        console.log(route_number)
 
         //turning the into an array
         route_number = route_number.trim().split(",");
+
     });
 
     $("#estimator-route").autocomplete({
