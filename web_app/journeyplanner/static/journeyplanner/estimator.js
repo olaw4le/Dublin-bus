@@ -59,6 +59,8 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 var allMarkers = [];
+// an object to hold key-pair values <headsign>:<route_id> - similar to a python dict
+var routeNames = {};
 
 
 $(function () {
@@ -68,6 +70,14 @@ $(function () {
         for (var key in stations) {
             var x = key.split("_");
             route_number += (x[0] + " " + stations[key].headsign) + ",";
+
+            // extract the headsign
+            var headSign = stations[key].headsign;
+
+            route_number += (x[0]+" "+ headSign)+ ",";
+
+            // populate routeNames
+            routeNames[headSign] = key;
         }
 
         //turning the into an array
