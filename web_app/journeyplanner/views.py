@@ -252,11 +252,11 @@ def leap_login(request):
 @csrf_exempt
 def get_stats(request):
 
-    def round_time(time_str):
+    def round_time(time_as_str):
         """ takes a passed 24 hr time in the string format 'HH:MM' and returns a
         string representation of that time rounded to the nearest 30 minutes"""
 
-        split_str = time_str.split(":")
+        split_str = time_as_str.split(":")
         hours, minutes = split_str[0], int(split_str[1])
 
         # if minutes is closer to half-hour than full hour then round to half-hour
@@ -298,8 +298,8 @@ def get_stats(request):
 
         # template for the response json
         response = {
-            hourly: {},
-            daily: {}
+            "hourly": {},
+            "daily": {}
         }
 
         # for an hour either side of the searched time groups - estimate the journey time based on historical averages
