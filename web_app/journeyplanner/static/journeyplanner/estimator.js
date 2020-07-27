@@ -77,7 +77,7 @@ $(function () {
             route_number += (x[0]+" "+ headSign)+ ",";
 
             // populate routeNames
-            routeNames[headSign] = key;
+            routeNames[x[0]+" "+ headSign] = key;
         }
 
         //turning the into an array
@@ -482,19 +482,19 @@ var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
 
 // function for reading in the parameters used for generating the graphs
 function getSearchParams() {
-    route = $("#estimator-route").val();
-    var x = route.split(" ");
-    route = x[0]
-    origin = $("#estimator-origin").val();
-    var x = origin.split(" ");
-    origin = x[0]
-    var destination = $("#estimator-destination").val();
-    var x = destination.split(" ");
-    destination = x[0]
+    var routeName = $("#estimator-route").val();
+    // find the route number using the routeName
+    console.log(routeName);
+    var route = routeNames[routeName].split("_");
+
+    var originName = $("#estimator-origin").val();
+    var origin = originName.split(" ")[0];
+    var destinationName = $("#estimator-destination").val();
+    var destination = destinationName.split(" ")[0];
 
     var params = new Object();
-    params["route"] = route;
-    params["direction"] = direction;                           // placeholder values !!!
+    params["route"] = route[0];
+    params["direction"] = route[1];
     params["start"] = origin;
     params["end"] = destination;
 
