@@ -50,7 +50,10 @@ function bustime() {
         data: { stopnumber: stopnumber }
     })
 
+    
+
         .done(function (response) {
+            $('.spinner-border').hide();
             var x = JSON.parse(response)
             businfo = x.results
             console.log(businfo);
@@ -82,6 +85,7 @@ function bustime() {
 
 // $("#real-time-button").click(bustime)
 $("#real-time-button").on('click', function () {
+    $('.spinner-border').show();
     // $("#real-time-table").html(tableRows);
     bustime();
 
