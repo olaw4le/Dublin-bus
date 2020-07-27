@@ -18,6 +18,7 @@ function clearMarkers() {
     }
 }
 
+
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
@@ -50,6 +51,7 @@ $(document).ready(function () {
 
 });
 
+
 //initialise variables
 var routes = "";
 var route_number = "";
@@ -57,6 +59,7 @@ var stop_name = "";
 var stations = "";
 var routes = ""
 var allMarkers = [];
+
 
 $(function () {
     var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
@@ -159,7 +162,7 @@ function destination() {
     console.log(index)
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
-    console.log(destination_list)
+    // console.log(destination_list)
 
 
     for (var i = 0; i < destination_list.length; i++) {
@@ -169,6 +172,7 @@ function destination() {
     // populating the inner html with the destination
     $("#estimator-destination").html(To)
 }
+
 
 function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
@@ -358,7 +362,7 @@ $(function () {
                                     $('#cash-and-leap-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
                                 } else {
                                     $('#fare-result-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
-                                } 
+                                }
                             }
                         }
                     } else {
@@ -519,7 +523,7 @@ function makeStatsRequest() {
             var data = JSON.parse(response);
 
             var infoObject = new Object();
-            infoObject["data"] = data;
+            infoObject["data"] = data.daily;
             infoObject["route"] = params.route;
             infoObject["start"] = params.start;
             infoObject["end"] = params.end;
@@ -587,6 +591,7 @@ function DataSet(data) {
 
     this.data = arr;
 }
+
 
 function drawBarChart(data) {
 
