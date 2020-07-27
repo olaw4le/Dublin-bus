@@ -141,19 +141,26 @@ function stops() {
 
                         list += (key3 + " " + y) + ",";
                     }
-                }
 
-                //turning the into an array
-                list = list.trim().split(",");
-                result = list
 
-                //popuplating the sub route select list
-                for (var i = 0; i < list.length; i++) {
-                    To += "<option>  " + list[i] + "</option>";
-                    stop_list.push(list[i])
-                }
-                $("#estimator-origin").html(To);
+
+
+
             }
+
+        //turning the into an array
+        list = list.trim().split(",");
+        result = list
+
+        //popuplating the sub route select list
+        for (var i = 0; i < list.length; i++) {
+            To += "<option>  " + list[i] + "</option>";
+            stop_list.push(list[i])
+        }
+
+
+        $("#estimator-origin").html(To) ;
+}
         }
     })
 
@@ -171,7 +178,7 @@ function destination() {
     //console.log(index)
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
-    // console.log(destination_list)
+    //console.log(destination_list)
 
     for (var i = 0; i < destination_list.length; i++) {
         To += "<option>" + destination_list[i] + "</option>";
@@ -270,7 +277,7 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
-        // clear old fare and prediction values each time user clicks go
+// clear old fare and prediction values each time user clicks go
         $('#stop-to-stop-fare').html("");
         $("#stop-to-stop-estimate").html("");
 
