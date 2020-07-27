@@ -348,5 +348,6 @@ def get_stats(request):
                 print(e)
                 response["daily"] = str(e)
 
+        print(response)
         return HttpResponse(json.dumps(response))
 
