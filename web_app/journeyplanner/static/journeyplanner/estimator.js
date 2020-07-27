@@ -92,7 +92,7 @@ var stop_list = [];
 
 // function to populate the origin and destination
 function stops() {
-    var To = "<option value=0>Stops</option>";
+    var To = "<option value=0>-- Select -- </option>";
 
     // getting the value of the selected route
     sel_route= $("#estimator-route").val();
@@ -163,7 +163,7 @@ var index;
 
 // function to populate the remaining destination stop
 function destination() {
-    var To = "<option value=0>Stops</option>";
+    var To = "<option value=0>-- Select --</option>";
 
     starting_stop = $("#estimator-origin").val();
     index = stop_list.indexOf(String(starting_stop)) //finding the index of the selected stop
@@ -289,9 +289,8 @@ $(function () {
        
 
         // show error if user doesn't complete all fields
-        if ($('#estimator-route').val() == "" || $("#estimator-sub option:selected").text() ==
-            'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' 
-            || $("#estimator-destination option:selected").text() == 'Select stop:') {
+        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' 
+            || $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
             $(".spinner-border").show();
