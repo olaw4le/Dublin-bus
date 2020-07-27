@@ -360,5 +360,6 @@ def get_stats(request):
             response["daily"][weekday_short] = jp.get_95_percentile(route, direction, sub_segments,
                                                                     month, weekday, time_group) // 60
 
+        print(response)
         return HttpResponse(json.dumps(response))
 
