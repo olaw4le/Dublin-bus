@@ -553,6 +553,7 @@ $(function () {
 
   // add on click to edit-journey button to hide results and show journey planner
   $('.edit-journey').on('click', function () {
+    removeLineFromMap();
     $(".form-area").show();
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "0px");
