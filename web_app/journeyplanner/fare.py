@@ -34,18 +34,27 @@ def get_fare(route, direction, start_stop, end_stop):
     else:
         return fare_details
     url = f"https://www.dublinbus.ie/Fare-Calculator/Fare-Calculator-Results/?routeNumber={route}&direction={direction}&board={start_stop_idx}&alight={end_stop_idx}"
-    try: 
+    if True: 
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
-        fare = soup.find(id="ctl00_FullRegion_MainRegion_ContentColumns_holder_FareListingControl_lblFare")
+        adult_fare = soup.find(id="ctl00_FullRegion_MainRegion_ContentColumns_holder_FareListingControl_lblFare")
+        head = soup.find_all("th", string=lambda string: string and "All Fares" in string)
+        table = head[0].parent.parent
+        for row in table.find_all("tr"):
+
+            cells = row.find_all("td")
+            if len(cells) == 2 and "€" in str(cells[1].contents[0]):
+                print(str(cells[0].contents[0]).strip(), str(cells[1].contents[0]).strip())
+
+
         print(url)
-        print(fare.contents[0])
-        fare_details["fare"] = fare.contents[0]
+        print(adult_fare.contents[0])
+        fare_details["fare"] = adult_fare.contents[0]
         fare_details["url"] = url
         print("fare details")
         print(fare_details)
         return fare_details
-    except:
+    else:
         fare_details["fare"] = None
         fare_details["url"] = None
         return fare_details
