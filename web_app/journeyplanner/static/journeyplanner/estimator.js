@@ -18,15 +18,15 @@ function clearMarkers() {
   }
 
 
- 
+
 
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
     removeLineFromMap);
- 
- 
+
+
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
   clearMarkers);
 
@@ -117,16 +117,16 @@ function stops() {
        for (key in stations) {
         var x = key.split("_");
         var y= (x[0]+" "+stations[key].headsign)
-        
-           
+
+
         if (sel_route ==y) {
-            
+
 
             routes = stations[key].stops
             direction=key.charAt(key.length-1);
             //console.log("direction",direction)
-            
-           
+
+
 
             for (var key2 in routes) {
 
@@ -141,16 +141,16 @@ function stops() {
                    list += (key3+" "+y)+ ",";
 
 
-                 
-                 
-    
-                }            
+
+
+
+                }
             }
 
         //turning the into an array
         list = list.trim().split(",");
         result = list
-        
+
 
         //popuplating the sub route select list
         for (var i = 0; i < list.length; i++) {
@@ -160,7 +160,7 @@ function stops() {
 
 
         $("#estimator-origin").html(To) ;
-    
+
         }}
     })
 
@@ -180,7 +180,7 @@ function destination() {
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
     //console.log(destination_list)
-    
+
 
     for (var i = 0; i < destination_list.length; i++) {
         To += "<option>" + destination_list[i] + "</option>";
@@ -196,7 +196,7 @@ function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
     var x = origin_stop.split(" ");
     origin_stop=x[0]
-    
+
     var route = $("#estimator-route").val();
     var x = route.split(" ");
     route=x[0]
@@ -280,7 +280,7 @@ function calcRoute() {
 
 
         })
-   
+
 
 };
 
@@ -295,10 +295,10 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
-       
+
 
         // show error if user doesn't complete all fields
-        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' 
+        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --'
             || $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
