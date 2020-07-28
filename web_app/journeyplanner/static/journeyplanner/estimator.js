@@ -106,7 +106,7 @@ function stops() {
     // getting the value of the selected route
     sel_route= $("#estimator-route").val();
 
-    console.log("route",sel_route)
+    //console.log("route",sel_route)
 
     $.getJSON("static/new_ordered_stops.json", null, function (data) {
        stations = data;
@@ -124,7 +124,7 @@ function stops() {
 
             routes = stations[key].stops
             direction=key.charAt(key.length-1);
-            console.log("direction",direction)
+            //console.log("direction",direction)
             
            
 
@@ -176,10 +176,10 @@ function destination() {
 
     starting_stop = $("#estimator-origin").val();
     index = stop_list.indexOf(String(starting_stop)) //finding the index of the selected stop
-    console.log(index)
+    //console.log(index)
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
-    console.log(destination_list)
+    //console.log(destination_list)
     
 
     for (var i = 0; i < destination_list.length; i++) {
@@ -209,7 +209,7 @@ function origin_marker() {
     })
 
         .done(function (response) {
-            console.log("successfully posted");
+            //console.log("successfully posted");
             var x = JSON.parse(response)
 
             for (key in x) {
@@ -255,7 +255,7 @@ function calcRoute() {
     })
 
         .done(function (response) {
-            console.log("successfully posted");
+            //console.log("successfully posted");
             var x = JSON.parse(response)
 
             var start_latlng = { lat: x[start].lat, lng: x[start].lng };
@@ -306,20 +306,21 @@ $(function () {
 
             calcRoute();
             removeLineFromMap();
+            makeStatsRequest();
 
             if ($(window).width() < 992) {
                 datetimeValue = $("#datetime-tab2").val();
-                console.log("datetime value mobile: " + datetimeValue);
+                //console.log("datetime value mobile: " + datetimeValue);
                 var arr = datetimeValue.split('T');
                 date = arr[0];
-                console.log("mobile date: " + date);
+                //console.log("mobile date: " + date);
                 time = arr[1];
-                console.log("mobile time: " + time);
+                //console.log("mobile time: " + time);
             } else {
                 var date = $("#datepicker-tab2").val();
-                console.log("desktop date: " + date);
+                //console.log("desktop date: " + date);
                 time = $('#timepicker-tab2').val();
-                console.log("desktop time: " + time);
+                //console.log("desktop time: " + time);
 
                 // use date and time here to make properly formatted datetimeValue for mobile
                 datetimeValue = date + 'T' + time;
@@ -368,10 +369,10 @@ $(function () {
             var x = destination.split(" ");
             destination=x[0]
 
-            console.log("route",route)
-            console.log("origin",origin)
-            console.log("destination",destination)
-            console.log("direction",direction)
+            //console.log("route",route)
+            //console.log("origin",origin)
+            //console.log("destination",destination)
+            //console.log("direction",direction)
             $.ajax({
                 type: "POST",
                 url: "prediction/",
@@ -386,7 +387,7 @@ $(function () {
             })
 
                 .done(function (result) {
-                    console.log("successfully posted");
+                    //console.log("successfully posted");
                     $(".spinner-border").hide();
                     $("#stop-to-stop-estimate").html(result + " minutes");
                 });
@@ -413,7 +414,7 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('#edit-journey-tab2').on('click', function () {
-        console.log("inside edit-journey-results");
+        //console.log("inside edit-journey-results");
         $(".form-area").show();
         // $("#map-interface").css("top", "0px");
         $("#stop-to-stop-results").hide();
@@ -437,13 +438,13 @@ function sendDateTimeChangePostRequest() {
         datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
         date = arr[0];
-        console.log("mobile date: " + datetimeValue);
+        //console.log("mobile date: " + datetimeValue);
         time = arr[1];
     } else {
         var date = $("#datepicker-tab2-results-date").val();
-        console.log("desktop date: " + date);
+        //console.log("desktop date: " + date);
         time = $('#datepicker-tab2-results-time').val();
-        console.log("desktop time: " + time);
+        //console.log("desktop time: " + time);
 
         // use date and time here to make properly formatted datetimeValue for mobile
         datetimeValue = date + 'T' + time;
@@ -457,7 +458,7 @@ function sendDateTimeChangePostRequest() {
 
     var timeSplit = time.split(':');
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-    console.log(timeSeconds);
+    //console.log(timeSeconds);
 
     $.ajax({
         type: "POST",
@@ -471,10 +472,12 @@ function sendDateTimeChangePostRequest() {
             direction: direction
         }
     }).done(function (result) {
-        console.log("successfully posted");
+        //console.log("successfully posted");
         $(".spinner-border").hide();
         $("#stop-to-stop-estimate").show();
         $("#stop-to-stop-estimate").html(result + " minutes");
+        // request new data for graphs when date & time changes
+        makeStatsRequest();
 
     });
 }
@@ -548,14 +551,16 @@ function makeStatsRequest() {
     .done(function(response){
         var data = JSON.parse(response);
 
+        console.log(data);
+
         var infoObject = new Object();
-            infoObject["data"] = data.daily;
+            infoObject["data"] = data.hourly;
             infoObject["route"] = params.route;
             infoObject["start"] = params.start;
             infoObject["end"] = params.end;
 
         updateTextInfo(infoObject);
-        drawBarChart(data);
+        drawBarChart(data.hourly);
         })
 }
 
@@ -627,42 +632,55 @@ function drawBarChart(data) {
     var labels = Object.keys(data);
 
     bars =  new DataSet(data);
-    var someChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    datasets: [bars],
-                    labels: Object.keys(data),
-                    },
-                options: {
-                    responsive: true,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                labelString: "Travel Time (Minutes)",
-                                display: true
-                            },
-                            stacked: false,
-                            display: true,
-                            gridLineWidth: 0,
-                            minorTickInterval: null,
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
-                        xAxes: [{
-                            stacked: false,
-                            display: true,
-                            gridLineWidth: 0,
-                            gridLines: {
-                                display: false
-                            }
-                        }]
+    console.log(bars);
+
+    // check if a chart already exists in the container div;
+    // if so just update the existing chart with new data
+    // else create a new chart element in the container div
+
+    if (ctx.firstChild) {
+        someChart.config.data = {
+            datasets: [bars],
+            labels: Object.keys(data)
+        }
+    } else {
+        var someChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        datasets: [bars],
+                        labels: Object.keys(data),
+                        },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    labelString: "Travel Time (Minutes)",
+                                    display: true
+                                },
+                                stacked: false,
+                                display: true,
+                                gridLineWidth: 0,
+                                minorTickInterval: null,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                stacked: false,
+                                display: true,
+                                gridLineWidth: 0,
+                                gridLines: {
+                                    display: false
+                                }
+                            }]
+                        }
                     }
-                }
-    });
+        });
+    }
     return someChart;
 
 }
