@@ -286,6 +286,9 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
+        $('#stop-to-stop-fare').html("");
+        $("#stop-to-stop-estimate").html("");
+
        
 
         // show error if user doesn't complete all fields
