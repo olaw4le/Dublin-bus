@@ -1,9 +1,9 @@
-/*
 $(document).ready(function () {
 
     $('#leap-login-button').on('click', function () {
 
         console.log("inside leap click");
+        leap_login();
         $('#leap-login-container').hide();
         $('#leap-overview-container').show();
         $('#leap-detailed-container').show();
@@ -14,12 +14,16 @@ $(document).ready(function () {
         $('#leap-overview-container').hide();
         $('#leap-detailed-container').hide();
 
+        // clear the entered username & password
+        $("#leap-user").val("");
+        $("#leap-password").val("");
+
     }); 
 
 
 
 });
-*/
+
 
 // login to leap api & return card overview
 function leap_login(){
