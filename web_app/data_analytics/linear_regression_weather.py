@@ -218,7 +218,6 @@ def generate_test_dataframe(route, direction, date, time):
     sql = db.construct_sql(table_name="model_features", query_type="select_where",
                            column_names=["features"], data={"id": template_name})
     # execute sql query
-
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
   
     # make a single row to contain the test data and put 0 in every column.
@@ -381,10 +380,9 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         # construct sql query
         table_name = "route_%s_%s_proportions" % (route.lower(), direction)
         sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
-        
+
         sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
-       
-        
+
         response_values = db.execute_sql(sql_values, database, user, password, host, port, retrieving_data=True)[0]
         
         response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
@@ -397,7 +395,7 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
                 splitsegment = str(item).split("_")
                 first_stop_segment = str(item).split("_")[0][3:]
                 last_stop_segment = str(item).split("_")[1][:-2]
-    
+
                 if startstop == first_stop_segment:
                     index1 = list_of_keys.index(item)
                 if endstop == last_stop_segment:
@@ -407,8 +405,8 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
         for i in range(index1, index2 + 1):
             if list_of_values[i] is not None: # this is to handle the odd NaN value in our proporitons datasets. 
-        # NaNs occur at an average incidence
-        # of 0.12% in the data.
+                # NaNs occur at an average incidence
+                # of 0.12% in the data.
                 value = list_of_values[i]
                 total += value
         proportion = total
@@ -427,10 +425,11 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
-    print("From generate prediction: ", route, startstop, endstop, date, time, direction)
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
+    #  print("From generate prediction: ", route, startstop, endstop, date, time, direction)
+
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
     # loads the correct linear regression pickle using the route and direction
@@ -440,7 +439,7 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
 
     # get the prediction from the pickle using the test dataframe generated above
     prediction = linear_regression.predict(test)
-    print("Prediction from model: ", int(prediction[0]))
+    # print("Prediction from model: ", int(prediction[0]))
 
     # get month, day_of_the_week and time_group from the date and time, these are needed for calculating the proportion of the total
     # journey that the users trip represents. 
@@ -454,7 +453,7 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
 
     # get proportion and multiply by the prediction
     result = proportion * prediction[0]
-    print("Users proportion: ", proportion)
-    print("Users estimated journeytime: ", int(result))
+    # print("Users proportion: ", proportion)
+    # print("Users estimated journeytime: ", int(result))
     minutes = int(result) // 60
     return minutes
