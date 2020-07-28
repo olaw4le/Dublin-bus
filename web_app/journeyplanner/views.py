@@ -277,7 +277,7 @@ def get_stats(request):
         string representation of that time rounded to the nearest 30 minutes"""
 
         split_str = time_as_str.split(":")
-        hours, minutes = split_str[0], int(split_str[1])
+        hours, minutes = int(split_str[0]), int(split_str[1])
 
         # if minutes is closer to half-hour than full hour then round to half-hour
         if 15 < minutes < 45:
@@ -318,8 +318,8 @@ def get_stats(request):
 
         # template for the response json
         response = {
-            "hourly": {},
-            "daily": {}
+            "hourly": dict(),
+            "daily": dict()
         }
 
         # for an hour either side of the searched time groups - estimate the journey time based on historical averages
@@ -338,8 +338,12 @@ def get_stats(request):
             time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
 
             # add the estimated journey time to this the response dict (convert into minutes)
-            response["hourly"][time_str] = jp.get_95_percentile(route, direction, sub_segments,
-                                                                month, weekday, time_group) // 60
+            try:
+                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
+                response["hourly"][time_str] = duration
+            except Exception as e:
+                print(e)
+                response["hourly"] = str(e)
 
         # for 3 days either side of the searched day - estimate journey duration at this time of day
         offsets = [-3, -2, -1, 0, 1, 2, 3]
@@ -357,9 +361,12 @@ def get_stats(request):
             time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
 
             # add the estimated journey time to this the response dict (convert into minutes)
-            response["daily"][weekday_short] = jp.get_95_percentile(route, direction, sub_segments,
-                                                                    month, weekday, time_group) // 60
+            try:
+                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
+                response["daily"][weekday_short] = duration
+            except Exception as e:
+                print(e)
+                response["daily"] = str(e)
 
-        print(response)
         return HttpResponse(json.dumps(response))
 
