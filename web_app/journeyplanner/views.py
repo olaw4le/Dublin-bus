@@ -144,9 +144,8 @@ def planner(request):
             try:
                 route_list=stops_latlng(route_number)
             except:
-                pass
-            finally:
                 route_list= 0
+            
 
             try:
                 #getting the orging and destination stop number using the vincenty formular
@@ -156,21 +155,19 @@ def planner(request):
                 print(direction)
 
             except:
-                pass
-
-            finally:
                 origin=0
                 arrival=0
+
+        
             #use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
+                print('prediction from module',prediction)
             except:
-                pass
-
-            #adding the calculated value to the list that will be sent back
-            finally:
-                prediction.append(duration)
+               prediction.append(duration)
+               print('prediction from google',prediction)
+                
 
 
            
