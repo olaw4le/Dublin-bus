@@ -1,14 +1,23 @@
-import db_interface as db
+from data_analytics import db_interface as db
 import json
 import os
 from dotenv import load_dotenv
 
+"""
 load_dotenv()
 database = os.getenv("database")
 user = os.getenv("user")
 password = os.getenv("password")
 host = os.getenv("host")
 port = os.getenv("port")
+"""
+
+# hard code env variables to appease laura - major security vulnerability !
+database = "postgres"
+user = "postgres"
+password = "YZuB%F34qYSbpp7J"
+host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
+port = 5432
 
 # 1. find segments in journey
 # 2. query database for segment proportions
@@ -43,10 +52,8 @@ def stops_on_journey(start, end, seq):
     """return all stops on a given route-sequence between a
         start and end start (including the start & end stop)"""
 
-    start_index = seq.index(start)
-    end_index = seq.index(end)
-    print(start_index)
-    print(end_index)
+    start_index = seq.index(int(start))
+    end_index = seq.index(int(end))
 
     return seq[start_index: end_index + 1]
 
@@ -78,8 +85,59 @@ def get_proportions(route, direction, segments, month, day, time):
     return sum(response[0])
 
 
+def get_mean_time(route, direction, segments, month, day, time):
+
+    # create sql query
+    table_name = "route_%s_%s_means" % (str(route), str(direction))
+    sql = db.construct_sql(table_name=table_name, query_type="select_where",
+                           data={"month": month, "weekday": day, "timegroup": str(time)},
+                           column_names=segments)
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+
+    # return the sum of all proportions
+    print(sql)
+    print("this is the response")
+    print(response)
+    return sum(response[0])
+
+
+def get_standard_dev(route, direction, segments, month, day, time):
+
+    # get the standard deviations
+    # create sql query
+    table_name = "route_%s_%s_standard_dev" % (str(route), str(direction))
+    sql = db.construct_sql(table_name=table_name, query_type="select_where",
+                           data={"month": month, "weekday": day, "timegroup": str(time)},
+                           column_names=segments)
+
+    # execute sql query
+    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+
+    # return the sum of all proportions
+    print("this is the response")
+    print(response)
+    return sum(response[0])
+
+
+def get_95_percentile(route, direction, segments, month, day, time):
+    """calculate the 95th percentile from the means & standard deviations for each segment"""
+
+    means = get_mean_time(route, direction, segments, month, day, time)
+    std_dev = get_standard_dev(route, direction, segments, month, day, time)
+
+    return means + (1.645 * std_dev)
+
+
+"""
 # ---- EXAMPLE USAGE ----
-all_stops = stops_on_route("270", main=True, direction=2)
-sub_stops = stops_on_journey(3333, 7026, all_stops)
+all_stops = stops_on_route("145", main=True, direction=1)
+print(all_stops)
+sub_stops = stops_on_journey(4320, 334, all_stops)
+print(sub_stops)
 sub_segments = segments_from_stops(sub_stops)
-print(get_proportions(270, 2, sub_segments, "January", "Monday", 15))
+print(sub_segments)
+print(get_proportions("145", 1, sub_segments, "January", "Monday", 15))
+print(get_95_percentile("145", 1, sub_segments, "January", "Monday", 15))
+"""

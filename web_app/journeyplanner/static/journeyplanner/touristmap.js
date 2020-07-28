@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav", function () {
+    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab", function () {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
@@ -379,7 +379,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     else if (travelMode == "TRANSIT") {
                         var journey_steps = {}; //dictionary for each bus steps in the journey
                         distance = journeysteps[i].distance.text;
-                        //duration=journeysteps[i].duration.text
+                        duration=journeysteps[i].duration.text
+                        x=duration.split(" ")
+                        duration=x[0]
                         instruction = journeysteps[i].instructions;
                         Route_number = journeysteps[i].transit.line.short_name;
                         arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -400,6 +402,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         journey_steps["num_stops"] = num_stops;
                         journey_steps["departure_latlng"] = departure_latlng;
                         journey_steps["arrival_latlng"] = arrival_latlng;
+                        journey_steps["duration"] = duration;
 
 
                         list.push(journey_steps)
@@ -484,7 +487,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 instruction = instruction[0];
 
                                 direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
-
+                                
                             }
 
                             else if (travelMode == "TRANSIT") {
@@ -505,15 +508,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 instruction = instruction[0];
 
 
-
-
-
-
-
-
-
-
-                                direction_text.append('<li>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops:&nbsp;</b>' + num_stops + '&nbsp;stops&nbsp;&nbsp;<b>Duration:&nbsp</b>' + bus_time(number) + " mins" + '</li>');
+                                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b> Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
                                 number += 1
                             }

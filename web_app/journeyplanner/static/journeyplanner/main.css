@@ -351,8 +351,12 @@ label.dt-label {
   flex-direction: row;
 }
 
+#destination-tourist-summary {
+  height: fit-content;
+}
+
 .summary-results {
-  height: 30px;
+  min-height: 30px;
 }
 
 .geo-spinner {
@@ -461,6 +465,7 @@ label.dt-label {
       height: 400px;
   
     }
+
 
     /* hide tab title on mobiles */
     .tab-title {

@@ -8,9 +8,9 @@ $(document).ready(function () {
   // .off ensures onclicks are not added multiple times
   $(document).off("click.routes");
 
-  // Remove routes on map when navigating to another tab
-  $(document).on("click.routes", "#routeplanner-nav, .edit-journey, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
-    removeLineFromMap);
+  // Remove routes when navigating to another tab
+  $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
+  removeLineFromMap);
 
   // initialise tooltip for info regarding geolocation
   $(function () {
@@ -316,7 +316,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           else if (travelMode == "TRANSIT") {
             var journey_steps = {}; //dictionary for each bus steps in the journey
             distance = journeysteps[i].distance.text;
-            //duration=journeysteps[i].duration.text
+            duration=journeysteps[i].duration.text
+            x=duration.split(" ")
+            duration=x[0]
             instruction = journeysteps[i].instructions;
             Route_number = journeysteps[i].transit.line.short_name;
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -337,6 +339,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             journey_steps["num_stops"] = num_stops;
             journey_steps["departure_latlng"] = departure_latlng;
             journey_steps["arrival_latlng"] = arrival_latlng;
+            journey_steps["duration"] = duration;
 
 
             list.push(journey_steps)
@@ -476,7 +479,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 instruction = instruction.split(',');
                 instruction = instruction[0];
 
-                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b>Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
+                direction_text.append('<li><p>' + bus + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '<b> Route:&nbsp;</b>' + Route_number + '&nbsp;&nbsp;<b>Stops: </b>' + num_stops + '<b> Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
                 number += 1
               }
@@ -586,6 +589,7 @@ $(function () {
 
   // add on click to edit-journey button to hide results and show journey planner
   $('.edit-journey').on('click', function () {
+    removeLineFromMap();
     $(".form-area").show();
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "0px");

@@ -179,7 +179,6 @@ def generate_test_dataframe(route, direction, date, time):
     Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
     are added to a temporary dataframe.
     The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
-    print("Route", route)
     # get weather from database
     weather = get_weather_from_db()
     # extract required parameters
@@ -197,8 +196,6 @@ def generate_test_dataframe(route, direction, date, time):
     # construct sql query
     sql = db.construct_sql(table_name="model_features", query_type="select_where", column_names=["features"], data={"id": template_name})
     # execute sql query
-    print("sql")
-    print(sql)
 
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
   
@@ -331,7 +328,6 @@ def quickanddirty(route, direction, startstop, endstop):
     
     # get the stops for the subroutes on that route as a dictionary
     ordered_stop_data_route = ordered_stop_data[str(route)]
-    #print("ordered_stop_data_route", ordered_stop_data_route)
     for key, value in ordered_stop_data_route.items():
         # for the main (or majority subroute) in the given direction on that route...
         if ordered_stop_data_route[key]['direction'] == int(direction) and ordered_stop_data_route[key]['main'] == True:
@@ -362,7 +358,6 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     try:
     # construct sql query
         table_name = "route_%s_%s_proportions" % (route.lower(), direction)
-        print(table_name)
         sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
         
         sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
@@ -373,51 +368,18 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         response_keys = db.execute_sql(sql_keys, database, user, password, host, port, retrieving_data=True)
         
         list_of_values = list(response_values[3:])
-        print(list_of_values)
         list_of_keys = list(response_keys[3:])
-        print(list_of_keys)
-    
-    #below commented code is being kept until we decide if we keep the proportions data locally as a backup
-        
-    #proportions_name = str(route) + "_" + str(direction) + "_proportions.json"
-    #file_path = '/Users/laura/Desktop/proportions_test/' + proportions_name
-    #f = open(file_path)
-    #proportions_json = json.load(f)
-
-    # find relevant entry
-    #access_code = days[weekday] + "_" + months[month] + "_" + times[time_group]
-
-    # attempt to calculate the proportion using average segment time
     
         for item in list_of_keys:
-            print("item", item)
-            print(list_of_keys.index(item))
-            print(len(list_of_keys)-1)
             if list_of_keys.index(item) != len(list_of_keys)-1:
-                match = str(item).split("_")[0][3:]
-                print("match", match)
-
-                print("startstop", startstop)
-                if startstop == match:
-                    print("startstop", startstop)
+                splitsegment = str(item).split("_")
+                first_stop_segment = str(item).split("_")[0][3:]
+                last_stop_segment = str(item).split("_")[1][:-2]
+    
+                if startstop == first_stop_segment:
                     index1 = list_of_keys.index(item)
-                    print(index1)
-                if endstop == match:
+                if endstop == last_stop_segment:
                     index2 = list_of_keys.index(item)
-                    print(index2)
-            if list_of_keys.index(item) == len(list_of_keys)-1:
-                match = str(item).split("_")[0][3:]
-                print(match)
-                match_end = str(item).split("_")[1][:-2]
-                print(match_end)
-                if startstop == match:
-                    print("startstop", startstop)
-                    index1 = list_of_keys.index(item)
-                    print(index1)
-                if endstop == match or match_end:
-                    index2 = list_of_keys.index(item)
-                    print(index2)
-            
 
         total = 0
 
@@ -426,12 +388,9 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         # NaNs occur at an average incidence
         # of 0.12% in the data.
                 value = list_of_values[i]
-                print(value)
                 total += value
-                print(total)
         proportion = total
         if proportion > 0:
-            print(proportion)
             return proportion
         else:
             print("Unable to access proportions data, using simple percentage of route")
@@ -446,20 +405,16 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
-    print(route, startstop, endstop, date, time, direction)
+    print("From generate prediction: ", route, startstop, endstop, date, time, direction)
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
     # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
     test = generate_test_dataframe(route, direction, date, time)
-    for column,row in test.items():
-        print (column, row)
     # loads the correct linear regression pickle using the route and direction
     pickle_file = path + "web_app/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
-    print(pickle_file)
     pickle_in = open(pickle_file, 'rb')
     linear_regression = pickle.load(pickle_in)
-    print(linear_regression)
 
     # get the prediction from the pickle using the test dataframe generated above
     prediction = linear_regression.predict(test)

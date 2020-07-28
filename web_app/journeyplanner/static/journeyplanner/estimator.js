@@ -1,8 +1,34 @@
+function removeLineFromMap() {
+    if (directionsRenderer) {
+        directionsRenderer.setDirections({ routes: [] });
+    }
+    // First, remove any existing markers from the map.
+    console.log(allMarkers);
+    if (allMarkers) {
+        for (var i = 0; i < allMarkers.length; i++) {
+            allMarkers[i].setMap(null);
+        }
+    }
+}
+function clearMarkers() {
+    if (directionsDisplay != null) {
+        directionsDisplay.setMap(null);
+        directionsDisplay = null;
+    }
+  }
+
+
+ 
+
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
-    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab",
-        removeLineFromMap);
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
+    removeLineFromMap);
+ 
+ 
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
+  clearMarkers);
 
 
     // flatpickr date https://flatpickr.js.org/options/
@@ -34,15 +60,17 @@ var routes = ""
 var allMarkers = [];
 
 $(function () {
-    var jqxhr = $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
+    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
         stations = data;
 
         for (var key in stations) {
-            route_number += key + " ";
+            var x = key.split("_");
+            route_number += (x[0]+" "+stations[key].headsign)+ ",";
         }
+        console.log(route_number)
 
         //turning the into an array
-        route_number = route_number.trim().split(" ");
+        route_number = route_number.trim().split(",");
     });
 
     $("#estimator-route").autocomplete({
@@ -57,114 +85,96 @@ $(function () {
 });
 
 
-function removeLineFromMap() {
-    if (directionsRenderer) {
-        directionsRenderer.setDirections({ routes: [] });
-    }
-    // First, remove any existing markers from the map.
-    console.log(allMarkers);
-    if (allMarkers) {
-        for (var i = 0; i < allMarkers.length; i++) {
-            allMarkers[i].setMap(null);
-        }
-    }
-}
-
-
-// function to populate the sub_routes list			
-function route_list() {
-
-    sel = $("#estimator-route").val();
-    console.log(sel)
-
-    //getting the value of the selected route
-    var list = ''
-
-    //jquery to open the json file 
-    $.getJSON("static/journeyplanner/ordered_stops_main.json", null, function (data) {
-        stations = data;
-
-        // populating the sub route select list 
-        var To = "<option value=0>-- Select --</option>";
-        for (var key in stations) {
-
-
-            if (sel.toString() == key.toString()) {
-
-                routes = stations[key]
-
-                for (var key2 in routes) {
-                    console.log(key2)
-                    list += key2 + " ";
-                }
-            }
-        }
-
-        //turning the into an array
-        list = list.trim().split(" ");
-        result = list
-
-        //popuplating the sub route select list
-        for (var i = 0; i < list.length; i++) {
-            To += "<option  value=" + list[i] + ">" + list[i] + "</option>";
-        }
-
-        document.getElementById("estimator-sub").innerHTML = To;
-
-    });
-}
-
-//getting the value of the selected sub route
-var sel_sub = "";
+//getting the value of the selected  route
+var sel_route = "";
 var direction = ""
 var stop_list = [];
 
 // function to populate the origin and destination
 function stops() {
-    var To = "<option value=0>-- Select --</option>";
+    var To = "<option value=0>-- Select -- </option>";
 
-    // getting the value of the selected sub-route
-    sel_sub = $("#estimator-sub").val();
+    // getting the value of the selected route
+    sel_route= $("#estimator-route").val();
 
-    // going through the sub-routes the selected route has 
-    for (key in routes) {
+    console.log("route",sel_route)
 
-        // if the user selected sub-route is found 
-        if (sel_sub == key) {
+    $.getJSON("static/new_ordered_stops.json", null, function (data) {
+       stations = data;
+       var key;
+     //getting the value of the selected route
+      var list = ''
 
-            // the stops the selected sub-routes goes through
-            bus_stops = routes[key].stops;
+       for (key in stations) {
+        var x = key.split("_");
+        var y= (x[0]+" "+stations[key].headsign)
+        
+           
+        if (sel_route ==y) {
+            
 
-            direction = routes[key].direction
+            routes = stations[key].stops
+            direction=key.charAt(key.length-1);
+            console.log("direction",direction)
+            
+           
+
+            for (var key2 in routes) {
+
+                for (var key3 in routes[key2]){
+
+                   var x=Object.values(routes[key2])
+                   var y = JSON.stringify(x);
+                   y= y.replace(/[[\]]/g,'')
+                   y=y.replace(/['"]+/g, '')
 
 
-            // poppulating the origin and destination with the stops
-            for (var i = 0; i < bus_stops.length; i++) {
-                To += "<option  value=" + bus_stops[i] + ">" + bus_stops[i] + "</option>";
+                   list += (key3+" "+y)+ ",";
 
-                stop_list.push(bus_stops[i])
 
+                 
+                 
+    
+                }            
             }
 
-            // populating the inner html
-            $("#estimator-origin").html(To)
+        //turning the into an array
+        list = list.trim().split(",");
+        result = list
+        
 
+        //popuplating the sub route select list
+        for (var i = 0; i < list.length; i++) {
+            To += "<option>  " + list[i] + "</option>";
+            stop_list.push(list[i])
         }
-    }
+
+
+        $("#estimator-origin").html(To) ;
+    
+        }}
+    })
+
 }
+
+
+
 var index;
+
 // function to populate the remaining destination stop
 function destination() {
     var To = "<option value=0>-- Select --</option>";
 
-    starting_stop = $("#estimator-origin").val()
-    index = stop_list.indexOf(+starting_stop) //finding the index of the selected stop
+    starting_stop = $("#estimator-origin").val();
+    index = stop_list.indexOf(String(starting_stop)) //finding the index of the selected stop
+    console.log(index)
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
     console.log(destination_list)
+    
 
     for (var i = 0; i < destination_list.length; i++) {
-        To += "<option  value=" + destination_list[i] + ">" + destination_list[i] + "</option>";
+        To += "<option>" + destination_list[i] + "</option>";
 
     }
 
@@ -175,13 +185,18 @@ function destination() {
 
 function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
+    var x = origin_stop.split(" ");
+    origin_stop=x[0]
+    
     var route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
 
 
     $.ajax({
         type: "POST",
         url: "list_latlng/",
-        data: { route: route }
+        data: { route: route}
     })
 
         .done(function (response) {
@@ -198,36 +213,32 @@ function origin_marker() {
 
             }
 
-            for (var i in allMarkers) {
-
-
-                google.maps.event.addListener(allMarkers[i], 'click', function () {
-                    $('#estimator-origin').val(this.getTitle());
-                    $('#estimator-origin').show();
-                });
-            }
-
-
 
         });
 }
 
-function initMap2() {
-    directionsService = new google.maps.DirectionsService;
+// function initMap2() {
+//     directionsService = new google.maps.DirectionsService;
 
-    directionsDisplay = new google.maps.DirectionsRenderer({
-        map: map
-    });
-    calcRoute();
-    removeLineFromMap();
-}
+//     directionsDisplay = new google.maps.DirectionsRenderer({
+//         map: map
+//     });
+//     calcRoute();
 
+// }
 
 // calculate route
 function calcRoute() {
     var route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
     var start = $("#estimator-origin").val();
+    var x = start.split(" ");
+    start=x[0]
     var end = $("#estimator-destination").val()
+    var x = end.split(" ");
+    end=x[0]
+
     $.ajax({
         type: "POST",
         url: "list_latlng/",
@@ -240,31 +251,32 @@ function calcRoute() {
 
             var start_latlng = { lat: x[start].lat, lng: x[start].lng };
             var end_latlng = { lat: x[end].lat, lng: x[end].lng };
+
             var request = {
                 origin: start_latlng,
                 destination: end_latlng,
                 travelMode: google.maps.TravelMode.DRIVING
             };
+                directionsService = new google.maps.DirectionsService;
 
+                 directionsDisplay = new google.maps.DirectionsRenderer({
+                    map: map
+    })
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
-                    console.log(result)
                 }
+                removeLineFromMap()
             });
 
 
         })
-    removeLineFromMap()
+   
 
 };
 
 // event listner to porpulate the route dropdown list)
-$("#estimator-route").on('keyup click change hover', route_list);
-
-// event listner to populate the origin and destination 
-$("#estimator-sub").change(stops);
-
+$("#estimator-route").on('keyup click change hover', stops);
 $("#estimator-route").change(origin_marker);
 $("#estimator-origin").change(destination);
 
@@ -274,15 +286,16 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
+       
+
         // show error if user doesn't complete all fields
-        if ($('#estimator-route').val() == "" || $("#estimator-sub option:selected").text() ==
-            'Select route:' || $("#estimator-origin option:selected").text() == 'Select stop:' 
-            || $("#estimator-destination option:selected").text() == 'Select stop:') {
+        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' 
+            || $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
             $(".spinner-border").show();
 
-            initMap2();
+            calcRoute();
             removeLineFromMap();
 
             if ($(window).width() < 992) {
@@ -337,8 +350,19 @@ $(function () {
 
             // sending a post request to the server
             route = $("#estimator-route").val();
+            var x = route.split(" ");
+            route=x[0]
             origin = $("#estimator-origin").val();
+            var x = origin.split(" ");
+            origin=x[0]
             destination = $("#estimator-destination").val();
+            var x = destination.split(" ");
+            destination=x[0]
+
+            console.log("route",route)
+            console.log("origin",origin)
+            console.log("destination",destination)
+            console.log("direction",direction)
             $.ajax({
                 type: "POST",
                 url: "prediction/",
@@ -370,7 +394,7 @@ $(function () {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({ top: "400px" }, 'fast');
+                $("#map-interface").animate({ top: "350px" }, 'fast');
             }
             $("#stop-to-stop-results").show();
 
@@ -453,3 +477,182 @@ function sendDateTimeChangePostRequest() {
 
     });
 }
+
+
+// code for creating journey time graphs //
+
+//  1.  read the search params from the html
+//      date, time, route, start & end stops
+//  2.  request the predictions data from the server
+//      matching search params to database data wil happen serverside
+//  3.  wait for the data to return
+//
+//  4.  create a bar chart with the returned data...
+//
+
+// define the colours to use when drawing & filling charts & graphs
+var borderColours = ["rgb(184, 202, 204)", "rgb(64, 204, 219)"];
+var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
+
+
+// function for reading in the parameters used for generating the graphs
+function getSearchParams() {
+    route = $("#estimator-route").val();
+    var x = route.split(" ");
+    route=x[0]
+    origin = $("#estimator-origin").val();
+    var x = origin.split(" ");
+    origin=x[0]
+    var destination = $("#estimator-destination").val();
+    var x = destination.split(" ");
+    destination=x[0]
+
+    var params = new Object();
+        params["route"] = route;
+        params["direction"] = direction;                           // placeholder values !!!
+        params["start"] = origin;
+        params["end"] = destination;
+
+        // get the date & time
+        if ($(window).width() < 992) {
+            // if used on mobile
+            var datetimeValue = $("#datetime-tab2").val();
+            var arr = datetimeValue.split('T');
+            params["date"] = arr[0];
+            params["time"] = arr[1];
+        } else {
+            // for other devices...
+            params["date"] = $("#datepicker-tab2").val();
+            params["time"] = $('#timepicker-tab2').val();
+        }
+
+    return params;
+}
+
+
+// function for requesting graph data from web server
+function makeStatsRequest() {
+
+    // red the search parameters
+    var params = getSearchParams()
+
+    // make the request
+    $.ajax({
+        type:"POST",
+        url:"get_stats/",
+        data:{date:params.date, time:params.time, route:params.route, direction:params.direction, end:params.end, start:params.start}
+    })
+
+    // when response received
+    .done(function(response){
+        var data = JSON.parse(response);
+
+        var infoObject = new Object();
+            infoObject["data"] = data;
+            infoObject["route"] = params.route;
+            infoObject["start"] = params.start;
+            infoObject["end"] = params.end;
+
+        updateTextInfo(infoObject);
+        drawBarChart(data);
+        })
+}
+
+
+// display a textual description of the data contained in the graph
+function updateTextInfo(data) {
+
+    //$("#results-route-number").html(data.route);
+    //$("#results-route-stops").html(data.start + '-' + data.end);
+
+
+    // get the 95% journey time for this time group
+    var day_time = Object.keys(data.data)[2];
+    var journey_time = data.data[day_time];
+    var fastest_time = day_time;
+
+    for (var key in data.data) {
+        if (data.data[key] < journey_time) {
+            fastest_time = key
+        }
+    }
+
+    // if there's a faster time than the 'search time' add that to the description
+    if (day_time == fastest_time) {
+        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes.");
+    } else {
+        var timeDelta = journey_time - data.data[day_time];
+        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes. You could expect to save "  + timeDelta + "minutes by making this trip at " + fastest_time + "instead.");
+    }
+
+}
+
+
+function DataSet(data) {
+    // formats the passed data as an object w/ instance variables to be passed
+    // to the Chart() object constructor
+    this.label = "Journey Duration";
+    // this.fill = fill;
+    this.backgroundColor = [fillColours[0], fillColours[0], fillColours[1], fillColours[0], fillColours[0]];
+    this.borderColor = [borderColours[0], borderColours[0], borderColours[1], borderColours[0], borderColours[0]];
+    this.borderWidth = 1;
+    this.barPercentage = 0.95;     // sets the relative width of bars in a bar chart
+    this.categoryPercentage = 1;   // sets the relative width of bars in a bar chart
+
+    var arr = new Array();
+
+    Object.keys(data).forEach( function(item) {
+            arr.push(data[item]);
+        })
+
+    this.data = arr;
+}
+
+function drawBarChart(data) {
+
+    // get the chart container from the info.html page
+    var ctx = $("#results-canvas");
+    var bars = [];
+    var labels = Object.keys(data);
+
+    bars =  new DataSet(data);
+    var someChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    datasets: [bars],
+                    labels: Object.keys(data),
+                    },
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                labelString: "Travel Time (Minutes)",
+                                display: true
+                            },
+                            stacked: false,
+                            display: true,
+                            gridLineWidth: 0,
+                            minorTickInterval: null,
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            stacked: false,
+                            display: true,
+                            gridLineWidth: 0,
+                            gridLines: {
+                                display: false
+                            }
+                        }]
+                    }
+                }
+    });
+    return someChart;
+
+}
+$('#stop-to-stop-go').on('click',makeStatsRequest)

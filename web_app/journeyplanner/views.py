@@ -13,6 +13,10 @@ from .fare import get_fare
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
 from data_analytics import db_interface
+from data_analytics import get_journey_proportion as jp
+from data_analytics.to_time_group import to_time_group
+
+from datetime import datetime, timedelta, time
 
 sys.path.append("..")
 
@@ -119,42 +123,63 @@ def planner(request):
         total_fare = []
 
         for i in data:
-            
+
             route= i["route_number"]
             date = request.POST["date"]
             time = request.POST["time"]
-            print("route",route)
-        
-        #direction= 2
+            duration=i["duration"]
+
+            print("duration",duration)
+
+            #direction= 2
             route_number=route.upper()
 
-        #departure stops lat and lng
+            #departure stops lat and lng
             departure=i["departure_latlng"]
             x=departure.split(",")
             departure_lat = float(x[0])
             departure_lng = float(x[1])
 
-        #arrival stops lat and lng 
+            #arrival stops lat and lng
             arrival=i["arrival_latlng"]
             y=arrival.split(",")
             arrival_lat = float(y[0])
             arrival_lng = float(y[1])
-        
+
 
             route_number=route.upper()
-        # getting the suggested route file 
-            route_list=stops_latlng(route_number)
+            # getting the suggested route file
+            try:
+                route_list=stops_latlng(route_number)
+            except:
+                pass
+            finally:
+                route_list= 0
 
-        #getting the orging and destination stop number using the vincenty formular 
-            origin=find_stop(route_list,(departure_lat,departure_lng))
-            arrival=find_stop(route_list,(arrival_lat,arrival_lng))
-            direction = get_direction.get_direction_from_stops(route, origin, arrival)
-            print(direction)
-        #use the maachine learning module to calculate prediction 
-            calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
-        
-        #adding the calculated value to the list that will be sent back
-            prediction.append(calculation)
+            try:
+                #getting the orging and destination stop number using the vincenty formular
+                origin=find_stop(route_list,(departure_lat,departure_lng))
+                arrival=find_stop(route_list,(arrival_lat,arrival_lng))
+                direction = get_direction.get_direction_from_stops(route, origin, arrival)
+                print(direction)
+
+            except:
+                pass
+
+            finally:
+                origin=0
+                arrival=0
+            #use the maachine learning module to calculate prediction
+            try:
+                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+                prediction.append(calculation)
+            except:
+                pass
+
+            #adding the calculated value to the list that will be sent back
+            finally:
+                prediction.append(duration)
+
 
         # #get the fare for each leg of the journey
             journey_fare = get_fare(route, direction, origin, arrival)
@@ -242,4 +267,53 @@ def leap_login(request):
         # convert stats to json format & return to user
         return HttpResponse(json.dumps(stats))
 
+
+# csrf exemption is only temporary while running on local machine!!!
+@csrf_exempt
+def get_stats(request):
+
+    if request.method == "POST":
+
+        date_str = request.POST["date"]
+        time_str = request.POST["time"]
+        route = request.POST["route"]
+        origin = request.POST["start"]
+        destination = request.POST["end"]
+        direction = request.POST["direction"]
+
+        # extract the month & weekday from the date
+        # need to do this for each time tested...
+        # time_obj = time(second=int(time_str))
+        time_obj = time.fromisoformat("%s:00" % time_str)
+        date_obj = datetime.fromisoformat("%s %s" % (date_str, time_obj.strftime("%H:%M:%S")))
+
+        "2020-07-23"    # date format
+        "73740"         # time format
+
+        # determine the segments on this route
+        all_stops = jp.stops_on_route(str(route), main=True, direction=int(direction))
+        sub_stops = jp.stops_on_journey(origin, destination, all_stops)
+        sub_segments = jp.segments_from_stops(sub_stops)
+
+        # for an hour either side of the searched time groups - estimate the journey time based on historical averages
+        offsets = [-3600, -1800, 0, 1800, 3600]
+
+        response = {}
+
+        for n in offsets:
+            # create a time delta object representing a difference of n seconds
+            offset = timedelta(0, n)
+            dt = date_obj + offset
+
+            time_str = dt.strftime("%H:%M")
+            month = dt.strftime("%B")
+            weekday = dt.strftime("%A")
+
+            # get the daytime as number of seconds since midnight & convert into 'time group'
+            time_group = to_time_group(int((dt - datetime.fromisoformat(dt.strftime("%Y-%m-%d"))).total_seconds()))
+
+            # add the estimated journey time to this the response dict (convert into minutes)
+            response[time_str] = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
+
+        return HttpResponse(json.dumps(response))
 
