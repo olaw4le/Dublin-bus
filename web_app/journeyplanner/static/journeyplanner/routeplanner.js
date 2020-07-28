@@ -383,7 +383,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             fare.forEach(element => {
               console.log(element["fare"])
               if (element["found"]) {
-                $('#fare-result-tab1').append('<li>' + element["route"] + "</li>");
+                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + "</li>");
                 for (const key in element) {
                   if (key != "url" && key != "route" && key != "found") {
                     $('#fare-result-tab1').append('<li>' + key + ": " + element[key] + "</li>");
