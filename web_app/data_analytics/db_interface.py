@@ -7,6 +7,13 @@ import pg8000 as ps
 
 def construct_sql(**kwargs):
 
+    if "verbose" in kwargs:
+        verbose = kwargs["verbose"]
+        if type(verbose) != bool:
+            verbose = False
+    else:
+        verbose = False
+
     if "table_name" in kwargs:
         table_name = kwargs["table_name"]
     else:
@@ -97,7 +104,9 @@ def construct_sql(**kwargs):
 
         # combine the query template, table name, attribute names & attribute values
         sql_query = templates[query_type] % (cols, table_name, predicates)
-       
+
+        if verbose:
+            print(sql_query)
         return sql_query
 
     # if deleting/selecting *all* data from a table
