@@ -91,16 +91,26 @@ def get_mean_time(route, direction, segments, month, day, time):
     table_name = "route_%s_%s_means" % (str(route), str(direction))
     sql = db.construct_sql(table_name=table_name, query_type="select_where",
                            data={"month": month, "weekday": day, "timegroup": str(time)},
-                           column_names=segments)
+                           column_names=segments, verbose=False)
 
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions
-    print(sql)
-    print("this is the response")
-    print(response)
-    return sum(response[0])
+    # logic for handling null values in returned tuple
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    non_nulls = []
+    nulls = 0
+    total = 0
+    for n in response[0]:
+        if type(n) is None:
+            nulls += 1
+        else:
+            non_nulls.append(n)
+        total += 1
+
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    sum_non_nulls = sum(non_nulls)
+    return sum_non_nulls + (nulls * sum_non_nulls / total)
 
 
 def get_standard_dev(route, direction, segments, month, day, time):
@@ -110,24 +120,40 @@ def get_standard_dev(route, direction, segments, month, day, time):
     table_name = "route_%s_%s_standard_dev" % (str(route), str(direction))
     sql = db.construct_sql(table_name=table_name, query_type="select_where",
                            data={"month": month, "weekday": day, "timegroup": str(time)},
-                           column_names=segments)
+                           column_names=segments, verbose=False)
 
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions
-    print("this is the response")
-    print(response)
-    return sum(response[0])
+    # logic for handling null values in returned tuple
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    non_nulls = []
+    nulls = 0
+    total = 0
+    for n in response[0]:
+        if type(n) is None:
+            nulls += 1
+        else:
+            non_nulls.append(n)
+        total += 1
+
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    sum_non_nulls = sum(non_nulls)
+    return sum_non_nulls + (nulls * sum_non_nulls / total)
 
 
 def get_95_percentile(route, direction, segments, month, day, time):
     """calculate the 95th percentile from the means & standard deviations for each segment"""
 
-    means = get_mean_time(route, direction, segments, month, day, time)
-    std_dev = get_standard_dev(route, direction, segments, month, day, time)
-
-    return means + (1.645 * std_dev)
+    try:
+        means = float(get_mean_time(route, direction, segments, month, day, time))
+        std_dev = float(get_standard_dev(route, direction, segments, month, day, time))
+        print(means)
+        print(std_dev)
+        return means + (1.645 * std_dev)
+    except Exception as e:
+        print(e)
+        return e
 
 
 """
