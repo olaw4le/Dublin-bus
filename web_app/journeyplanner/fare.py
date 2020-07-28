@@ -7,12 +7,16 @@ def get_fare(route, direction, start_stop, end_stop):
     
     fare_details = {}
     fare_details["found"]=False
-    direction = int(direction)
+
     with open("/Users/hannahbarrett/Documents/CompScience/ResearchPracticum/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json") as json_file:
         ordered_stops = json.load(json_file)
     route = route.upper()
     fare_details["route"] = route
     route_dict = ordered_stops[route]
+    if direction:
+        direction = int(direction)
+    else:
+        return fare_details
     print("looking for", direction)
     for subroute in route_dict:
         print(route_dict[subroute]["direction"])

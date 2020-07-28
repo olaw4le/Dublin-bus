@@ -154,7 +154,7 @@ def planner(request):
             except:
                 route_list= 0
                 
-            direction = None
+            
             try:
                 #getting the orging and destination stop number using the vincenty formular
                 origin=find_stop(route_list,(departure_lat,departure_lng))
@@ -163,6 +163,7 @@ def planner(request):
                 print(direction)
 
             except:
+                direction = None
                 origin=0
                 arrival=0
 
