@@ -455,6 +455,11 @@ label.dt-label {
   text-align: left;
   font-weight: 600;
 }
+
+#leap-logout {
+  display: none;
+  margin-left: 30px;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
