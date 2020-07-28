@@ -379,7 +379,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     else if (travelMode == "TRANSIT") {
                         var journey_steps = {}; //dictionary for each bus steps in the journey
                         distance = journeysteps[i].distance.text;
-                        //duration=journeysteps[i].duration.text
+                        duration=journeysteps[i].duration.text
+                        x=duration.split(" ")
+                        duration=x[0]
                         instruction = journeysteps[i].instructions;
                         Route_number = journeysteps[i].transit.line.short_name;
                         arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -400,6 +402,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         journey_steps["num_stops"] = num_stops;
                         journey_steps["departure_latlng"] = departure_latlng;
                         journey_steps["arrival_latlng"] = arrival_latlng;
+                        journey_steps["duration"] = duration;
 
 
                         list.push(journey_steps)
