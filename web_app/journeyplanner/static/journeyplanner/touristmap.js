@@ -434,11 +434,14 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                     .done(function (response) {
 
+
+                        response = JSON.parse(response)
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
 
-                        prediction1 = JSON.parse(response)
+                        // prediction1 = JSON.parse(response)
+                        prediction1 = response.prediction;
                         console.log(prediction1)
 
                         function bus_time(k) {
