@@ -111,6 +111,8 @@ def planner(request):
     if request.method == "POST":
         data= json.loads(request.POST["data"])
 
+        print('request',request.POST)
+
 
         prediction=[] #list to store the calculated predictions
 

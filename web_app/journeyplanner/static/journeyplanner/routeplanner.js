@@ -347,6 +347,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
             //turning the data to sent into json
             var data = JSON.stringify(journey_steps);
+
+            console.log('data',data)
           }
         }
 
