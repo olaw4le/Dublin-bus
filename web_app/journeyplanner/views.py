@@ -174,11 +174,12 @@ def planner(request):
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
             except:
-                pass
+                prediction.append(duration)
 
             #adding the calculated value to the list that will be sent back
-            finally:
-                prediction.append(duration)
+            # finally:
+            #     pass
+                
 
 
         # #get the fare for each leg of the journey
