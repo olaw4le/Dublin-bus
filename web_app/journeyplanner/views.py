@@ -173,6 +173,7 @@ def planner(request):
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
+                print('prediction from module',prediction)
             except:
                 prediction.append(duration)
 

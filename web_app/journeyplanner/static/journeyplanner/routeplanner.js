@@ -595,6 +595,7 @@ $(function () {
       $("#map-interface").css("top", "0px");
     }
     $("#route-results").hide();
+    $('#direction').empty()
   });
 
 

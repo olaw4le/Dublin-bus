@@ -628,20 +628,10 @@ label.dt-label {
   @media only screen and (max-width: 400px){
 
     a.nav-item.nav-link.load-interface.nav-bottom{
-      font-size: 0.65em;
+      font-size: 0.75em;
     }
   }
   
-  
-
-  
-
-    
-
-      
-
-
-   
 
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
