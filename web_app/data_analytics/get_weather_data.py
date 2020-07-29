@@ -32,7 +32,7 @@ def get_nearest_forecast(date_obj):
 
     if type(date_obj) is datetime:
         # extract a string format time from the date
-        date_str = date_obj.strftime("%Y-%m-%d %H:%M:%S.f")
+        date_str = date_obj.strftime("%Y-%m-%d %H:%M:%S.%f")
     elif type(date_obj) is str:
         # assume the passed string is in the correct format - some error checking should really go here
         date_str = date_obj
