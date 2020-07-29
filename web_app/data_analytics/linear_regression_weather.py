@@ -6,6 +6,7 @@ import requests
 import urllib.request
 from datetime import datetime
 from data_analytics import db_interface as db
+from data_analytics.get_weather_data import get_nearest_forecast, time_from_seconds
 import os
 from sklearn.linear_model import LinearRegression
 
@@ -160,7 +161,8 @@ def get_active_columns(test):
         fi = fee.replace("'", '')
         ending_final = fi.replace("]", '')
 
-        # append that "ending" to the string of that column title to get a string that mimics the format of the one hot encoding variables
+        # append that "ending" to the string of that column title to get a string that mimics
+        # the format of the one hot encoding variables
         string = str(column) + "_" + ending_final
 
         # append that string to the list
@@ -179,8 +181,26 @@ def generate_test_dataframe(route, direction, date, time):
     Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
     are added to a temporary dataframe.
     The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
-    # get weather from database
-    weather = get_weather_from_db()
+
+    # check if *current* weather data should be used for prediction;
+
+    dt = datetime.fromisoformat("%s %s" % (str(date), time_from_seconds(time)))
+    now = datetime.now()
+    if abs((dt - now).total_seconds()) < 3600:
+        current = True
+        print("using current weather data")
+    else:
+        current = False
+        print("using forecast weather data")
+
+    if current:
+        # if so; get current weather from database
+        weather = get_weather_from_db()[0]
+
+    else:
+        # otherwise; request the nearest weather forecast from the database
+        weather = get_nearest_forecast(dt)[0]
+
     # extract required parameters
     temp = weather[2]
     feels_like = weather[3]
@@ -190,11 +210,13 @@ def generate_test_dataframe(route, direction, date, time):
     wind_deg = weather[5]
     rain = weather[8]
 
-    # create empty dataframe with correct headings from templates generated from list of columns from the datasets used to train the linear regression models
+    # create empty dataframe with correct headings from templates generated from list of columns from
+    # the datasets used to train the linear regression models
 
     template_name = str(route) + "_" + str(direction)
     # construct sql query
-    sql = db.construct_sql(table_name="model_features", query_type="select_where", column_names=["features"], data={"id": template_name})
+    sql = db.construct_sql(table_name="model_features", query_type="select_where",
+                           column_names=["features"], data={"id": template_name})
     # execute sql query
 
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)[0][0]
@@ -233,8 +255,8 @@ def generate_test_dataframe(route, direction, date, time):
     temp_dataframe = temp_dataframe.drop(columns=['DAYOFSERVICE', 'TIME'])
 
     # remember that test dataframe we created at the beginning... well, now we...
-    # use the get_active_columns function to figure out the names of the categorical columns in the test dataframe that need to be
-    # encoded to 1 (instead of 0) and then...
+    # use the get_active_columns function to figure out the names of the categorical
+    # columns in the test dataframe that need to be encoded to 1 (instead of 0) and then...
     active_columns = get_active_columns(temp_dataframe)
 
     # ... itterate through this one line test dataframe and if the column is in the list of active columns...
@@ -257,8 +279,8 @@ def generate_test_dataframe(route, direction, date, time):
 def get_indices(startstop, endstop, dictionary, order_segment_list):
     """Returns the indices of the users boarding and alighting stop in an ordered list of the stops on that route.
     
-    In this code the dictionary in question will be a dictionary with stop segments as keys and the proportion of the total journey
-    that this stop represents"""
+    In this code the dictionary in question will be a dictionary with stop segments as keys and the proportion
+    of the total journey that this stop represents"""
 
     indices = []
     for key, value in dictionary.items():
@@ -353,10 +375,10 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
              12: "12", 13: "13", 14: "14", 15: "15", 16: "16", 17: "17", 18: "18", 19: "19", 20: "20", 21: "21",
              22: "22", 23: "23", 24: "24", 25: "25", 26: "26", 27: "27", 28: "28"}
 
-    # call proportions file in dictionary format - this proportions file returns a calculated average based on previous journies for a given...
-    # ...month, week and time_group...
+    # call proportions file in dictionary format - this proportions file returns a calculated average based
+    # on previous journeys for a given... ...month, week and time_group...
     try:
-    # construct sql query
+        # construct sql query
         table_name = "route_%s_%s_proportions" % (route.lower(), direction)
         sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
         
