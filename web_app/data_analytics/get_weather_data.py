@@ -56,6 +56,35 @@ def get_nearest_forecast(date_obj):
         return e
 
 
+def time_from_seconds(seconds):
+    """ takes an int representing the number of seconds since midnight
+    & return a 24hr string representation of that time"""
+
+    try:
+        seconds = int(seconds)
+    except Exception as e:
+        print("Error: unable to cast str '%s' as int" % seconds)
+        return e
+
+    # guard statement - return "00:00:00" if seconds == to 1 day
+    if seconds == 86400:
+        return "00:00:00"
+
+    # guard statement - if passed a number greater than total seconds in day use
+    # the modulo of the passed seconds and total seconds in a day
+    if seconds > 86400:
+        # make recursive to reuse the initial guard statement ~ ¯\_(ツ)_/¯ I'm lazy
+        return time_from_seconds(seconds % 86400)
+
+    # calculate the int vales for hours/minutes/seconds, cast as type string and pad with 0's
+    hours = str(seconds // 3600).zfill(2)
+    remainder = seconds % 3600
+    minutes = str(remainder // 60).zfill(2)
+    seconds = str(remainder % 60).zfill(2)
+
+    return "%s:%s:%s" % (hours, minutes, seconds)
+
+
 # example use of function get_nearest_forecast()
 """
 dt = DateTime("2020-07-31 12:00:00")
