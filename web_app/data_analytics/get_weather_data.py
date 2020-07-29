@@ -56,4 +56,9 @@ def get_nearest_forecast(date_obj):
         return e
 
 
+# example use of function get_nearest_forecast()
+"""
+dt = DateTime("2020-07-31 12:00:00")
+print(get_nearest_forecast(dt))
 print(get_nearest_forecast("1990-11-23 12:00:00.0000"))
+"""
