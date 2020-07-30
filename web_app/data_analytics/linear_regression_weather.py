@@ -195,7 +195,7 @@ def generate_test_dataframe(route, direction, date, time):
 
     if current:
         # if so; get current weather from database
-        weather = get_weather_from_db()[0]
+        weather = get_weather_from_db()
 
     else:
         # otherwise; request the nearest weather forecast from the database
