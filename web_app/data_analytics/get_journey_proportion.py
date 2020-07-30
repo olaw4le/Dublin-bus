@@ -81,8 +81,8 @@ def get_proportions(route, direction, segments, month, day, time):
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions
-    return sum(response[0])
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    return sum_values(response[0])
 
 
 def get_mean_time(route, direction, segments, month, day, time):
@@ -96,21 +96,8 @@ def get_mean_time(route, direction, segments, month, day, time):
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # logic for handling null values in returned tuple
     # return the sum of all proportions + the (number of missing values * the average journey time)
-    non_nulls = []
-    nulls = 0
-    total = 0
-    for n in response[0]:
-        if type(n) is None:
-            nulls += 1
-        else:
-            non_nulls.append(n)
-        total += 1
-
-    # return the sum of all proportions + the (number of missing values * the average journey time)
-    sum_non_nulls = sum(non_nulls)
-    return sum_non_nulls + (nulls * sum_non_nulls / total)
+    return sum_values(response[0])
 
 
 def get_standard_dev(route, direction, segments, month, day, time):
@@ -125,21 +112,8 @@ def get_standard_dev(route, direction, segments, month, day, time):
     # execute sql query
     response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # logic for handling null values in returned tuple
     # return the sum of all proportions + the (number of missing values * the average journey time)
-    non_nulls = []
-    nulls = 0
-    total = 0
-    for n in response[0]:
-        if type(n) is None:
-            nulls += 1
-        else:
-            non_nulls.append(n)
-        total += 1
-
-    # return the sum of all proportions + the (number of missing values * the average journey time)
-    sum_non_nulls = sum(non_nulls)
-    return sum_non_nulls + (nulls * sum_non_nulls / total)
+    return sum_values(response[0])
 
 
 def get_95_percentile(route, direction, segments, month, day, time):
@@ -154,6 +128,33 @@ def get_95_percentile(route, direction, segments, month, day, time):
     except Exception as e:
         print(e)
         return e
+
+
+def sum_values(values, **kwargs):
+    """function for summing the values of all ints in a list - with logic for handling None values"""
+
+    if "replace_none_with_average" in kwargs:
+        replace_none = kwargs["replace_none_with_average"]
+    else:
+        replace_none = True
+
+    length = 0
+    nulls = 0
+    total = 0
+    for n in values:
+        length += 1
+        try:
+            total += int(n)
+        except Exception as e:
+            print("Error: can't cast type to int")
+            print(e)
+            nulls += 1
+
+    # return the sum of all proportions + the (number of missing values * the average journey time)
+    if replace_none:
+        return total + (nulls / length * total)
+    else:
+        return total
 
 
 """
