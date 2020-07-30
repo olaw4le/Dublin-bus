@@ -1,6 +1,8 @@
 import sys
 sys.path.insert(0, 'web_app/journeyplanner/')
+
 from route_details import *
+
 
 def test_stops_latlng():
    #testing wether the stops lat and lng for a given route isnt empty

@@ -1,4 +1,4 @@
-from django.test import TestCase,client 
+from django.test import TestCase
 from django.shortcuts import reverse
 from django.test import Client
 
@@ -64,21 +64,21 @@ class Testviews(TestCase):
 
 
 
-# class routeplannerTest(TestCase):
-#     @classmethod
-#     def tearDownClass(cls):
-#         pass
+class routeplannerTest(TestCase):
+    @classmethod
+    def tearDownClass(cls):
+        pass
 
-#     def setUpClass(self):
-#         self.client = Client()
+    def setUpClass(self):
+        self.client = Client()
 
-#     def test_addAccount(self):
-#         data= {'data': ['[{"route_number":"14","arrival_stop":"Beaumont Avenue, stop 1046","departure_stop":"Frankfort Avenue, stop 1079","num_stops":10,"departure_latlng":"53.3166603,-6.2707465","arrival_latlng":"53.2933604,-6.2573817","duration":"6"},{"route_number":"17","arrival_stop":"Clonskeagh, Harlech Grove","departure_stop":"Churchtown, Nutgrove Avenue","num_stops":11,"departure_latlng":"53.29419910000001,-6.258802699999999","arrival_latlng":"53.3020144,-6.2279957","duration":"7"}]'], 'date': ['2020-07-28'], 'time': ['81960']}
+    def test_addAccount(self):
+        data= {'data': ['[{"route_number":"14","arrival_stop":"Beaumont Avenue, stop 1046","departure_stop":"Frankfort Avenue, stop 1079","num_stops":10,"departure_latlng":"53.3166603,-6.2707465","arrival_latlng":"53.2933604,-6.2573817","duration":"6"},{"route_number":"17","arrival_stop":"Clonskeagh, Harlech Grove","departure_stop":"Churchtown, Nutgrove Avenue","num_stops":11,"departure_latlng":"53.29419910000001,-6.258802699999999","arrival_latlng":"53.3020144,-6.2279957","duration":"7"}]'], 'date': ['2020-07-28'], 'time': ['81960']}
 
-#         response = self.client.post('/routeplanner/',data)
+        response = self.client.post('/routeplanner/',data)
 
-#        # Check that the response is 200 OK.
-#         self.assertEqual(response.status_code, 200)
+       # Check that the response is 200 OK.
+        self.assertEqual(response.status_code, 200)
 
 
 

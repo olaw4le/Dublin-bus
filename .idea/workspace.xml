@@ -21,9 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3b993cac-3106-4c47-8c5b-c002ba1d4056" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/routeplanner.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/routeplanner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/test/test_routes_details.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/test/test_routes_details.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.test_routes_details">
     <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="research-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -68,8 +67,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test_routes_details" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="research-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/web_app/journeyplanner/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/web_app/journeyplanner/test/test_routes_details.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test_routes_details" />
         <item itemvalue="Python.scratch" />
       </list>
     </recent_temporary>
@@ -94,29 +115,29 @@
       <screen x="0" y="23" width="1440" height="823" />
     </state>
     <state x="507" y="211" key="FileChooserDialogImpl/0.23.1440.823@0.23.1440.823" timestamp="1595451842245" />
-    <state width="688" height="205" key="GridCell.Tab.0.bottom" timestamp="1595973289043">
+    <state width="1377" height="205" key="GridCell.Tab.0.bottom" timestamp="1595978794625">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.bottom/0.23.1440.816@0.23.1440.816" timestamp="1595928114803" />
-    <state width="688" height="205" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1595973289043" />
+    <state width="1377" height="205" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1595978794625" />
     <state width="1377" height="205" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="688" height="205" key="GridCell.Tab.0.center" timestamp="1595973289041">
+    <state width="1377" height="205" key="GridCell.Tab.0.center" timestamp="1595978794625">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.center/0.23.1440.816@0.23.1440.816" timestamp="1595928114801" />
-    <state width="688" height="205" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1595973289041" />
+    <state width="1377" height="205" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1595978794625" />
     <state width="1377" height="205" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="688" height="205" key="GridCell.Tab.0.left" timestamp="1595973289039">
+    <state width="1377" height="205" key="GridCell.Tab.0.left" timestamp="1595978794624">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.left/0.23.1440.816@0.23.1440.816" timestamp="1595928114799" />
-    <state width="688" height="205" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1595973289039" />
+    <state width="1377" height="205" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1595978794624" />
     <state width="1377" height="205" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="688" height="205" key="GridCell.Tab.0.right" timestamp="1595973289042">
+    <state width="1377" height="205" key="GridCell.Tab.0.right" timestamp="1595978794625">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.right/0.23.1440.816@0.23.1440.816" timestamp="1595928114802" />
-    <state width="688" height="205" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1595973289042" />
+    <state width="1377" height="205" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1595978794625" />
     <state width="1377" height="205" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
   </component>
   <component name="XDebuggerManager">
