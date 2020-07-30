@@ -138,6 +138,35 @@
 
 
 
+      <!-- fare -->
+      <div id="accordion-fare-tourist" class="fare-accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <ul id="total-fares-tourist" class="upper-fare-content"></ul>
+                <div class="fare-total-message">Some fares on this journey could not be calculated</div>
+                    <h5 class="mb-0 fare-button">
+
+                        <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapse-tourist"
+                            aria-expanded="true" aria-controls="collapse-tourist">
+                            More fare details
+                        </button>
+                    </h5>
+            </div>
+
+            <div id="collapse-tourist" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-fare-tourist">
+                <div class="card-body">
+                    <ul id="fare-result-tourist" class="fare-result-detailed"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
     <!-- spinner to show while user waits for result-->
     <div class="d-flex justify-content-center">
         <div class="spinner-border text-warning prediction-spinner" role="status">

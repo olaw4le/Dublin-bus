@@ -377,7 +377,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             // hide the spinner and show the results
             $('.prediction-spinner').hide();
             $('.results-card').show();
-            $('#accordion-fare').show();
+            $('.fare-accordion').show();
 
             // extract the fare from the response
             let fare = response.fare;
@@ -449,7 +449,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 // else show totals that are available along with error message
                 $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
                 $('#total-fares').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
-                $('#fare-total-message').show();
+                $('.fare-total-message').show();
               }
             }
             

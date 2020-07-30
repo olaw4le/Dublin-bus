@@ -377,7 +377,7 @@ $(function () {
 
                 .done(function (response) {
 
-                    $('#accordion-fare-tab2').show();
+                    $('.fare-accordion').show();
 
                     // display fare to user and display 'unavailable' when no fare given
                     var fare = response.fare;

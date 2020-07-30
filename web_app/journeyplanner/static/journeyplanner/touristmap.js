@@ -112,7 +112,7 @@ $(".tourist-check").change(function () {
             callback(results, status, type)
         });
 
-    // hide markers when checkbox un-checked
+        // hide markers when checkbox un-checked
     } else if (!this.checked) {
         var type = $(this).attr("data-type");
         var typeMarkers = markers[type];
@@ -380,9 +380,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     else if (travelMode == "TRANSIT") {
                         var journey_steps = {}; //dictionary for each bus steps in the journey
                         distance = journeysteps[i].distance.text;
-                        duration=journeysteps[i].duration.text
-                        x=duration.split(" ")
-                        duration=x[0]
+                        duration = journeysteps[i].duration.text
+                        x = duration.split(" ")
+                        duration = x[0]
                         instruction = journeysteps[i].instructions;
                         Route_number = journeysteps[i].transit.line.short_name;
                         arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -436,12 +436,101 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     .done(function (response) {
 
                         console.log("response")
-                        
+
                         response = JSON.parse(response)
                         console.log(response)
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
+                        $('.fare-accordion').show();
+
+                        // extract the fare from the response
+                        let fare = response.fare;
+
+                        // clear the fare each time a new fare is shown
+                        $('#fare-result-tourist').html("");
+                        $('#total-fares-tourist').html("");
+
+                        // initialise total cash and leap fares
+                        var total_cash = 0;
+                        var total_leap = 0;
+
+
+                        // keep track of whether a fare for every bus was added to the total
+                        var all_fares_included = true;
+
+                        // loop through all fare dictionaries in the list returned
+                        fare.forEach(element => {
+                            if (element["found"]) {
+                                $('#fare-result-tourist').append('<li>' + "Route " + element["route"] + ":" + "</li>");
+                                for (const key in element) {
+                                    if (key != "url" && key != "route" && key != "found") {
+                                        $('#fare-result-tourist').append('<li>' + key + ": " + "€" + element[key] + "</li>");
+                                    }
+                                    // parse from a string to a float and add to cash or leap total
+                                    if (key == "Adult Cash") {
+                                        amount = parseFloat(element[key]);
+                                        total_cash += amount;
+
+                                    } if (key == "Adult Leap") {
+                                        element[key] = parseFloat(element[key]);
+                                        total_leap += element[key];
+                                    }
+                                }
+                                //add new line
+                                $('#fare-result-tourist').append('<br>');
+                            } else {
+
+                                // if all fares not included, show a message to the user 
+                                all_fares_included = false;
+                                $('#fare-result-tourist').append('<li>' + "Route " + element["route"] + ":" + '</li>');
+                                $('#fare-result-tourist').append('<li>' + "Unavailable" + '</li>');
+                                $('#fare-result-tourist').append('<br>');
+                            }
+                        });
+
+                        // cap leap total at €6
+                        if (total_leap > 6) {
+                            total_leap == 6.00
+                        }
+
+                        // use regex to remove leading 0 for values below €10
+                        total_leap = "" + total_leap.toFixed(2);
+                        total_leap = total_leap.replace(/^0+/, '');
+                        total_cash = "" + total_cash.toFixed(2);
+                        total_cash = total_cash.replace(/^0+/, '');
+
+                        // append totals to list and display to user
+                        // if all fares included display to user with no error message
+                        if (all_fares_included) {
+                            $('#total-fares-tourist').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+                            $('#total-fares-tourist').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
+                        } else {
+                            // if all fares unavailable show total as unavailable
+                            if (total_cash == 0) {
+                                $('#total-fares-tourist').append('<li>' + "Total Cash Fare: Unavailable" + '</li>');
+                            } if (total_leap == 0) {
+                                $('#total-fares-tourist').append('<li>' + "Total Leap Fare: Unavailable" + '</li>');
+                            } else {
+                                // else show totals that are available along with error message
+                                $('#total-fares-tourist').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+                                $('#total-fares-tourist').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
+                                $('.fare-total-message').show();
+                            }
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         // prediction1 = JSON.parse(response)
                         console.log("prediction");
@@ -461,8 +550,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                             journeyTime += parseInt(prediction1[j])
                             console.log(journeyTime)
                         }
-
-
                         var b = input_time.split(':');
                         var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime, 'minutes').format("HH:mm");
                         console.log(theFutureTime)
@@ -494,7 +581,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 instruction = instruction[0];
 
                                 direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
-                                
+
                             }
 
                             else if (travelMode == "TRANSIT") {
@@ -608,6 +695,10 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+
+        // hide the fare when the user clicks back
+        $('.fare-accordion').hide();
+
 
         if ($(window).width() <= 992) {
             map.panTo(mobileDublin);

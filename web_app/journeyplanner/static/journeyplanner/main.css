@@ -464,26 +464,26 @@ label.dt-label {
   margin-left: 0px;
 }
 
+#accordion-fare-tourist {
+  display: none;
+}
 
 #accordion-fare {
-  display: none;
-  margin: 15px 15px 15px 15px;
-  background-color: white;
+  display:none;
 }
 
 #accordion-fare-tab2 {
-  display: none;
+  display:none;
+}
+
+
+.fare-accordion {
   margin: 15px 15px 15px 15px;
   background-color: white;
 }
 
-#fare-result-tab1 {
-  padding-left: 0px;
-  margin-bottom: 10px;
-  padding-bottom: 0px;
-}
 
-#fare-result-tab2 {
+.fare-result-detailed{
   padding-left: 0px;
   margin-bottom: 10px;
   padding-bottom: 0px;
