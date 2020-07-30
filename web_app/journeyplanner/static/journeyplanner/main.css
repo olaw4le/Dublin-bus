@@ -468,24 +468,47 @@ label.dt-label {
 #accordion-fare {
   display: none;
   margin: 15px 15px 15px 15px;
+  background-color: white;
+}
+
+#accordion-fare-tab2 {
+  display: none;
+  margin: 15px 15px 15px 15px;
+  background-color: white;
 }
 
 #fare-result-tab1 {
   padding-left: 0px;
   margin-bottom: 10px;
+  padding-bottom: 0px;
 }
 
-#fare-total-message {
+#fare-result-tab2 {
+  padding-left: 0px;
+  margin-bottom: 10px;
+  padding-bottom: 0px;
+}
+
+.fare-total-message {
   display: none;
   font-size: 0.9em;
   color: red;
 }
 
-#total-fares {
+.upper-fare-content {
   margin-left: 0px;
   padding-left: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
 }
 
+.card-body {
+  padding-bottom: 0px;
+}
+
+.card-header {
+  background-color: white;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */

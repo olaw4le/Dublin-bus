@@ -111,6 +111,30 @@
       
     </div>
 
+    <!-- fare -->
+    <div id="accordion-fare-tab2">
+        <div class="card">
+            <div class="card-header" id="heading-tab2">
+                <ul id="cash-and-leap-tab2" class="upper-fare-content"></ul>
+                <div class="fare-total-message">Some fares on this journey could not be calculated</div>
+                    <h5 class="mb-0 fare-button">
+                        <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapse-tab2"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            More fare details
+                        </button>
+                    </h5>
+            </div>
+
+            <div id="collapse-tab2" class="collapse" aria-labelledby="heading-tab2" data-parent="#accordion-fare-tab2">
+                <div class="card-body">
+                    <ul id="fare-result-tab2"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <!-- estimate -->
     <div class="card results">
         <div class="row">
@@ -123,18 +147,6 @@
 
             <!-- show result -->
             <div class="col-6" id="stop-to-stop-estimate"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-6" id="placeholder">Cash fare:</div>
-
-            <!-- show loader while user waiting for result -->
-            <div class="spinner-border text-success" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-
-            <!-- show result -->
-            <div class="col-6" id="stop-to-stop-fare"></div>
         </div>
 
         <div id="results-chart">

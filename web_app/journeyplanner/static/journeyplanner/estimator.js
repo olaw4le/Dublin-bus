@@ -15,20 +15,20 @@ function clearMarkers() {
         directionsDisplay.setMap(null);
         directionsDisplay = null;
     }
-  }
+}
 
 
- 
+
 
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
-    removeLineFromMap);
- 
- 
+        removeLineFromMap);
+
+
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
-  clearMarkers);
+        clearMarkers);
 
 
     // flatpickr date https://flatpickr.js.org/options/
@@ -65,7 +65,7 @@ $(function () {
 
         for (var key in stations) {
             var x = key.split("_");
-            route_number += (x[0]+" "+stations[key].headsign)+ ",";
+            route_number += (x[0] + " " + stations[key].headsign) + ",";
         }
         console.log(route_number)
 
@@ -95,64 +95,65 @@ function stops() {
     var To = "<option value=0>-- Select -- </option>";
 
     // getting the value of the selected route
-    sel_route= $("#estimator-route").val();
+    sel_route = $("#estimator-route").val();
 
-    console.log("route",sel_route)
+    console.log("route", sel_route)
 
     $.getJSON("static/new_ordered_stops.json", null, function (data) {
-       stations = data;
-       var key;
-     //getting the value of the selected route
-      var list = ''
+        stations = data;
+        var key;
+        //getting the value of the selected route
+        var list = ''
 
-       for (key in stations) {
-        var x = key.split("_");
-        var y= (x[0]+" "+stations[key].headsign)
-        
-           
-        if (sel_route ==y) {
-            
-
-            routes = stations[key].stops
-            direction=key.charAt(key.length-1);
-            console.log("direction",direction)
-            
-           
-
-            for (var key2 in routes) {
-
-                for (var key3 in routes[key2]){
-
-                   var x=Object.values(routes[key2])
-                   var y = JSON.stringify(x);
-                   y= y.replace(/[[\]]/g,'')
-                   y=y.replace(/['"]+/g, '')
+        for (key in stations) {
+            var x = key.split("_");
+            var y = (x[0] + " " + stations[key].headsign)
 
 
-                   list += (key3+" "+y)+ ",";
+            if (sel_route == y) {
 
 
-                 
-                 
-    
-                }            
+                routes = stations[key].stops
+                direction = key.charAt(key.length - 1);
+                console.log("direction", direction)
+
+
+
+                for (var key2 in routes) {
+
+                    for (var key3 in routes[key2]) {
+
+                        var x = Object.values(routes[key2])
+                        var y = JSON.stringify(x);
+                        y = y.replace(/[[\]]/g, '')
+                        y = y.replace(/['"]+/g, '')
+
+
+                        list += (key3 + " " + y) + ",";
+
+
+
+
+
+                    }
+                }
+
+                //turning the into an array
+                list = list.trim().split(",");
+                result = list
+
+
+                //popuplating the sub route select list
+                for (var i = 0; i < list.length; i++) {
+                    To += "<option>  " + list[i] + "</option>";
+                    stop_list.push(list[i])
+                }
+
+
+                $("#estimator-origin").html(To);
+
             }
-
-        //turning the into an array
-        list = list.trim().split(",");
-        result = list
-        
-
-        //popuplating the sub route select list
-        for (var i = 0; i < list.length; i++) {
-            To += "<option>  " + list[i] + "</option>";
-            stop_list.push(list[i])
         }
-
-
-        $("#estimator-origin").html(To) ;
-    
-        }}
     })
 
 }
@@ -171,7 +172,7 @@ function destination() {
     destination_list = stop_list.slice(index + 1) //displaying the stops after the selected stops 
 
     console.log(destination_list)
-    
+
 
     for (var i = 0; i < destination_list.length; i++) {
         To += "<option>" + destination_list[i] + "</option>";
@@ -186,17 +187,17 @@ function destination() {
 function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
     var x = origin_stop.split(" ");
-    origin_stop=x[0]
-    
+    origin_stop = x[0]
+
     var route = $("#estimator-route").val();
     var x = route.split(" ");
-    route=x[0]
+    route = x[0]
 
 
     $.ajax({
         type: "POST",
         url: "list_latlng/",
-        data: { route: route}
+        data: { route: route }
     })
 
         .done(function (response) {
@@ -231,13 +232,13 @@ function origin_marker() {
 function calcRoute() {
     var route = $("#estimator-route").val();
     var x = route.split(" ");
-    route=x[0]
+    route = x[0]
     var start = $("#estimator-origin").val();
     var x = start.split(" ");
-    start=x[0]
+    start = x[0]
     var end = $("#estimator-destination").val()
     var x = end.split(" ");
-    end=x[0]
+    end = x[0]
 
     $.ajax({
         type: "POST",
@@ -246,7 +247,7 @@ function calcRoute() {
     })
 
         .done(function (response) {
-       
+
             var x = JSON.parse(response)
 
             var start_latlng = { lat: x[start].lat, lng: x[start].lng };
@@ -257,11 +258,11 @@ function calcRoute() {
                 destination: end_latlng,
                 travelMode: google.maps.TravelMode.DRIVING
             };
-                directionsService = new google.maps.DirectionsService;
+            directionsService = new google.maps.DirectionsService;
 
-                 directionsDisplay = new google.maps.DirectionsRenderer({
-                    map: map
-    })
+            directionsDisplay = new google.maps.DirectionsRenderer({
+                map: map
+            })
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
@@ -271,7 +272,7 @@ function calcRoute() {
 
 
         })
-   
+
 
 };
 
@@ -289,10 +290,10 @@ $(function () {
         $('#stop-to-stop-fare').html("");
         $("#stop-to-stop-estimate").html("");
 
-       
+
 
         // show error if user doesn't complete all fields
-        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' 
+        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --'
             || $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
@@ -303,17 +304,12 @@ $(function () {
 
             if ($(window).width() < 992) {
                 datetimeValue = $("#datetime-tab2").val();
-                console.log("datetime value mobile: " + datetimeValue);
                 var arr = datetimeValue.split('T');
                 date = arr[0];
-                console.log("mobile date: " + date);
                 time = arr[1];
-                console.log("mobile time: " + time);
             } else {
                 var date = $("#datepicker-tab2").val();
-                console.log("desktop date: " + date);
-                time = $('#timepicker-tab2').val();
-                console.log("desktop time: " + time);
+                time = $('#timepicker-tab2').val();;
 
                 // use date and time here to make properly formatted datetimeValue for mobile
                 datetimeValue = date + 'T' + time;
@@ -354,18 +350,18 @@ $(function () {
             // sending a post request to the server
             route = $("#estimator-route").val();
             var x = route.split(" ");
-            route=x[0]
+            route = x[0]
             origin = $("#estimator-origin").val();
             var x = origin.split(" ");
-            origin=x[0]
+            origin = x[0]
             destination = $("#estimator-destination").val();
             var x = destination.split(" ");
-            destination=x[0]
+            destination = x[0]
 
-            console.log("route",route)
-            console.log("origin",origin)
-            console.log("destination",destination)
-            console.log("direction",direction)
+            console.log("route", route)
+            console.log("origin", origin)
+            console.log("destination", destination)
+            console.log("direction", direction)
             $.ajax({
                 type: "POST",
                 url: "prediction/",
@@ -381,13 +377,28 @@ $(function () {
 
                 .done(function (response) {
 
+                    $('#accordion-fare-tab2').show();
+
                     // display fare to user and display 'unavailable' when no fare given
-                    var fare = response.fare.fare;
-                    if (fare) {
-                        $('#stop-to-stop-fare').html(fare);
-                    } else{
-                        $('#stop-to-stop-fare').html("Unavailable");
+                    var fare = response.fare;
+                    console.log("fare dict thing")
+                    console.log(fare)
+
+
+                    if (fare["found"]) {
+                        for (const key in fare) {
+                            if (key != "url" && key != "route" && key != "found") {
+                                if (key == "Adult Cash" || key == "Adult Leap"){
+                                    $('#cash-and-leap-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
+                                } else {
+                                    $('#fare-result-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
+                                } 
+                            }
+                        }
+                    } else {
+                        $('#fare-result-tab2').append('<li>' + "Unavailable" + '</li>');
                     }
+
                     console.log("successfully posted");
                     $(".spinner-border").hide();
                     $("#stop-to-stop-estimate").html(response.result + " minutes");
@@ -404,13 +415,7 @@ $(function () {
             // set the value of the html for the summary results using the html id
             $("#origin-tab2").html("Stop " + $("#estimator-origin").val());
             $("#destination-tab2").html("Stop " + $("#estimator-destination").val());
-
         }
-
-
-
-
-
     });
 
     // add on click to edit-journey button to hide results and show journey planner
@@ -420,7 +425,6 @@ $(function () {
         // $("#map-interface").css("top", "0px");
         $("#stop-to-stop-results").hide();
     });
-
     // call post request function when mobile datetime value changed
     $("#datetime-tab2-results").on("change", function () {
         sendDateTimeChangePostRequest();
@@ -502,32 +506,32 @@ var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
 function getSearchParams() {
     route = $("#estimator-route").val();
     var x = route.split(" ");
-    route=x[0]
+    route = x[0]
     origin = $("#estimator-origin").val();
     var x = origin.split(" ");
-    origin=x[0]
+    origin = x[0]
     var destination = $("#estimator-destination").val();
     var x = destination.split(" ");
-    destination=x[0]
+    destination = x[0]
 
     var params = new Object();
-        params["route"] = route;
-        params["direction"] = direction;                           // placeholder values !!!
-        params["start"] = origin;
-        params["end"] = destination;
+    params["route"] = route;
+    params["direction"] = direction;                           // placeholder values !!!
+    params["start"] = origin;
+    params["end"] = destination;
 
-        // get the date & time
-        if ($(window).width() < 992) {
-            // if used on mobile
-            var datetimeValue = $("#datetime-tab2").val();
-            var arr = datetimeValue.split('T');
-            params["date"] = arr[0];
-            params["time"] = arr[1];
-        } else {
-            // for other devices...
-            params["date"] = $("#datepicker-tab2").val();
-            params["time"] = $('#timepicker-tab2').val();
-        }
+    // get the date & time
+    if ($(window).width() < 992) {
+        // if used on mobile
+        var datetimeValue = $("#datetime-tab2").val();
+        var arr = datetimeValue.split('T');
+        params["date"] = arr[0];
+        params["time"] = arr[1];
+    } else {
+        // for other devices...
+        params["date"] = $("#datepicker-tab2").val();
+        params["time"] = $('#timepicker-tab2').val();
+    }
 
     return params;
 }
@@ -541,23 +545,23 @@ function makeStatsRequest() {
 
     // make the request
     $.ajax({
-        type:"POST",
-        url:"get_stats/",
-        data:{date:params.date, time:params.time, route:params.route, direction:params.direction, end:params.end, start:params.start}
+        type: "POST",
+        url: "get_stats/",
+        data: { date: params.date, time: params.time, route: params.route, direction: params.direction, end: params.end, start: params.start }
     })
 
-    // when response received
-    .done(function(response){
-        var data = JSON.parse(response);
+        // when response received
+        .done(function (response) {
+            var data = JSON.parse(response);
 
-        var infoObject = new Object();
+            var infoObject = new Object();
             infoObject["data"] = data;
             infoObject["route"] = params.route;
             infoObject["start"] = params.start;
             infoObject["end"] = params.end;
 
-        updateTextInfo(infoObject);
-        drawBarChart(data);
+            updateTextInfo(infoObject);
+            drawBarChart(data);
         })
 }
 
@@ -585,7 +589,7 @@ function updateTextInfo(data) {
         $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[day_time];
-        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes. You could expect to save "  + timeDelta + "minutes by making this trip at " + fastest_time + "instead.");
+        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes. You could expect to save " + timeDelta + "minutes by making this trip at " + fastest_time + "instead.");
     }
 
 }
@@ -604,9 +608,9 @@ function DataSet(data) {
 
     var arr = new Array();
 
-    Object.keys(data).forEach( function(item) {
-            arr.push(data[item]);
-        })
+    Object.keys(data).forEach(function (item) {
+        arr.push(data[item]);
+    })
 
     this.data = arr;
 }
@@ -618,44 +622,44 @@ function drawBarChart(data) {
     var bars = [];
     var labels = Object.keys(data);
 
-    bars =  new DataSet(data);
+    bars = new DataSet(data);
     var someChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    datasets: [bars],
-                    labels: Object.keys(data),
+        type: 'bar',
+        data: {
+            datasets: [bars],
+            labels: Object.keys(data),
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        labelString: "Travel Time (Minutes)",
+                        display: true
                     },
-                options: {
-                    responsive: true,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                labelString: "Travel Time (Minutes)",
-                                display: true
-                            },
-                            stacked: false,
-                            display: true,
-                            gridLineWidth: 0,
-                            minorTickInterval: null,
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
-                        xAxes: [{
-                            stacked: false,
-                            display: true,
-                            gridLineWidth: 0,
-                            gridLines: {
-                                display: false
-                            }
-                        }]
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    minorTickInterval: null,
+                    ticks: {
+                        beginAtZero: true
                     }
-                }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        }
     });
     return someChart;
 
 }
-$('#stop-to-stop-go').on('click',makeStatsRequest)
+$('#stop-to-stop-go').on('click', makeStatsRequest)

@@ -191,10 +191,7 @@ def planner(request):
         
         print("prediction list",prediction)
 
-        
-
-
-       
+    
     prediction_and_fare["fare"] = total_fare
     prediction_and_fare["prediction"] = prediction
     print("prediction and fare dict")

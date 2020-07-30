@@ -379,10 +379,13 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             $('.results-card').show();
             $('#accordion-fare').show();
 
+            // extract the fare from the response
             let fare = response.fare;
+
+            // clear the fare each time a new fare is shown
             $('#fare-result-tab1').html("");
 
-            // total cash and leap fares
+            // initialise total cash and leap fares
             var total_cash = 0;
             var total_leap = 0;
 
@@ -390,35 +393,34 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             // keep track of whether a fare for every bus was added to the total
             var all_fares_included = true;
 
+            // loop through all fare dictionaries in the list returned
             fare.forEach(element => {
               if (element["found"]) {
                 $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + "</li>");
                 for (const key in element) {
                   if (key != "url" && key != "route" && key != "found") {
                     $('#fare-result-tab1').append('<li>' + key + ": " + "€" + element[key] + "</li>");
-
-                    // add to total depending on whether it's cash or leap
-                  } if (key == "Adult Cash") {
-                    // add two decimals to the float
-                    element[key] = parseFloat(element[key]).toFixed(2);
-                    total_cash += element[key];
+                  }
+                  // parse from a string to a float and add to cash or leap total
+                  if (key == "Adult Cash") {
+                    amount = parseFloat(element[key]);
+                    total_cash += amount;
 
                   } if (key == "Adult Leap") {
-                    element[key] = parseFloat(element[key]).toFixed(2);
+                    element[key] = parseFloat(element[key]);
                     total_leap += element[key];
-
                   }
-
                 }
+                //add new line
+                $('#fare-result-tab1').append('<br>');
               } else {
-                all_fares_included = false;
-                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ": Unavailable" + '</li>');
-              }
 
-              // add a space after each list
-              // $("ul").after(function () {
-              //   return "<div><br></div>";
-              // });
+                // if all fares not included, show a message to the user 
+                all_fares_included = false;
+                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + '</li>');
+                $('#fare-result-tab1').append('<li>' + "Unavailable" + '</li>');
+                $('#fare-result-tab1').append('<br>');
+              }
             });
 
             // cap leap total at €6
@@ -426,26 +428,31 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
               total_leap == 6.00
             }
 
-            // remove leading 0 for values below €10
-            total_leap = "" + total_leap;
+            // use regex to remove leading 0 for values below €10
+            total_leap = "" + total_leap.toFixed(2);
             total_leap = total_leap.replace(/^0+/, '');
-            total_cash = "" + total_cash;
+            total_cash = "" + total_cash.toFixed(2);
             total_cash = total_cash.replace(/^0+/, '');
 
             // append totals to list and display to user
-            if (all_fares_included){
-              console.log("if flag:")
-              console.log(all_fares_included);
+            // if all fares included display to user with no error message
+            if (all_fares_included) {
               $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+              $('#total-fares').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
             } else {
-              console.log("else flag:")
-              console.log(all_fares_included);
-              $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
-              $('#fare-total-message').show();
+              // if all fares unavailable show total as unavailable
+              if(total_cash == 0){
+                $('#total-fares').append('<li>' + "Total Cash Fare: Unavailable" + '</li>');
+              } if (total_leap == 0){
+                $('#total-fares').append('<li>' + "Total Leap Fare: Unavailable" + '</li>');
+              } else {
+                // else show totals that are available along with error message
+                $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+                $('#total-fares').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
+                $('#fare-total-message').show();
+              }
             }
-            $('#total-fares').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
-
-
+            
             // get prediction from dict returned
             response = response.prediction;
 
