@@ -11,24 +11,29 @@
         <div class="form-group">
             <label for="origin">From:</label>
             <!-- <p class="instruction">(Type an origin location or use your current location)</p> -->
-            <input type="text" required="required" class="input-box form-control col-6" id="origin" placeholder="Enter origin">
+            <input type="text" required="required" class="input-box form-control col-6" id="origin"
+                placeholder="Enter origin">
             <div class="row">
-                <button type="submit" class="col-4 btn btn-link align-top geolocation-option" id="geolocation-routeplanner">Use my location</button>
+                <button type="submit" class="col-4 btn btn-link align-top geolocation-option"
+                    id="geolocation-routeplanner">Use my location</button>
                 <div class="spinner-border spinner-border-sm text-success geo-spinner" role="status"></div>
-                <button type="button" class="btn btn-default align-top question" data-toggle="tooltip" data-placement="top" title="You can choose to use your current location in order to make the directions more helpful for you. Your location will not be stored or sent elsewhere.">
+                <button type="button" class="btn btn-default align-top question" data-toggle="tooltip"
+                    data-placement="top"
+                    title="You can choose to use your current location in order to make the directions more helpful for you. Your location will not be stored or sent elsewhere.">
                     <span class="fa fa-question-circle"></span>
                 </button>
             </div>
         </div>
 
-          <!-- error if geolocation doesn't work -->
-          <div>
+        <!-- error if geolocation doesn't work -->
+        <div>
             <p class="geo-error">There was an error finding your current location. Please enter the origin location.</p>
         </div>
-        
+
         <div class="form-group">
             <label for="destination">To:</label>
-            <input type="text" required="required" class="input-box form-control col-6" id="destination" placeholder="Enter destination">
+            <input type="text" required="required" class="input-box form-control col-6" id="destination"
+                placeholder="Enter destination">
         </div>
         <div>
             <!-- mobile datetime picker-->
@@ -51,17 +56,17 @@
             <p class="invalid-location-error">We could not find directions for this journey.</p>
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
 
-        </form>
+    </form>
 
-        <!-- dublin bus twitter feed -->
-        <div class="container news">
-            <div class="black_box">
-                <a class="twitter-timeline" data-width="700" data-height="500"
-                    href="https://twitter.com/dublinbusnews?ref_src=twsrc%5Etfw">Twitter Updates by Dublin Bus</a>
-            </div>
+    <!-- dublin bus twitter feed -->
+    <div class="container news">
+        <div class="black_box">
+            <a class="twitter-timeline" data-width="700" data-height="500"
+                href="https://twitter.com/dublinbusnews?ref_src=twsrc%5Etfw">Twitter Updates by Dublin Bus</a>
         </div>
-        <div class="mobile-space"></div>
     </div>
+    <div class="mobile-space"></div>
+</div>
 </div>
 
 <div class="container" id="route-results">
@@ -109,7 +114,7 @@
             </div>
         </div>
 
-     
+
     </div>
 
     <!-- spinner to show while user waits for results -->
@@ -131,11 +136,67 @@
                 <p>Total duration: <span id="duration-val"></span></p>
             </div>
         </div>
-        <div id="journey-planner-fare">
+
+
+        <!-- fare -->
+        <!-- <div id="journey-planner-fare">
             <h5 class="fare-header">Journey Fare:</h5>
             <ul id="fare-result-tab1"></ul>
-        </div>
+        </div> -->
     </div>
+
+
+    <div id="accordion-fare">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <ul id="total-fares"></ul>
+                <div id="fare-total-message">Some fares on this journey could not be calculated</div>
+                    <h5 class="mb-0 fare-button">
+
+                        <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            More fare details
+                        </button>
+                    </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-fare">
+                <div class="card-body">
+                    <ul id="fare-result-tab1"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- directions and prediction -->
     <div class="card results results-card">
         <div class="row">
             <ul id="direction">

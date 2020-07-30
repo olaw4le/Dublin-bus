@@ -363,8 +363,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                     if (travelMode == "WALKING") {
 
                         duration = journeysteps[i].duration.text;
-
-                        journeyTime += parseInt(duration[0])
+                        console.log("journey time");
+                        console.log(duration);
+                        journeyTime += parseInt(duration)
 
 
                         console.log(journeyTime)
@@ -434,13 +435,16 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                     .done(function (response) {
 
-
+                        console.log("response")
+                        
                         response = JSON.parse(response)
+                        console.log(response)
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
 
                         // prediction1 = JSON.parse(response)
+                        console.log("prediction");
                         prediction1 = response.prediction;
                         console.log(prediction1)
 

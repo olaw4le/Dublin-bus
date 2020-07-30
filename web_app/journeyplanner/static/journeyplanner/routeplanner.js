@@ -10,7 +10,7 @@ $(document).ready(function () {
 
   // Remove routes when navigating to another tab
   $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
-  removeLineFromMap);
+    removeLineFromMap);
 
   // initialise tooltip for info regarding geolocation
   $(function () {
@@ -221,7 +221,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         } else {
           date = $("#datepicker-tab1").val();
           time = $('#timepicker-tab1').val();
-    
+
           // use date and time here to make properly formatted datetimeValue for mobile
           datetimeValue = date + 'T' + time;
         }
@@ -316,9 +316,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
           else if (travelMode == "TRANSIT") {
             var journey_steps = {}; //dictionary for each bus steps in the journey
             distance = journeysteps[i].distance.text;
-            duration=journeysteps[i].duration.text
-            x=duration.split(" ")
-            duration=x[0]
+            duration = journeysteps[i].duration.text
+            x = duration.split(" ")
+            duration = x[0]
             instruction = journeysteps[i].instructions;
             Route_number = journeysteps[i].transit.line.short_name;
             arrival_stop = journeysteps[i].transit.arrival_stop.name;
@@ -370,41 +370,85 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         })
 
           .done(function (response) {
-          
+
             // parse the response
             response = JSON.parse(response)
 
             // hide the spinner and show the results
             $('.prediction-spinner').hide();
             $('.results-card').show();
-            $('#journey-planner-fare').show();
+            $('#accordion-fare').show();
 
             let fare = response.fare;
-            console.log("Fare")
-            console.log(fare)
             $('#fare-result-tab1').html("");
+
+            // total cash and leap fares
+            var total_cash = 0;
+            var total_leap = 0;
+
+
+            // keep track of whether a fare for every bus was added to the total
+            var all_fares_included = true;
+
             fare.forEach(element => {
-              console.log(element["fare"])
               if (element["found"]) {
                 $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + "</li>");
                 for (const key in element) {
                   if (key != "url" && key != "route" && key != "found") {
-                    $('#fare-result-tab1').append('<li>' + key + ": " + element[key] + "</li>");
-                
+                    $('#fare-result-tab1').append('<li>' + key + ": " + "€" + element[key] + "</li>");
+
+                    // add to total depending on whether it's cash or leap
+                  } if (key == "Adult Cash") {
+                    // add two decimals to the float
+                    element[key] = parseFloat(element[key]).toFixed(2);
+                    total_cash += element[key];
+
+                  } if (key == "Adult Leap") {
+                    element[key] = parseFloat(element[key]).toFixed(2);
+                    total_leap += element[key];
+
                   }
+
                 }
-                console.log(element["fare"] + element["route"])
               } else {
-                console.log("inside else if");
-                $('#fare-result-tab1').append('<li>' + element["route"] + ": Unavailable" + '</li>');
+                all_fares_included = false;
+                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ": Unavailable" + '</li>');
               }
+
+              // add a space after each list
+              // $("ul").after(function () {
+              //   return "<div><br></div>";
+              // });
             });
 
+            // cap leap total at €6
+            if (total_leap > 6) {
+              total_leap == 6.00
+            }
+
+            // remove leading 0 for values below €10
+            total_leap = "" + total_leap;
+            total_leap = total_leap.replace(/^0+/, '');
+            total_cash = "" + total_cash;
+            total_cash = total_cash.replace(/^0+/, '');
+
+            // append totals to list and display to user
+            if (all_fares_included){
+              console.log("if flag:")
+              console.log(all_fares_included);
+              $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+            } else {
+              console.log("else flag:")
+              console.log(all_fares_included);
+              $('#total-fares').append('<li>' + "Total Cash Fare: €" + total_cash + '</li>');
+              $('#fare-total-message').show();
+            }
+            $('#total-fares').append('<li>' + "Total Leap Fare: €" + total_leap + '</li>');
 
 
             // get prediction from dict returned
             response = response.prediction;
-            
+
             // prediction1 = JSON.parse(response)
             prediction1 = response
             console.log("prediction")
@@ -561,7 +605,7 @@ $(function () {
       // use date and time here to make properly formatted datetimeValue for mobile
       datetimeValue = date + 'T' + time;
     }
- 
+
     $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight

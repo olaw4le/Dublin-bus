@@ -447,10 +447,6 @@ label.dt-label {
   margin-top: 10px;
 }
 
-#journey-planner-fare {
-  display: none;
-}
-
 .fare-header {
   text-align: left;
   font-weight: 600;
@@ -460,6 +456,36 @@ label.dt-label {
   display: none;
   margin-left: 30px;
 }
+
+/* fare */
+
+.fare-button {
+  text-align: left;
+  margin-left: 0px;
+}
+
+
+#accordion-fare {
+  display: none;
+  margin: 15px 15px 15px 15px;
+}
+
+#fare-result-tab1 {
+  padding-left: 0px;
+  margin-bottom: 10px;
+}
+
+#fare-total-message {
+  display: none;
+  font-size: 0.9em;
+  color: red;
+}
+
+#total-fares {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
