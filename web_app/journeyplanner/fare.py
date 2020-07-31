@@ -12,7 +12,10 @@ def get_fare(route, direction, start_stop, end_stop):
         ordered_stops = json.load(json_file)
     route = route.upper()
     fare_details["route"] = route
-    route_dict = ordered_stops[route]
+    try:
+        route_dict = ordered_stops[route]
+    except:
+        return fare_details
     if direction:
         direction = int(direction)
     else:

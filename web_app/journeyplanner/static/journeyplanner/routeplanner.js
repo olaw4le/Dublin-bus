@@ -355,6 +355,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
             // clear the fare each time a new fare is shown
             $('#fare-result-tab1').html("");
+            $('#total-fares').html("");
 
             // initialise total cash and leap fares
             var total_cash = 0;
@@ -453,7 +454,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
               var rhours = Math.floor(hours);
               var minutes = (hours - rhours) * 60;
               var rminutes = Math.round(minutes);
-              return rhours + "hour " + rminutes + "minute.";
+              return rhours + " hour " + rminutes + " mins";
               }
 
 
@@ -538,7 +539,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
     });
 }
 
-
 function showSteps(directionResult, markerArray, stepDisplay, map) {
   // For each step, place a marker, and add the text to the marker's infowindow.
   // Also attach the marker to an array so we can keep track of it and remove it
@@ -573,6 +573,7 @@ $(function () {
     // show spinner and hide results
     $('.prediction-spinner').show();
     $('.results-card').hide();
+    $('.fare-accordion').hide();
 
     //remove line from map
     removeLineFromMap();
