@@ -1,3 +1,4 @@
+// remove line from map
 function removeLineFromMap() {
     if (directionsRenderer) {
         directionsRenderer.setDirections({ routes: [] });
@@ -17,16 +18,13 @@ function clearMarkers() {
     }
 }
 
-
-
-
 $(document).ready(function () {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
         removeLineFromMap);
 
-
+    // clear markers when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
         clearMarkers);
 
@@ -52,6 +50,7 @@ $(document).ready(function () {
 
 });
 
+//initialise variables
 var routes = "";
 var route_number = "";
 var stop_name = "";
@@ -67,7 +66,6 @@ $(function () {
             var x = key.split("_");
             route_number += (x[0] + " " + stations[key].headsign) + ",";
         }
-        console.log(route_number)
 
         //turning the into an array
         route_number = route_number.trim().split(",");
@@ -130,11 +128,6 @@ function stops() {
 
 
                         list += (key3 + " " + y) + ",";
-
-
-
-
-
                     }
                 }
 
@@ -142,22 +135,17 @@ function stops() {
                 list = list.trim().split(",");
                 result = list
 
-
                 //popuplating the sub route select list
                 for (var i = 0; i < list.length; i++) {
                     To += "<option>  " + list[i] + "</option>";
                     stop_list.push(list[i])
                 }
-
-
                 $("#estimator-origin").html(To);
-
             }
         }
     })
 
 }
-
 
 
 var index;
@@ -182,7 +170,6 @@ function destination() {
     // populating the inner html with the destination
     $("#estimator-destination").html(To)
 }
-
 
 function origin_marker() {
     var origin_stop = $("#estimator-origin").val()
@@ -214,19 +201,8 @@ function origin_marker() {
 
             }
 
-
         });
 }
-
-// function initMap2() {
-//     directionsService = new google.maps.DirectionsService;
-
-//     directionsDisplay = new google.maps.DirectionsRenderer({
-//         map: map
-//     });
-//     calcRoute();
-
-// }
 
 // calculate route
 function calcRoute() {
@@ -269,11 +245,7 @@ function calcRoute() {
                 }
                 removeLineFromMap()
             });
-
-
         })
-
-
 };
 
 // event listner to porpulate the route dropdown list)
@@ -287,12 +259,11 @@ $(function () {
 
     $('#stop-to-stop-go').on('click', function () {
 
+        // clear old fare and prediction values each time user clicks go
         $('#stop-to-stop-fare').html("");
         $("#stop-to-stop-estimate").html("");
 
-
-
-        // show error if user doesn't complete all fields
+        // show error if user doesn't complete all fields in form
         if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --'
             || $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
@@ -302,6 +273,7 @@ $(function () {
             calcRoute();
             removeLineFromMap();
 
+            //  use different date and time values depending on size of screen
             if ($(window).width() < 992) {
                 datetimeValue = $("#datetime-tab2").val();
                 var arr = datetimeValue.split('T');
@@ -346,7 +318,6 @@ $(function () {
             var timeSplit = time.split(':');
             var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
-
             // sending a post request to the server
             route = $("#estimator-route").val();
             var x = route.split(" ");
@@ -358,10 +329,7 @@ $(function () {
             var x = destination.split(" ");
             destination = x[0]
 
-            console.log("route", route)
-            console.log("origin", origin)
-            console.log("destination", destination)
-            console.log("direction", direction)
+            // send post request
             $.ajax({
                 type: "POST",
                 url: "prediction/",
@@ -375,16 +343,15 @@ $(function () {
                 }
             })
 
+                // response returned from post request
                 .done(function (response) {
 
                     $('.fare-accordion').show();
 
                     // display fare to user and display 'unavailable' when no fare given
                     var fare = response.fare;
-                    console.log("fare dict thing")
-                    console.log(fare)
 
-
+                    // if fare has found flag 'True', append fares to list
                     if (fare["found"]) {
                         for (const key in fare) {
                             if (key != "url" && key != "route" && key != "found") {
@@ -396,10 +363,13 @@ $(function () {
                             }
                         }
                     } else {
+                        // else append unavailable
                         $('#fare-result-tab2').append('<li>' + "Unavailable" + '</li>');
                     }
 
                     console.log("successfully posted");
+
+                    // hide spinner and show estimate
                     $(".spinner-border").hide();
                     $("#stop-to-stop-estimate").html(response.result + " minutes");
                 });
@@ -420,9 +390,7 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('#edit-journey-tab2').on('click', function () {
-        console.log("inside edit-journey-results");
         $(".form-area").show();
-        // $("#map-interface").css("top", "0px");
         $("#stop-to-stop-results").hide();
     });
     // call post request function when mobile datetime value changed
@@ -439,17 +407,15 @@ function sendDateTimeChangePostRequest() {
     $("#stop-to-stop-estimate").hide();
     $(".spinner-border").show();
 
+    // diff date and time values depending on screen size
     if ($(window).width() < 992) {
         datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
         date = arr[0];
-        console.log("mobile date: " + datetimeValue);
         time = arr[1];
     } else {
         var date = $("#datepicker-tab2-results-date").val();
-        console.log("desktop date: " + date);
         time = $('#datepicker-tab2-results-time').val();
-        console.log("desktop time: " + time);
 
         // use date and time here to make properly formatted datetimeValue for mobile
         datetimeValue = date + 'T' + time;
@@ -460,11 +426,10 @@ function sendDateTimeChangePostRequest() {
     $("#datepicker-tab2-results-date").val(date);
     $("#datepicker-tab2-results-time").val(time);
 
-
     var timeSplit = time.split(':');
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-    console.log(timeSeconds);
 
+    // send post request again when user changes date and time
     $.ajax({
         type: "POST",
         url: "prediction/",

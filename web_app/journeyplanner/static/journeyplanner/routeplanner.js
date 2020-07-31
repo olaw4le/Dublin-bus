@@ -82,22 +82,6 @@ $("#origin").on("input", function () {
   $('.geo-error').hide();
 });
 
-
-// function to create a marker for the bus station nearby from the user location 
-// function createMarker(place) {
-//   var marker = new google.maps.Marker({
-//     map: map,
-//     icon: "http://maps.google.com/mapfiles/ms/micons/bus.png",
-//     position: place.geometry.location
-//   });
-
-//   google.maps.event.addListener(marker, 'click', function () {
-//     infowindow.setContent(place.name);
-//     infowindow.open(map, this);
-//   });
-// }
-
-
 //the starting location   
 var starting_lat;
 var starting_lng;
@@ -108,6 +92,7 @@ var ending_lng;
 var directionsRenderer;
 var allMarkers = [];
 
+// function to remove route line from map
 function removeLineFromMap() {
   if (directionsRenderer) {
     directionsRenderer.setDirections({ routes: [] });
@@ -150,8 +135,6 @@ function routes() {
 
   // Create a map and center it on starting point
 
-  // map.panTo(center);
-
   // Create a renderer for directions and bind it to the map.
   directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
 
@@ -163,11 +146,8 @@ function routes() {
   return true;
 }
 
-
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
-
-
 
   // Retrieve the start and end locations and create a DirectionsRequest using
   // Bus directions.
@@ -184,7 +164,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
     // showing the response received in a text format 
     function (response, status) {
-      console.log(response)
 
       // markers for each step.
       if (status === 'OK') {
@@ -250,13 +229,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         var date1 = arr[0];
         var input_time = arr[1];
 
-
         // convert time to seconds since midnight
-        // console.log("time: "+ input_time);
         var timeSplit = input_time.split(':');
         var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-
-
 
         // the route distance
         var distance = '';
@@ -302,15 +277,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             duration = journeysteps[i].duration.text;
 
             journeyTime += parseInt(duration[0])
-
-
             console.log(journeyTime)
 
             //trimming the instruction text
             instruction = instruction.split(',');
             instruction = instruction[0];
-
-
           }
 
           else if (travelMode == "TRANSIT") {
@@ -354,7 +325,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         console.log("data", list)
 
-
         var prediction = 0;
         // sending a post request to the server
         $.ajax({
@@ -369,6 +339,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
         })
 
+        // response returned from post request
           .done(function (response) {
 
             // parse the response
@@ -388,7 +359,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             // initialise total cash and leap fares
             var total_cash = 0;
             var total_leap = 0;
-
 
             // keep track of whether a fare for every bus was added to the total
             var all_fares_included = true;
@@ -484,11 +454,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             $("#duration-val").html(journeyTime + ' mins')
             $("#journey-time").html(input_time + ' - ' + theFutureTime)
 
-
-
             for (var i = 0; i < journeysteps.length; i++) {
-
-
 
               console.log('number', number)
               var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
@@ -534,11 +500,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                 number += 1
               }
-
-
             }
-
-            console.log(number)
           })
 
         //showing the response on the map. 	 
@@ -589,9 +551,11 @@ $(function () {
 
   $('#go').on('click', function () {
 
+    // show spinner and hide results
     $('.prediction-spinner').show();
     $('.results-card').hide();
 
+    //remove line from map
     removeLineFromMap();
 
 
@@ -601,13 +565,10 @@ $(function () {
       datetimeValue = $("#datetime-tab1").val();
       var arr = datetimeValue.split('T');
       date = arr[0];
-      console.log("mobile date: " + date);
       time = arr[1];
     } else {
       var date = $("#datepicker-tab1").val();
-      console.log("desktop date: " + date);
       time = $('#timepicker-tab1').val();
-      console.log("desktop time: " + time);
 
       // use date and time here to make properly formatted datetimeValue for mobile
       datetimeValue = date + 'T' + time;
@@ -616,10 +577,8 @@ $(function () {
     $(".datetime").val(datetimeValue);
 
     // convert time to seconds since midnight
-    console.log("time: " + time);
     var timeSplit = time.split(':');
     var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-    console.log(timeSeconds);
 
     // show results and routes
     var success = routes();
@@ -634,20 +593,17 @@ $(function () {
 
     // remove line from map when user clicks go
     removeLineFromMap();
-
-
   });
 
   // add on click to edit-journey button to hide results and show journey planner
   $('.edit-journey').on('click', function () {
     removeLineFromMap();
     $(".form-area").show();
+    // show half map on mobiles
     if ($(window).width() < 992) {
       $("#map-interface").css("top", "0px");
     }
     $("#route-results").hide();
     $('#direction').empty()
   });
-
-
 });

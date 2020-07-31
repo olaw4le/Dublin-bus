@@ -199,9 +199,8 @@ function createMarker(place, icon, markerList, rating) {
     })(place.name, ending_lat, ending_lng));
 }
 
-
+// initialise info window and some variables
 infoWindow = new google.maps.InfoWindow;
-
 var ending_lat;
 var ending_lng;
 var starting_lat;
@@ -343,15 +342,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 var timeSplit = input_time.split(':');
                 var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
 
-
-
-
-
-
-
-                //  // going through the repsone recieved from google
-                //  var travelMode = journeysteps[i].travel_mode;
-
                 var journeyTime = 0;
                 for (var i = 0; i < journeysteps.length; i++) {
 
@@ -373,8 +363,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         //trimming the instruction text
                         instruction = instruction.split(',');
                         instruction = instruction[0];
-
-
                     }
 
                     else if (travelMode == "TRANSIT") {
@@ -395,8 +383,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         instruction = instruction.split(',');
                         instruction = instruction[0];
 
-
-
                         journey_steps["route_number"] = Route_number;
                         journey_steps["arrival_stop"] = arrival_stop;
                         journey_steps["departure_stop"] = departure_stop;
@@ -404,7 +390,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         journey_steps["departure_latlng"] = departure_latlng;
                         journey_steps["arrival_latlng"] = arrival_latlng;
                         journey_steps["duration"] = duration;
-
 
                         list.push(journey_steps)
                         list1.push(Route_number)
@@ -417,7 +402,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 var data = JSON.stringify(list);
 
                 console.log("data", list)
-
 
                 var prediction = 0;
                 // sending a post request to the server
@@ -433,12 +417,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                 })
 
+                    // response returned from post request
                     .done(function (response) {
 
-                        console.log("response")
-
                         response = JSON.parse(response)
-                        console.log(response)
+    
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
@@ -455,7 +438,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         var total_cash = 0;
                         var total_leap = 0;
 
-
                         // keep track of whether a fare for every bus was added to the total
                         var all_fares_included = true;
 
@@ -463,6 +445,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         fare.forEach(element => {
                             if (element["found"]) {
                                 $('#fare-result-tourist').append('<li>' + "Route " + element["route"] + ":" + "</li>");
+                                // append all price related items to list
                                 for (const key in element) {
                                     if (key != "url" && key != "route" && key != "found") {
                                         $('#fare-result-tourist').append('<li>' + key + ": " + "€" + element[key] + "</li>");
@@ -519,20 +502,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                             }
                         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        // prediction1 = JSON.parse(response)
                         console.log("prediction");
                         prediction1 = response.prediction;
                         console.log(prediction1)
@@ -548,7 +517,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         for (var j = 0; j < prediction1.length; j++) {
 
                             journeyTime += parseInt(prediction1[j])
-                            console.log(journeyTime)
                         }
                         var b = input_time.split(':');
                         var theFutureTime = moment().hour(b[0]).minute(b[1]).add(journeyTime, 'minutes').format("HH:mm");
@@ -571,7 +539,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                             if (travelMode == "WALKING") {
 
-
                                 distance = journeysteps[i].distance.text;
                                 duration = journeysteps[i].duration.text;
                                 instruction = journeysteps[i].instructions;
@@ -583,11 +550,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
                             }
-
                             else if (travelMode == "TRANSIT") {
                                 var journey_steps = {}; //dictionary for each bus steps in the journey
                                 distance = journeysteps[i].distance.text;
-
 
                                 instruction = journeysteps[i].instructions;
                                 Route_number = journeysteps[i].transit.line.short_name;
@@ -606,14 +571,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                                 number += 1
                             }
-
-
                         }
-
-                        console.log(number)
                     })
-
-
                 //showing the response on the map. 	 
                 directionsRenderer.setDirections(response);
                 showSteps(response, markerArray, stepDisplay, map);
@@ -623,7 +582,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             }
         });
 }
-
 
 function showSteps(directionResult, markerArray, stepDisplay, map) {
     // For each step, place a marker, and add the text to the marker's infowindow.
@@ -688,9 +646,6 @@ $(function () {
             $("#route-results-tourist").show();
 
         }
-
-
-
     });
 
     // add on click to edit-journey button to hide results and show journey planner
@@ -699,7 +654,7 @@ $(function () {
         // hide the fare when the user clicks back
         $('.fare-accordion').hide();
 
-
+        // pan to correct place on map depending on screen size
         if ($(window).width() <= 992) {
             map.panTo(mobileDublin);
             map.setZoom(13);
@@ -709,6 +664,7 @@ $(function () {
             map.panBy(300, 0);
         }
 
+        // when the user clicks 'back' show the markers again of the checked check-box
         $('.tourist-check').each(function (index, obj) {
             if (this.checked) {
                 var type = $(this).attr("data-type");
@@ -726,15 +682,12 @@ $(function () {
                 service.nearbySearch(request, function (results, status) {
                     callback(results, status, type)
                 });
-
             }
-
-
-
         });
 
         $("#checkbox-card").show();
         $(".form-area").show();
+        // show half map on mobile screens
         if ($(window).width() < 992) {
             $("#map-interface").animate({ top: "400px" }, 400);
         }
