@@ -9,7 +9,6 @@ $(document).ready(function () {
         var month = ((d.getMonth()+1) < 10) ? "0" + (d.getMonth()+1) : (d.getMonth()+1);
         var date = (d.getDate()  < 10) ? "0" + d.getDate() : d.getDate();
         var datestring = d.getFullYear() + "-" + month + "-" + date + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-        console.log("full date " + datestring);
         return datestring;
     }
 
@@ -36,7 +35,6 @@ $(document).ready(function () {
 
     // show active link in bottom nav bar
     $('.nav-bottom').on('click', function () {
-        // $('.nav-bottom').removeClass("active");
         navId = $(this).attr('id');
         $('#' + navId).addClass("active");
         navIdForTab = navId.split("-")[0];
@@ -51,7 +49,7 @@ $(document).ready(function () {
         }
     });
 
-
+    // hide sidebar menu on desktop landing page
     $("#hide-menu").on('click', function(){
         $("#hide-menu").hide();
         $(".hide-slide-menu, #hide-menu").hide();
@@ -61,6 +59,8 @@ $(document).ready(function () {
             "width": "30px"
           }, 200);
     });
+
+    // show sidebar menu on desktop landing page
     $("#show-menu").on('click', function(){
         $("#show-menu").hide();
         $("#hide-menu").show();
@@ -86,10 +86,6 @@ $(window).resize(function () {
         $("#map-interface").show();
         $("#show-map").html("Show Map");
         $("#map-interface").css("top", "");
-
-        // if ($('#tourist-nav').hasClass("active")) {
-        //     $("#map-interface").css("top", "");
-        // }
     }
 });
 

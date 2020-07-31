@@ -2,14 +2,18 @@ $(document).ready(function () {
 
     $('#leap-login-button').on('click', function () {
 
+        $('.spinner-border').show();
+
         console.log("inside leap click");
         leap_login();
         $('#leap-login-container').hide();
-        $('#leap-overview-container').show();
-        $('#leap-detailed-container').show();
+        
+        
+        
     })
 
     $('#leap-logout').on('click', function () {
+        $('#leap-logout').hide();
         $('#leap-login-container').show();
         $('#leap-overview-container').hide();
         $('#leap-detailed-container').hide();
@@ -40,6 +44,11 @@ function leap_login(){
     })
 
         .done(function(response){
+
+            $('.spinner-border').hide();
+            $('#leap-detailed-container').show();
+            $('#leap-overview-container').show();
+            $('#leap-logout').show();
             var overviewData = JSON.parse(response);
             console.log(overviewData);
 

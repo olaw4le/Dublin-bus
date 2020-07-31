@@ -70,20 +70,17 @@ function bustime() {
                     var origin = businfo[i].origin
                     var destination = businfo[i].destination;
                     var due_time = businfo[i].duetime;
-
-                    tableRows += "<tr><td>" + route_number + "</td><td>" + destination + "</td><td>" + due_time + "mins" + "</td></tr>";
+                    if (due_time == "Due") {
+                        due_time = 0;
+                    }
+                    tableRows += "<tr><td>" + route_number + "</td><td>" + destination + "</td><td>" + due_time + " mins" + "</td></tr>";
                     $("#real-time-table").html(tableRows)
 
                 }
-
             }
-
-
         })
 }
 
-
-// $("#real-time-button").click(bustime)
 $("#real-time-button").on('click', function () {
     $('.spinner-border').show();
     // $("#real-time-table").html(tableRows);
