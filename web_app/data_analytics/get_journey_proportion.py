@@ -71,6 +71,7 @@ def segments_from_stops(seq):
 
 
 def get_proportions(route, direction, segments, month, day, time):
+    # print([route, direction, segments, month, day, time])
 
     # create sql query
     table_name = "route_%s_%s_proportions" % (str(route), str(direction))
@@ -79,10 +80,20 @@ def get_proportions(route, direction, segments, month, day, time):
                            column_names=segments)
 
     # execute sql query
-    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+    try:
+        response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions + the (number of missing values * the average journey time)
-    return sum_values(response[0])
+        if len(response) < 1:
+            # if the response is empty return None
+            return None
+        else:
+            # return the sum of all proportions + the (number of missing values * the average journey time)
+            return sum_values(response[0])
+
+    except Exception as e:
+        # print(e)
+        # print(sql)
+        return e
 
 
 def get_mean_time(route, direction, segments, month, day, time):
@@ -94,10 +105,20 @@ def get_mean_time(route, direction, segments, month, day, time):
                            column_names=segments, verbose=False)
 
     # execute sql query
-    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+    try:
+        response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions + the (number of missing values * the average journey time)
-    return sum_values(response[0])
+        if len(response) < 1:
+            # if the response is empty return None
+            return None
+        else:
+            # return the sum of all proportions + the (number of missing values * the average journey time)
+            return sum_values(response[0])
+
+    except Exception as e:
+        # print(e)
+        # print(sql)
+        return e
 
 
 def get_standard_dev(route, direction, segments, month, day, time):
@@ -110,24 +131,39 @@ def get_standard_dev(route, direction, segments, month, day, time):
                            column_names=segments, verbose=False)
 
     # execute sql query
-    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+    try:
+        response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    # return the sum of all proportions + the (number of missing values * the average journey time)
-    return sum_values(response[0])
+        if len(response) < 1:
+            # if the response is empty return None
+            return None
+        else:
+            # return the sum of all proportions + the (number of missing values * the average journey time)
+            return sum_values(response[0])
+
+    except Exception as e:
+        # print(e)
+        return e
 
 
 def get_95_percentile(route, direction, segments, month, day, time):
     """calculate the 95th percentile from the means & standard deviations for each segment"""
+    # print([route, direction, segments, month, day, time])
 
     try:
-        means = float(get_mean_time(route, direction, segments, month, day, time))
-        std_dev = float(get_standard_dev(route, direction, segments, month, day, time))
-        print(means)
-        print(std_dev)
-        return means + (1.645 * std_dev)
+        means = get_mean_time(route, direction, segments, month, day, time)
+        std_dev = get_standard_dev(route, direction, segments, month, day, time)
     except Exception as e:
-        print(e)
+        # print(e)
         return e
+
+    # print(means)
+    # print(std_dev)
+
+    if type(means) and type(std_dev) not in [int, float]:
+        return None
+    else:
+        return means + (1.645 * std_dev)
 
 
 def sum_values(values, **kwargs):
@@ -146,8 +182,8 @@ def sum_values(values, **kwargs):
         try:
             total += int(n)
         except Exception as e:
-            print("Error: can't cast type to int")
-            print(e)
+            # print("Error: can't cast type to int")
+            # print(e)
             nulls += 1
 
     # return the sum of all proportions + the (number of missing values * the average journey time)
