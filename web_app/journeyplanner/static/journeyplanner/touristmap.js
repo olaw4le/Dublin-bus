@@ -528,7 +528,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
               var rhours = Math.floor(hours);
               var minutes = (hours - rhours) * 60;
               var rminutes = Math.round(minutes);
-              return rhours + "hour " + rminutes + "minute.";
+              return rhours + "hour " + rminutes + " mins";
               }
 
 

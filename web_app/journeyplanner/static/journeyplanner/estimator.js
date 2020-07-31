@@ -166,7 +166,6 @@ function destination() {
         To += "<option>" + destination_list[i] + "</option>";
 
     }
-
     // populating the inner html with the destination
     $("#estimator-destination").html(To)
 }
@@ -441,11 +440,11 @@ function sendDateTimeChangePostRequest() {
             destination: destination,
             direction: direction
         }
-    }).done(function (result) {
+    }).done(function (response) {
         console.log("successfully posted");
         $(".spinner-border").hide();
         $("#stop-to-stop-estimate").show();
-        $("#stop-to-stop-estimate").html(result + " minutes");
+        $("#stop-to-stop-estimate").html(response.result + " minutes");
 
     });
 }
