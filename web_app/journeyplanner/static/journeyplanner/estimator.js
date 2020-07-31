@@ -536,6 +536,9 @@ function makeStatsRequest() {
     // red the search parameters
     var params = getSearchParams()
 
+    // hide any error messages from the previous search
+    $("#no-data-error").hide()
+
     // make the request
     $.ajax({
         type:"POST",
@@ -547,17 +550,19 @@ function makeStatsRequest() {
     .done(function(response){
         var data = JSON.parse(response);
 
-        console.log(data);
+        if (data.hourly != "none" ) {
+            var infoObject = new Object();
+                infoObject["data"] = data.hourly;
+                infoObject["route"] = params.route;
+                infoObject["start"] = params.start;
+                infoObject["end"] = params.end;
 
-        var infoObject = new Object();
-            infoObject["data"] = data.hourly;
-            infoObject["route"] = params.route;
-            infoObject["start"] = params.start;
-            infoObject["end"] = params.end;
-
-        updateTextInfo(infoObject);
-        drawBarChart(data.hourly);
-        })
+            updateTextInfo(infoObject);
+            drawBarChart(data.hourly);
+        } else {
+            chartDataError();
+        }
+    })
 }
 
 
@@ -688,4 +693,14 @@ function drawBarChart(data) {
     return someChart;
 
 }
+
+function chartDataError(){
+    // display an error message when no data historical data associated with the searched time...
+    var msg = "Oh no! There appears to be no Historical data for this route at this time! Maybe try a different time?";
+    $("#no-data-error").text(msg);
+    $("#no-data-error").show();
+    $("#results-chart").hide();
+}
+
+
 $('#stop-to-stop-go').on('click',makeStatsRequest)
