@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import sys
 sys.path.append("..")
 from .route_details import stops_latlng, find_stop,latlng
@@ -8,6 +8,7 @@ import requests
 import json
 import requests
 from pyleapcard import *
+from .fare import get_fare
 
 from data_analytics import linear_regression_weather
 from data_analytics import get_direction
@@ -103,16 +104,23 @@ def prediction(request):
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         print("Users estimated journey in minutes (from views.py)", result)
 
-    return HttpResponse(result)
+
+        journey_fare = get_fare(route, direction, origin, destination)
+        results_dict = {"result" : result, "fare" : journey_fare}
+        
+    return JsonResponse(results_dict)
 
 
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
         data= json.loads(request.POST["data"])
-
-
+        
+        prediction_and_fare = {}
         prediction=[] #list to store the calculated predictions
+        
+        # list of fare dictionaries containing fare, route and url for each bug leg of journey
+        total_fare = []
 
         for i in data:
 
@@ -145,8 +153,8 @@ def planner(request):
                 route_list=stops_latlng(route_number)
             except:
                 route_list= 0
+                
             
-
             try:
                 #getting the orging and destination stop number using the vincenty formular
                 origin=find_stop(route_list,(departure_lat,departure_lng))
@@ -155,29 +163,40 @@ def planner(request):
                 print(direction)
 
             except:
+                direction = None
                 origin=0
                 arrival=0
 
-        
+  
+
             #use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
                 print('prediction from module',prediction)
             except:
-               prediction.append(duration)
-               print('prediction from google',prediction)
+                prediction.append(duration)
+
+            #adding the calculated value to the list that will be sent back
+            # finally:
+            #     pass
                 
 
 
-           
+        # #get the fare for each leg of the journey
+            journey_fare = get_fare(route, direction, origin, arrival)
+            total_fare.append(journey_fare)
+            
 
+        
         print("prediction list",prediction)
 
-
-
-
-    return HttpResponse(json.dumps(prediction))
+    
+    prediction_and_fare["fare"] = total_fare
+    prediction_and_fare["prediction"] = prediction
+    print("prediction and fare dict")
+    print(prediction_and_fare)
+    return JsonResponse(json.dumps(prediction_and_fare), safe=False)
     
 
 @csrf_exempt

@@ -446,6 +446,69 @@ label.dt-label {
 #routeplanner-form {
   margin-top: 10px;
 }
+
+.fare-header {
+  text-align: left;
+  font-weight: 600;
+}
+
+#leap-logout {
+  display: none;
+  margin-left: 30px;
+}
+
+/* fare */
+
+.fare-button {
+  text-align: left;
+  margin-left: 0px;
+}
+
+#accordion-fare-tourist {
+  display: none;
+}
+
+#accordion-fare {
+  display:none;
+}
+
+#accordion-fare-tab2 {
+  display:none;
+}
+
+
+.fare-accordion {
+  margin: 15px 15px 15px 15px;
+  background-color: white;
+}
+
+
+.fare-result-detailed{
+  padding-left: 0px;
+  margin-bottom: 10px;
+  padding-bottom: 0px;
+}
+
+.fare-total-message {
+  display: none;
+  font-size: 0.9em;
+  color: red;
+}
+
+.upper-fare-content {
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+}
+
+.card-body {
+  padding-bottom: 0px;
+}
+
+.card-header {
+  background-color: white;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
@@ -619,20 +682,10 @@ label.dt-label {
   @media only screen and (max-width: 400px){
 
     a.nav-item.nav-link.load-interface.nav-bottom{
-      font-size: 0.65em;
+      font-size: 0.75em;
     }
   }
   
-  
-
-  
-
-    
-
-      
-
-
-   
 
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
