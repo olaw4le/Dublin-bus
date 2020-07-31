@@ -488,10 +488,6 @@ function sendDateTimeChangePostRequest() {
 //  4.  create a bar chart with the returned data...
 //
 
-// define the colours to use when drawing & filling charts & graphs
-var borderColours = ["rgb(184, 202, 204)", "rgb(64, 204, 219)"];
-var fillColours = ["rgba(102, 255, 255, 0.5)", "rgba(64, 204, 219, 0.8)"];
-
 
 // function for reading in the parameters used for generating the graphs
 function getSearchParams() {
@@ -565,22 +561,27 @@ function updateTextInfo(data) {
 
 
     // get the 95% journey time for this time group
-    var day_time = Object.keys(data.data)[2];
-    var journey_time = data.data[day_time];
-    var fastest_time = day_time;
+    var keys = Object.keys(data.data)
+    var current_time = keys[Math.floor(keys.length / 2)];
+    var journey_time = data.data[current_time];
+    var fastest_time = current_time;
 
     for (var key in data.data) {
-        if (data.data[key] < journey_time) {
-            fastest_time = key
+        var t = data.data[key];
+        if (t < journey_time) {
+            // ignore journey times of 0 minute - this is missing data
+            if (t != 0) {
+                fastest_time = key;
+            }
         }
     }
 
     // if there's a faster time than the 'search time' add that to the description
-    if (day_time == fastest_time) {
-        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes.");
+    if (current_time === fastest_time) {
+        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
-        var timeDelta = journey_time - data.data[day_time];
-        $("#results-description").html("At " + day_time + " 95% of journeys take less than " + journey_time + " minutes. You could expect to save " + timeDelta + "minutes by making this trip at " + fastest_time + "instead.");
+        var timeDelta = journey_time - data.data[fastest_time];
+        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to "  + timeDelta + " minutes faster at " + fastest_time + ".");
     }
 
 }
@@ -590,16 +591,19 @@ function DataSet(data) {
     // formats the passed data as an object w/ instance variables to be passed
     // to the Chart() object constructor
     this.label = "Journey Duration";
-    // set background & border colours of middle (IE.current time value) as different to others
-    this.backgroundColor = [];
-    this.borderColor= [];
-    for (var i = 0; i < data.length; i++) {
-        if (i == data.length/2) {
-            this.backgroundColor.push(fillColours[1]);
-            this.borderColor.push(borderColours[1]);
+
+    // allow function to handle datasets of non-fixed size - central datapoint is assumed to be current
+    var length = Object.keys(data).length;
+    var midpoint = Math.floor(length / 2);
+    this.backgroundColor = new Array();
+    this.borderColor = new Array();
+    for (var i = 0; i < length; i++) {
+        if ( i == midpoint ) {
+            this.backgroundColor.push("rgba(64, 204, 219, 0.8)");
+            this.borderColor.push("rgb(64, 204, 219)");
         } else {
-            this.backgroundColor.push(fillColours[0]);
-            this.borderColor.push(borderColours[0]);
+            this.backgroundColor.push("rgba(184, 202, 204, 0.8)");
+            this.borderColor.push("rgb(184, 202, 204)");
         }
     }
     this.borderWidth = 1;
