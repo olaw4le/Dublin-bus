@@ -276,7 +276,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
             duration = journeysteps[i].duration.text;
 
-            journeyTime += parseInt(duration[0])
+            journeyTime += parseInt(duration)
             console.log(journeyTime)
 
             //trimming the instruction text
