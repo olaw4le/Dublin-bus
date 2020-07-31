@@ -236,7 +236,7 @@ def leap_login(request):
             leap_session.try_login(user, password)
 
         except Exception as e:
-            print(e)
+            # print(e)
             return e
 
         # request the www.leapcard.ie account overview
@@ -319,11 +319,15 @@ def get_stats(request):
 
             # add the estimated journey time to this the response dict (convert into minutes)
             try:
-                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
-                response["hourly"][time_str] = duration
+                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group)
+                if duration is None:
+                    response["hourly"][time_str] = 0
+                    break
+                else:
+                    response["hourly"][time_str] = duration // 60
             except Exception as e:
                 print(e)
-                response["hourly"] = str(e)
+                response["hourly"] = "none"
 
         # for 3 days either side of the searched day - estimate journey duration at this time of day
         offsets = [-3, -2, -1, 0, 1, 2, 3]
@@ -342,12 +346,15 @@ def get_stats(request):
 
             # add the estimated journey time to this the response dict (convert into minutes)
             try:
-                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group) // 60
-                response["daily"][weekday_short] = duration
+                duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group)
+                if duration is None:
+                    response["daily"][time_str] = 0
+                else:
+                    response["daily"][time_str] = duration // 60
             except Exception as e:
                 print(e)
-                response["daily"] = str(e)
+                response["daily"] = "none"
 
-        print(response)
+        # print(response)
         return HttpResponse(json.dumps(response))
 
