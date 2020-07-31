@@ -444,6 +444,25 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
               journeyTime += parseInt(prediction1[j])
               console.log(journeyTime)
             }
+            var format= journeyTime
+
+            //coverting the time in hours and minutes
+            function timeConvert(n) {
+              var num = n;
+              var hours = (num / 60);
+              var rhours = Math.floor(hours);
+              var minutes = (hours - rhours) * 60;
+              var rminutes = Math.round(minutes);
+              return rhours + "hour " + rminutes + "minute.";
+              }
+
+
+            if (format>=60){
+              format=timeConvert(format)
+            }
+            else{
+              format=journeyTime + ' mins'
+            }
 
 
             var b = input_time.split(':');
@@ -451,7 +470,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
             console.log(theFutureTime)
             // setting the total time and predicted arrival time in the html
 
-            $("#duration-val").html(journeyTime + ' mins')
+            $("#duration-val").html(format)
             $("#journey-time").html(input_time + ' - ' + theFutureTime)
 
             for (var i = 0; i < journeysteps.length; i++) {
