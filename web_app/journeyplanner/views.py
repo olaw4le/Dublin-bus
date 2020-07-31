@@ -319,6 +319,9 @@ def get_stats(request):
         # for an hour either side of the searched time groups - estimate the journey time based on historical averages
         offsets = [-3600, -1800, 0, 1800, 3600]
 
+        # a flag to indicate if any useful data is returned
+        all_null = True
+
         for n in offsets:
             # create a time delta object representing a difference of n seconds
             offset = timedelta(0, n)
@@ -336,15 +339,21 @@ def get_stats(request):
                 duration = jp.get_95_percentile(route, direction, sub_segments, month, weekday, time_group)
                 if duration is None:
                     response["hourly"][time_str] = 0
-                    break
                 else:
                     response["hourly"][time_str] = duration // 60
+                    all_null = False
             except Exception as e:
                 print(e)
                 response["hourly"] = "none"
 
+        if all_null:
+            response["hourly"] = "none"
+
         # for 3 days either side of the searched day - estimate journey duration at this time of day
         offsets = [-3, -2, -1, 0, 1, 2, 3]
+
+        # a flag to indicate if any useful data is returned
+        all_null = True
 
         for n in offsets:
             # create a time delta object representing a difference of n seconds
@@ -365,9 +374,13 @@ def get_stats(request):
                     response["daily"][time_str] = 0
                 else:
                     response["daily"][time_str] = duration // 60
+                    all_null = False
             except Exception as e:
                 print(e)
                 response["daily"] = "none"
+
+        if all_null:
+            response["daily"] = "none"
 
         # print(response)
         return HttpResponse(json.dumps(response))
