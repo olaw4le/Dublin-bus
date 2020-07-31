@@ -24,11 +24,11 @@ $(document).ready(function () {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
-    removeLineFromMap);
+        removeLineFromMap);
 
 
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
-  clearMarkers);
+        clearMarkers);
 
 
     // flatpickr date https://flatpickr.js.org/options/
