@@ -92,6 +92,7 @@ def realtime(request):
 @csrf_exempt
 def prediction(request):
     if request.method == "POST":
+        print('request',request.POST)
         route= request.POST["route"]
         origin= request.POST["origin"]
         destination = request.POST["destination"]
@@ -184,6 +185,7 @@ def planner(request):
 
 @csrf_exempt
 def find_latlng(request):
+    print('request',request.POST)
     if request.method == "POST":
         route = request.POST["route"]
         stop_id = request.POST["stop"]
@@ -200,6 +202,7 @@ def find_latlng(request):
 
 @csrf_exempt
 def list_latlng(request):
+    print('request',request.POST)
     if request.method == "POST":
         route = request.POST["route"]
         route_number = route.upper()
@@ -211,6 +214,7 @@ def list_latlng(request):
 
 @csrf_exempt
 def real_time(request):
+    print('request',request.POST)
     if request.method == "POST":
         stop_number = request.POST["stopnumber"]
         url = "https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid={}&format=json".format(stop_number)
