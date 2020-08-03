@@ -115,77 +115,75 @@ def prediction(request):
 @csrf_exempt
 def planner(request):
     if request.method == "POST":
-        data= json.loads(request.POST["data"])
+        data = json.loads(request.POST["data"])
 
-        prediction_and_fare = {}
-        prediction=[] #list to store the calculated predictions
+        prediction_and_fare = dict()
+        prediction = [] # list to store the calculated predictions
 
         # list of fare dictionaries containing fare, route and url for each bug leg of journey
         total_fare = []
 
         for i in data:
 
-            route= i["route_number"]
+            route = i["route_number"]
             date = request.POST["date"]
             time = request.POST["time"]
-            duration=i["duration"]
+            duration = i["duration"]
 
             # print("duration",duration)
 
-            #direction= 2
-            route_number=route.upper()
+            # direction = 2
+            route_number = route.upper()
 
-            #departure stops lat and lng
-            departure=i["departure_latlng"]
-            x=departure.split(",")
+            # departure stops lat and lng
+            departure = i["departure_latlng"]
+            x = departure.split(",")
             departure_lat = float(x[0])
             departure_lng = float(x[1])
 
-            #arrival stops lat and lng
-            arrival=i["arrival_latlng"]
-            y=arrival.split(",")
+            # arrival stops lat and lng
+            arrival = i["arrival_latlng"]
+            y = arrival.split(",")
             arrival_lat = float(y[0])
             arrival_lng = float(y[1])
 
-
-            route_number=route.upper()
+            route_number = route.upper()
             # getting the suggested route file
             try:
-                route_list=stops_latlng(route_number)
+                route_list = stops_latlng(route_number)
             except:
-                route_list= 0
+                route_list = 0
 
             try:
-                #getting the orging and destination stop number using the vincenty formular
-                origin=find_stop(route_list,(departure_lat,departure_lng))
-                arrival=find_stop(route_list,(arrival_lat,arrival_lng))
+                # getting the orging and destination stop number using the vincenty formular
+                origin = find_stop(route_list, (departure_lat, departure_lng))
+                arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
                 # print(direction)
 
             except:
                 direction = None
-                origin=0
-                arrival=0
+                origin = 0
+                arrival = 0
 
-            #use the maachine learning module to calculate prediction
+            # use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
                 # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
+                # print('prediction from google',prediction)
 
-            #adding the calculated value to the list that will be sent back
+            # adding the calculated value to the list that will be sent back
             # finally:
             #     pass
 
-
-            # #get the fare for each leg of the journey
+            # get the fare for each leg of the journey
             journey_fare = get_fare(route, direction, origin, arrival)
             total_fare.append(journey_fare)
 
             # print("prediction list",prediction)
-
 
     prediction_and_fare["fare"] = total_fare
     prediction_and_fare["prediction"] = prediction

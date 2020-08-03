@@ -20,13 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="514e9684-583e-4c3f-8e9d-71250f6206b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web_app/journeyplanner/functions_test/test_fare.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/fare.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/fare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/test/test_routes_details.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/functions_test/test_routedetails.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
