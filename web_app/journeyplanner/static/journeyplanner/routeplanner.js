@@ -46,10 +46,17 @@ $(document).ready(function () {
 
 });
 
+((51.16097364792698, -9.061390000000003), (55.39991110721353, -3.4363900000000025))
+
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
-var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+
+//setting the autocomplete to dublin only
+var bound= new google.maps.LatLngBounds(new google.maps.LatLng(52.999804, -6.841221),new google.maps.LatLng(53.693350, -5.914218));
+
+var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] ,bounds: bound,strictBounds: true,};
+
 var origin;
 var destination;
 
@@ -92,13 +99,32 @@ var ending_lng;
 var directionsRenderer;
 var allMarkers = [];
 
+function timestamp(){
+  var pickedDate= $("#datepicker-tab1").val()
+  var pickedTime= $('#timepicker-tab1').val()
+  var x= (pickedDate +' '+pickedTime )
+  var departureTime;  
+
+  // making sure the date chosen isnt less than the current date 
+
+  if (Date.parse(x) < Date.now() ) {
+    departureTime = Date.now();
+  } 
+  else {
+    departureTime = Date.parse(x);}
+
+    return departureTime 
+    // return departureTime + 3600000; // 1 hour time zoon difference 
+
+  
+}
+
 // function to remove route line from map
 function removeLineFromMap() {
   if (directionsRenderer) {
     directionsRenderer.setDirections({ routes: [] });
   }
   // First, remove any existing markers from the map.
-  console.log(allMarkers);
   if (allMarkers) {
     for (var i = 0; i < allMarkers.length; i++) {
       allMarkers[i].setMap(null);
@@ -109,6 +135,8 @@ function removeLineFromMap() {
 // The routes function that shows the route 
 function routes() {
   var markerArray = [];
+
+  // var timestamp = Date.parse("26-02-2012".split('-').reverse().join('-'));
 
   //getting the lat and lng of the input address 
   var starting = origin.getPlace();
@@ -149,6 +177,8 @@ function routes() {
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
 
+  var userTime= timestamp()
+
   // Retrieve the start and end locations and create a DirectionsRequest using
   // Bus directions.
   directionsService.route({
@@ -158,7 +188,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
     transitOptions: {
       modes: ['BUS'],
       routingPreference: 'FEWER_TRANSFERS',
-      // departure_time: "17:44:2"
+      departureTime: new Date(userTime)
     }
   },
 

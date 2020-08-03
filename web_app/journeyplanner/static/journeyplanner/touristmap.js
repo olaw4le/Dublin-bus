@@ -49,7 +49,12 @@ $(document).ready(function () {
 
     // use autocomplete for origin and destination
     var input1 = document.getElementById("origin-tourist");
-    var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+
+    //setting the autocomplete to dublin only
+var bound= new google.maps.LatLngBounds(new google.maps.LatLng(52.999804, -6.841221),new google.maps.LatLng(53.693045, -5.914218));
+
+var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] ,bounds: bound,strictBounds: true,};
+
     origin = new google.maps.places.Autocomplete(input1, options);
 
     // hide error when content of origin input box changed
@@ -206,6 +211,28 @@ var ending_lng;
 var starting_lat;
 var starting_lng;
 
+
+//function to covert the date time into timestamp
+function timestamp(){
+    var pickedDate= $("#datepicker-tourist").val()
+    var pickedTime= $('#dtimepicker-tourist').val()
+    var x= (pickedDate +' '+pickedTime )
+    var departureTime;  
+  
+    // making sure the date chosen isnt less than the current date 
+  
+    if (Date.parse(x) < Date.now() ) {
+      departureTime = Date.now();
+    } 
+    else {
+      departureTime = Date.parse(x);}
+  
+      return departureTime 
+      // return departureTime + 3600000; // 1 hour time zoon difference 
+  
+    
+  }
+
 // show route on map
 function routes_tourist() {
 
@@ -235,6 +262,7 @@ function routes_tourist() {
 
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
+    var userTime= timestamp()
 
     // Retrieve the start and end locations and create a DirectionsRequest using
     // Bus directions.
@@ -245,6 +273,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
         transitOptions: {
             modes: ['BUS'],
             routingPreference: 'FEWER_TRANSFERS',
+            departureTime: new Date(userTime)
+
         }
     },
 
