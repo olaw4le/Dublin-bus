@@ -1,0 +1,179 @@
+{% load static %}
+
+<script src=" {% static 'journeyplanner/estimator.js' %}"></script>
+
+<!-- link js module containing tools for drawing charts -->
+<script src=" {% static 'journeyplanner/chartjs/chart.js/dist/Chart.bundle.min.js' %}"></script>
+
+<!-- form -->
+<h4 class="tab-title">Stop To Stop</h4>
+<div class="container form-area" id="form-area-stop-to-stop">
+    <form autocomplete="off" onsubmit="return false">
+        <div class="autocomplete form-group" id="autocomplete">
+            <label for="origin">Route:</label>
+            <input required="required" class="input-box form-control" id="estimator-route" placeholder="Enter route">
+        </div>
+        <div class="form-group">
+            <label for="destination">Origin Stop:</label>
+            <select required class="input-box form-control col-6" id="estimator-origin" placeholder="Select stop number">
+                <option value="0">-- Select --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="destination">Destination Stop:</label>
+            <select required class="input-box form-control col-6" id="estimator-destination" placeholder="Select stop number">
+                <option value="0">-- Select --</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+
+            <!-- mobile datetime picker -->
+            <div class="mobile-dt">
+                <label for="datetime-4">Date and Time:</label>
+                <input class="datetime input-box form-control" type="datetime-local" data-clear-btn="true"
+                    name="datetime-4" class="datetime" id="datetime-tab2" value="">
+            </div>
+        </div>
+
+        <!-- desktop date and time -->
+        <div class="desktop-dt">
+            <div class="row datetime">
+                <label class="dt-label">Date and Time:</label>
+                <input class="input-box form-control" type="text" id="datepicker-tab2">
+            </div>
+            <div class="row datetime">
+                <input class="input-box form-control" type="text" class="timepicker" id="timepicker-tab2">
+            </div>
+        </div>
+        <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p>
+        <button type="submit" class="go-button btn btn-warning btn-lg" id="stop-to-stop-go">Go</button>
+        <div class="mobile-space"></div>
+    </form>
+</div>
+
+<!-- results view -->
+<div class="container" id="stop-to-stop-results">
+    <div class="row">
+        <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Back</button>
+    </div>
+    <div class="card results">
+        <div class="row results">
+        </div>
+        <div class="row summary-results">
+            <div class="col-4">
+                <p>From:</p>
+            </div>
+            <div class="col-8">
+                <p id="origin-tab2"></p>
+            </div>
+        </div>
+        <div class="row summary-results">
+            <div class="col-4">
+                <p>To:</p>
+            </div>
+            <div class="col-8">
+                <p id="destination-tab2"></p>
+            </div>
+        </div>
+
+        <!-- desktop date and time -->
+        <div class="row summary-results-dt desktop-dt">
+            <div class="col-4">
+                <p>On:</p>
+            </div>
+            <div class="col-8">
+                <p><input type="text" id="datepicker-tab2-results-date" class="results-page-dt"></p>
+            </div>
+        </div>
+        <div class="row summary-results-dt desktop-dt">
+            <div class="col-4">
+                <p>At:</p>
+            </div>
+            <div class="col-8">
+                <p><input type="text" id="datepicker-tab2-results-time" class="results-page-dt"></p>
+            </div>
+        </div>
+
+        <!-- mobile date and time -->
+        <div class="mobile-dt">
+            <div class="row">
+                <div class="col-4">
+                    <label for="datetime-4" class="results-label">On:</label>
+                </div>
+                <div class="col-8 results-dt-mob">
+                    <input class="datetime" type="datetime-local" data-clear-btn="true" name="datetime-4"
+                        id="datetime-tab2-results" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- fare -->
+    <div id="accordion-fare-tab2" class="fare-accordion">
+        <div class="card">
+            <div class="card-header" id="heading-tab2">
+                <ul id="cash-and-leap-tab2" class="upper-fare-content"></ul>
+                <div class="fare-total-message">Some fares on this journey could not be calculated</div>
+                    <h5 class="mb-0 fare-button">
+                        <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapse-tab2"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            More fare details
+                        </button>
+                    </h5>
+            </div>
+
+            <div id="collapse-tab2" class="collapse" aria-labelledby="heading-tab2" data-parent="#accordion-fare-tab2">
+                <div class="card-body">
+                    <ul id="fare-result-tab2" class="fare-result-detailed"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- estimate -->
+    <div class="card results">
+        <div class="row">
+            <div class="col-6" id="placeholder">Estimated Journey Time:</div>
+
+            <!-- show loader while user waiting for result -->
+            <div class="spinner-border text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+            <!-- show result -->
+            <div class="col-6" id="stop-to-stop-estimate"></div>
+        </div>
+
+        <div class="row">
+            <div id="no-data-error"></div>
+        </div>
+
+
+        <div id="results-chart">
+            <!-- route number goes here -->
+            <div class="row chart" id="results-route-number"></div>
+            <!-- stop numbers go here -->
+            <div class="row chart" id="results-route-stops"></div>
+            <!-- Text Description Of Results Goes Here -->
+            <div class="row chart" id="results-description"></div>
+
+            <!-- define the canvas where the chart will be drawn -->
+            <!-- the canvas element must be the only element placed within a container
+                    div with style="position: relative;" for the chart to be responsive -->
+            <div class="chart-container chart" style="position: relative;">
+                <canvas id="results-canvas"></canvas>
+            </div>
+
+            <!-- a toggle switch for changing between times-by-hour or times-by-day on graph -->
+            <!-- source https://getbootstrap.com/docs/4.2/components/forms/#switches -->
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="results-canvas-toggle">
+                <label class="custom-control-label" for="customSwitch1"></label>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-space"></div>
+</div>

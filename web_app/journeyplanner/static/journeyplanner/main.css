@@ -1,0 +1,756 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Varela', serif;
+  }
+
+  /* mobile bottom nav - hidden on larger screens */
+  .fixed-bottom  {
+    display: none;
+  }
+
+  /*map */
+  #map {
+    height: 100%;
+    position: relative;
+  }
+
+  #fullscreen-map {
+    height: calc(100vh - 74px);
+    position: relative;
+  }
+
+  /*map interface*/
+  #map-interface {
+    z-index: 1000;
+    position: absolute;
+    display: block;
+    top: 30px;
+    left: 20px;
+    bottom: 30px;
+    width: auto;
+    height: calc(100vh - 134px);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    box-shadow: 4px 4px 8px #B8B8B8;
+  }
+
+  #map-interface-content {
+    max-width: 450px;
+    width: 450px;
+    height: calc(100vh - 129px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px;
+    }
+
+  .navbar {
+    background-color: #4484CE;
+  }
+
+  .navbar-brand {
+    color: white;
+    padding-left: 30px;
+    font-size: 2em;
+  }
+
+  .navbar-brand:hover {
+    color: white;
+    padding-left: 30px;
+    font-size: 2em;
+  }
+
+  #tab-menu{
+    max-width: 150px;
+    width: 150px;
+    background-color:#D0D0D0;
+    height: calc(100vh - 134px);
+    overflow-y: auto;
+    padding: 0px;
+  }
+
+  .slide-menu-item {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    font-weight: 500;
+  }
+
+  /* side menu panel */
+  .slide-menu-item:hover {
+    background-color: rgb(194, 194, 194);
+  }
+  .slide-menu-item.active {
+    background-color: #ffc107;
+  }
+  .slide-menu-item.active:hover {
+    color: white;
+  }
+
+  .nav-tabs .nav-item {
+    width: 105px;
+    height: 37px;
+    font-weight: 500; 
+  }
+
+  a .nav-item .nav-link {
+    vertical-align: middle;
+  }
+
+  /* routeplanner tab */
+  .form-area {
+    margin-right: 5px;
+    padding-right: 10px;
+    padding: 0px;
+    padding-left: 15px;
+  }
+  
+  /* go button on all tabs */
+  .go-button {
+  margin-left: 6px;
+  margin-bottom: 20px;
+  max-width: 80px;
+  min-width: 80px;
+  }
+
+  /* twitter feed on routeplanner tab */
+  .news {
+    padding-top: 10px;
+    height: 480px;
+    width: 100%;
+    padding-left: 3px;
+  }
+
+  /* route-plan-results*/
+  #route-results {
+    display: none;
+    padding: 0px;
+  }
+
+  #route-results-tourist {
+    display: none;
+    padding:0px;
+  }
+
+  #stop-to-stop-results {
+    display: none;
+    padding: 0px;
+  }
+
+  .card.results {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px 15px 15px 15px;
+  }
+
+  .results-page-dt {
+    height: 30px;
+  }
+
+  /* overall journey length on results tab1*/
+  #journey-time { 
+    margin-left: 30px;
+    margin-bottom: 0px;
+    font-size: 1.7em;
+    font-weight: 500;
+  }
+
+  #overall-duration{
+    margin-left: 18px;
+  }
+
+  /* date and time pickers on desktop screens */
+  .row.datetime {
+    width: 400px;
+    margin-left: 2px;
+    margin-bottom: 7px;
+    font-size: 1.1em;
+  }
+
+  .mobile-dt {
+    display: none;
+  }
+
+  .btn-secondary {
+    padding: 5px;
+    margin-left: 20px;
+  }
+
+  /* edit journey button */
+  .edit-journey {
+    margin-top: 2px;
+    margin-left: 30px;
+    height: 30px;
+    width: 100px;
+  }
+
+  /* remove margin on labels of summary results */
+  .results-label {
+    margin-left: 0px;
+  }
+
+  .results-dt-mob {
+    padding-left: 0px;
+    margin-left: -2px;
+  }
+
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 15px;
+  padding-top: 10px;
+  font-size: 1em;
+}
+
+#checkboxes {
+  margin-left: 20px;
+  font-size: 1.1em;
+  margin-top: 5px;
+}
+
+.geo-error {
+  display:none;
+}
+
+/* question mark for geolocation info */
+.question {
+  color: #4484CE;
+  height: fit-content !important;
+  padding: 0px 20px 5px 5px !important;
+}
+
+/* instructions to user on map interface */
+.instruction {
+  font-size: 0.9em;
+  margin-left: 10px;
+  /* padding-top: 10px; */
+}
+
+#instruction-planner {
+  padding-top: 10px;
+}
+
+/* all form input boxes for all tabs */
+.input-box {
+  max-width: 400px;
+  min-width: 400px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+h5 {
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.form-group {
+  font-size: 1.1em;
+}
+
+/* give all form labels a margin */
+label {
+  margin-left: 15px;
+}
+
+label.dt-label {
+  margin-left: 11px;
+}
+
+/* tourist map checkboxes */
+#checkbox-card {
+  margin: 15px 15px 15px 15px;
+  padding-bottom: 10px;
+}
+
+#origin-tourist {
+  padding-bottom: 5px !important;
+}
+
+/* 'use my location' button */
+.geolocation-option {
+  height: fit-content !important;
+  padding: 0px !important;
+  padding-left: 20px !important;
+  text-align: left;
+  min-width: 150px;
+
+}
+
+.spinner-border {
+  margin-left: 10px;
+  display: none;
+}
+
+.mobile-space{
+  display:none;
+}
+
+/* to align spinners beside checkboxes */
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+#destination-tourist-summary {
+  height: fit-content;
+}
+
+.summary-results {
+  min-height: 30px;
+}
+
+.geo-spinner {
+  display: none;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
+.summary-results-dt {
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+/* title of each tab on desktop screens */
+.tab-title {
+  font-size: 1.7em;
+  text-align: center;
+  background-color: #4484CE;
+  height: 66px;
+  padding-bottom: 14px;
+  padding-top: 17px;
+  font-weight: 400;
+  text-align: middle;
+  color: white;
+}
+
+#results-chart {
+  width: 420px;
+  margin-top: 20px;
+}
+
+.chart {
+  width: 90%;
+  margin-left: 0px;
+}
+
+#tourist-destination-error {
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
+
+.invalid-location-error{
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
+
+#stop-to-stop-incomplete-form-error {
+  display: none;
+  color: red;
+  margin-left: 5px;
+}
+
+/* leap card */
+#leap-login-container {
+  margin-top: 10px;
+}
+
+.leap-result {
+  display: none;
+}
+
+#leap-login-button {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+#leap-account-needed{
+  margin-left: 5px;
+}
+
+/*realtime info */
+#real-time {
+  margin-top: 10px;
+}
+
+#realtime-input {
+  width: 420px;
+}
+
+#realtime-error {
+  display: none;
+  margin-left: 25px;
+}
+
+#routeplanner-form {
+  margin-top: 10px;
+}
+
+.fare-header {
+  text-align: left;
+  font-weight: 600;
+}
+
+#leap-logout {
+  display: none;
+  margin-left: 30px;
+}
+
+/* fare */
+
+.fare-button {
+  text-align: left;
+  margin-left: 0px;
+}
+
+#accordion-fare-tourist {
+  display: none;
+}
+
+#accordion-fare {
+  display:none;
+}
+
+#accordion-fare-tab2 {
+  display:none;
+}
+
+
+.fare-accordion {
+  margin: 15px 15px 15px 15px;
+  background-color: white;
+}
+
+
+.fare-result-detailed{
+  padding-left: 0px;
+  margin-bottom: 10px;
+  padding-bottom: 0px;
+}
+
+.fare-total-message {
+  display: none;
+  font-size: 0.9em;
+  color: red;
+}
+
+.upper-fare-content {
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+}
+
+.card-body {
+  padding-bottom: 0px;
+}
+
+.card-header {
+  background-color: white;
+}
+  
+/* media queries to make interface responsive */
+  /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
+  @media only screen and (max-width: 992px) {
+
+    #fullscreen-map {
+      /* height: calc(100vh - 85px); */
+      height: 400px;
+  
+    }
+
+
+    /* hide tab title on mobiles */
+    .tab-title {
+      display: none;
+    }
+
+    .navbar-brand {
+      color: white;
+      padding-left: 10px;
+      font-size: 1.6em;
+    }
+
+      #map-interface {
+        top: 0px;
+        left: 0px;
+        min-width: 100vw;
+        height: fit-content;
+      }
+
+      #map-interface-content {
+        max-width: unset;
+        width: 100vw;
+        height: auto;
+        min-height: calc(100vh - 149px);
+        
+      }
+      #map-button {
+        display: block;
+      }
+  
+      /* hide tab menu sidebar on mobile */
+      #tab-menu  {
+        display: none;
+      }
+  
+      /* mobile screen bottom nav */
+      .fixed-bottom {
+        display: block;
+        height: 85px;
+        width: 100vw; 
+        min-width: 320px;
+      }
+      
+      .nav-item.nav-bottom {
+        width: 20%;
+      }
+  
+      .nav-link.nav-bottom {
+        font-size: 0.8rem;
+      }
+  
+
+      #bottom-nav-div {
+        height: 85px;
+        padding: 0px;
+        min-width: 320px;
+      }
+  
+      a.nav-item.nav-link.load-interface.nav-bottom {
+        height: 85px;
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+        padding-left: 10px;
+        background-color:	#DCDCDC;
+      }
+
+      a.nav-item.nav-link.load-interface.nav-bottom.active {
+        background-color: #A9A9A9;
+      }
+    
+      .word {
+        padding-top: 5px !important;
+      }
+
+      .desktop-dt {
+        display:none;
+      }
+  
+      .mobile-dt{
+        display: block;
+      }
+
+      .mobile-space {
+        display: block;
+        height: 120px;
+      }
+
+      /* make input boxes narrower on mobile screen*/
+      .input-box {
+        max-width: 70vw;
+        min-width: 270px;  
+        width: 70vw;
+        /* margin-bottom: 10px;
+        margin-left: 5px; */
+       
+      }
+      #geolocation-tourist {
+        margin: 0px !important;
+        padding-left: 5px;
+      }
+
+      .form-area {
+        margin: 0px;
+        max-width: unset;
+      }
+
+      #form-area-stop-to-stop {
+        padding-top: 15px;
+      }
+
+      .row .datetime {
+        margin-left: 4px;
+      }
+
+      .container .news {
+        padding: 0px;
+        width: 90%;
+        margin-left: 7px;
+        margin-right: 3px;
+      }
+
+          /* instructions to user on map interface */
+    .instruction {
+      font-size: 0.9em;
+      margin-left: 10px;
+      width: 90vw;
+    }
+
+     /* route-plan-results*/
+  #route-results {
+   margin-left: 5px;
+   margin-right: 5px;
+  }
+
+  #route-results-tourist {
+    margin-left: 5px;
+    margin-right: 5px;
+   }
+
+   .card.results {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px 15px 15px 15px;
+    width: 90vw;
+    min-width: 300px;
+
+  }
+
+  #results-chart {
+    width: 480px;
+  }
+
+  .edit-journey {
+    margin-top: 10px;
+  }
+
+/* change font of bottom nav when mobile screens get below 400px */
+  @media only screen and (max-width: 400px){
+
+    a.nav-item.nav-link.load-interface.nav-bottom{
+      font-size: 0.75em;
+    }
+  }
+  
+
+    /* show map interface again when screen is stretched out */
+    @media only screen and (min-width: 992px) {
+      #map-interface {
+        z-index: 1000;
+        position: absolute;
+        display: block;
+        top: 90px;
+        left: 50px;
+        bottom: 50px;
+        width: 440px;
+        height: 550px;
+      }
+    }
+  }
+
+
+  .ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+  }
+  
+  .ui-autocomplete > li > div {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333333;
+    white-space: nowrap;
+  }
+  
+  .ui-state-hover,
+  .ui-state-active,
+  .ui-state-focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+  
+  .ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }

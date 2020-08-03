@@ -1,0 +1,8 @@
+asgiref==3.2.7
+certifi==2020.4.5.1
+Django==3.0.7
+pip==20.0.2
+pytz==2020.1
+setuptools==47.1.1.post20200604
+pi==0.3.1
+wheel==0.34.2

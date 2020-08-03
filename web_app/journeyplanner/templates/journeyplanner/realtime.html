@@ -1,0 +1,43 @@
+{% load static %}
+
+
+<script src=" {% static 'journeyplanner/realtime.js' %}"></script>
+
+<h4 class="tab-title">Real-Time Information</h4>
+<div class="container form-area" id="real-time">
+  <form autocomplete="off" onsubmit="return false">
+    <div class="form-group">
+      <label for="Stop-number">Enter a stop number:</label>
+      <div class="input-group mb-3" id="realtime-input">
+        <input type="text" required="required" class="input-box form-control" id="Stop-number" placeholder="Search.."
+          aria-label="Search.." aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-secondary" id="real-time-button">Search</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+
+<!-- spinner to show while user waits for results -->
+<div class="d-flex justify-content-center">
+  <div class="spinner-border text-warning prediction-spinner" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- table of real-time info results -->
+<div class="table-responsive">
+  <table class="table" id="real-time-table">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="realtime-error">No real-time information available.</div>
+</div>
