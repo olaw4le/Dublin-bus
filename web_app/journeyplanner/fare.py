@@ -9,8 +9,8 @@ file_path = (base_path / "static/journeyplanner/ordered_stops_main.json").resolv
 
 def get_fare(route, direction, start_stop, end_stop):
 
-    fare_details = {}
-    fare_details["found"]=False
+    fare_details = dict()
+    fare_details["found"] = False
 
     with open(file_path) as json_file:
         ordered_stops = json.load(json_file)
@@ -50,14 +50,14 @@ def get_fare(route, direction, start_stop, end_stop):
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
         # adult_fare = soup.find(id="ctl00_FullRegion_MainRegion_ContentColumns_holder_FareListingControl_lblFare")
-        #find the table head that contains the string "all fares"
+        # find the table head that contains the string "all fares"
         head = soup.find_all("th", string=lambda string: string and "All Fares" in string)
         table = head[0].parent.parent
-        #loop through rows to find all cells containing "€"
+        # loop through rows to find all cells containing "€"
         for row in table.find_all("tr"):
             cells = row.find_all("td")
             if len(cells) == 2 and "€" in str(cells[1].contents[0]):
-                #strip the extra whitespace
+                # strip the extra whitespace
                 print(str(cells[0].contents[0]).strip(), str(cells[1].contents[0]).replace("€", "").strip())
                 fare_details[cells[0].contents[0].strip()] = cells[1].contents[0].replace("€", "").strip()
 
