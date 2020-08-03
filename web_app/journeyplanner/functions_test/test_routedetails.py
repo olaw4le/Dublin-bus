@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, 'web_app/journeyplanner/')
-from route_details import *
+from web_app.journeyplanner.route_details import stops_latlng, find_stop,latlng
 
 def test_stops_latlng():
    #testing wether the stops lat and lng for a given route isnt empty
@@ -11,7 +9,7 @@ def test_stops_latlng():
 
 def test_find_stop():
     #testing the vicenty formular that returns the stop number 
-    routelist=stops_latlng("76A")
+    routelist= stops_latlng("76A")
     lat_lng=(53.3879611111,-6.3792833333)
     test= find_stop(routelist, lat_lng)
     assert test== "1840"
@@ -22,3 +20,8 @@ def test_latlng():
     routelist = stops_latlng("46A")
     test= latlng(routelist,"812")
     assert test !=  None
+
+
+
+
+test_latlng()

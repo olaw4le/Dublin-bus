@@ -1,14 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
 import json
+from pathlib import Path
+
+base_path = Path(__file__).parent
+file_path = (base_path / "static/journeyplanner/ordered_stops_main.json").resolve()
+
 
 def get_fare(route, direction, start_stop, end_stop):
 
-    
     fare_details = {}
     fare_details["found"]=False
 
-    with open("/Users/hannahbarrett/Documents/CompScience/ResearchPracticum/research-project/web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json") as json_file:
+    with open(file_path) as json_file:
         ordered_stops = json.load(json_file)
     route = route.upper()
     fare_details["route"] = route
