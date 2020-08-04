@@ -1,7 +1,9 @@
 // remove line from map
 function removeLineFromMap() {
     if (directionsRenderer) {
-        directionsRenderer.setDirections({ routes: [] });
+        directionsRenderer.setDirections({
+            routes: []
+        });
     }
     // First, remove any existing markers from the map.
     console.log(allMarkers);
@@ -11,6 +13,7 @@ function removeLineFromMap() {
         }
     }
 }
+
 function clearMarkers() {
     if (directionsDisplay != null) {
         directionsDisplay.setMap(null);
@@ -19,7 +22,7 @@ function clearMarkers() {
 }
 
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
@@ -63,8 +66,8 @@ var allMarkers = [];
 var routeNames = {};
 
 
-$(function () {
-    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
+$(function() {
+    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function(data) {
         stations = data;
 
         for (var key in stations) {
@@ -74,10 +77,10 @@ $(function () {
             // extract the headsign
             var headSign = stations[key].headsign;
 
-            route_number += (x[0]+" "+ headSign)+ ",";
+            route_number += (x[0] + " " + headSign) + ",";
 
             // populate routeNames
-            routeNames[x[0]+" "+ headSign] = key;
+            routeNames[x[0] + " " + headSign] = key;
         }
 
         //turning the into an array
@@ -85,9 +88,9 @@ $(function () {
     });
 
     $("#estimator-route").autocomplete({
-        source: function (request, response) {
+        source: function(request, response) {
             var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
-            response($.grep(route_number, function (item) {
+            response($.grep(route_number, function(item) {
                 return matcher.test(item);
             }));
         }
@@ -110,7 +113,7 @@ function stops() {
 
     //console.log("route", sel_route)
 
-    $.getJSON("static/new_ordered_stops.json", null, function (data) {
+    $.getJSON("static/new_ordered_stops.json", null, function(data) {
         stations = data;
         var key;
         //getting the value of the selected route
@@ -145,22 +148,21 @@ function stops() {
 
 
 
+                }
 
+                //turning the into an array
+                list = list.trim().split(",");
+                result = list
+
+                //popuplating the sub route select list
+                for (var i = 0; i < list.length; i++) {
+                    To += "<option>  " + list[i] + "</option>";
+                    stop_list.push(list[i])
+                }
+
+
+                $("#estimator-origin").html(To);
             }
-
-        //turning the into an array
-        list = list.trim().split(",");
-        result = list
-
-        //popuplating the sub route select list
-        for (var i = 0; i < list.length; i++) {
-            To += "<option>  " + list[i] + "</option>";
-            stop_list.push(list[i])
-        }
-
-
-        $("#estimator-origin").html(To) ;
-}
         }
     })
 
@@ -200,12 +202,14 @@ function origin_marker() {
 
 
     $.ajax({
-        type: "POST",
-        url: "list_latlng/",
-        data: { route: route }
-    })
+            type: "POST",
+            url: "list_latlng/",
+            data: {
+                route: route
+            }
+        })
 
-        .done(function (response) {
+        .done(function(response) {
             //console.log("successfully posted");
             var x = JSON.parse(response)
 
@@ -235,17 +239,25 @@ function calcRoute() {
     end = x[0]
 
     $.ajax({
-        type: "POST",
-        url: "list_latlng/",
-        data: { route: route }
-    })
+            type: "POST",
+            url: "list_latlng/",
+            data: {
+                route: route
+            }
+        })
 
-        .done(function (response) {
+        .done(function(response) {
 
             var x = JSON.parse(response)
 
-            var start_latlng = { lat: x[start].lat, lng: x[start].lng };
-            var end_latlng = { lat: x[end].lat, lng: x[end].lng };
+            var start_latlng = {
+                lat: x[start].lat,
+                lng: x[start].lng
+            };
+            var end_latlng = {
+                lat: x[end].lat,
+                lng: x[end].lng
+            };
 
             var request = {
                 origin: start_latlng,
@@ -257,7 +269,7 @@ function calcRoute() {
             directionsDisplay = new google.maps.DirectionsRenderer({
                 map: map
             })
-            directionsService.route(request, function (result, status) {
+            directionsService.route(request, function(result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
                 }
@@ -273,17 +285,17 @@ $("#estimator-origin").change(destination);
 
 
 // go button for tab 2 to show and hide results
-$(function () {
+$(function() {
 
-    $('#stop-to-stop-go').on('click', function () {
+    $('#stop-to-stop-go').on('click', function() {
 
-// clear old fare and prediction values each time user clicks go
+        // clear old fare and prediction values each time user clicks go
         $('#stop-to-stop-fare').html("");
         $("#stop-to-stop-estimate").html("");
 
         // show error if user doesn't complete all fields in form
-        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --'
-            || $("#estimator-destination option:selected").text() == '-- Select --') {
+        if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' ||
+            $("#estimator-destination option:selected").text() == '-- Select --') {
             $('#stop-to-stop-incomplete-form-error').show();
         } else {
             $(".spinner-border").show();
@@ -318,7 +330,7 @@ $(function () {
                 dateFormat: 'yy-m-d',
                 defaultDate: date,
                 minDate: "today",
-                onClose: function (selectedDates, dateStr, instance) {
+                onClose: function(selectedDates, dateStr, instance) {
                     sendDateTimeChangePostRequest();
                 },
             });
@@ -330,7 +342,7 @@ $(function () {
                 noCalendar: true,
                 time_24hr: true,
                 minuteIncrement: 1,
-                onClose: function (selectedDates, dateStr, instance) {
+                onClose: function(selectedDates, dateStr, instance) {
                     sendDateTimeChangePostRequest();
                 },
             });
@@ -355,20 +367,20 @@ $(function () {
 
             // send post request
             $.ajax({
-                type: "POST",
-                url: "prediction/",
-                data: {
-                    date: date,
-                    time: timeSeconds,
-                    route: route,
-                    origin: origin,
-                    destination: destination,
-                    direction: direction
-                }
-            })
+                    type: "POST",
+                    url: "prediction/",
+                    data: {
+                        date: date,
+                        time: timeSeconds,
+                        route: route,
+                        origin: origin,
+                        destination: destination,
+                        direction: direction
+                    }
+                })
 
                 // response returned from post request
-                .done(function (response) {
+                .done(function(response) {
 
                     $('.fare-accordion').show();
 
@@ -379,7 +391,7 @@ $(function () {
                     if (fare["found"]) {
                         for (const key in fare) {
                             if (key != "url" && key != "route" && key != "found") {
-                                if (key == "Adult Cash" || key == "Adult Leap"){
+                                if (key == "Adult Cash" || key == "Adult Leap") {
                                     $('#cash-and-leap-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
                                 } else {
                                     $('#fare-result-tab2').append('<li>' + key + " Fare: " + "€" + fare[key] + "</li>");
@@ -402,7 +414,9 @@ $(function () {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({ top: "350px" }, 'fast');
+                $("#map-interface").animate({
+                    top: "350px"
+                }, 'fast');
             }
             $("#stop-to-stop-results").show();
 
@@ -413,12 +427,12 @@ $(function () {
     });
 
     // add on click to edit-journey button to hide results and show journey planner
-    $('#edit-journey-tab2').on('click', function () {
+    $('#edit-journey-tab2').on('click', function() {
         $(".form-area").show();
         $("#stop-to-stop-results").hide();
     });
     // call post request function when mobile datetime value changed
-    $("#datetime-tab2-results").on("change", function () {
+    $("#datetime-tab2-results").on("change", function() {
         sendDateTimeChangePostRequest();
     });
 
@@ -465,7 +479,7 @@ function sendDateTimeChangePostRequest() {
             destination: destination,
             direction: direction
         }
-    }).done(function (response) {
+    }).done(function(response) {
         //console.log("successfully posted");
         $(".spinner-border").hide();
         $("#stop-to-stop-estimate").show();
@@ -535,28 +549,35 @@ function makeStatsRequest() {
 
     // make the request
     $.ajax({
-        type:"POST",
-        url:"get_stats/",
-        data:{date:params.date, time:params.time, route:params.route, direction:params.direction, end:params.end, start:params.start}
-    })
+            type: "POST",
+            url: "get_stats/",
+            data: {
+                date: params.date,
+                time: params.time,
+                route: params.route,
+                direction: params.direction,
+                end: params.end,
+                start: params.start
+            }
+        })
 
         // when response received
-        .done(function (response) {
+        .done(function(response) {
             var data = JSON.parse(response);
 
-        if (data.hourly != "none" ) {
-            var infoObject = new Object();
-            infoObject["data"] = data.hourly;
-            infoObject["route"] = params.route;
-            infoObject["start"] = params.start;
-            infoObject["end"] = params.end;
+            if (data.hourly != "none") {
+                var infoObject = new Object();
+                infoObject["data"] = data.hourly;
+                infoObject["route"] = params.route;
+                infoObject["start"] = params.start;
+                infoObject["end"] = params.end;
 
-            updateTextInfo(infoObject);
-            drawBarChart(data.hourly);
-        } else {
-            chartDataError();
-        }
-    })
+                updateTextInfo(infoObject);
+                drawBarChart(data.hourly);
+            } else {
+                chartDataError();
+            }
+        })
 }
 
 
@@ -588,7 +609,7 @@ function updateTextInfo(data) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[fastest_time];
-        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to "  + timeDelta + " minutes faster at " + fastest_time + ".");
+        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
     }
 
 }
@@ -605,7 +626,7 @@ function DataSet(data) {
     this.backgroundColor = new Array();
     this.borderColor = new Array();
     for (var i = 0; i < length; i++) {
-        if ( i == midpoint ) {
+        if (i == midpoint) {
             this.backgroundColor.push("rgba(64, 204, 219, 0.8)");
             this.borderColor.push("rgb(64, 204, 219)");
         } else {
@@ -614,12 +635,12 @@ function DataSet(data) {
         }
     }
     this.borderWidth = 1;
-    this.barPercentage = 0.95;     // sets the relative width of bars in a bar chart
-    this.categoryPercentage = 1;   // sets the relative width of bars in a bar chart
+    this.barPercentage = 0.95; // sets the relative width of bars in a bar chart
+    this.categoryPercentage = 1; // sets the relative width of bars in a bar chart
 
     var arr = new Array();
 
-    Object.keys(data).forEach(function (item) {
+    Object.keys(data).forEach(function(item) {
         arr.push(data[item]);
     })
 
@@ -634,7 +655,7 @@ function drawBarChart(data) {
     var bars = [];
     var labels = Object.keys(data);
 
-    bars =  new DataSet(data);
+    bars = new DataSet(data);
 
     // check if a chart already exists in the container div;
     // if so just update the existing chart with new data
@@ -647,47 +668,47 @@ function drawBarChart(data) {
         }
     } else {
         var someChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        datasets: [bars],
-                        labels: Object.keys(data),
+            type: 'bar',
+            data: {
+                datasets: [bars],
+                labels: Object.keys(data),
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            labelString: "Travel Time (Minutes)",
+                            display: true
                         },
-                    options: {
-                        responsive: true,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [{
-                                scaleLabel: {
-                                    labelString: "Travel Time (Minutes)",
-                                    display: true
-                                },
-                                stacked: false,
-                                display: true,
-                                gridLineWidth: 0,
-                                minorTickInterval: null,
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
-                            xAxes: [{
-                                stacked: false,
-                                display: true,
-                                gridLineWidth: 0,
-                                gridLines: {
-                                    display: false
-                                }
-                            }]
+                        stacked: false,
+                        display: true,
+                        gridLineWidth: 0,
+                        minorTickInterval: null,
+                        ticks: {
+                            beginAtZero: true
                         }
-                    }
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        display: true,
+                        gridLineWidth: 0,
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            }
         });
     }
     return someChart;
 
 }
 
-function chartDataError(){
+function chartDataError() {
     // display an error message when no data historical data associated with the searched time...
     var msg = "Oh no! There appears to be no Historical data for this route at this time! Maybe try again with a different time?";
     $("#no-data-error").html(msg);
@@ -696,4 +717,4 @@ function chartDataError(){
 }
 
 
-$('#stop-to-stop-go').on('click',makeStatsRequest)
+$('#stop-to-stop-go').on('click', makeStatsRequest)
