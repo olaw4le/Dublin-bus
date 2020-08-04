@@ -275,63 +275,6 @@ def generate_test_dataframe(route, direction, date, time):
     return test_frame
 
 
-def get_indices(startstop, endstop, dictionary, order_segment_list):
-    """Returns the indices of the users boarding and alighting stop in an ordered list of the stops on that route.
-    
-    In this code the dictionary in question will be a dictionary with stop segments as keys and the proportion
-    of the total journey that this stop represents"""
-
-    indices = []
-    for key, value in dictionary.items():
-        # split the key into the two stop numbers that form it
-        dict_stops = key.split("_")
-        # if the first stop number is the users boarding stop...
-        if dict_stops[0] == str(startstop):
-            # its the start index so add it to the list
-            start_index = order_segment_list.index(key)
-            indices.append(start_index)
-        # if the second stop number is the users alighting stop...
-        if dict_stops[1] == str(endstop):
-            # its the end index so add it to the list
-            end_index = order_segment_list.index(key)
-            indices.append(end_index)
-    # return the list
-    return indices
-
-
-def segment_calculation(startstop, endstop, dictionary):
-    """not used since change to databse, will keep for now in case we use as a backup"""
-
-    total = 0
-    count = 0
-
-    order_segment_list = []
-    # this part uses the dictionary keys in the order they occur in this dictionary at this point in time
-    # to create a list of the segments in order.
-    # I am of course aware that order in dictionaries can't be relied upon, but it doesn't really matter in this case,
-    # as it's only being used to itterate through itself
-    # I needed the exact list as it is in this dictionary, now, rather than using the master list of ordered stops
-    # to protect against missing segments.
-    order_segments_dict = (dictionary.keys())
-    for i in order_segments_dict:
-        order_segment_list.append(i)
-
-    # get the indices of the users start and end stop in the above list
-    indices = get_indices(startstop, endstop, dictionary, order_segment_list)
-
-    #
-    for i in range(indices[0], indices[1] + 1):
-        value = dictionary[order_segment_list[i]]
-        # this is to handle the odd NaN value in our proporitons datasets. NaNs occur at an average incidence
-        # of 0.12% in the data.
-        if math.isnan(value):
-            pass  # if a NaN is present we simply delete that segment from calculations as if it didn't exist,
-            # so there will be a small loss of accuracy
-        else:
-            total += value
-
-    return total
-
 
 def quickanddirty(route, direction, startstop, endstop):
     """Returns proportion of the total journey that the user takes simply as percentage of how many of the stops on the route they travelled
@@ -428,32 +371,35 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
-    #  print("From generate prediction: ", route, startstop, endstop, date, time, direction)
+    try:
+        print("From generate prediction: ", route, startstop, endstop, date, time, direction)
 
-    # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
-    test = generate_test_dataframe(route, direction, date, time)
-    # loads the correct linear regression pickle using the route and direction
-    pickle_file = path + "web_app/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
-    pickle_in = open(pickle_file, 'rb')
-    linear_regression = pickle.load(pickle_in)
+        # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
+        test = generate_test_dataframe(route, direction, date, time)
+        # loads the correct linear regression pickle using the route and direction
+        pickle_file = path + "web_app/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
+        pickle_in = open(pickle_file, 'rb')
+        linear_regression = pickle.load(pickle_in)
 
-    # get the prediction from the pickle using the test dataframe generated above
-    prediction = linear_regression.predict(test)
-    # print("Prediction from model: ", int(prediction[0]))
+        # get the prediction from the pickle using the test dataframe generated above
+        prediction = linear_regression.predict(test)
+        # print("Prediction from model: ", int(prediction[0]))
 
-    # get month, day_of_the_week and time_group from the date and time, these are needed for calculating the proportion of the total
-    # journey that the users trip represents. 
-    date_time_obj = datetime.strptime(date, '%Y-%m-%d')
-    weekday = date_time_obj.weekday()
-    month = date_time_obj.month
-    time_group = time_group_function(time)
+        # get month, day_of_the_week and time_group from the date and time, these are needed for calculating the proportion of the total
+        # journey that the users trip represents. 
+        date_time_obj = datetime.strptime(date, '%Y-%m-%d')
+        weekday = date_time_obj.weekday()
+        month = date_time_obj.month
+        time_group = time_group_function(time)
 
-    # get the proportion using the get_proportion
-    proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
+        # get the proportion using the get_proportion
+        proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
 
-    # get proportion and multiply by the prediction
-    result = proportion * prediction[0]
-    # print("Users proportion: ", proportion)
-    # print("Users estimated journeytime: ", int(result))
-    minutes = int(result) // 60
-    return minutes
+        # get proportion and multiply by the prediction
+        result = proportion * prediction[0]
+        # print("Users proportion: ", proportion)
+        # print("Users estimated journeytime: ", int(result))
+        minutes = int(result) // 60
+        return minutes
+    except: 
+        return 0
