@@ -46,7 +46,6 @@ $(document).ready(function() {
 
 });
 
-((51.16097364792698, -9.061390000000003), (55.39991110721353, -3.4363900000000025))
 
 //using google map autocomplete for the address          
 var input1 = document.getElementById('origin');
