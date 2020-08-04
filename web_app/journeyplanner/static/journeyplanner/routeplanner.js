@@ -51,18 +51,6 @@ $(document).ready(function() {
 var input1 = document.getElementById('origin');
 var input2 = document.getElementById("destination");
 
-//setting the autocomplete to dublin only
-var bound = new google.maps.LatLngBounds(new google.maps.LatLng(52.999804, -6.841221), new google.maps.LatLng(53.693350, -5.914218));
-
-var options = {
-  componentRestrictions: {
-      country: "ie"
-  },
-  types: ['geocode'],
-  bounds: bound,
-  strictBounds: true,
-};
-
 var origin;
 var destination;
 
@@ -87,6 +75,17 @@ function WhenGoogleLoadedDo(fnt) {
 }
 
 WhenGoogleLoadedDo(() => {
+//setting the autocomplete to dublin only
+var bound = new google.maps.LatLngBounds(new google.maps.LatLng(52.999804, -6.841221), new google.maps.LatLng(53.693350, -5.914218));
+
+var options = {
+  componentRestrictions: {
+      country: "ie"
+  },
+  types: ['geocode'],
+  bounds: bound,
+  strictBounds: true,
+};
   origin = new google.maps.places.Autocomplete(input1, options);
   destination = new google.maps.places.Autocomplete(input2, options);
 });
