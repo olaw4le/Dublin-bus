@@ -389,7 +389,7 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
 
         # get month, day_of_the_week and time_group from the date and time,
         # these are needed for calculating the proportion of the total
-        # journey that the users trip represents. 
+        # journey that the users trip represents.
         date_time_obj = datetime.strptime(date, '%Y-%m-%d')
         weekday = date_time_obj.weekday()
         month = date_time_obj.month
@@ -404,5 +404,5 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
         # print("Users estimated journeytime: ", int(result))
         minutes = int(result) // 60
         return minutes
-    except: 
+    except:
         return 0
