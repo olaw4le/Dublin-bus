@@ -57,7 +57,7 @@ $(document).ready(function() {
 
 //initialise variables
 var routes = "";
-var route_number = "";
+var route_number= "";
 var stop_name = "";
 var stations = "";
 var routes = ""
@@ -69,10 +69,10 @@ var routeNames = {};
 $(function() {
     var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function(data) {
         stations = data;
-
+    
         for (var key in stations) {
             var x = key.split("_");
-            route_number += (x[0] + " " + stations[key].headsign) + ",";
+            route_number += (x[0]+" "+stations[key].headsign)+ ",";
 
             // extract the headsign
             var headSign = stations[key].headsign;
@@ -82,10 +82,17 @@ $(function() {
             // populate routeNames
             routeNames[x[0] + " " + headSign] = key;
         }
-
+    
         //turning the into an array
         route_number = route_number.trim().split(",");
+
+        //getting unqiue value of all the stops number
+        route_number = route_number.filter(function (item, pos) {
+                       return route_number.indexOf(item) == pos;});
+
     });
+
+  
 
     $("#estimator-route").autocomplete({
         source: function(request, response) {
@@ -97,6 +104,7 @@ $(function() {
     });
 
 });
+
 
 
 //getting the value of the selected  route
@@ -282,6 +290,7 @@ function calcRoute() {
 $("#estimator-route").on('keyup click change hover', stops);
 $("#estimator-route").change(origin_marker);
 $("#estimator-origin").change(destination);
+$("#estimator-route").change(removeLineFromMap);
 
 
 // go button for tab 2 to show and hide results
