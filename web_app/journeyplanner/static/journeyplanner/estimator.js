@@ -270,7 +270,7 @@ function calcRoute() {
             var request = {
                 origin: start_latlng,
                 destination: end_latlng,
-                travelMode: google.maps.TravelMode.DRIVING
+                travelMode: google.maps.TravelMode.TRANSIT
             };
             directionsService = new google.maps.DirectionsService;
 
@@ -293,6 +293,7 @@ $("#estimator-origin").change(destination);
 $("#estimator-route").change(removeLineFromMap);
 
 
+
 // go button for tab 2 to show and hide results
 $(function() {
 
@@ -312,6 +313,7 @@ $(function() {
             calcRoute();
             removeLineFromMap();
             makeStatsRequest();
+            
 
             //  use different date and time values depending on size of screen
             if ($(window).width() < 992) {
@@ -437,9 +439,17 @@ $(function() {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('#edit-journey-tab2').on('click', function() {
+        clearMarkers()
         $(".form-area").show();
         $("#stop-to-stop-results").hide();
+        
     });
+
+    
+
+
+
+
     // call post request function when mobile datetime value changed
     $("#datetime-tab2-results").on("change", function() {
         sendDateTimeChangePostRequest();
