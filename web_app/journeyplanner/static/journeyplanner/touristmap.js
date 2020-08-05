@@ -1,12 +1,18 @@
 // initialise center of map for both desktop and mobile screens
-var dublin = { lat: 53.349424, lng: -6.363448826171867 };
-var mobileDublin = { lat: 53.350152, lng: -6.260416 };
+var dublin = {
+    lat: 53.349424,
+    lng: -6.363448826171867
+};
+var mobileDublin = {
+    lat: 53.350152,
+    lng: -6.260416
+};
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     // remove tourist markers when user navigates to different tab using name spacing
     $(document).off('click.tourist');
-    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab", function () {
+    $(document).on('click.tourist', "#routeplanner-tab, .edit-journey, #allroutes-tab, #tourist-tab, #tourist-nav, #routeplanner-nav, #allroutes-nav, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab", function() {
         clearAllTouristMarkers(markers);
         removeLineFromTouristMap();
     });
@@ -24,7 +30,7 @@ $(document).ready(function () {
     $('#destination-tourist').hide();
 
     // initialise tooltip for geolocation information
-    $(function () {
+    $(function() {
         $('[data-toggle="tooltip"]').tooltip()
     })
 
@@ -49,17 +55,29 @@ $(document).ready(function () {
 
     // use autocomplete for origin and destination
     var input1 = document.getElementById("origin-tourist");
-    var options = { componentRestrictions: { country: "ie" }, types: ['geocode'] };
+
+    //setting the autocomplete to dublin only
+    var bound = new google.maps.LatLngBounds(new google.maps.LatLng(52.999804, -6.841221), new google.maps.LatLng(53.693045, -5.914218));
+
+    var options = {
+        componentRestrictions: {
+            country: "ie"
+        },
+        types: ['geocode'],
+        bounds: bound,
+        strictBounds: true,
+    };
+
     origin = new google.maps.places.Autocomplete(input1, options);
 
     // hide error when content of origin input box changed
-    $("#origin-tourist").on("input", function () {
+    $("#origin-tourist").on("input", function() {
         $('.geo-error').hide();
     });
 
 
     // call the geolocation function when button is clicked
-    $('#geolocation-tourist').on('click', function () {
+    $('#geolocation-tourist').on('click', function() {
         getGeolocation('origin-tourist');
         $('.geo-spinner').show();
     });
@@ -76,14 +94,14 @@ var markerArray = [];
 
 // prevent the enter button working on the autocomplete dropdown
 // this is done to prevent the geolocation button underneath being selected when enter is clicked
-$(".form-control").keydown(function (e) {
+$(".form-control").keydown(function(e) {
     if (e.keyCode == 13) {
         return false;
     }
 });
 
 // loop through checkboxes and display markers on map using data attribute
-$(".tourist-check").change(function () {
+$(".tourist-check").change(function() {
 
     // center to correct area of map depending on screen size 
     if ($(window).width() <= 992) {
@@ -108,7 +126,7 @@ $(".tourist-check").change(function () {
         };
 
         service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(request, function (results, status) {
+        service.nearbySearch(request, function(results, status) {
             callback(results, status, type)
         });
 
@@ -136,7 +154,7 @@ function callback(results, status, type) {
 
 // clear markers for a specific Place Type from map when checkbox un-checked
 function clearTouristMarkers(markers) {
-    $.each(markers, function (index) {
+    $.each(markers, function(index) {
         markers[index].setMap(null);
     });
 }
@@ -151,7 +169,9 @@ function clearAllTouristMarkers(markers) {
 // remove route line and all markers from tourist map
 function removeLineFromTouristMap() {
     if (directionsRenderer) {
-        directionsRenderer.setDirections({ routes: [] });
+        directionsRenderer.setDirections({
+            routes: []
+        });
     }
     if (markerArray) {
         for (var i = 0; i < markerArray.length; i++) {
@@ -179,8 +199,8 @@ function createMarker(place, icon, markerList, rating) {
     markerList.push(marker);
 
     // show name of place and rating when mouse hovers over marker
-    google.maps.event.addListener(marker, 'mouseover', (function (placeName, rating) {
-        return function () {
+    google.maps.event.addListener(marker, 'mouseover', (function(placeName, rating) {
+        return function() {
             console.log("inside event: " + placeName);
             infowindow.setContent(placeName + "<br>Rating: " + rating);
             infowindow.open(map, this);
@@ -188,8 +208,8 @@ function createMarker(place, icon, markerList, rating) {
     })(place.name, rating));
 
     // populate destination input box with location clicked on map
-    google.maps.event.addListener(marker, 'click', (function (placeName, ending_lat, ending_lng) {
-        return function () {
+    google.maps.event.addListener(marker, 'click', (function(placeName, ending_lat, ending_lng) {
+        return function() {
             destination_latlng = new google.maps.LatLng(ending_lat, ending_lng);
             name = placeName;
             $('#destination-tourist').val(placeName);
@@ -205,6 +225,28 @@ var ending_lat;
 var ending_lng;
 var starting_lat;
 var starting_lng;
+
+
+//function to covert the date time into timestamp
+function timestamp() {
+    var pickedDate = $("#datepicker-tourist").val()
+    var pickedTime = $('#dtimepicker-tourist').val()
+    var x = (pickedDate + ' ' + pickedTime)
+    var departureTime;
+
+    // making sure the date chosen isnt less than the current date 
+
+    if (Date.parse(x) < Date.now()) {
+        departureTime = Date.now();
+    } else {
+        departureTime = Date.parse(x);
+    }
+
+    return departureTime
+    // return departureTime + 3600000; // 1 hour time zoon difference 
+
+
+}
 
 // show route on map
 function routes_tourist() {
@@ -223,7 +265,10 @@ function routes_tourist() {
     }
 
     // Create a renderer for directions and bind it to the map.
-    directionsRenderer = new google.maps.DirectionsRenderer({ map: map, preserveViewport: true });
+    directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        preserveViewport: true
+    });
 
     // Instantiate an info window to hold step text.
     var stepDisplay = new google.maps.InfoWindow;
@@ -235,21 +280,24 @@ function routes_tourist() {
 
 // calculating and showing the bus routes
 function calculateAndDisplayRoute(directionsRenderer, directionsService, markerArray, stepDisplay, map) {
+    var userTime = timestamp()
 
     // Retrieve the start and end locations and create a DirectionsRequest using
     // Bus directions.
     directionsService.route({
-        origin: document.getElementById('origin-tourist').value,
-        destination: destination_latlng,
-        travelMode: 'TRANSIT',
-        transitOptions: {
-            modes: ['BUS'],
-            routingPreference: 'FEWER_TRANSFERS',
-        }
-    },
+            origin: document.getElementById('origin-tourist').value,
+            destination: destination_latlng,
+            travelMode: 'TRANSIT',
+            transitOptions: {
+                modes: ['BUS'],
+                routingPreference: 'FEWER_TRANSFERS',
+                departureTime: new Date(userTime)
+
+            }
+        },
 
         // showing the response received in a text format 
-        function (response, status) {
+        function(response, status) {
 
             // markers for each step.
             if (status === 'OK') {
@@ -363,9 +411,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         //trimming the instruction text
                         instruction = instruction.split(',');
                         instruction = instruction[0];
-                    }
-
-                    else if (travelMode == "TRANSIT") {
+                    } else if (travelMode == "TRANSIT") {
                         var journey_steps = {}; //dictionary for each bus steps in the journey
                         distance = journeysteps[i].distance.text;
                         duration = journeysteps[i].duration.text
@@ -406,22 +452,22 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 var prediction = 0;
                 // sending a post request to the server
                 $.ajax({
-                    type: "POST",
-                    url: "planner/",
-                    data: {
-                        data,
-                        date: date1,
-                        time: timeSeconds,
+                        type: "POST",
+                        url: "planner/",
+                        data: {
+                            data,
+                            date: date1,
+                            time: timeSeconds,
 
-                    }
+                        }
 
-                })
+                    })
 
                     // response returned from post request
-                    .done(function (response) {
+                    .done(function(response) {
 
                         response = JSON.parse(response)
-    
+
                         // hide spinner when post request is done
                         $('.prediction-spinner').hide();
                         $('.results-card').show();
@@ -455,7 +501,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                         amount = parseFloat(element[key]);
                                         total_cash += amount;
 
-                                    } if (key == "Adult Leap") {
+                                    }
+                                    if (key == "Adult Leap") {
                                         element[key] = parseFloat(element[key]);
                                         total_leap += element[key];
                                     }
@@ -492,7 +539,8 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                             // if all fares unavailable show total as unavailable
                             if (total_cash == 0) {
                                 $('#total-fares-tourist').append('<li>' + "Total Cash Fare: Unavailable" + '</li>');
-                            } if (total_leap == 0) {
+                            }
+                            if (total_leap == 0) {
                                 $('#total-fares-tourist').append('<li>' + "Total Leap Fare: Unavailable" + '</li>');
                             } else {
                                 // else show totals that are available along with error message
@@ -517,27 +565,26 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         for (var j = 0; j < prediction1.length; j++) {
 
                             journeyTime += parseInt(prediction1[j])
-                            console.log('journeyTime',journeyTime)
+                            console.log('journeyTime', journeyTime)
                         }
-                        var format= journeyTime
+                        var format = journeyTime
 
-            //coverting the time in hours and minutes
-            function timeConvert(n) {
-              var num = n;
-              var hours = (num / 60);
-              var rhours = Math.floor(hours);
-              var minutes = (hours - rhours) * 60;
-              var rminutes = Math.round(minutes);
-              return rhours + "hour " + rminutes + " mins";
-              }
+                        //coverting the time in hours and minutes
+                        function timeConvert(n) {
+                            var num = n;
+                            var hours = (num / 60);
+                            var rhours = Math.floor(hours);
+                            var minutes = (hours - rhours) * 60;
+                            var rminutes = Math.round(minutes);
+                            return rhours + "hour " + rminutes + " mins";
+                        }
 
 
-            if (format>=60){
-              format=timeConvert(format)
-            }
-            else{
-              format=journeyTime + ' mins'
-            }
+                        if (format >= 60) {
+                            format = timeConvert(format)
+                        } else {
+                            format = journeyTime + ' mins'
+                        }
 
 
 
@@ -572,8 +619,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                                 direction_text.append('<li>' + walking + '&nbsp;&nbsp;' + instruction + '</p><p>' + road + '&nbsp;&nbsp;<b>Duration:</b>&nbsp;' + duration + '</li>');
 
-                            }
-                            else if (travelMode == "TRANSIT") {
+                            } else if (travelMode == "TRANSIT") {
                                 var journey_steps = {}; //dictionary for each bus steps in the journey
                                 distance = journeysteps[i].distance.text;
 
@@ -599,8 +645,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 //showing the response on the map. 	 
                 directionsRenderer.setDirections(response);
                 showSteps(response, markerArray, stepDisplay, map);
-            }
-            else {
+            } else {
                 window.alert('Directions request failed due to ' + status);
             }
         });
@@ -621,7 +666,7 @@ function showSteps(directionResult, markerArray, stepDisplay, map) {
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
-    google.maps.event.addListener(marker, 'click', function () {
+    google.maps.event.addListener(marker, 'click', function() {
         // Open an info window when the marker is clicked on, containing the text
         // of the step.
         stepDisplay.setContent(text);
@@ -631,9 +676,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
 
 // when the user click the go button, the route function runs and the results div shows
-$(function () {
+$(function() {
 
-    $('#go-tourist').on('click', function () {
+    $('#go-tourist').on('click', function() {
 
         // show loader while prediction is loading
         $('.prediction-spinner').show();
@@ -664,7 +709,9 @@ $(function () {
             $(".form-area").hide();
             $("#checkbox-card").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({ top: "400px" }, 400);
+                $("#map-interface").animate({
+                    top: "400px"
+                }, 400);
             }
             $("#route-results-tourist").show();
 
@@ -672,7 +719,7 @@ $(function () {
     });
 
     // add on click to edit-journey button to hide results and show journey planner
-    $('.edit-journey').on('click', function () {
+    $('.edit-journey').on('click', function() {
 
         // hide the fare when the user clicks back
         $('.fare-accordion').hide();
@@ -688,7 +735,7 @@ $(function () {
         }
 
         // when the user clicks 'back' show the markers again of the checked check-box
-        $('.tourist-check').each(function (index, obj) {
+        $('.tourist-check').each(function(index, obj) {
             if (this.checked) {
                 var type = $(this).attr("data-type");
 
@@ -702,7 +749,7 @@ $(function () {
                 };
 
                 service = new google.maps.places.PlacesService(map);
-                service.nearbySearch(request, function (results, status) {
+                service.nearbySearch(request, function(results, status) {
                     callback(results, status, type)
                 });
             }
@@ -712,12 +759,11 @@ $(function () {
         $(".form-area").show();
         // show half map on mobile screens
         if ($(window).width() < 992) {
-            $("#map-interface").animate({ top: "400px" }, 400);
+            $("#map-interface").animate({
+                top: "400px"
+            }, 400);
         }
         $("#route-results-tourist").hide();
         $('#direction-tourist').empty()
     });
 });
-
-
-

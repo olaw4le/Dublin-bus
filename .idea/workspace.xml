@@ -20,6 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="514e9684-583e-4c3f-8e9d-71250f6206b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,18 +44,6 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.test_fare">
     <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -171,6 +161,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -182,13 +173,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="405" y="44" key="#test_routes_details" timestamp="1596399591764">
@@ -199,29 +189,29 @@
       <screen x="0" y="23" width="1440" height="823" />
     </state>
     <state x="507" y="211" key="FileChooserDialogImpl/0.23.1440.823@0.23.1440.823" timestamp="1595451842245" />
-    <state width="1377" height="205" key="GridCell.Tab.0.bottom" timestamp="1596405497725">
+    <state width="1377" height="205" key="GridCell.Tab.0.bottom" timestamp="1596533876670">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.bottom/0.23.1440.816@0.23.1440.816" timestamp="1595928114803" />
-    <state width="1377" height="205" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1596405497725" />
+    <state width="1377" height="205" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1596533876670" />
     <state width="1377" height="205" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="1377" height="205" key="GridCell.Tab.0.center" timestamp="1596405497724">
+    <state width="1377" height="205" key="GridCell.Tab.0.center" timestamp="1596533876670">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.center/0.23.1440.816@0.23.1440.816" timestamp="1595928114801" />
-    <state width="1377" height="205" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1596405497724" />
+    <state width="1377" height="205" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1596533876670" />
     <state width="1377" height="205" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="1377" height="205" key="GridCell.Tab.0.left" timestamp="1596405497723">
+    <state width="1377" height="205" key="GridCell.Tab.0.left" timestamp="1596533876670">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.left/0.23.1440.816@0.23.1440.816" timestamp="1595928114799" />
-    <state width="1377" height="205" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1596405497723" />
+    <state width="1377" height="205" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1596533876670" />
     <state width="1377" height="205" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
-    <state width="1377" height="205" key="GridCell.Tab.0.right" timestamp="1596405497724">
+    <state width="1377" height="205" key="GridCell.Tab.0.right" timestamp="1596533876670">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="688" height="205" key="GridCell.Tab.0.right/0.23.1440.816@0.23.1440.816" timestamp="1595928114802" />
-    <state width="1377" height="205" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1596405497724" />
+    <state width="1377" height="205" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1596533876670" />
     <state width="1377" height="205" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1595451997206" />
   </component>
   <component name="XDebuggerManager">

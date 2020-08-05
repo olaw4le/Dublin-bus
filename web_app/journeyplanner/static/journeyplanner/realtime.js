@@ -5,10 +5,9 @@ var latitude = "";
 var longitude = "";
 
 
-
-$(function () {
+$(function() {
     //jquery to acess the json file
-    var jqxhr = $.getJSON("static/bus_routes_routes_stops.json", null, function (data) {
+    var jqxhr = $.getJSON("static/bus_routes_routes_stops.json", null, function(data) {
         stations = data.bus;
         // going through the list of objects in the json file
         for (var i = 0; i < stations.length; i++) {
@@ -21,15 +20,15 @@ $(function () {
         stop_name = stop_name.trim().split(" ");
 
         //getting unqiue value of all the stops number
-        stop_number = stop_number.filter(function (item, pos) {
+        stop_number = stop_number.filter(function(item, pos) {
             return stop_number.indexOf(item) == pos;
         });
 
 
         $("#Stop-number").autocomplete({
-            source: function (request, response) {
+            source: function(request, response) {
                 var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
-                response($.grep(stop_number, function (item) {
+                response($.grep(stop_number, function(item) {
                     return matcher.test(item);
                 }));
             }
@@ -45,14 +44,16 @@ function bustime() {
     var tableRows = ""
     // request to get the bus time table, this should be done in the django app
     $.ajax({
-        type: "POST",
-        url: "real_time/",
-        data: { stopnumber: stopnumber }
-    })
+            type: "POST",
+            url: "real_time/",
+            data: {
+                stopnumber: stopnumber
+            }
+        })
 
-    
 
-        .done(function (response) {
+
+        .done(function(response) {
             $('.spinner-border').hide();
             var x = JSON.parse(response)
             businfo = x.results
@@ -81,18 +82,9 @@ function bustime() {
         })
 }
 
-$("#real-time-button").on('click', function () {
+$("#real-time-button").on('click', function() {
     $('.spinner-border').show();
     // $("#real-time-table").html(tableRows);
     bustime();
 
 });
-
-
-
-
-
-
-
-
-
