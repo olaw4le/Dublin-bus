@@ -10,7 +10,7 @@ import requests
 from pyleapcard import *
 from .fare import get_fare
 
-from data_analytics import linear_regression_weather
+from data_analytics import neural_net
 from data_analytics import get_direction
 from data_analytics import db_interface
 from data_analytics import get_journey_proportion as jp
@@ -102,7 +102,7 @@ def prediction(request):
         direction=request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         # print("Users estimated journey in minutes (from views.py)", result)
 
 
@@ -168,7 +168,7 @@ def planner(request):
 
             # use the maachine learning module to calculate prediction
             try:
-                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+                calculation=neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
                 prediction.append(calculation)
                 # print('prediction from module',prediction)
             except:
