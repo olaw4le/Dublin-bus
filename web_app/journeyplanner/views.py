@@ -10,6 +10,7 @@ import requests
 from pyleapcard import *
 from .fare import get_fare
 
+from data_analytics import neural_net
 from data_analytics import linear_regression_weather
 from data_analytics import incidents
 from data_analytics import get_direction
@@ -105,7 +106,9 @@ def prediction(request):
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
     try:
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
+        # print("Users estimated journey in minutes (from views.py)", result)
+
         journey_fare = get_fare(route, direction, origin, destination)
 
         if result !=0:
@@ -181,14 +184,14 @@ def planner(request):
 
             # use the maachine learning module to calculate prediction
             try:
-                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+                calculation = neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
                 if calculation != 0:
                     prediction.append(calculation)
 
                 elif calculation ==0:
                     # return the google prediction if the calculation is 0
                     prediction.append(duration)
-                
+
                 elif calculation >=300:
                     prediction.append(duration)
 
@@ -426,7 +429,7 @@ def accident(request):
             time = request.POST["time"]
             duration = i["duration"]
 
-     
+
             # departure stops lat and lng
             departure = i["departure_latlng"]
             x = departure.split(",")
@@ -462,7 +465,7 @@ def accident(request):
             response= incidents.return_incident_info()
             print(response)
 
-            
+
         return HttpResponse(json.dumps(response))
 
-        
+
