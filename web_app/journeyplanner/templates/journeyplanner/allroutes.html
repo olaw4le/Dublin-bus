@@ -48,7 +48,16 @@
                 <input class="input-box form-control" type="text" class="timepicker" id="timepicker-tab2">
             </div>
         </div>
-        <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p>
+
+        <!-- error if form not complete -->
+        <div class="alert alert-danger geo-error" id="stop-to-stop-incomplete-form-error" role="alert">
+            Please select route, origin stop and destination stop.
+        </div>
+
+
+
+
+        <!-- <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p> -->
         <button type="submit" class="go-button btn btn-warning btn-lg" id="stop-to-stop-go">Go</button>
         <div class="mobile-space"></div>
     </form>

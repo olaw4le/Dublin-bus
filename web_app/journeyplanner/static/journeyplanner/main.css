@@ -406,14 +406,16 @@ label.dt-label {
 
 .invalid-location-error{
   display: none;
-  color: red;
-  margin-left: 5px;
+  /* color: red;
+  margin-left: 5px; */
+}
+
+.alert-danger {
+  width: 90%;
 }
 
 #stop-to-stop-incomplete-form-error {
   display: none;
-  color: red;
-  margin-left: 5px;
 }
 
 /* leap card */
