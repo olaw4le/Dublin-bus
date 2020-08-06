@@ -248,18 +248,27 @@ def leap_login(request):
         leap_session = LeapSession()
 
         # attempt to login to www.leapcard.ie with supplied credentials
-        # return error if credentials are incorrect
+        # return error if credentials are incorrect or request fails
         try:
             leap_session.try_login(user, password)
 
-        except Exception as e:
-            # print(e)
-            return e
+            # request the www.leapcard.ie account overview
+            overview = leap_session.get_card_overview()
 
-        # request the www.leapcard.ie account overview
-        overview = leap_session.get_card_overview()
-        stats = {"cardNumber": overview.card_num, "cardBalance": overview.balance, "cardName": overview.card_label,
-                 "cardType": overview.card_type, "cardExpiry": overview.expiry_date}
+        except Exception as e:
+            if type(e) == ConnectionError:
+                err = {"code": "44", "msg": "The service could not be reached"}
+            elif type(e) == OSError:
+                err = {"code": "45", "msg": "Invalid credentials entered"}
+            elif type(e) == IOError:
+                err = {"code": "45", "msg": "Invalid credentials entered"}
+            else:
+                err = {"code": "46", "msg": "Unknown error occurred"}
+
+            return HttpResponse(json.dumps(err))
+
+        stats = {"code": "00", "cardNumber": overview.card_num, "cardBalance": overview.balance,
+                 "cardName": overview.card_label, "cardType": overview.card_type, "cardExpiry": overview.expiry_date}
 
         # convert stats to json format & return to user
         return HttpResponse(json.dumps(stats))
