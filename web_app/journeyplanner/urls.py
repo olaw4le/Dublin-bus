@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^real_time/', views.real_time, name='real_time'),
     url(r'^leap_login/', views.leap_login, name='leap_login'),
     url(r'^get_stats/', views.get_stats, name='get_stats'),
-    url(r'^accident/', views.get_stats, name='accident')
+    url(r'^accident/', views.accident, name='accident')
 ]
 
 
