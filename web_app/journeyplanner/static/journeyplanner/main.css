@@ -390,6 +390,7 @@ label.dt-label {
 #results-chart {
   width: 420px;
   margin-top: 20px;
+  padding-left: 0px;
 }
 
 .chart {
@@ -447,7 +448,7 @@ label.dt-label {
 
 #realtime-error {
   display: none;
-  margin-left: 25px;
+  margin-left: 15px;
 }
 
 #routeplanner-form {
@@ -486,6 +487,7 @@ label.dt-label {
 
 .fare-accordion {
   margin-left: 15px;
+  margin-bottom: 10px;
 }
 
 .tab-card {
