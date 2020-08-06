@@ -5,6 +5,8 @@
 <h4 class="tab-title">Leap Card</h4>
 <!-- leapcard login form -->
 <div class="container form-area" id="leap-login-container">
+    <!-- Error messages to display -->
+    <div class="alert alert-danger invalid-location-error" role="alert" id="leap-error"></div>
     <form autocomplete="off" onsubmit="return false">
         <div class="form-group">
             <label for="username">Username:</label>
@@ -64,7 +66,7 @@
                 <p>Card Type: </p>
             </div>
             <div class="col-8">
-                <p id="card-type">Student</p>
+                <p id="card-type"></p>
             </div>
         </div>
 
