@@ -387,3 +387,54 @@ def get_stats(request):
         # print(response)
         return HttpResponse(json.dumps(response))
 
+@csrf_exempt
+def accident(request):
+     if request.method == "POST":
+        data = json.loads(request.POST["data"])
+
+
+        for i in data:
+            route = i["route_number"]
+            date = request.POST["date"]
+            time = request.POST["time"]
+            duration = i["duration"]
+
+     
+            # departure stops lat and lng
+            departure = i["departure_latlng"]
+            x = departure.split(",")
+            departure_lat = float(x[0])
+            departure_lng = float(x[1])
+
+            # arrival stops lat and lng
+            arrival = i["arrival_latlng"]
+            y = arrival.split(",")
+            arrival_lat = float(y[0])
+            arrival_lng = float(y[1])
+
+            route_number = route.upper()
+            # getting the suggested route file
+            try:
+                route_list = stops_latlng(route_number)
+            except:
+                route_list = 0
+
+            try:
+                # getting the orging and destination stop number using the vincenty formular
+                origin = find_stop(route_list, (departure_lat, departure_lng))
+                arrival = find_stop(route_list, (arrival_lat, arrival_lng))
+                direction = get_direction.get_direction_from_stops(route, origin, arrival)
+                # print(direction)
+
+            except:
+                direction = None
+                origin = 0
+                arrival = 0
+
+
+            response= ' '
+
+            
+        return HttpResponse(json.dumps(response))
+
+        

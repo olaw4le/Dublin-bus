@@ -19,7 +19,8 @@ urlpatterns = [
     url(r'^list_latlng/', views.list_latlng, name='stops_latlng'),
     url(r'^real_time/', views.real_time, name='real_time'),
     url(r'^leap_login/', views.leap_login, name='leap_login'),
-    url(r'^get_stats/', views.get_stats, name='get_stats')
+    url(r'^get_stats/', views.get_stats, name='get_stats'),
+    url(r'^accident/', views.get_stats, name='accident')
 ]
 
 

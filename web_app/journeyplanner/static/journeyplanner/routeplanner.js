@@ -560,6 +560,32 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                       }
                   })
 
+// laura post request 
+ $.ajax({
+      type: "POST",
+      url: "accident/",
+      data: { data, date: date1, time: input_time, }
+
+                })  
+                
+// response returned from post request
+.done(function(response) {
+
+// parse the response
+ response = JSON.parse(response)
+
+            })
+
+
+
+
+
+
+
+
+
+
+
               //showing the response on the map. 	 
               directionsRenderer.setDirections(response);
 
