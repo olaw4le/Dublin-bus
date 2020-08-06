@@ -300,8 +300,12 @@ $(function() {
     $('#stop-to-stop-go').on('click', function() {
 
         // clear old fare and prediction values each time user clicks go
-        $('#stop-to-stop-fare').html("");
+        $('#cash-and-leap-tab2').html("");
+        $('#fare-result-tab2').html("");
         $("#stop-to-stop-estimate").html("");
+        $('.fare-accordion').hide();
+        $('#results-card').hide();
+        $('#results-chart').hide();
 
         // show error if user doesn't complete all fields in form
         if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' ||
@@ -394,6 +398,7 @@ $(function() {
                 .done(function(response) {
 
                     $('.fare-accordion').show();
+                    $('#results-card').show();
 
                     // display fare to user and display 'unavailable' when no fare given
                     var fare = response.fare;
@@ -417,7 +422,7 @@ $(function() {
                     console.log("successfully posted");
 
                     // hide spinner and show estimate
-                    $(".spinner-border").hide();
+                    $("#estimate-loader").hide();
                     $("#stop-to-stop-estimate").html(response.result + " minutes");
                 });
 
@@ -425,9 +430,8 @@ $(function() {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({
-                    top: "350px"
-                }, 'fast');
+                $("#map-interface").css(
+                    "top", "350px");
             }
             $("#stop-to-stop-results").show();
 
@@ -442,6 +446,9 @@ $(function() {
         clearMarkers()
         $(".form-area").show();
         $("#stop-to-stop-results").hide();
+        $('.fare-accordion').hide();
+        $('#cash-and-leap-tab2').html("");
+        $('#fare-result-tab2').html("");
         
     });
 
@@ -561,11 +568,11 @@ function getSearchParams() {
 function makeStatsRequest() {
 
     // red the search parameters
-    var params = getSearchParams()
+    var params = getSearchParams();
 
     // hide any error messages from the previous search
-    $("#no-data-error").hide()
-
+    $("#no-data-error").hide();
+    $('#graph-loader').show();
     // make the request
     $.ajax({
             type: "POST",
@@ -596,7 +603,9 @@ function makeStatsRequest() {
             } else {
                 chartDataError();
             }
-        })
+            $('#results-chart').show();
+            $('#graph-loader').hide();
+        });
 }
 
 

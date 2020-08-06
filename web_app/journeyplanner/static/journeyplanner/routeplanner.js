@@ -610,6 +610,8 @@ $(function() {
       $('.prediction-spinner').show();
       $('.results-card').hide();
       $('.fare-accordion').hide();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
 
       //remove line from map
       removeLineFromMap();
@@ -642,9 +644,8 @@ $(function() {
 
           $(".form-area").hide();
           if ($(window).width() < 992) {
-              $("#map-interface").animate({
-                  top: "400px"
-              }, 400);
+              $("#map-interface").css(
+                  "top", "400px");
           }
           $("#route-results").show();
       }
@@ -662,6 +663,8 @@ $(function() {
           $("#map-interface").css("top", "0px");
       }
       $("#route-results").hide();
-      $('#direction').empty()
+      $('#direction').empty();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
   });
 });
