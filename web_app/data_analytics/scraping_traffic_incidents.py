@@ -16,6 +16,7 @@ password = "YZuB%F34qYSbpp7J"
 host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
 port = 5432
 
+
 def construct_sql(**kwargs):
 
     if "table_name" in kwargs:
@@ -121,6 +122,7 @@ def construct_sql(**kwargs):
         print("Error: Unsupported query type entered")
         return False
 
+
 def execute_sql(sql_query, database, user, password, host, port, **kwargs):
     
     # is function expected to produce output or not - depends on query type
@@ -159,7 +161,6 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
 
     else:
         connection.close()
-
 
 
 # api requests - it was necessary to split dublin into four tiles
@@ -207,7 +208,7 @@ for JSON in jsons:
         continue
 
 # query the database for the shapes of the routes
-sql1 =  construct_sql(table_name="db_gtfs_shapes", query_type="select_all")
+sql1 = construct_sql(table_name="db_gtfs_shapes", query_type="select_all")
 permanent_list = execute_sql(sql1, database, user, password, host, port, retrieving_data=True)
 
     
@@ -226,4 +227,13 @@ for shape in permanent_list:
             print(distance)
             paths_of_incidents.append(incident)
     new_dict[shape[0]]=paths_of_incidents
+
+# this sql query will replace the above
+"""
+"
+select route_id
+from db_gtfs_shapes
+where (route_path <-> path'[%s]') < 0.006;" % incident_path
+"""
+
 print(new_dict)
