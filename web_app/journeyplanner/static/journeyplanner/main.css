@@ -142,6 +142,10 @@ html, body {
     padding: 0px;
   }
 
+  #stop-to-stop-estimate {
+    font-weight: 800px;
+  }
+
   .card.results {
     padding-top: 10px;
     padding-left: 10px;
@@ -686,6 +690,7 @@ label.dt-label {
 
   #results-chart {
     width: 480px;
+    padding-left: 0px;
   }
 
   .edit-journey {
