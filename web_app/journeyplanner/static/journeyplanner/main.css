@@ -646,6 +646,7 @@ label.dt-label {
 
       .row .datetime {
         margin-left: 4px;
+        max-width: 200px;
       }
 
       .container .news {
