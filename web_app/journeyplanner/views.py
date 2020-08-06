@@ -11,6 +11,7 @@ from pyleapcard import *
 from .fare import get_fare
 
 from data_analytics import linear_regression_weather
+from data_analytics import incidents
 from data_analytics import get_direction
 from data_analytics import db_interface
 from data_analytics import get_journey_proportion as jp
@@ -432,7 +433,8 @@ def accident(request):
                 arrival = 0
 
 
-            response= ' '
+            response= incidents.return_incident_info()
+            print(response)
 
             
         return HttpResponse(json.dumps(response))
