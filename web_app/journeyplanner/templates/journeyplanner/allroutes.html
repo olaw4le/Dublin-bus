@@ -48,7 +48,16 @@
                 <input class="input-box form-control" type="text" class="timepicker" id="timepicker-tab2">
             </div>
         </div>
-        <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p>
+
+        <!-- error if form not complete -->
+        <div class="alert alert-danger geo-error" id="stop-to-stop-incomplete-form-error" role="alert">
+            Please select route, origin stop and destination stop.
+        </div>
+
+
+
+
+        <!-- <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p> -->
         <button type="submit" class="go-button btn btn-warning btn-lg" id="stop-to-stop-go">Go</button>
         <div class="mobile-space"></div>
     </form>
@@ -59,7 +68,7 @@
     <div class="row">
         <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm" id="edit-journey-tab2">Back</button>
     </div>
-    <div class="card results">
+    <div class="card results tab-card">
         <div class="row results">
         </div>
         <div class="row summary-results">
@@ -112,7 +121,8 @@
     </div>
 
     <!-- fare -->
-    <div id="accordion-fare-tab2" class="fare-accordion">
+    
+    <div id="accordion-fare-tab2" class="fare-accordion results tab-card">
         <div class="card">
             <div class="card-header" id="heading-tab2">
                 <ul id="cash-and-leap-tab2" class="upper-fare-content"></ul>
@@ -120,7 +130,7 @@
                 <h5 class="mb-0 fare-button">
                     <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse"
                         data-target="#collapse-tab2" aria-expanded="true" aria-controls="collapseOne">
-                        More fare details
+                        Fare details
                     </button>
                 </h5>
             </div>
@@ -141,9 +151,9 @@
         </div>
     </div>
     <!-- estimate -->
-    <div class="card results" id="results-card">
+    <div class="card results tab-card" id="results-card">
         <div class="row">
-            <div class="col-6" id="placeholder">Estimated Journey Time:</div>
+            <div class="col-6" id="placeholder">Journey Length:</div>
 
 
 
@@ -163,7 +173,7 @@
         </div>
       
 
-        <div id="results-chart">
+        <div id="results-chart" class="container">
 
             <!-- route number goes here -->
             <div class="row chart" id="results-route-number"></div>

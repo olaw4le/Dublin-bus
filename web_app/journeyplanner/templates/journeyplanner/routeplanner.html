@@ -24,9 +24,9 @@
         </div>
 
         <!-- error if geolocation doesn't work -->
-        <div>
-            <p class="geo-error">There was an error finding your current location. Please enter the origin location.</p>
-        </div>
+        <div class="alert alert-danger geo-error" role="alert">
+            There was an error finding your current location. Please enter the origin location.
+          </div>
 
         <div class="form-group">
             <label for="destination">To:</label>
@@ -51,7 +51,13 @@
                     <input class="input-box form-control" type="text" class="timepicker" id="timepicker-tab1">
                 </div>
             </div>
-            <p class="invalid-location-error">We could not find directions for this journey.</p>
+           
+            <!-- error message if invalid locations entered -->
+            <div class="alert alert-danger invalid-location-error" role="alert">
+                We could not find directions for this journey.
+              </div>
+
+
             <button type="submit" class="go-button btn btn-warning btn-lg" id="go">Go</button>
 
     </form>
@@ -124,7 +130,7 @@
     </div>
 
     <!-- overall journey time and length -->
-    <div class="card results results-card">
+    <div class="card results results-card tab-card">
         <div id="overall-time">
             <div class="row">
                 <p id="journey-time"></p>
@@ -138,7 +144,7 @@
     </div>
 
     <!-- fare -->
-    <div id="accordion-fare" class="fare-accordion">
+    <div id="accordion-fare" class="fare-accordion tab-card">
         <div class="card">
             <div class="card-header" id="headingOne">
                 <ul id="total-fares" class="upper-fare-content"></ul>
@@ -147,7 +153,7 @@
 
                         <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapseOne"
                             aria-expanded="true" aria-controls="collapseOne">
-                            More fare details
+                            Fare details
                         </button>
                     </h5>
             </div>
@@ -162,7 +168,7 @@
     </div>
 
     <!-- directions and prediction -->
-    <div class="card results results-card">
+    <div class="card results results-card tab-card">
         <div class="row">
             <ul id="direction">
             </ul>

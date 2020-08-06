@@ -142,6 +142,10 @@ html, body {
     padding: 0px;
   }
 
+  #stop-to-stop-estimate {
+    font-weight: 800px;
+  }
+
   .card.results {
     padding-top: 10px;
     padding-left: 10px;
@@ -389,8 +393,9 @@ label.dt-label {
 }
 
 .chart {
-  width: 90%;
+  width: 80vw;
   margin-left: 0px;
+  max-width: 375px;
 }
 
 #tourist-destination-error {
@@ -401,14 +406,16 @@ label.dt-label {
 
 .invalid-location-error{
   display: none;
-  color: red;
-  margin-left: 5px;
+  /* color: red;
+  margin-left: 5px; */
+}
+
+.alert-danger {
+  width: 90%;
 }
 
 #stop-to-stop-incomplete-form-error {
   display: none;
-  color: red;
-  margin-left: 5px;
 }
 
 /* leap card */
@@ -474,13 +481,22 @@ label.dt-label {
 
 #accordion-fare-tab2 {
   display:none;
+  
 }
-
 
 .fare-accordion {
+  margin-left: 15px;
+}
+
+.tab-card {
+  width: 90vw;
+  max-width: 400px;
+}
+
+/* .fare-accordion {
   margin: 15px 15px 15px 15px;
   background-color: white;
-}
+} */
 
 
 .fare-result-detailed{
@@ -513,6 +529,14 @@ label.dt-label {
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
+
+
+    .tab-card {
+      width: 90vw;
+      max-width: 650px;
+    }
+
+
 
     #fullscreen-map {
       /* height: calc(100vh - 85px); */
@@ -633,6 +657,7 @@ label.dt-label {
 
       .row .datetime {
         margin-left: 4px;
+        max-width: 200px;
       }
 
       .container .news {
@@ -672,6 +697,7 @@ label.dt-label {
 
   #results-chart {
     width: 480px;
+    padding-left: 0px;
   }
 
   .edit-journey {
@@ -684,8 +710,8 @@ label.dt-label {
     a.nav-item.nav-link.load-interface.nav-bottom{
       font-size: 0.75em;
     }
+
   }
-  
 
     /* show map interface again when screen is stretched out */
     @media only screen and (min-width: 992px) {
