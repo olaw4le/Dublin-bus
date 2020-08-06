@@ -15,13 +15,15 @@
         </div>
         <div class="form-group">
             <label for="destination">Origin Stop:</label>
-            <select required class="input-box form-control col-6" id="estimator-origin" placeholder="Select stop number">
+            <select required class="input-box form-control col-6" id="estimator-origin"
+                placeholder="Select stop number">
                 <option value="0">-- Select --</option>
             </select>
         </div>
         <div class="form-group">
             <label for="destination">Destination Stop:</label>
-            <select required class="input-box form-control col-6" id="estimator-destination" placeholder="Select stop number">
+            <select required class="input-box form-control col-6" id="estimator-destination"
+                placeholder="Select stop number">
                 <option value="0">-- Select --</option>
             </select>
         </div>
@@ -115,12 +117,12 @@
             <div class="card-header" id="heading-tab2">
                 <ul id="cash-and-leap-tab2" class="upper-fare-content"></ul>
                 <div class="fare-total-message">Some fares on this journey could not be calculated</div>
-                    <h5 class="mb-0 fare-button">
-                        <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse" data-target="#collapse-tab2"
-                            aria-expanded="true" aria-controls="collapseOne">
-                            More fare details
-                        </button>
-                    </h5>
+                <h5 class="mb-0 fare-button">
+                    <button class="btn btn-outline-primary btn-sm text-left" data-toggle="collapse"
+                        data-target="#collapse-tab2" aria-expanded="true" aria-controls="collapseOne">
+                        More fare details
+                    </button>
+                </h5>
             </div>
 
             <div id="collapse-tab2" class="collapse" aria-labelledby="heading-tab2" data-parent="#accordion-fare-tab2">
@@ -132,16 +134,18 @@
 
     </div>
 
-
+    <!-- show loader while user waiting for result -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-warning" id="estimate-loader" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <!-- estimate -->
-    <div class="card results">
+    <div class="card results" id="results-card">
         <div class="row">
             <div class="col-6" id="placeholder">Estimated Journey Time:</div>
 
-            <!-- show loader while user waiting for result -->
-            <div class="spinner-border text-success" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+
 
             <!-- show result -->
             <div class="col-6" id="stop-to-stop-estimate"></div>
@@ -151,8 +155,16 @@
             <div id="no-data-error"></div>
         </div>
 
+        <!-- show loader while user waiting for result -->
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-warning" id="graph-loader" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+      
 
         <div id="results-chart">
+
             <!-- route number goes here -->
             <div class="row chart" id="results-route-number"></div>
             <!-- stop numbers go here -->
@@ -167,12 +179,6 @@
                 <canvas id="results-canvas"></canvas>
             </div>
 
-            <!-- a toggle switch for changing between times-by-hour or times-by-day on graph -->
-            <!-- source https://getbootstrap.com/docs/4.2/components/forms/#switches -->
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="results-canvas-toggle">
-                <label class="custom-control-label" for="customSwitch1"></label>
-            </div>
         </div>
     </div>
     <div class="mobile-space"></div>

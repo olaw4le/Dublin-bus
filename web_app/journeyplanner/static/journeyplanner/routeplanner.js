@@ -610,6 +610,8 @@ $(function() {
       $('.prediction-spinner').show();
       $('.results-card').hide();
       $('.fare-accordion').hide();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
 
       //remove line from map
       removeLineFromMap();
@@ -662,6 +664,8 @@ $(function() {
           $("#map-interface").css("top", "0px");
       }
       $("#route-results").hide();
-      $('#direction').empty()
+      $('#direction').empty();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
   });
 });
