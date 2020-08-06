@@ -644,9 +644,8 @@ $(function() {
 
           $(".form-area").hide();
           if ($(window).width() < 992) {
-              $("#map-interface").animate({
-                  top: "400px"
-              }, 400);
+              $("#map-interface").css(
+                  "top", "400px");
           }
           $("#route-results").show();
       }

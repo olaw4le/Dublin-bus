@@ -430,9 +430,8 @@ $(function() {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({
-                    top: "350px"
-                }, 'fast');
+                $("#map-interface").css(
+                    "top", "350px");
             }
             $("#stop-to-stop-results").show();
 
