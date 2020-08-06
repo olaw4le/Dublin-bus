@@ -481,9 +481,14 @@ label.dt-label {
 
 #accordion-fare-tab2 {
   display:none;
+  
+}
+
+.fare-accordion {
   margin-left: 15px;
 }
-.tab-2-card {
+
+.tab-card {
   width: 90vw;
   max-width: 400px;
 }
@@ -526,7 +531,7 @@ label.dt-label {
   @media only screen and (max-width: 992px) {
 
 
-    .tab-2-card {
+    .tab-card {
       width: 90vw;
       max-width: 650px;
     }
