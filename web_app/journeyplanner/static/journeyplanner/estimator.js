@@ -423,7 +423,7 @@ $(function () {
 
                     // hide spinner and show estimate
                     $("#estimate-loader").hide();
-                    $("#stop-to-stop-estimate").html(response.result + " minutes");
+                    $("#stop-to-stop-estimate").html(response.result);
                 });
 
 

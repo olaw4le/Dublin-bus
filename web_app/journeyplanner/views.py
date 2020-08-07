@@ -105,22 +105,23 @@ def prediction(request):
 
     try:
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
-        if result !=0:
-            result=result
-        elif result ==0:
-            result="N/A"
-        elif result >=300:
-            result='N/A'
-        # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
-        results_dict = {"result" : result, "fare" : journey_fare}
+
+        if result !=0:
+            result= (result, ' minutes')
+        elif result ==0:
+            result= "Prediction unavailable!"
+        elif result >=300:
+            result= 'Prediction unavailable!'
 
     except:
-        result= "Prediction currently unavailable!"
-        
-        results_dict = {"result" : result, "fare" : journey_fare}
+        result= "Prediction unavailable!"
+
+    results_dict = {"result" : result, "fare" : journey_fare}
 
     return JsonResponse(results_dict)
+
+
 
 
 @csrf_exempt
