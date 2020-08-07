@@ -407,7 +407,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                         // loop through all fare dictionaries in the list returned
                         fare.forEach(element => {
                             if (element["found"]) {
-                                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + "</li>");
+                                $('#fare-result-tab1').append('<li><b>' + "Route " + element["route"] + ":" + "</b></li>");
                                 for (const key in element) {
                                     if (key != "url" && key != "route" && key != "found") {
                                         $('#fare-result-tab1').append('<li>' + key + ": " + "€" + element[key] + "</li>");
@@ -429,7 +429,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                                 // if all fares not included, show a message to the user 
                                 all_fares_included = false;
-                                $('#fare-result-tab1').append('<li>' + "Route " + element["route"] + ":" + '</li>');
+                                $('#fare-result-tab1').append('<li><b>' + "Route " + element["route"] + ":" + '</b></li>');
                                 $('#fare-result-tab1').append('<li>' + "Unavailable" + '</li>');
                                 $('#fare-result-tab1').append('<br>');
                             }
