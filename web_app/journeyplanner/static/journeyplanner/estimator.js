@@ -416,7 +416,7 @@ $(function () {
                         }
                     } else {
                         // else append unavailable
-                        $('#fare-result-tab2').append('<li>' + "Unavailable" + '</li>');
+                        $('#fare-result-tab2').append('<li>' + "Fare currently unavailable" + '</li>');
                     }
 
                     console.log("successfully posted");
