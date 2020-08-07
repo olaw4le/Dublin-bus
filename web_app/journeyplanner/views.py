@@ -174,7 +174,16 @@ def planner(request):
             # use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
-                prediction.append(calculation)
+                if calculation != 0:
+                    prediction.append(calculation)
+
+                elif calculation ==0:
+                    # return the google prediction if the calculation is 0
+                    prediction.append(duration)
+                
+                elif calculation >=300:
+                    prediction.append(duration)
+
                 # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
