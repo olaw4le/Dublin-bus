@@ -495,11 +495,6 @@ label.dt-label {
   max-width: 400px;
 }
 
-/* .fare-accordion {
-  margin: 15px 15px 15px 15px;
-  background-color: white;
-} */
-
 
 .fare-result-detailed{
   padding-left: 0px;
@@ -526,6 +521,12 @@ label.dt-label {
 
 .card-header {
   background-color: white;
+}
+
+#traffic-incident {
+  display:none;
+  width: 92%;
+  margin-left: 15px;
 }
   
 /* media queries to make interface responsive */

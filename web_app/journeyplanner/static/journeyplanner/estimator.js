@@ -93,8 +93,6 @@ $(function () {
 
     });
 
-
-
     $("#estimator-route").autocomplete({
         source: function (request, response) {
             var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
@@ -108,8 +106,6 @@ $(function () {
     });
 
 });
-
-
 
 //getting the value of the selected  route
 var sel_route = "";
