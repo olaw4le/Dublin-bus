@@ -121,7 +121,7 @@
     </div>
 
     <!-- fare -->
-    
+
     <div id="accordion-fare-tab2" class="fare-accordion results tab-card">
         <div class="card">
             <div class="card-header" id="heading-tab2">
@@ -155,14 +155,17 @@
         <div class="row">
             <div class="col-6" id="placeholder">Journey Length:</div>
 
-
-
             <!-- show result -->
             <div class="col-6" id="stop-to-stop-estimate"></div>
         </div>
 
         <div class="row">
-            <div id="no-data-error"></div>
+            <!-- error if no historical data available -->
+            <div class="alert alert-warning geo-error" id="no-data-error" role="alert">
+                Oh no! There appears to be no Historical data for this route at this time! Maybe try again with a
+                different time?
+            </div>
+
         </div>
 
         <!-- show loader while user waiting for result -->
@@ -171,7 +174,7 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-      
+
 
         <div id="results-chart" class="container">
 

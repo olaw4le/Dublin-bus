@@ -732,8 +732,6 @@ function drawBarChart(data) {
 
 function chartDataError() {
     // display an error message when no data historical data associated with the searched time...
-    var msg = "Oh no! There appears to be no Historical data for this route at this time! Maybe try again with a different time?";
-    $("#no-data-error").html(msg);
     $("#no-data-error").show();
     $("#results-chart").hide();
 }
