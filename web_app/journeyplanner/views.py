@@ -190,10 +190,10 @@ def planner(request):
                 elif calculation >=300:
                     prediction.append(duration)
 
-                # print('prediction from module',prediction)
+                print('prediction from module',prediction)
             except:
                 prediction.append(duration)
-                # print('prediction from google',prediction)
+                print('prediction from google',prediction)
 
             # adding the calculated value to the list that will be sent back
             # finally:
