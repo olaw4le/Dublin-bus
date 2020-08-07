@@ -11,6 +11,7 @@ from pyleapcard import *
 from .fare import get_fare
 
 from data_analytics import linear_regression_weather
+from data_analytics import incidents
 from data_analytics import get_direction
 from data_analytics import db_interface
 from data_analytics import get_journey_proportion as jp
@@ -104,6 +105,12 @@ def prediction(request):
 
     try:
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        if result !=0:
+            result=result
+        elif result ==0:
+            result="N/A"
+        elif result >=300:
+            result='N/A'
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
@@ -173,11 +180,20 @@ def planner(request):
             # use the maachine learning module to calculate prediction
             try:
                 calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
-                prediction.append(calculation)
-                # print('prediction from module',prediction)
+                if calculation != 0:
+                    prediction.append(calculation)
+
+                elif calculation ==0:
+                    # return the google prediction if the calculation is 0
+                    prediction.append(duration)
+                
+                elif calculation >=300:
+                    prediction.append(duration)
+
+                print('prediction from module',prediction)
             except:
                 prediction.append(duration)
-                # print('prediction from google',prediction)
+                print('prediction from google',prediction)
 
             # adding the calculated value to the list that will be sent back
             # finally:
@@ -247,18 +263,27 @@ def leap_login(request):
         leap_session = LeapSession()
 
         # attempt to login to www.leapcard.ie with supplied credentials
-        # return error if credentials are incorrect
+        # return error if credentials are incorrect or request fails
         try:
             leap_session.try_login(user, password)
 
-        except Exception as e:
-            # print(e)
-            return e
+            # request the www.leapcard.ie account overview
+            overview = leap_session.get_card_overview()
 
-        # request the www.leapcard.ie account overview
-        overview = leap_session.get_card_overview()
-        stats = {"cardNumber": overview.card_num, "cardBalance": overview.balance, "cardName": overview.card_label,
-                 "cardType": overview.card_type, "cardExpiry": overview.expiry_date}
+        except Exception as e:
+            if type(e) == ConnectionError:
+                err = {"code": "44", "msg": "The service could not be reached"}
+            elif type(e) == OSError:
+                err = {"code": "45", "msg": "Invalid credentials entered"}
+            elif type(e) == IOError:
+                err = {"code": "45", "msg": "Invalid credentials entered"}
+            else:
+                err = {"code": "46", "msg": "Unknown error occurred"}
+
+            return HttpResponse(json.dumps(err))
+
+        stats = {"code": "00", "cardNumber": overview.card_num, "cardBalance": overview.balance,
+                 "cardName": overview.card_label, "cardType": overview.card_type, "cardExpiry": overview.expiry_date}
 
         # convert stats to json format & return to user
         return HttpResponse(json.dumps(stats))
@@ -387,3 +412,55 @@ def get_stats(request):
         # print(response)
         return HttpResponse(json.dumps(response))
 
+@csrf_exempt
+def accident(request):
+     if request.method == "POST":
+        data = json.loads(request.POST["data"])
+
+
+        for i in data:
+            route = i["route_number"]
+            date = request.POST["date"]
+            time = request.POST["time"]
+            duration = i["duration"]
+
+     
+            # departure stops lat and lng
+            departure = i["departure_latlng"]
+            x = departure.split(",")
+            departure_lat = float(x[0])
+            departure_lng = float(x[1])
+
+            # arrival stops lat and lng
+            arrival = i["arrival_latlng"]
+            y = arrival.split(",")
+            arrival_lat = float(y[0])
+            arrival_lng = float(y[1])
+
+            route_number = route.upper()
+            # getting the suggested route file
+            try:
+                route_list = stops_latlng(route_number)
+            except:
+                route_list = 0
+
+            try:
+                # getting the orging and destination stop number using the vincenty formular
+                origin = find_stop(route_list, (departure_lat, departure_lng))
+                arrival = find_stop(route_list, (arrival_lat, arrival_lng))
+                direction = get_direction.get_direction_from_stops(route, origin, arrival)
+                # print(direction)
+
+            except:
+                direction = None
+                origin = 0
+                arrival = 0
+
+
+            response= incidents.return_incident_info()
+            print(response)
+
+            
+        return HttpResponse(json.dumps(response))
+
+        

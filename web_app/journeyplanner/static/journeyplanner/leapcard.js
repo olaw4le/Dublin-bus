@@ -17,6 +17,7 @@ $(document).ready(function () {
         $('#leap-login-container').show();
         $('#leap-overview-container').hide();
         $('#leap-detailed-container').hide();
+        $('#leap-error').hide();
 
         // clear the entered username & password
         $("#leap-user").val("");
@@ -46,9 +47,6 @@ function leap_login(){
         .done(function(response){
 
             $('.spinner-border').hide();
-            $('#leap-detailed-container').show();
-            $('#leap-overview-container').show();
-            $('#leap-logout').show();
             var overviewData = JSON.parse(response);
             console.log(overviewData);
 
@@ -60,10 +58,26 @@ function leap_login(){
 // display the overview information on the leap.html page
 function displayOverview(overviewData) {
 
-    $("#card-name").html(overviewData.cardName);
-    var a = $("#card-balance").html("€" + overviewData.cardBalance);
-    var a = $("#card-type").html(overviewData.cardType);
-    var a = $("#card-number").html(overviewData.cardNumber);
-    var a = $("#card-expiry").html(overviewData.cardExpiry);
+    // code 00 represents a successful response
+    if (overviewData.code == "00") {
+        $("#card-name").html(overviewData.cardName);
+        var a = $("#card-balance").html("€" + overviewData.cardBalance);
+        var a = $("#card-type").html(overviewData.cardType);
+        var a = $("#card-number").html(overviewData.cardNumber);
+        var a = $("#card-expiry").html(overviewData.cardExpiry);
+
+        $('#leap-detailed-container').show();
+        $('#leap-overview-container').show();
+        $('#leap-logout').show();
+    } else {
+    // error handling
+        $("#leap-error").html(overviewData.msg)
+        $('#leap-error').show();
+        $('#leap-login-container').show();
+        // clear the entered username & password
+        $("#leap-user").val("");
+        $("#leap-password").val("");
+
+    }
 
 }

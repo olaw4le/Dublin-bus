@@ -22,7 +22,7 @@ function clearMarkers() {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Remove routes when navigating to another tab
     $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
 //initialise variables
 var routes = "";
-var route_number= "";
+var route_number = "";
 var stop_name = "";
 var stations = "";
 var routes = ""
@@ -66,13 +66,13 @@ var allMarkers = [];
 var routeNames = {};
 
 
-$(function() {
-    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function(data) {
+$(function () {
+    var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
         stations = data;
-    
+
         for (var key in stations) {
             var x = key.split("_");
-            route_number += (x[0]+" "+stations[key].headsign)+ ",";
+            route_number += (x[0] + " " + stations[key].headsign) + ",";
 
             // extract the headsign
             var headSign = stations[key].headsign;
@@ -82,30 +82,30 @@ $(function() {
             // populate routeNames
             routeNames[x[0] + " " + headSign] = key;
         }
-    
+
         //turning the into an array
         route_number = route_number.trim().split(",");
 
         //getting unqiue value of all the stops number
         route_number = route_number.filter(function (item, pos) {
-                       return route_number.indexOf(item) == pos;});
+            return route_number.indexOf(item) == pos;
+        });
 
     });
 
-  
-
     $("#estimator-route").autocomplete({
-        source: function(request, response) {
+        source: function (request, response) {
             var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
-            response($.grep(route_number, function(item) {
+            response($.grep(route_number, function (item) {
                 return matcher.test(item);
             }));
-        }
+
+        },
+        close: () => { console.log("closed"); $("#estimator-route").blur(); stops(); },
+        change: () => { stops() }
     });
 
 });
-
-
 
 //getting the value of the selected  route
 var sel_route = "";
@@ -114,14 +114,17 @@ var stop_list = [];
 
 // function to populate the origin and destination
 function stops() {
+    console.log("in stops")
     var To = "<option value=0>-- Select -- </option>";
+    // disable select
+    $("#estimator-origin").prop('disabled', true);
 
     // getting the value of the selected route
     sel_route = $("#estimator-route").val();
 
     //console.log("route", sel_route)
 
-    $.getJSON("static/new_ordered_stops.json", null, function(data) {
+    $.getJSON("static/new_ordered_stops.json", null, function (data) {
         stations = data;
         var key;
         //getting the value of the selected route
@@ -152,10 +155,6 @@ function stops() {
 
                         list += (key3 + " " + y) + ",";
                     }
-
-
-
-
                 }
 
                 //turning the into an array
@@ -167,13 +166,14 @@ function stops() {
                     To += "<option>  " + list[i] + "</option>";
                     stop_list.push(list[i])
                 }
-
-
+                console.log(To);
                 $("#estimator-origin").html(To);
             }
         }
-    })
-
+    }).done(()=> {
+        //enable select
+        $("#estimator-origin").prop('disabled', false);
+    });
 }
 
 
@@ -210,14 +210,14 @@ function origin_marker() {
 
 
     $.ajax({
-            type: "POST",
-            url: "list_latlng/",
-            data: {
-                route: route
-            }
-        })
+        type: "POST",
+        url: "list_latlng/",
+        data: {
+            route: route
+        }
+    })
 
-        .done(function(response) {
+        .done(function (response) {
             //console.log("successfully posted");
             var x = JSON.parse(response)
 
@@ -247,14 +247,14 @@ function calcRoute() {
     end = x[0]
 
     $.ajax({
-            type: "POST",
-            url: "list_latlng/",
-            data: {
-                route: route
-            }
-        })
+        type: "POST",
+        url: "list_latlng/",
+        data: {
+            route: route
+        }
+    })
 
-        .done(function(response) {
+        .done(function (response) {
 
             var x = JSON.parse(response)
 
@@ -277,7 +277,7 @@ function calcRoute() {
             directionsDisplay = new google.maps.DirectionsRenderer({
                 map: map
             })
-            directionsService.route(request, function(result, status) {
+            directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
                 }
@@ -287,7 +287,7 @@ function calcRoute() {
 };
 
 // event listner to porpulate the route dropdown list)
-$("#estimator-route").on('keyup click change hover', stops);
+$("#estimator-route").on('keyup click change hover focus', stops);
 $("#estimator-route").change(origin_marker);
 $("#estimator-origin").change(destination);
 $("#estimator-route").change(removeLineFromMap);
@@ -295,13 +295,17 @@ $("#estimator-route").change(removeLineFromMap);
 
 
 // go button for tab 2 to show and hide results
-$(function() {
+$(function () {
 
-    $('#stop-to-stop-go').on('click', function() {
+    $('#stop-to-stop-go').on('click', function () {
 
         // clear old fare and prediction values each time user clicks go
-        $('#stop-to-stop-fare').html("");
+        $('#cash-and-leap-tab2').html("");
+        $('#fare-result-tab2').html("");
         $("#stop-to-stop-estimate").html("");
+        $('.fare-accordion').hide();
+        $('#results-card').hide();
+        $('#results-chart').hide();
 
         // show error if user doesn't complete all fields in form
         if ($('#estimator-route').val() == "" || $("#estimator-origin option:selected").text() == '-- Select --' ||
@@ -313,7 +317,7 @@ $(function() {
             calcRoute();
             removeLineFromMap();
             makeStatsRequest();
-            
+
 
             //  use different date and time values depending on size of screen
             if ($(window).width() < 992) {
@@ -341,7 +345,7 @@ $(function() {
                 dateFormat: 'yy-m-d',
                 defaultDate: date,
                 minDate: "today",
-                onClose: function(selectedDates, dateStr, instance) {
+                onClose: function (selectedDates, dateStr, instance) {
                     sendDateTimeChangePostRequest();
                 },
             });
@@ -353,7 +357,7 @@ $(function() {
                 noCalendar: true,
                 time_24hr: true,
                 minuteIncrement: 1,
-                onClose: function(selectedDates, dateStr, instance) {
+                onClose: function (selectedDates, dateStr, instance) {
                     sendDateTimeChangePostRequest();
                 },
             });
@@ -378,22 +382,23 @@ $(function() {
 
             // send post request
             $.ajax({
-                    type: "POST",
-                    url: "prediction/",
-                    data: {
-                        date: date,
-                        time: timeSeconds,
-                        route: route,
-                        origin: origin,
-                        destination: destination,
-                        direction: direction
-                    }
-                })
+                type: "POST",
+                url: "prediction/",
+                data: {
+                    date: date,
+                    time: timeSeconds,
+                    route: route,
+                    origin: origin,
+                    destination: destination,
+                    direction: direction
+                }
+            })
 
                 // response returned from post request
-                .done(function(response) {
+                .done(function (response) {
 
                     $('.fare-accordion').show();
+                    $('#results-card').show();
 
                     // display fare to user and display 'unavailable' when no fare given
                     var fare = response.fare;
@@ -417,7 +422,7 @@ $(function() {
                     console.log("successfully posted");
 
                     // hide spinner and show estimate
-                    $(".spinner-border").hide();
+                    $("#estimate-loader").hide();
                     $("#stop-to-stop-estimate").html(response.result + " minutes");
                 });
 
@@ -425,9 +430,8 @@ $(function() {
             // show results
             $(".form-area").hide();
             if ($(window).width() < 992) {
-                $("#map-interface").animate({
-                    top: "350px"
-                }, 'fast');
+                $("#map-interface").css(
+                    "top", "350px");
             }
             $("#stop-to-stop-results").show();
 
@@ -438,20 +442,17 @@ $(function() {
     });
 
     // add on click to edit-journey button to hide results and show journey planner
-    $('#edit-journey-tab2').on('click', function() {
+    $('#edit-journey-tab2').on('click', function () {
         clearMarkers()
         $(".form-area").show();
         $("#stop-to-stop-results").hide();
-        
+        $('.fare-accordion').hide();
+        $('#cash-and-leap-tab2').html("");
+        $('#fare-result-tab2').html("");
+
     });
-
-    
-
-
-
-
     // call post request function when mobile datetime value changed
-    $("#datetime-tab2-results").on("change", function() {
+    $("#datetime-tab2-results").on("change", function () {
         sendDateTimeChangePostRequest();
     });
 
@@ -498,7 +499,7 @@ function sendDateTimeChangePostRequest() {
             destination: destination,
             direction: direction
         }
-    }).done(function(response) {
+    }).done(function (response) {
         //console.log("successfully posted");
         $(".spinner-border").hide();
         $("#stop-to-stop-estimate").show();
@@ -561,27 +562,27 @@ function getSearchParams() {
 function makeStatsRequest() {
 
     // red the search parameters
-    var params = getSearchParams()
+    var params = getSearchParams();
 
     // hide any error messages from the previous search
-    $("#no-data-error").hide()
-
+    $("#no-data-error").hide();
+    $('#graph-loader').show();
     // make the request
     $.ajax({
-            type: "POST",
-            url: "get_stats/",
-            data: {
-                date: params.date,
-                time: params.time,
-                route: params.route,
-                direction: params.direction,
-                end: params.end,
-                start: params.start
-            }
-        })
+        type: "POST",
+        url: "get_stats/",
+        data: {
+            date: params.date,
+            time: params.time,
+            route: params.route,
+            direction: params.direction,
+            end: params.end,
+            start: params.start
+        }
+    })
 
         // when response received
-        .done(function(response) {
+        .done(function (response) {
             var data = JSON.parse(response);
 
             if (data.hourly != "none") {
@@ -596,7 +597,9 @@ function makeStatsRequest() {
             } else {
                 chartDataError();
             }
-        })
+            $('#results-chart').show();
+            $('#graph-loader').hide();
+        });
 }
 
 
@@ -659,7 +662,7 @@ function DataSet(data) {
 
     var arr = new Array();
 
-    Object.keys(data).forEach(function(item) {
+    Object.keys(data).forEach(function (item) {
         arr.push(data[item]);
     })
 
