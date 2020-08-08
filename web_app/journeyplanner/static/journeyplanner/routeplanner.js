@@ -560,6 +560,32 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                       }
                   })
 
+// laura post request 
+ $.ajax({
+      type: "POST",
+      url: "accident/",
+      data: { data, date: date1, time: input_time, }
+
+                })  
+                
+// response returned from post request
+.done(function(response) {
+
+// parse the response
+ response = JSON.parse(response)
+
+            })
+
+
+
+
+
+
+
+
+
+
+
               //showing the response on the map. 	 
               directionsRenderer.setDirections(response);
 
@@ -610,6 +636,8 @@ $(function() {
       $('.prediction-spinner').show();
       $('.results-card').hide();
       $('.fare-accordion').hide();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
 
       //remove line from map
       removeLineFromMap();
@@ -642,9 +670,8 @@ $(function() {
 
           $(".form-area").hide();
           if ($(window).width() < 992) {
-              $("#map-interface").animate({
-                  top: "400px"
-              }, 400);
+              $("#map-interface").css(
+                  "top", "400px");
           }
           $("#route-results").show();
       }
@@ -662,6 +689,8 @@ $(function() {
           $("#map-interface").css("top", "0px");
       }
       $("#route-results").hide();
-      $('#direction').empty()
+      $('#direction').empty();
+      $('#total-fares').html("");
+      $('#fare-result-tab1').html("");
   });
 });

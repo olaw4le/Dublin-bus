@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
-path = cwd[:-7]
+path = cwd
 
 # load environment
 database = "postgres"
@@ -27,6 +27,7 @@ password = "YZuB%F34qYSbpp7J"
 host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
 port = 5432
 weather_api_key = "86baa129046e5cbaeb16af074356e579"
+
 
 def get_weather_from_db():
     """returns a tuple of the 'current' weather data from out postgres database."""
@@ -287,7 +288,7 @@ def quickanddirty(route, direction, startstop, endstop):
         However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate than at 6pm on a weekday"""
 
     # get the master list of ordered stops
-    f = open(path + 'web_app/journeyplanner/static/journeyplanner/ordered_stops_main.json')
+    f = open(path + "/journeyplanner/static/journeyplanner/ordered_stops_main.json")
     ordered_stop_data = json.load(f)
     
     # get the stops for the subroutes on that route as a dictionary
@@ -377,7 +378,11 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
         # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
         test = generate_test_dataframe(route, direction, date, time)
         # loads the correct linear regression pickle using the route and direction
+<<<<<<< HEAD:web_app/data_analytics/neural_net.py
         pickle_file = path + "web_app/data_analytics/pickles_nn/" + str(route) + "_direction" + str(direction) + ".pickle"
+=======
+        pickle_file = path + "/data_analytics/pickles_new/" + str(route) + "_direction" + str(direction) + ".pickle"
+>>>>>>> dev:web_app/data_analytics/linear_regression_weather.py
         pickle_in = open(pickle_file, 'rb')
         linear_regression = pickle.load(pickle_in)
 
@@ -385,7 +390,8 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
         prediction = linear_regression.predict(test)
         # print("Prediction from model: ", int(prediction[0]))
 
-        # get month, day_of_the_week and time_group from the date and time, these are needed for calculating the proportion of the total
+        # get month, day_of_the_week and time_group from the date and time,
+        # these are needed for calculating the proportion of the total
         # journey that the users trip represents. 
         date_time_obj = datetime.strptime(date, '%Y-%m-%d')
         weekday = date_time_obj.weekday()
