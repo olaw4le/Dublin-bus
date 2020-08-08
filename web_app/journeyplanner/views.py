@@ -10,12 +10,8 @@ import requests
 from pyleapcard import *
 from .fare import get_fare
 
-<<<<<<< HEAD
 from data_analytics import neural_net
-=======
-from data_analytics import linear_regression_weather
 from data_analytics import incidents
->>>>>>> dev
 from data_analytics import get_direction
 from data_analytics import db_interface
 from data_analytics import get_journey_proportion as jp
