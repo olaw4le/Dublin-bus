@@ -1,4 +1,5 @@
-from db_interface import *
+# from data_analytics import db_interface as db
+from db_interface.db_interface import *
 import csv
 
 # hard code env variables to appease laura - major security vulnerability !
