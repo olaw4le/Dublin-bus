@@ -131,64 +131,6 @@ class PostFunction(TestCase):
        # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
 
-
-# using selenium webdriver
-class webdriver_test(StaticLiveServerTestCase):
-   
-    @classmethod
-    def setUpClass(cls):
-        super(webdriver_test, cls).setUpClass()
-        cls.selenium = webdriver.Chrome(ChromeDriverManager().install())
-        cls.selenium.implicitly_wait(10)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super(webdriver_test, cls).tearDownClass()
-
-    # in the realtime tab put 123 in the search box
-    def realtime(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/realtime/'))
-        user_input = self.selenium.find_element_by_id("Stop-number")
-        user_input.send_keys(123)
-
-    # in the leap card tab input the these login details
-    def leapcard(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/leap/'))
-        user_email = self.selenium.find_element_by_id("leap-user")
-        user_email.send_keys('admin@outlook.com')
-
-        user_password =self.selenium.find_element_by_id("leap-password")
-        user_password.send_keys("admin")
-
-    # routeplenner tab 
-    def routeplanner(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/routeplanner/'))
-        user_origin = self.selenium.find_element_by_id("origin")
-        user_origin.send_keys('UCD Sports Centre, Belfield, Dublin, Ireland')
-        
-        user_destination= self.selenium.find_element_by_id("destination")
-        user_destination.send_keys('Ballsbridge, Dublin, Ireland')
-
-        user_date= self.selenium.find_element_by_id("destination")
-        user_date.send_keys('25/09/2020, 20:20')
-
-    def allroute(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/allroutes/'))
-        user_input = self.selenium.find_element_by_id("estimator-route")
-        user_input.send_keys('151 towards Bargy Road')
-        
-        user_origin= self.selenium.find_element_by_id("destination")
-        user_origin.select_by_visible_text('4606 Balgaddy Road')
-
-        user_destination= self.selenium.find_element_by_id("destination")
-        user_destination.select_by_visible_text('7142 Foxborough Rise')
-
-
-    def tourist(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/tourist/'))
-        user_origin = self.selenium.find_element_by_id("origin-tourist")
-        user_origin.send_keys('67 Eccles Street, Northside, Dublin, Ireland')
         
 
 
