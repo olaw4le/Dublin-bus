@@ -13,7 +13,8 @@ from .fare import get_fare
 from data_analytics import linear_regression_weather
 from data_analytics import incidents
 from data_analytics import get_direction
-from data_analytics import db_interface
+# from data_analytics import db_interface as db
+import db_interface.db_interface as db
 from data_analytics import get_journey_proportion as jp
 from data_analytics.to_time_group import to_time_group
 
