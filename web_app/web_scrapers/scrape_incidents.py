@@ -24,79 +24,87 @@ grid_refs = {
     "SE_Dublin": "494/332"
 }
 
-# retrieve incident data & assemble in list
-incidents = []
 
-for ref in grid_refs:
-    url = api_url % (grid_refs[ref], traffic_key)
-    incidents_json = requests.get(url).json()
+def scrape_incidents():
+    # retrieve incident data & assemble in list
+    incidents = []
 
-    try:
-        traffic_items = incidents_json['TRAFFIC_ITEMS']['TRAFFIC_ITEM']
-
-    except Exception as e:
-        print(e)
-        continue
-
-    for item in traffic_items:
-        incident = {
-            "incident_id": item['TRAFFIC_ITEM_ID'],
-            "start_time": item['START_TIME'],
-            "end_time": item['END_TIME'],
-            "start_point": str((item['LOCATION']["GEOLOC"]['ORIGIN']['LATITUDE'],
-                                item['LOCATION']["GEOLOC"]['ORIGIN']['LONGITUDE'])),
-            "end_point": str((item['LOCATION']["GEOLOC"]["TO"][0]['LATITUDE'],
-                              item['LOCATION']["GEOLOC"]["TO"][0]['LONGITUDE'])),
-            "incident_path": "",
-            "desc_line_1": item['TRAFFIC_ITEM_DESCRIPTION'][0]['value'],
-            "desc_line_2": ""
-        }
+    for ref in grid_refs:
+        url = api_url % (grid_refs[ref], traffic_key)
+        incidents_json = requests.get(url).json()
 
         try:
-            incident["desc_line_2"] = item["LOCATION"]["INTERSECTION"]["ORIGIN"]["STREET1"]["ADDRESS1"]
+            traffic_items = incidents_json['TRAFFIC_ITEMS']['TRAFFIC_ITEM']
+
         except Exception as e:
             print(e)
+            continue
 
-        incident["incident_path"] = "[%s, %s]" % (incident["start_point"], incident["end_point"])
+        for item in traffic_items:
+            incident = {
+                "incident_id": item['TRAFFIC_ITEM_ID'],
+                "start_time": item['START_TIME'],
+                "end_time": item['END_TIME'],
+                "start_point": str((item['LOCATION']["GEOLOC"]['ORIGIN']['LATITUDE'],
+                                    item['LOCATION']["GEOLOC"]['ORIGIN']['LONGITUDE'])),
+                "end_point": str((item['LOCATION']["GEOLOC"]["TO"][0]['LATITUDE'],
+                                  item['LOCATION']["GEOLOC"]["TO"][0]['LONGITUDE'])),
+                "incident_path": "",
+                "desc_line_1": item['TRAFFIC_ITEM_DESCRIPTION'][0]['value'],
+                "desc_line_2": ""
+            }
 
-        incidents.append(incident)
+            try:
+                incident["desc_line_2"] = item["LOCATION"]["INTERSECTION"]["ORIGIN"]["STREET1"]["ADDRESS1"]
+            except Exception as e:
+                print(e)
+
+            incident["incident_path"] = "[%s, %s]" % (incident["start_point"], incident["end_point"])
+
+            incidents.append(incident)
+    return incidents
 
 
-# iterate through incidents and work out if they are relevant - if so store on database
+def store_incidents(incidents):
+    # iterate through incidents and work out if they are relevant - if so store on database
 
-# sql query for checking if incident is within ~500m of a bus route
-path_sql = """
-    select route_id 
-    from db_gtfs_shapes
-    where (route_path <-> path'%s') < 0.006;
-    """
+    # sql query for checking if incident is within ~500m of a bus route
+    path_sql = """
+        select route_id 
+        from db_gtfs_shapes
+        where (route_path <-> path'%s') < 0.006;
+        """
 
-now = datetime.now()
+    now = datetime.now()
 
-for incident in incidents:
+    for incident in incidents:
 
-    # skip incidents that are already over
-    dt = datetime.strptime(incident["end_time"], "%m/%d/%Y %H:%M:%S")
-    if now > dt:
-        continue
+        # skip incidents that are already over
+        dt = datetime.strptime(incident["end_time"], "%m/%d/%Y %H:%M:%S")
+        if now > dt:
+            continue
 
-    # check if this incident intersects with any bus route
-    sql = path_sql % incident["incident_path"]
+        # check if this incident intersects with any bus route
+        sql = path_sql % incident["incident_path"]
 
-    # return a list of bus routes that are effected by this disruption
-    response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
+        # return a list of bus routes that are effected by this disruption
+        response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    if len(response) > 0:
+        if len(response) > 0:
 
-        # populate the lookup table
-        for route in response:
+            # populate the lookup table
+            for route in response:
 
-            entry = {"incident_id": incident["incident_id"], "route_id": route[0]}
-            sql = db.construct_sql(table_name="incident_lookup", query_type="insert", data=entry)
+                entry = {"incident_id": incident["incident_id"], "route_id": route[0]}
+                sql = db.construct_sql(table_name="incident_lookup", query_type="insert", data=entry)
 
-            # execute sql query
+                # execute sql query
+                response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
+
+            # add this incident as an entry into the incident_data table
+            sql = db.construct_sql(table_name="incident_data", query_type="insert", data=incident)
             response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
 
-        # add this incident as an entry into the incident_data table
-        sql = db.construct_sql(table_name="incident_data", query_type="insert", data=incident)
-        response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
+
+if __name__ is "__main__":
+    store_incidents(scrape_incidents())
