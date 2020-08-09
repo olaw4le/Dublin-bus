@@ -528,12 +528,21 @@ label.dt-label {
   width: 92%;
   margin-left: 15px;
 }
+
+#no-data-error{
+  width: 95%;
+  margin: auto;
+  margin-top: 15px;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
-
-
+    
+    #traffic-incident{
+      width: 90vw;
+    }
+    
     .tab-card {
       width: 90vw;
       max-width: 650px;
@@ -701,6 +710,10 @@ label.dt-label {
   #results-chart {
     width: 480px;
     padding-left: 0px;
+  }
+
+  .chart-container {
+    margin-top: 20px;
   }
 
   .edit-journey {

@@ -1,4 +1,5 @@
-from data_analytics import db_interface as db
+# from data_analytics import db_interface as db
+import db_interface.db_interface as db
 
 def return_incident_info():
 

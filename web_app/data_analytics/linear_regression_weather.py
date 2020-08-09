@@ -5,7 +5,8 @@ import math
 import requests
 import urllib.request
 from datetime import datetime
-from data_analytics import db_interface as db
+# from data_analytics import db_interface as db
+import db_interface.db_interface as db
 from data_analytics.get_weather_data import get_nearest_forecast, time_from_seconds
 import os
 from sklearn.linear_model import LinearRegression
