@@ -1,7 +1,8 @@
-from data_analytics import db_interface as db
+# from data_analytics import db_interface as db
+import db_interface.db_interface as db
 import json
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 """
 load_dotenv()
