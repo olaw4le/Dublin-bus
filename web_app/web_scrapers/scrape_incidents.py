@@ -43,17 +43,17 @@ for ref in grid_refs:
             "incident_id": item['TRAFFIC_ITEM_ID'],
             "start_time": item['START_TIME'],
             "end_time": item['END_TIME'],
-            "start_point": (item['LOCATION']["GEOLOC"]['ORIGIN']['LATITUDE'],
-                            item['LOCATION']["GEOLOC"]['ORIGIN']['LONGITUDE']),
-            "end_point": (item['LOCATION']["GEOLOC"]["TO"][0]['LATITUDE'],
-                          item['LOCATION']["GEOLOC"]["TO"][0]['LONGITUDE']),
+            "start_point": str((item['LOCATION']["GEOLOC"]['ORIGIN']['LATITUDE'],
+                                item['LOCATION']["GEOLOC"]['ORIGIN']['LONGITUDE'])),
+            "end_point": str((item['LOCATION']["GEOLOC"]["TO"][0]['LATITUDE'],
+                              item['LOCATION']["GEOLOC"]["TO"][0]['LONGITUDE'])),
             "incident_path": "",
             "desc_line_1": item['TRAFFIC_ITEM_DESCRIPTION'][0]['value'],
-            "decs_line_2": ""
+            "desc_line_2": ""
         }
 
         try:
-            incident["decs_line_2"] = item["LOCATION"]["INTERSECTION"]["ORIGIN"]["STREET1"]["ADDRESS1"]
+            incident["desc_line_2"] = item["LOCATION"]["INTERSECTION"]["ORIGIN"]["STREET1"]["ADDRESS1"]
         except Exception as e:
             print(e)
 
