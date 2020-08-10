@@ -11,7 +11,6 @@ from pyleapcard import *
 from .fare import get_fare
 
 from data_analytics import neural_net
-from data_analytics import linear_regression_weather
 from data_analytics import incidents
 from data_analytics import get_direction
 # from data_analytics import db_interface as db
