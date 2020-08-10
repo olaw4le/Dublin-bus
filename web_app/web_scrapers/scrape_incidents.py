@@ -4,8 +4,6 @@ import os
 import requests
 from datetime import datetime
 
-# locate & read .env file
-load_dotenv(find_dotenv())
 
 database = os.getenv("database")
 user = os.getenv("user")
@@ -99,11 +97,11 @@ def store_incidents(incidents):
                 sql = db.construct_sql(table_name="incident_lookup", query_type="insert", data=entry)
 
                 # execute sql query
-                response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
+                db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
 
             # add this incident as an entry into the incident_data table
             sql = db.construct_sql(table_name="incident_data", query_type="insert", data=incident)
-            response = db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
+            db.execute_sql(sql, database, user, password, host, port, retrieving_data=False)
 
 
 if __name__ is "__main__":
