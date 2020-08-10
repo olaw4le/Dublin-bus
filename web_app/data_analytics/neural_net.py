@@ -372,36 +372,37 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
     """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
-    try:
-        print("From generate prediction: ", route, startstop, endstop, date, time, direction)
+    #try:
+    print("From generate prediction: ", route, startstop, endstop, date, time, direction)
 
-        # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
-        test = generate_test_dataframe(route, direction, date, time)
-        # loads the correct linear regression pickle using the route and direction
-        pickle_file = path + "web_app/data_analytics/pickles_neural_net_random_forest_combo/" + str(route) + "_direction" + str(direction) + ".pickle"
-        pickle_in = open(pickle_file, 'rb')
-        model = pickle.load(pickle_in)
+    # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
+    test = generate_test_dataframe(route, direction, date, time)
+    # loads the correct linear regression pickle using the route and direction
+    pickle_file = path + "/data_analytics/pickles_neural_net_random_forest_combo/" + str(route) + "_direction" + str(direction) + ".pickle"
+    print("Pickle file name", pickle_file)
+    pickle_in = open(pickle_file, 'rb')
+    model = pickle.load(pickle_in)
 
-        # get the prediction from the pickle using the test dataframe generated above
-        prediction = model.predict(test)
-        # print("Prediction from model: ", int(prediction[0]))
+    # get the prediction from the pickle using the test dataframe generated above
+    prediction = model.predict(test)
+    print("Prediction from model: ", int(prediction[0]))
 
-        # get month, day_of_the_week and time_group from the date and time,
-        # these are needed for calculating the proportion of the total
-        # journey that the users trip represents. 
-        date_time_obj = datetime.strptime(date, '%Y-%m-%d')
-        weekday = date_time_obj.weekday()
-        month = date_time_obj.month
-        time_group = time_group_function(time)
+    # get month, day_of_the_week and time_group from the date and time,
+    # these are needed for calculating the proportion of the total
+    # journey that the users trip represents. 
+    date_time_obj = datetime.strptime(date, '%Y-%m-%d')
+    weekday = date_time_obj.weekday()
+    month = date_time_obj.month
+    time_group = time_group_function(time)
 
-        # get the proportion using the get_proportion
-        proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
+    # get the proportion using the get_proportion
+    proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
 
-        # get proportion and multiply by the prediction
-        result = proportion * prediction[0]
-        # print("Users proportion: ", proportion)
-        # print("Users estimated journeytime: ", int(result))
-        minutes = int(result) // 60
-        return minutes
-    except: 
-        return 0
+    # get proportion and multiply by the prediction
+    result = proportion * prediction[0]
+    # print("Users proportion: ", proportion)
+    # print("Users estimated journeytime: ", int(result))
+    minutes = int(result) // 60
+    return minutes
+    #except: 
+        #return 0

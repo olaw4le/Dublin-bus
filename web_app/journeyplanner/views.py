@@ -103,18 +103,15 @@ def prediction(request):
         direction=request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
-<<<<<<< HEAD
-        result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
-=======
+        
     try:
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         if result !=0:
             result=result
         elif result ==0:
             result="N/A"
         elif result >=300:
             result='N/A'
->>>>>>> dev
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
@@ -183,11 +180,7 @@ def planner(request):
 
             # use the maachine learning module to calculate prediction
             try:
-<<<<<<< HEAD
                 calculation=neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
-                prediction.append(calculation)
-=======
-                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
                 if calculation != 0:
                     prediction.append(calculation)
 
@@ -198,7 +191,6 @@ def planner(request):
                 elif calculation >=300:
                     prediction.append(duration)
 
->>>>>>> dev
                 # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
