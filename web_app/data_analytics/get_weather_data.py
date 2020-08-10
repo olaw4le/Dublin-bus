@@ -1,5 +1,6 @@
 # logic for determining which weather data to pass to the prediciton models
-from data_analytics import db_interface as db
+# from data_analytics import db_interface as db
+import db_interface.db_interface as db
 from datetime import datetime
 import json
 import os
