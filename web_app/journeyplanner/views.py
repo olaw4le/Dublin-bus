@@ -104,6 +104,7 @@ def prediction(request):
         direction=request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
+
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         # print("Users estimated journey in minutes (from views.py)", result)
@@ -121,13 +122,11 @@ def prediction(request):
         results_dict = {"result" : result, "fare" : journey_fare}
 
     except:
-        result= "Prediction unavailable!"
+        result = "Prediction unavailable!"
 
-    results_dict = {"result" : result, "fare" : journey_fare}
+    results_dict = {"result": result, "fare": journey_fare}
 
     return JsonResponse(results_dict)
-
-
 
 
 @csrf_exempt
@@ -431,7 +430,6 @@ def accident(request):
             time = request.POST["time"]
             duration = i["duration"]
 
-
             # departure stops lat and lng
             departure = i["departure_latlng"]
             x = departure.split(",")
@@ -467,5 +465,4 @@ def accident(request):
             print(response)
 
         return HttpResponse(json.dumps(response))
-
 
