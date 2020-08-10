@@ -116,7 +116,10 @@ def prediction(request):
         elif result ==0:
             result= "Prediction unavailable!"
         elif result >=300:
-            result= 'Prediction unavailable!'
+            result='N/A'
+        # print("Users estimated journey in minutes (from views.py)", result)
+        journey_fare = get_fare(route, direction, origin, destination)
+        results_dict = {"result" : result, "fare" : journey_fare}
 
     except:
         result= "Prediction unavailable!"
@@ -195,10 +198,10 @@ def planner(request):
                 elif calculation >=300:
                     prediction.append(duration)
 
-                print('prediction from module',prediction)
+                # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
-                print('prediction from google',prediction)
+                print('prediction from google', prediction)
 
             # adding the calculated value to the list that will be sent back
             # finally:
@@ -417,11 +420,11 @@ def get_stats(request):
         # print(response)
         return HttpResponse(json.dumps(response))
 
+
 @csrf_exempt
 def accident(request):
-     if request.method == "POST":
+    if request.method == "POST":
         data = json.loads(request.POST["data"])
-
 
         for i in data:
             route = i["route_number"]
@@ -461,10 +464,8 @@ def accident(request):
                 origin = 0
                 arrival = 0
 
-
             response= incidents.return_incident_info()
             print(response)
-
 
         return HttpResponse(json.dumps(response))
 
