@@ -14,6 +14,11 @@ html, body {
   #map {
     height: 100%;
     position: relative;
+    /* -webkit-transform: none !important; 
+    z-index: auto !important;
+  }
+    #map  > div{
+        z-index: auto !important; */
   }
 
   #fullscreen-map {
@@ -23,7 +28,7 @@ html, body {
 
   /*map interface*/
   #map-interface {
-    z-index: 1000;
+    z-index: 5000;
     position: absolute;
     display: block;
     top: 30px;
@@ -35,7 +40,9 @@ html, body {
     overflow-x: hidden;
     box-shadow: 4px 4px 8px #B8B8B8;
   }
-
+  .pac-container {
+    z-index: 5001 !important;
+}
   #map-interface-content {
     max-width: 450px;
     width: 450px;
@@ -528,12 +535,21 @@ label.dt-label {
   width: 92%;
   margin-left: 15px;
 }
+
+#no-data-error{
+  width: 95%;
+  margin: auto;
+  margin-top: 15px;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
   @media only screen and (max-width: 992px) {
-
-
+    
+    #traffic-incident{
+      width: 90vw;
+    }
+    
     .tab-card {
       width: 90vw;
       max-width: 650px;
@@ -701,6 +717,10 @@ label.dt-label {
   #results-chart {
     width: 480px;
     padding-left: 0px;
+  }
+
+  .chart-container {
+    margin-top: 20px;
   }
 
   .edit-journey {
