@@ -4,6 +4,7 @@ import os
 import requests
 from datetime import datetime
 
+load_dotenv(find_dotenv())
 
 database = os.getenv("database")
 user = os.getenv("user")
