@@ -96,33 +96,31 @@ def realtime(request):
 @csrf_exempt
 def prediction(request):
     if request.method == "POST":
-        route= request.POST["route"]
-        origin= request.POST["origin"]
+        route = request.POST["route"]
+        origin = request.POST["origin"]
         destination = request.POST["destination"]
         date = request.POST["date"]
         time = request.POST["time"]
-        direction=request.POST["direction"]
+        direction =request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
     try:
         result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
         journey_fare = get_fare(route, direction, origin, destination)
 
-        if result !=0:
-            result= (result, ' minutes')
-        elif result ==0:
-            result= "Prediction unavailable!"
-        elif result >=300:
-            result= 'Prediction unavailable!'
+        if result != 0:
+            result = (result, ' minutes')
+        elif result == 0:
+            result = "Prediction unavailable!"
+        elif result >= 300:
+            result = 'Prediction unavailable!'
 
     except:
-        result= "Prediction unavailable!"
+        result = "Prediction unavailable!"
 
-    results_dict = {"result" : result, "fare" : journey_fare}
+    results_dict = {"result": result, "fare": journey_fare}
 
     return JsonResponse(results_dict)
-
-
 
 
 @csrf_exempt
@@ -131,7 +129,7 @@ def planner(request):
         data = json.loads(request.POST["data"])
 
         prediction_and_fare = dict()
-        prediction = [] # list to store the calculated predictions
+        prediction = []     # list to store the calculated predictions
 
         # list of fare dictionaries containing fare, route and url for each bug leg of journey
         total_fare = []
@@ -168,7 +166,7 @@ def planner(request):
                 route_list = 0
 
             try:
-                # getting the orging and destination stop number using the vincenty formular
+                # getting the origin and destination stop number using the vincenty formula
                 origin = find_stop(route_list, (departure_lat, departure_lng))
                 arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
@@ -414,11 +412,11 @@ def get_stats(request):
         # print(response)
         return HttpResponse(json.dumps(response))
 
+
 @csrf_exempt
 def accident(request):
-     if request.method == "POST":
+    if request.method == "POST":
         data = json.loads(request.POST["data"])
-
 
         for i in data:
             route = i["route_number"]
@@ -426,7 +424,6 @@ def accident(request):
             time = request.POST["time"]
             duration = i["duration"]
 
-     
             # departure stops lat and lng
             departure = i["departure_latlng"]
             x = departure.split(",")
@@ -458,11 +455,8 @@ def accident(request):
                 origin = 0
                 arrival = 0
 
-
             response= incidents.return_incident_info()
             print(response)
 
-            
         return HttpResponse(json.dumps(response))
 
-        
