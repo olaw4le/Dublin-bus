@@ -10,7 +10,7 @@ import requests
 from pyleapcard import *
 from .fare import get_fare
 
-from data_analytics import linear_regression_weather
+from data_analytics import neural_net
 from data_analytics import incidents
 from data_analytics import get_direction
 # from data_analytics import db_interface as db
@@ -104,8 +104,11 @@ def prediction(request):
         direction=request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
+
     try:
-        result = linear_regression_weather.generate_prediction(route, origin, destination, date, time, direction)
+        result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
+        # print("Users estimated journey in minutes (from views.py)", result)
+
         journey_fare = get_fare(route, direction, origin, destination)
 
         if result !=0:
@@ -113,16 +116,17 @@ def prediction(request):
         elif result ==0:
             result= "Prediction unavailable!"
         elif result >=300:
-            result= 'Prediction unavailable!'
+            result='N/A'
+        # print("Users estimated journey in minutes (from views.py)", result)
+        journey_fare = get_fare(route, direction, origin, destination)
+        results_dict = {"result" : result, "fare" : journey_fare}
 
     except:
-        result= "Prediction unavailable!"
+        result = "Prediction unavailable!"
 
-    results_dict = {"result" : result, "fare" : journey_fare}
+    results_dict = {"result": result, "fare": journey_fare}
 
     return JsonResponse(results_dict)
-
-
 
 
 @csrf_exempt
@@ -181,21 +185,21 @@ def planner(request):
 
             # use the maachine learning module to calculate prediction
             try:
-                calculation=linear_regression_weather.generate_prediction(route_number, origin, arrival, date, time, direction)
+                calculation = neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
                 if calculation != 0:
                     prediction.append(calculation)
 
                 elif calculation ==0:
                     # return the google prediction if the calculation is 0
                     prediction.append(duration)
-                
+
                 elif calculation >=300:
                     prediction.append(duration)
 
-                print('prediction from module',prediction)
+                # print('prediction from module',prediction)
             except:
                 prediction.append(duration)
-                print('prediction from google',prediction)
+                print('prediction from google', prediction)
 
             # adding the calculated value to the list that will be sent back
             # finally:
@@ -414,11 +418,11 @@ def get_stats(request):
         # print(response)
         return HttpResponse(json.dumps(response))
 
+
 @csrf_exempt
 def accident(request):
-     if request.method == "POST":
+    if request.method == "POST":
         data = json.loads(request.POST["data"])
-
 
         for i in data:
             route = i["route_number"]
@@ -426,7 +430,6 @@ def accident(request):
             time = request.POST["time"]
             duration = i["duration"]
 
-     
             # departure stops lat and lng
             departure = i["departure_latlng"]
             x = departure.split(",")
@@ -458,11 +461,8 @@ def accident(request):
                 origin = 0
                 arrival = 0
 
-
             response= incidents.return_incident_info()
             print(response)
 
-            
         return HttpResponse(json.dumps(response))
 
-        
