@@ -4,7 +4,7 @@ from locust import HttpUser, between, task
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
     
-    @task
+    @task 
     def routeplanner(self):
         self.client.get("/routeplanner/")
         self.client.get("/static/journeyplanner/routeplanner.js")
@@ -29,7 +29,7 @@ class WebsiteUser(HttpUser):
     def tourist(self):
         self.client.get("/tourist/")
         self.client.get("/static/journeyplanner/touristmap.js")
-        
+
         
     @task
     def leapcard(self):
