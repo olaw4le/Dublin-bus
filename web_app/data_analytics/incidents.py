@@ -17,6 +17,8 @@ def return_incident_info(route, direction, date, time, start_stop_x, start_stop_
     route_string = str(route.lower()) + "_" + str(direction)
     print(route_string)
     sql = "SELECT * FROM incident_lookup l, incident_data d WHERE l.route_id = %s AND l.incident_id = d.incident_id;" % (route_string)
+    #sql = "SELECT * FROM incident_lookup WHERE route_id = '%s'" % (route_string)
+    print(sql)
     x = db.execute_sql(sql, database, user, password, host, port)
-    
+    print("X = ", x)
     return [(start_stop_x, start_stop_y), (end_stop_x, end_stop_y), 'Closed between Balbutcher Lane and R108 - Closed. ']
