@@ -22,7 +22,6 @@
     <list default="true" id="514e9684-583e-4c3f-8e9d-71250f6206b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
