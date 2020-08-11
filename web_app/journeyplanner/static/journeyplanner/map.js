@@ -9,7 +9,9 @@ var directionsRenderer;
 var markerArray;
 var geocoder;
 var geolocation = false;
-
+window.setInterval(function() {
+    $("#map-interface").zIndex(1000);
+}, 500);
 //loading the ui map.This is the function that loads when the opens the page 
 function initMap() {
 
@@ -39,6 +41,18 @@ function initMap() {
         document.getElementById('map'), {
             center: dublin,
             zoom: 12,
+            bounds_changed: function() {
+                console.log("BOUNDS CHANGED");
+                $("#map-interface").zIndex(5000);
+            },
+            idle: function() {
+                console.log("IDLE");
+                $("#map-interface").zIndex(5000);
+            },
+            zoom_changed: function() {
+                console.log("ZOOM CHANGED");
+                $("#map-interface").zIndex(5000);
+            },
             styles: [{
                     "featureType": "administrative.land_parcel",
                     "elementType": "all",
