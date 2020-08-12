@@ -637,7 +637,11 @@ function updateTextInfo(data) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[fastest_time];
-        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        if (timeDelta > 1) {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        } else {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
+        }
     }
 
 }
@@ -679,7 +683,7 @@ function DataSet(data) {
 function drawBarChart(data) {
 
     // get the chart container from the info.html page
-    var ctx = $("#results-canvas");
+    var container = $("#chart-container");
     var bars = [];
     var labels = Object.keys(data);
 
@@ -689,49 +693,48 @@ function drawBarChart(data) {
     // if so just update the existing chart with new data
     // else create a new chart element in the container div
 
-    if (ctx.firstChild) {
-        someChart.config.data = {
+    container.empty();
+    $('<canvas id="results-canvas"></canvas>').prependTo(container);
+
+    var ctx = $("#results-canvas");
+
+    var someChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
             datasets: [bars],
-            labels: Object.keys(data)
-        }
-    } else {
-        var someChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                datasets: [bars],
-                labels: Object.keys(data),
+            labels: Object.keys(data),
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
             },
-            options: {
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            labelString: "Travel Time (Minutes)",
-                            display: true
-                        },
-                        stacked: false,
-                        display: true,
-                        gridLineWidth: 0,
-                        minorTickInterval: null,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    xAxes: [{
-                        stacked: false,
-                        display: true,
-                        gridLineWidth: 0,
-                        gridLines: {
-                            display: false
-                        }
-                    }]
-                }
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        labelString: "Travel Time (Minutes)",
+                        display: true
+                    },
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    minorTickInterval: null,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    gridLines: {
+                        display: false
+                    }
+                }]
             }
-        });
-    }
+        }
+    });
+
     return someChart;
 
 }
