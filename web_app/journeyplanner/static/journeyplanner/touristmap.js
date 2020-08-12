@@ -77,7 +77,8 @@ $(document).ready(function () {
 
 
     // call the geolocation function when button is clicked
-    $('#geolocation-tourist').on('click', function () {
+    $('#geolocation-tourist').on('click', function (e) {
+        e.preventDefault(); //prevent this button from causing the form error handling
         getGeolocation('origin-tourist');
         $('.geo-spinner').show();
     });

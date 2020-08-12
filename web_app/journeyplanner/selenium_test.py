@@ -4,8 +4,6 @@ from django.shortcuts import reverse
 from django.test import Client
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.contrib.auth.models import User
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,8 +16,6 @@ class seliumtesting(unittest.TestCase):
     # declare variable to store the URL to be visited
     base_url="https://www.plan-your-journey.eu"
 
-    # declare variable to store search term
-    search_term="WD My Passport 4TB"
 
     # --- Pre - Condition ---
     def setUp(self):
@@ -42,7 +38,7 @@ class seliumtesting(unittest.TestCase):
 
         # look for the input box and enter 123
         user_input = self.driver.find_element_by_id("Stop-number")
-        user_input.send_keys(123)
+        user_input.send_keys(6245)
 
         # click the search button
         button=self.driver.find_element_by_id("real-time-button")
