@@ -324,7 +324,9 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     try:
         # construct sql query
         table_name = "route_%s_%s_proportions" % (route.lower(), direction)
-        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",
+                                      data={"month": months[month], "weekday": days[weekday],
+                                            "timegroup": str(time_group)})
 
         sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
 
@@ -363,8 +365,9 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
             return proportion
 
     # otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
-    except:
+    except Exception as e:
         print("Unable to access proportions data, using simple percentage of route")
+        print(e)
         proportion = quickanddirty(route, direction, startstop, endstop)
     return proportion
 
