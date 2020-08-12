@@ -18,7 +18,8 @@ $(document).ready(function () {
     })
 
     // call geolocation function when button clicked
-    $('#geolocation-routeplanner').on('click', function () {
+    $('#geolocation-routeplanner').on('click', function (e) {
+        e.preventDefault(); //prevent this button from causing the form error handling
         getGeolocation('origin');
         $('.geo-spinner').show();
     });
