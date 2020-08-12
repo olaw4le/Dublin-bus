@@ -630,7 +630,10 @@ function updateTextInfo(data) {
     }
 
     // if there's a faster time than the 'search time' add that to the description
-    if (current_time === fastest_time) {
+    if (current_time == 0) {
+        $("#results-description").html("There is no data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
+
+    } else if (current_time === fastest_time) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[fastest_time];
