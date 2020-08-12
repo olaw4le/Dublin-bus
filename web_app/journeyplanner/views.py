@@ -106,7 +106,6 @@ def prediction(request):
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         journey_fare = get_fare(route, direction, origin, destination)
-<<<<<<< HEAD
         if result >=300:
             result='N/A'
         elif result ==0:
@@ -114,15 +113,6 @@ def prediction(request):
         elif result !=0:
             result= (result, ' minutes')
         
-=======
-
-        if result != 0:
-            result = (result, ' minutes')
-        elif result == 0:
-            result = "Prediction unavailable!"
-        elif result >= 300:
-            result = 'N/A'
->>>>>>> dev
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
