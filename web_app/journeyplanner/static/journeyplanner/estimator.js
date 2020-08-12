@@ -637,7 +637,11 @@ function updateTextInfo(data) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[fastest_time];
-        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        if (timeDelta > 1) {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        } else {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
+        }
     }
 
 }
