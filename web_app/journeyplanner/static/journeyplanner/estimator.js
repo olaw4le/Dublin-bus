@@ -453,7 +453,9 @@ $(function () {
     });
     // call post request function when mobile datetime value changed
     $("#datetime-tab2-results").on("change", function () {
+       
         sendDateTimeChangePostRequest();
+        
     });
 
 });
@@ -462,9 +464,11 @@ $(function () {
 // post request sent again when date and time changed on results page
 function sendDateTimeChangePostRequest() {
 
+    $('#results-card').hide();
     $("#stop-to-stop-estimate").hide();
-    $(".spinner-border").show();
-
+    $("#estimate-loader").show();
+    $('#results-chart').hide();
+    
     // diff date and time values depending on screen size
     if ($(window).width() < 992) {
         datetimeValue = $("#datetime-tab2-results").val();
@@ -500,13 +504,12 @@ function sendDateTimeChangePostRequest() {
             direction: direction
         }
     }).done(function (response) {
-        //console.log("successfully posted");
-        $(".spinner-border").hide();
+        $('#results-card').show();
+        $("#estimate-loader").hide();
+        $("#stop-to-stop-estimate").html(response.result);
         $("#stop-to-stop-estimate").show();
-        $("#stop-to-stop-estimate").html(response.result + " minutes");
         // request new data for graphs when date & time changes
         makeStatsRequest();
-
     });
 }
 
