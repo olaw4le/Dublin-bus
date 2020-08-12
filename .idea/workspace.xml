@@ -20,13 +20,277 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="514e9684-583e-4c3f-8e9d-71250f6206b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/static/journeyplanner/estimator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/102_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/102_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/104_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/104_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/111_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/111_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/114_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/114_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/116_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/116_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/118_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/11_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/11_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/120_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/120_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/122_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/122_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/123_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/123_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/130_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/130_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/13_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/13_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/140_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/140_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/142_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/142_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/145_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/145_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/14C_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/14C_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/14_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/14_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/150_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/150_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/151_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/151_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/15_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/161_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/161_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/16C_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/16C_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/16D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/16_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/16_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/17A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/17A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/17_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/17_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/184_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/184_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/185_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/185_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/18_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/18_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/1_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/1_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/220_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/220_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/236_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/236_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/238_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/238_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/239_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/239_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/25_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/26_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/26_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/270_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/270_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/27_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/29A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/29A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/31_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/32X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/32X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/32_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/32_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33E_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/33_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/37_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/37_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/38_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/39_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40E_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40E_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/40_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41C_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41C_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/41_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/42D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/42D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/42_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/42_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/43_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/43_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/44B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/44B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/44_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/44_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/45A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/45A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/46A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/46A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/46E_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/47_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/47_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/49_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/49_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/4_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/4_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/51D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/51D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/51X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/53_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/53_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/54A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/54A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/56A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/56A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/59_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/59_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/61_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/61_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/63_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/63_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/65B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/65B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/65_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/65_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/66_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/67X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/67X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/67_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/67_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/68A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/68A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/68X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/68_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/68_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/69X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/69X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/69_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/69_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/70D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/70D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/70_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/70_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/75_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/75_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/76A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/76A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/76_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/76_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/77A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/77A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/77X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/79A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/79A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/79_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/79_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7B_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7B_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7D_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7D_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/7_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/83A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/83A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/83_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/83_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84A_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84A_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84X_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84X_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/84_direction2.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/9_direction1.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/9_direction2.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
+>>>>>>> 3456bf1c7cc673f9740e0a99863412240741ecb9
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,6 +307,23 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web_app/journeyplanner" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Python.test_fare">
     <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -160,11 +441,26 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="514e9684-583e-4c3f-8e9d-71250f6206b9" name="Default Changelist" comment="" />
+      <created>1597070152071</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597070152071</updated>
+    </task>
+    <task id="LOCAL-00001" summary="update views.py - minor fix">
+      <created>1597070361733</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597070361733</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,12 +468,17 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update views.py - minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="update views.py - minor fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="405" y="44" key="#test_routes_details" timestamp="1596399591764">
