@@ -195,6 +195,7 @@ function initMap() {
 function getGeolocation(inputID) {
     geolocation = true;
     if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(){}, function(){});
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
                 lat: position.coords.latitude,
@@ -210,7 +211,7 @@ function getGeolocation(inputID) {
 
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
-        });
+        }, {timeout:10000});
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
