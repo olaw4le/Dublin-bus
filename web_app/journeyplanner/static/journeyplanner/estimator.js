@@ -544,17 +544,15 @@ function getSearchParams() {
     params["start"] = origin;
     params["end"] = destination;
 
-    // get the date & time
+    // diff date and time values depending on screen size
     if ($(window).width() < 992) {
-        // if used on mobile
-        var datetimeValue = $("#datetime-tab2").val();
+        datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
         params["date"] = arr[0];
         params["time"] = arr[1];
     } else {
-        // for other devices...
-        params["date"] = $("#datepicker-tab2").val();
-        params["time"] = $('#timepicker-tab2').val();
+        params["date"] = $("#datepicker-tab2-results-date").val();
+        params["time"] = $('#datepicker-tab2-results-time').val();
     }
 
     return params;
