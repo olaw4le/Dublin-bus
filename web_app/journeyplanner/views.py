@@ -106,6 +106,15 @@ def prediction(request):
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         journey_fare = get_fare(route, direction, origin, destination)
+<<<<<<< HEAD
+        if result >=300:
+            result='N/A'
+        elif result ==0:
+            result= "Prediction unavailable!"
+        elif result !=0:
+            result= (result, ' minutes')
+        
+=======
 
         if result != 0:
             result = (result, ' minutes')
@@ -113,6 +122,7 @@ def prediction(request):
             result = "Prediction unavailable!"
         elif result >= 300:
             result = 'N/A'
+>>>>>>> dev
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
@@ -183,15 +193,18 @@ def planner(request):
             # use the maachine learning module to calculate prediction
             try:
                 calculation = neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
-                if calculation != 0:
-                    prediction.append(calculation)
-
+                if calculation >=300:
+                    prediction.append(duration)
+                    print('prediction from google', prediction)
+    
                 elif calculation ==0:
                     # return the google prediction if the calculation is 0
                     prediction.append(duration)
+                    print('prediction from google', prediction)
 
-                elif calculation >=300:
-                    prediction.append(duration)
+                else:
+                    prediction.append(calculation)
+                    
 
                 # print('prediction from module',prediction)
             except:
@@ -458,7 +471,7 @@ def accident(request):
                 origin = 0
                 arrival = 0
 
-            response= incidents.return_incident_info()
+            response= incidents.return_incident_info(route_number, direction, date, time, departure_lat, departure_lng, arrival_lat, arrival_lng)
             print(response)
 
         return HttpResponse(json.dumps(response))
