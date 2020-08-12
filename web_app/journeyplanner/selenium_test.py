@@ -4,8 +4,6 @@ from django.shortcuts import reverse
 from django.test import Client
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.contrib.auth.models import User
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
