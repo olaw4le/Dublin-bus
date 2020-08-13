@@ -37,7 +37,9 @@ def construct_sql(**kwargs):
         "select_all": "SELECT * FROM %s",
         "select_where": "SELECT %s FROM %s WHERE %s",
         "insert": "INSERT INTO %s (%s) VALUES (%s)",
-        "attr_names": """SELECT column_name FROM information_schema.columns WHERE table_name = '%s' ORDER BY ordinal_position"""
+        "attr_names": """SELECT column_name FROM information_schema.columns 
+                    WHERE table_name = '%s' ORDER BY ordinal_position""",
+        "update": "UPDATE %s SET %s WHERE %s"
     }
 
     # if inserting data
@@ -46,7 +48,7 @@ def construct_sql(**kwargs):
         # check that data passed as kwarg
         if "data" not in kwargs:
             print("Error: No data supplied for insert query")
-            return False
+            return Exception
 
         attr_names = ""
         attr_values = ""
@@ -115,6 +117,58 @@ def construct_sql(**kwargs):
         
         return sql_query
 
+    elif query_type == "update":
+
+        # check that data passed as kwarg
+        if "data" not in kwargs:
+            print("Error: No data supplied for update query")
+            return Exception
+
+        # check that data passed as kwarg
+        if "predicates" not in kwargs:
+            print("Error: No 'predicates' supplied for update query")
+            return Exception
+
+        data = ""
+        predicates = ""
+
+        # for item in data to be inserted;
+        # build a string containing the attribute names and attributes values
+        for key in kwargs["data"].keys():
+
+            val = kwargs["data"][key]
+
+            # place string values in single quotes
+            if type(val) is str:
+                val = "'%s'" % val
+            else:
+                val = str(val)
+
+            data += " %s = %s, " % (key, val)
+
+        # remove "AND" from the end of attr_names & attr_Values
+        data = data[:-2]
+
+        # for item in data to be inserted;
+        # build a string containing the attribute names and attributes values
+        for key in kwargs["predicates"].keys():
+
+            val = kwargs["predicates"][key]
+
+            # place string values in single quotes
+            if type(val) is str:
+                val = "'%s'" % val
+            else:
+                val = str(val)
+
+            predicates += " %s = %s AND" % (key, val)
+
+        # remove "AND" from the end of attr_names & attr_Values
+        predicates = predicates[:-3]
+
+        sql_query = templates[query_type] % (table_name, data, predicates)
+        return sql_query
+
     else:
         print("Error: Unsupported query type entered")
         return False
@@ -134,7 +188,7 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
     except Exception as e:
         print("Failed to connect to database")
         print(e)
-        return e
+        raise Exception(e)
 
     cursor = connection.cursor()
 
@@ -146,7 +200,7 @@ def execute_sql(sql_query, database, user, password, host, port, **kwargs):
         connection.close()
         print("Failed to execute sql query")
         print(e)
-        return e
+        raise Exception(e)
 
     # if retrieving data / expecting some kind of response...
     if retrieving_data:

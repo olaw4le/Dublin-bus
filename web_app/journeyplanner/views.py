@@ -13,7 +13,6 @@ from .fare import get_fare
 from data_analytics import neural_net
 from data_analytics import incidents
 from data_analytics import get_direction
-# from data_analytics import db_interface as db
 import db_interface.db_interface as db
 from data_analytics import get_journey_proportion as jp
 from data_analytics.to_time_group import to_time_group
@@ -96,32 +95,30 @@ def realtime(request):
 @csrf_exempt
 def prediction(request):
     if request.method == "POST":
-        route= request.POST["route"]
-        origin= request.POST["origin"]
+        route = request.POST["route"]
+        origin = request.POST["origin"]
         destination = request.POST["destination"]
         date = request.POST["date"]
         time = request.POST["time"]
-        direction=request.POST["direction"]
+        direction =request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
-
 
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
-        # print("Users estimated journey in minutes (from views.py)", result)
-
         journey_fare = get_fare(route, direction, origin, destination)
-
-        if result !=0:
-            result= (result, ' minutes')
+        if result >=300:
+            result='N/A'
         elif result ==0:
             result= "Prediction unavailable!"
-        elif result >=300:
-            result='N/A'
+        elif result !=0:
+            result= (result, ' minutes')
+        
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result" : result, "fare" : journey_fare}
 
-    except:
+    except Exception as e:
+        print(e)
         result = "Prediction unavailable!"
 
     results_dict = {"result": result, "fare": journey_fare}
@@ -135,7 +132,7 @@ def planner(request):
         data = json.loads(request.POST["data"])
 
         prediction_and_fare = dict()
-        prediction = [] # list to store the calculated predictions
+        prediction = []     # list to store the calculated predictions
 
         # list of fare dictionaries containing fare, route and url for each bug leg of journey
         total_fare = []
@@ -172,7 +169,7 @@ def planner(request):
                 route_list = 0
 
             try:
-                # getting the orging and destination stop number using the vincenty formular
+                # getting the origin and destination stop number using the vincenty formula
                 origin = find_stop(route_list, (departure_lat, departure_lng))
                 arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
@@ -186,15 +183,18 @@ def planner(request):
             # use the maachine learning module to calculate prediction
             try:
                 calculation = neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
-                if calculation != 0:
-                    prediction.append(calculation)
-
+                if calculation >=300:
+                    prediction.append(duration)
+                    print('prediction from google', prediction)
+    
                 elif calculation ==0:
                     # return the google prediction if the calculation is 0
                     prediction.append(duration)
+                    print('prediction from google', prediction)
 
-                elif calculation >=300:
-                    prediction.append(duration)
+                else:
+                    prediction.append(calculation)
+                    
 
                 # print('prediction from module',prediction)
             except:
@@ -461,7 +461,7 @@ def accident(request):
                 origin = 0
                 arrival = 0
 
-            response= incidents.return_incident_info()
+            response= incidents.return_incident_info(route_number, direction, date, time, departure_lat, departure_lng, arrival_lat, arrival_lng)
             print(response)
 
         return HttpResponse(json.dumps(response))

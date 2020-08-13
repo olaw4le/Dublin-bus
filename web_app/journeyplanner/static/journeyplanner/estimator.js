@@ -544,17 +544,15 @@ function getSearchParams() {
     params["start"] = origin;
     params["end"] = destination;
 
-    // get the date & time
+    // diff date and time values depending on screen size
     if ($(window).width() < 992) {
-        // if used on mobile
-        var datetimeValue = $("#datetime-tab2").val();
+        datetimeValue = $("#datetime-tab2-results").val();
         var arr = datetimeValue.split('T');
         params["date"] = arr[0];
         params["time"] = arr[1];
     } else {
-        // for other devices...
-        params["date"] = $("#datepicker-tab2").val();
-        params["time"] = $('#timepicker-tab2').val();
+        params["date"] = $("#datepicker-tab2-results-date").val();
+        params["time"] = $('#datepicker-tab2-results-time').val();
     }
 
     return params;
@@ -630,11 +628,18 @@ function updateTextInfo(data) {
     }
 
     // if there's a faster time than the 'search time' add that to the description
-    if (current_time === fastest_time) {
+    if (current_time == 0) {
+        $("#results-description").html("There is no data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
+
+    } else if (current_time === fastest_time) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
     } else {
         var timeDelta = journey_time - data.data[fastest_time];
-        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        if (timeDelta > 1) {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+        } else {
+            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
+        }
     }
 
 }
@@ -676,7 +681,7 @@ function DataSet(data) {
 function drawBarChart(data) {
 
     // get the chart container from the info.html page
-    var ctx = $("#results-canvas");
+    var container = $("#chart-container");
     var bars = [];
     var labels = Object.keys(data);
 
@@ -686,49 +691,48 @@ function drawBarChart(data) {
     // if so just update the existing chart with new data
     // else create a new chart element in the container div
 
-    if (ctx.firstChild) {
-        someChart.config.data = {
+    container.empty();
+    $('<canvas id="results-canvas"></canvas>').prependTo(container);
+
+    var ctx = $("#results-canvas");
+
+    var someChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
             datasets: [bars],
-            labels: Object.keys(data)
-        }
-    } else {
-        var someChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                datasets: [bars],
-                labels: Object.keys(data),
+            labels: Object.keys(data),
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
             },
-            options: {
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            labelString: "Travel Time (Minutes)",
-                            display: true
-                        },
-                        stacked: false,
-                        display: true,
-                        gridLineWidth: 0,
-                        minorTickInterval: null,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    xAxes: [{
-                        stacked: false,
-                        display: true,
-                        gridLineWidth: 0,
-                        gridLines: {
-                            display: false
-                        }
-                    }]
-                }
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        labelString: "Travel Time (Minutes)",
+                        display: true
+                    },
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    minorTickInterval: null,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    stacked: false,
+                    display: true,
+                    gridLineWidth: 0,
+                    gridLines: {
+                        display: false
+                    }
+                }]
             }
-        });
-    }
+        }
+    });
+
     return someChart;
 
 }
