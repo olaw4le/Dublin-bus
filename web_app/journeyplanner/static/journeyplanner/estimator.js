@@ -12,7 +12,7 @@ function removeLineFromMap() {
 		}
 	}
 }
-
+//clear any markers on the map 
 function clearMarkers() {
 	if (directionsDisplay != null) {
 		directionsDisplay.setMap(null);
@@ -266,22 +266,51 @@ function calcRoute() {
 				lng: x[end].lng
 			};
 
-			var request = {
-				origin: start_latlng,
-				destination: end_latlng,
-				travelMode: google.maps.TravelMode.TRANSIT
-			};
-			directionsService = new google.maps.DirectionsService;
-
-			directionsDisplay = new google.maps.DirectionsRenderer({
-				map: map
-			})
-			directionsService.route(request, function (result, status) {
-				if (status == google.maps.DirectionsStatus.OK) {
-					directionsDisplay.setDirections(result);
-				}
-				removeLineFromMap()
+			var marker1 = new google.maps.Marker({
+				position: new google.maps.LatLng(start_latlng),
+				map: map,
+				title: 'Origin',
 			});
+
+			var marker2 = new google.maps.Marker({
+				position: new google.maps.LatLng(end_latlng),
+				map: map,
+				title: 'Destination',
+			});
+
+			allMarkers.push(marker1)
+			allMarkers.push(marker2)
+
+			
+
+			list=destination_list.splice(0,destination_list.length-2)
+	
+
+			for (key in list) {
+				
+			var y = list[key].split(" ");
+			start = y[0]
+			
+			var stop_latlng = {
+				lat: x[start].lat,
+				lng: x[start].lng
+			};
+
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(stop_latlng),
+				map: map,
+				title: 'stop '+start,
+				icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|ddd'
+			});
+
+			allMarkers.push(marker)
+
+
+
+			}
+
+
+
 		})
 };
 

@@ -3,10 +3,11 @@ import json
 import os
 
 path = os.getcwd()
-
+# /Users/olawalebmg/research-project/web_app/journeyplanner/static/routes/7.json
 
 # function to find the coordinates of the stops a route goes through
 def stops_latlng(route_number):
+    # route_file = "journeyplanner/static/routes/{}.json".format(route_number)
     route_file = "%s/journeyplanner/static/routes/{}.json" % path
 
     stops_coordinate = {}
