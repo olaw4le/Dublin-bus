@@ -100,7 +100,7 @@ def prediction(request):
         destination = request.POST["destination"]
         date = request.POST["date"]
         time = request.POST["time"]
-        direction =request.POST["direction"]
+        direction = request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
     try:
@@ -115,13 +115,12 @@ def prediction(request):
         
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
-        results_dict = {"result" : result, "fare" : journey_fare}
+        results_dict = {"result": result, "fare": journey_fare}
 
     except Exception as e:
         print(e)
         result = "Prediction unavailable!"
         results_dict = {"result": result, "fare": {"found": False}}
-
 
     return JsonResponse(results_dict)
 
@@ -450,7 +449,7 @@ def accident(request):
                 route_list = 0
 
             try:
-                # getting the orging and destination stop number using the vincenty formular
+                # getting the origin and destination stop number using the vincenty formular
                 origin = find_stop(route_list, (departure_lat, departure_lng))
                 arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
