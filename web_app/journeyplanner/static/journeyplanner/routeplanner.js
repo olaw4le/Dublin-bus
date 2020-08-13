@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+<<<<<<< HEAD
 	// load twitter to display the twitter widget whenever this tab is clicked
 	if (typeof twttr != 'undefined') {
 		twttr.widgets.load();
@@ -44,6 +45,54 @@ $(document).ready(function () {
 		minTime: "05:00",
 		minuteIncrement: 1
 	});
+=======
+    $('.no-directions-error').hide();
+
+    // load twitter to display the twitter widget whenever this tab is clicked
+    if (typeof twttr != 'undefined') {
+        twttr.widgets.load();
+    }
+
+    // .off ensures onclicks are not added multiple times
+    $(document).off("click.routes");
+
+    // Remove routes when navigating to another tab
+    $(document).on("click.routes", "#routeplanner-nav, #allroutes-nav, #tourist-nav, #allroutes-tab, #tourist-tab, #routeplanner-tab, #leap-nav, #realtime-nav,#realtime-tab,#leap-tab",
+        removeLineFromMap);
+
+    // initialise tooltip for info regarding geolocation
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    // call geolocation function when button clicked
+    $('#geolocation-routeplanner').on('click', function (e) {
+        e.preventDefault(); //prevent this button from causing the form error handling
+        getGeolocation('origin');
+        $('.geo-spinner').show();
+    });
+
+    // flatpickr date https://flatpickr.js.org/options/
+    $("#datepicker-tab1").flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: 'yy-m-d',
+        defaultDate: new Date(),
+        minDate: "today"
+    });
+
+
+    // flatpickr time
+    $('#timepicker-tab1').flatpickr({
+        enableTime: true,
+        defaultDate: new Date().getHours() + ":" + new Date().getMinutes(),
+        dateFormat: 'H:i',
+        noCalendar: true,
+        time_24hr: true,
+        minTime: "05:00",
+        minuteIncrement: 1
+    });
+>>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 
 });
 
@@ -512,6 +561,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 						for (var i = 0; i < journeysteps.length; i++) {
 
 
+<<<<<<< HEAD
 							var bus = ("<img src=static/journeyplanner/icons/com.nextbus.dublin.jpg width=25 height=25>");
 							var walking = ("<img src=static/journeyplanner/icons/walking.png width=25 height=25>");
 							var road = ("<img src=static/journeyplanner/icons/road.png width=25 height=25>");
@@ -536,6 +586,12 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 								var journey_steps = {}; //dictionary for each bus steps in the journey
 								distance = journeysteps[i].distance.text;
 
+=======
+                                number += 1
+                            }
+                        }
+                    })
+>>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 
 								instruction = journeysteps[i].instructions;
 								Route_number = journeysteps[i].transit.line.short_name;
@@ -549,6 +605,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 								instruction = instruction.split(',');
 								instruction = instruction[0];
 
+<<<<<<< HEAD
 								direction_text.append('<li><p>' + bus + '  ' + instruction + '</p><p>' + road + '<b> Route: </b>' + Route_number + '  <b>Stops: </b>' + num_stops + '<b> Duration: </b>' + bus_time(number) + " mins" + '</p></li>');
 
 								number += 1
@@ -617,6 +674,37 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 				window.alert('Directions request failed due to ' + status);
 			}
 		});
+=======
+                    // response returned from traffic incident post request
+                    .done(function (traffic_response) {
+
+                        // parse the response
+                        traffic_response = JSON.parse(traffic_response)[0]
+                        console.log("accident info")
+                        console.log(traffic_response);
+                        if (traffic_response.length != 0) {
+                            console.log("loopiung trhgouh accidents")
+                            $(traffic_response).each(function () {
+                                $('#traffic-incident-content').append("<div>" + this + "</div>");
+                            });
+                            $("#traffic-incident").show();
+                        } else {
+                            console.log("hiding")
+                            $("#traffic-incident").hide();
+                        }
+                    })
+
+                //showing the response on the map. 	 
+                directionsRenderer.setDirections(response);
+
+                showSteps(response, markerArray, stepDisplay, map);
+            } else {
+                $('.tab-card').hide();
+                $('.prediction-spinner').hide();
+                $('.no-directions-error').show();
+            }
+        });
+>>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 }
 
 function showSteps(directionResult, markerArray, stepDisplay, map) {
@@ -648,6 +736,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
 
+<<<<<<< HEAD
 	$('#go').on('click', function () {
 
 		// show spinner and hide results
@@ -713,4 +802,77 @@ $(function () {
 		$('#fare-result-tab1').html("");
 		$('#traffic-incident').hide();
 	});
+=======
+    $('#go').on('click', function () {
+
+        // show spinner and hide results
+        $("#traffic-incident").hide();
+        $('.tab-card').show();
+        $('.no-directions-error').hide();
+        $('.prediction-spinner').show();
+        $('.results-card').hide();
+        $('.fare-accordion').hide();
+        $('#total-fares').html("");
+        $('#fare-result-tab1').html("");
+        $('#traffic-incident').hide();
+
+        //remove line from map
+        removeLineFromMap();
+
+
+        var time, date, datetimeValue;
+        // use different variables for date and time depending on screen size
+        if ($(window).width() < 992) {
+            datetimeValue = $("#datetime-tab1").val();
+            var arr = datetimeValue.split('T');
+            date = arr[0];
+            time = arr[1];
+        } else {
+            var date = $("#datepicker-tab1").val();
+            time = $('#timepicker-tab1').val();
+
+            // use date and time here to make properly formatted datetimeValue for mobile
+            datetimeValue = date + 'T' + time;
+        }
+
+        $(".datetime").val(datetimeValue);
+
+        // convert time to seconds since midnight
+        var timeSplit = time.split(':');
+        var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
+
+        // show results and routes
+        var success = routes();
+        if (success) {
+
+            $(".form-area").hide();
+            if ($(window).width() < 992) {
+                $("#map-interface").css(
+                    "top", "400px");
+            }
+            $("#route-results").show();
+        }
+
+        // remove line from map when user clicks go
+        removeLineFromMap();
+    });
+
+    // add on click to edit-journey button to hide results and show journey planner
+    $('.edit-journey').on('click', function () {
+
+        $("#traffic-incident").hide();
+        $('.no-directions-error').hide();
+        removeLineFromMap();
+        $(".form-area").show();
+        // show half map on mobiles
+        if ($(window).width() < 992) {
+            $("#map-interface").css("top", "0px");
+        }
+        $("#route-results").hide();
+        $('#direction').empty();
+        $('#total-fares').html("");
+        $('#fare-result-tab1').html("");
+        $('#traffic-incident').hide();
+    });
+>>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 });

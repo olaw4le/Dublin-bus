@@ -112,7 +112,7 @@
     <div class="row">
         <button type="submit" class="btn btn-warning p-1 edit-journey btn-sm">Back</button>
     </div>
-    <div class="card results tab-card">
+    <div class="card results tab-card" id="tourist-summary-results">
         <div class="row results">
         </div>
         <div class="row summary-results from">
@@ -154,6 +154,12 @@
             </div>
         </div>
 
+    </div>
+
+
+    <!-- error if no directions available (happens for dates too far in future) -->
+    <div class="alert alert-danger no-directions-error" role="alert">
+        There are no directions available available for the date entered. Please try a date in the more foreseeable future.
     </div>
 
 

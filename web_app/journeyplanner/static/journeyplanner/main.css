@@ -538,6 +538,12 @@ label.dt-label {
   margin: auto;
   margin-top: 15px;
 }
+
+.no-directions-error {
+  display: none;
+  margin-left: 10px;
+  margin-top: 10px;
+}
   
 /* media queries to make interface responsive */
   /* when the screen becomes smaller than 992px, the interface becomes full screen and the map is hidden */
