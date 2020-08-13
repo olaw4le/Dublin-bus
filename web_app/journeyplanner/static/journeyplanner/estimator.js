@@ -281,34 +281,31 @@ function calcRoute() {
 			allMarkers.push(marker1)
 			allMarkers.push(marker2)
 
-			
 
-			list=destination_list.splice(0,destination_list.length-2)
-	
+			list = destination_list.splice(0, destination_list.length - 2)
+
 
 			for (key in list) {
-				
-			var y = list[key].split(" ");
-			start = y[0]
-			
-			var stop_latlng = {
-				lat: x[start].lat,
-				lng: x[start].lng
-			};
 
-			var marker = new google.maps.Marker({
-				position: new google.maps.LatLng(stop_latlng),
-				map: map,
-				title: 'stop '+start,
-				icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|ddd'
-			});
+				var y = list[key].split(" ");
+				start = y[0]
 
-			allMarkers.push(marker)
+				var stop_latlng = {
+					lat: x[start].lat,
+					lng: x[start].lng
+				};
 
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(stop_latlng),
+					map: map,
+					title: 'stop ' + start,
+					icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|ddd'
+				});
+
+				allMarkers.push(marker)
 
 
 			}
-
 
 
 		})
