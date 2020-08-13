@@ -607,29 +607,31 @@ function makeStatsRequest() {
 // display a textual description of the data contained in the graph
 function updateTextInfo(data) {
 
-    //$("#results-route-number").html(data.route);
-    //$("#results-route-stops").html(data.start + '-' + data.end);
-
-
     // get the 95% journey time for this time group
-    var keys = Object.keys(data.data)
+    var keys = Object.keys(data.data);
     var current_time = keys[Math.floor(keys.length / 2)];
-    var journey_time = data.data[current_time];
-    var fastest_time = current_time;
+    var journey_time = "dummy";
+    var fastest_time;
 
     for (var key in data.data) {
         var t = data.data[key];
-        if (t < journey_time) {
+        if (journey_time === "dummy") {
+            if (data.data[key] > 0) {
+                journey_time = data.data[key];
+                fastest_time = journey_time;
+            }
+        } else if (t < journey_time) {
             // ignore journey times of 0 minute - this is missing data
-            if (t != 0) {
+            if (t > 0) {
                 fastest_time = key;
             }
         }
     }
 
     // if there's a faster time than the 'search time' add that to the description
-    if (current_time == 0) {
-        $("#results-description").html("There is no data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
+    console.log(data.data[current_time]);
+    if (data.data[current_time] == 0) {
+        $("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
 
     } else if (current_time === fastest_time) {
         $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
