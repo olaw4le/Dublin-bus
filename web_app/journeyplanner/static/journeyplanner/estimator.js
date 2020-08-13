@@ -340,7 +340,7 @@ $(function () {
 
 			calcRoute();
 			removeLineFromMap();
-			makeStatsRequest();
+			//makeStatsRequest();
 
 
 			//  use different date and time values depending on size of screen
@@ -444,6 +444,7 @@ $(function () {
 					// hide spinner and show estimate
 					$("#estimate-loader").hide();
 					$("#stop-to-stop-estimate").html(response.result);
+					makeStatsRequest();
 				});
 
 
