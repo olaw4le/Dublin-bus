@@ -120,8 +120,8 @@ def prediction(request):
     except Exception as e:
         print(e)
         result = "Prediction unavailable!"
+        results_dict = {"result": result, "fare": {"found": False}}
 
-    results_dict = {"result": result, "fare": journey_fare}
 
     return JsonResponse(results_dict)
 
