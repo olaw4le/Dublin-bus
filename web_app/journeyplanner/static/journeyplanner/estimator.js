@@ -548,40 +548,8 @@ function sendDateTimeChangePostRequest() {
 
 // function for reading in the parameters used for generating the graphs
 function getSearchParams() {
-<<<<<<< HEAD
-	var routeName = $("#estimator-route").val();
-	// find the route number using the routeName
-	var route = routeNames[routeName].split("_");
-
-	var originName = $("#estimator-origin").val();
-	var origin = originName.split(" ")[0];
-	var destinationName = $("#estimator-destination").val();
-	var destination = destinationName.split(" ")[0];
-
-	var params = new Object();
-	params["route"] = route[0];
-	params["direction"] = route[1];
-	params["start"] = origin;
-	params["end"] = destination;
-
-	// get the date & time
-	if ($(window).width() < 992) {
-		// if used on mobile
-		var datetimeValue = $("#datetime-tab2").val();
-		var arr = datetimeValue.split('T');
-		params["date"] = arr[0];
-		params["time"] = arr[1];
-	} else {
-		// for other devices...
-		params["date"] = $("#datepicker-tab2").val();
-		params["time"] = $('#timepicker-tab2').val();
-	}
-
-	return params;
-=======
     var routeName = $("#estimator-route").val();
     // find the route number using the routeName
-    console.log(routeName);
     var route = routeNames[routeName].split("_");
 
     var originName = $("#estimator-origin").val();
@@ -607,7 +575,6 @@ function getSearchParams() {
     }
 
     return params;
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 }
 
 
@@ -659,35 +626,6 @@ function makeStatsRequest() {
 // display a textual description of the data contained in the graph
 function updateTextInfo(data) {
 
-<<<<<<< HEAD
-	//$("#results-route-number").html(data.route);
-	//$("#results-route-stops").html(data.start + '-' + data.end);
-
-
-	// get the 95% journey time for this time group
-	var keys = Object.keys(data.data)
-	var current_time = keys[Math.floor(keys.length / 2)];
-	var journey_time = data.data[current_time];
-	var fastest_time = current_time;
-
-	for (var key in data.data) {
-		var t = data.data[key];
-		if (t < journey_time) {
-			// ignore journey times of 0 minute - this is missing data
-			if (t != 0) {
-				fastest_time = key;
-			}
-		}
-	}
-
-	// if there's a faster time than the 'search time' add that to the description
-	if (current_time === fastest_time) {
-		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
-	} else {
-		var timeDelta = journey_time - data.data[fastest_time];
-		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
-	}
-=======
     // get the 95% journey time for this time group
     var keys = Object.keys(data.data);
     var current_time = keys[Math.floor(keys.length / 2)];
@@ -724,7 +662,6 @@ function updateTextInfo(data) {
             $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
         }
     }
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 
 }
 
@@ -764,63 +701,6 @@ function DataSet(data) {
 
 function drawBarChart(data) {
 
-<<<<<<< HEAD
-	// get the chart container from the info.html page
-	var ctx = $("#results-canvas");
-	var bars = [];
-	var labels = Object.keys(data);
-
-	bars = new DataSet(data);
-
-	// check if a chart already exists in the container div;
-	// if so just update the existing chart with new data
-	// else create a new chart element in the container div
-
-	if (ctx.firstChild) {
-		someChart.config.data = {
-			datasets: [bars],
-			labels: Object.keys(data)
-		}
-	} else {
-		var someChart = new Chart(ctx, {
-			type: 'bar',
-			data: {
-				datasets: [bars],
-				labels: Object.keys(data),
-			},
-			options: {
-				responsive: true,
-				legend: {
-					display: false
-				},
-				scales: {
-					yAxes: [{
-						scaleLabel: {
-							labelString: "Travel Time (Minutes)",
-							display: true
-						},
-						stacked: false,
-						display: true,
-						gridLineWidth: 0,
-						minorTickInterval: null,
-						ticks: {
-							beginAtZero: true
-						}
-					}],
-					xAxes: [{
-						stacked: false,
-						display: true,
-						gridLineWidth: 0,
-						gridLines: {
-							display: false
-						}
-					}]
-				}
-			}
-		});
-	}
-	return someChart;
-=======
     // get the chart container from the info.html page
     var container = $("#chart-container");
     var bars = [];
@@ -875,7 +755,6 @@ function drawBarChart(data) {
     });
 
     return someChart;
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 
 }
 

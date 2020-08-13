@@ -386,7 +386,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 				var list = []
 				var list1 = []
 
-<<<<<<< HEAD
 				var datetimeValue = $("#datetime-tourist").val();
 				var arr = datetimeValue.split('T');
 				var date1 = arr[0];
@@ -646,21 +645,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 				window.alert('Directions request failed due to ' + status);
 			}
 		});
-=======
-                                number += 1
-                            }
-                        }
-                    })
-                //showing the response on the map. 	 
-                directionsRenderer.setDirections(response);
-                showSteps(response, markerArray, stepDisplay, map);
-            } else {
-                $('.tab-card').hide();
-                $('.prediction-spinner').hide();
-                $('.no-directions-error').show();
-            }
-        });
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 }
 
 function showSteps(directionResult, markerArray, stepDisplay, map) {
@@ -690,97 +674,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 // when the user click the go button, the route function runs and the results div shows
 $(function () {
 
-<<<<<<< HEAD
-	$('#go-tourist').on('click', function () {
-
-		// show loader while prediction is loading
-		$('.prediction-spinner').show();
-		$('.results-card').hide();
-
-		// display error if user does not select a destination on map
-		if ($("#destination-tourist").is(":hidden")) {
-			$('#tourist-destination-error').show();
-		} else {
-			var time, dateValue
-			// use different variables for date and time depending on screen size
-			if ($(window).width() < 992) {
-				var dateValue = $("#datetime-tourist").val();
-				var arr = dateValue.split('T');
-				date = arr[0];
-				time = arr[1];
-			} else {
-				dateValue = $("#datepicker-tourist").val();
-				time = $('#timepicker-tourist').val();
-			}
-
-			// convert time to seconds since midnight
-			var timeSplit = time.split(':');
-			var timeSeconds = (+timeSplit[0]) * 60 * 60 + (+timeSplit[1]) * 60;
-
-			// show results and routes
-			var tourist_success = routes_tourist();
-			if (tourist_success) {
-				$(".form-area").hide();
-				$("#checkbox-card").hide();
-				if ($(window).width() < 992) {
-					$("#map-interface").css(
-						"top", "400px");
-				}
-				$("#route-results-tourist").show();
-			}
-
-
-		}
-	});
-
-	// add on click to edit-journey button to hide results and show journey planner
-	$('.edit-journey').on('click', function () {
-
-		// hide the fare when the user clicks back
-		$('.fare-accordion').hide();
-
-		// pan to correct place on map depending on screen size
-		if ($(window).width() <= 992) {
-			map.panTo(mobileDublin);
-			map.setZoom(13);
-		} else {
-			map.panTo(dublin);
-			map.setZoom(13);
-			map.panBy(300, 0);
-		}
-
-		// when the user clicks 'back' show the markers again of the checked check-box
-		$('.tourist-check').each(function (index, obj) {
-			if (this.checked) {
-				var type = $(this).attr("data-type");
-
-				// show spinner for clicked checkbox
-				$('#' + type + '-spin').show();
-
-				var request = {
-					location: dublin,
-					radius: '50000',
-					type: type
-				};
-
-				service = new google.maps.places.PlacesService(map);
-				service.nearbySearch(request, function (results, status) {
-					callback(results, status, type)
-				});
-			}
-		});
-
-		$("#checkbox-card").show();
-		$(".form-area").show();
-		// show half map on mobile screens
-		if ($(window).width() < 992) {
-			$("#map-interface").css(
-				"top", "400px");
-		}
-		$("#route-results-tourist").hide();
-		$('#direction-tourist').empty()
-	});
-=======
     $('#go-tourist').on('click', function () {
 
         // hide no directions error and show summary results
@@ -876,5 +769,4 @@ $(function () {
         $("#route-results-tourist").hide();
         $('#direction-tourist').empty()
     });
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 });
