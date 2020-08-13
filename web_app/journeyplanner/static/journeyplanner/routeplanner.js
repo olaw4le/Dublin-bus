@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('.no-directions-error').hide();
+
     // load twitter to display the twitter widget whenever this tab is clicked
     if (typeof twttr != 'undefined') {
         twttr.widgets.load();
@@ -561,31 +563,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 number += 1
                             }
                         }
-
-                        // // traffic incident post request
-                        // $.ajax({
-                        //     type: "POST",
-                        //     url: "accident/",
-                        //     data: { data, date: date1, time: input_time, }
-
-                        // })
-
-                        //     // response returned from post request
-                        //     .done(function (traffic_response) {
-
-                        //         // parse the response
-                        //         response = JSON.parse(traffic_response)
-                        //         console.log("accident info")
-                        //         console.log(traffic_response[2]);
-                        //         // populate html with traffic incident warning
-                        //         $('#traffic-incident').html(traffic_response[2]);
-                        //         // show traffic incident
-                        //         
-                        //     })
-
-                        $('#traffic-incident').show();
-
-
                     })
 
                 // laura post request 
@@ -596,29 +573,33 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 
                 })
 
-                    // response returned from post request
+                    // response returned from traffic incident post request
                     .done(function (traffic_response) {
 
                         // parse the response
-                        traffic_response = JSON.parse(traffic_response)
+                        traffic_response = JSON.parse(traffic_response)[0]
                         console.log("accident info")
-                        console.log(traffic_response[2]);
-                        // populate html with traffic incident warning
-                        $('#traffic-incident-content').html(traffic_response[2]);
+                        console.log(traffic_response);
+                        if (traffic_response.length != 0) {
+                            console.log("loopiung trhgouh accidents")
+                            $(traffic_response).each(function () {
+                                $('#traffic-incident-content').append("<div>" + this + "</div>");
+                            });
+                            $("#traffic-incident").show();
+                        } else {
+                            console.log("hiding")
+                            $("#traffic-incident").hide();
+                        }
                     })
-
 
                 //showing the response on the map. 	 
                 directionsRenderer.setDirections(response);
 
-                // google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
-                //   console.log("changed")
-                //   map.panBy(-600, 0);
-                //   map.setZoom(map.getZoom() - 1);
-                // });
                 showSteps(response, markerArray, stepDisplay, map);
             } else {
-                window.alert('Directions request failed due to ' + status);
+                $('.tab-card').hide();
+                $('.prediction-spinner').hide();
+                $('.no-directions-error').show();
             }
         });
 }
@@ -655,6 +636,9 @@ $(function () {
     $('#go').on('click', function () {
 
         // show spinner and hide results
+        $("#traffic-incident").hide();
+        $('.tab-card').show();
+        $('.no-directions-error').hide();
         $('.prediction-spinner').show();
         $('.results-card').hide();
         $('.fare-accordion').hide();
@@ -705,6 +689,9 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+
+        $("#traffic-incident").hide();
+        $('.no-directions-error').hide();
         removeLineFromMap();
         $(".form-area").show();
         // show half map on mobiles
