@@ -563,7 +563,6 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                                 number += 1
                             }
                         }
-                        $('#traffic-incident').show(); // show traffic incident message
                     })
 
                 // laura post request 
