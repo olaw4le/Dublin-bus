@@ -100,28 +100,27 @@ def prediction(request):
         destination = request.POST["destination"]
         date = request.POST["date"]
         time = request.POST["time"]
-        direction =request.POST["direction"]
+        direction = request.POST["direction"]
         # print("From prediction(views.py): ", route, origin, destination, date, time)
 
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
         journey_fare = get_fare(route, direction, origin, destination)
-        if result >=300:
-            result='N/A'
-        elif result ==0:
-            result= "Prediction unavailable!"
-        elif result !=0:
-            result= (result, ' minutes')
+        if result >= 300:
+            result = 'N/A'
+        elif result == 0:
+            result = "Prediction unavailable!"
+        elif result != 0:
+            result = (result, ' minutes')
         
         # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
-        results_dict = {"result" : result, "fare" : journey_fare}
+        results_dict = {"result": result, "fare": journey_fare}
 
     except Exception as e:
         print(e)
         result = "Prediction unavailable!"
         results_dict = {"result": result, "fare": {"found": False}}
-
 
     return JsonResponse(results_dict)
 
