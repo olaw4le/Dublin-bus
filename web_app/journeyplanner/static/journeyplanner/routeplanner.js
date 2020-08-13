@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('.no-directions-error').hide(); 
+
     // load twitter to display the twitter widget whenever this tab is clicked
     if (typeof twttr != 'undefined') {
         twttr.widgets.load();
@@ -611,14 +613,11 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 //showing the response on the map. 	 
                 directionsRenderer.setDirections(response);
 
-                // google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {
-                //   console.log("changed")
-                //   map.panBy(-600, 0);
-                //   map.setZoom(map.getZoom() - 1);
-                // });
                 showSteps(response, markerArray, stepDisplay, map);
             } else {
-                window.alert('Directions request failed due to ' + status);
+                $('.tab-card').hide();
+                $('.prediction-spinner').hide();
+                $('.no-directions-error').show();
             }
         });
 }
@@ -655,6 +654,8 @@ $(function () {
     $('#go').on('click', function () {
 
         // show spinner and hide results
+        $('.tab-card').show();
+        $('.no-directions-error').hide(); 
         $('.prediction-spinner').show();
         $('.results-card').hide();
         $('.fare-accordion').hide();
@@ -705,6 +706,8 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+
+        $('.no-directions-error').hide();
         removeLineFromMap();
         $(".form-area").show();
         // show half map on mobiles

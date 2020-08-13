@@ -656,7 +656,9 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
                 directionsRenderer.setDirections(response);
                 showSteps(response, markerArray, stepDisplay, map);
             } else {
-                window.alert('Directions request failed due to ' + status);
+                $('.tab-card').hide();
+                $('.prediction-spinner').hide();
+                $('.no-directions-error').show();
             }
         });
 }
@@ -689,6 +691,10 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 $(function () {
 
     $('#go-tourist').on('click', function () {
+
+        // hide no directions error and show summary results
+        $('#tourist-summary-results').show();
+        $('.no-directions-error').hide(); 
 
         // show loader while prediction is loading
         $('.prediction-spinner').show();
@@ -732,6 +738,8 @@ $(function () {
 
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
+
+        $('.no-directions-error').hide();
 
         // hide the fare when the user clicks back
         $('.fare-accordion').hide();
