@@ -7,12 +7,7 @@ path = os.getcwd()
 
 # function to find the coordinates of the stops a route goes through
 def stops_latlng(route_number):
-<<<<<<< HEAD
-    # route_file = "journeyplanner/static/routes/{}.json".format(route_number)
-    route_file = "%s/journeyplanner/static/routes/{}.json" % path
-=======
     route_file = "%s/journeyplanner/static/routes/%s.json" % (path, route_number)
->>>>>>> 9d0c4f0cd452e2fc528efaaac54568220a9bb747
 
     stops_coordinate = {}
 
