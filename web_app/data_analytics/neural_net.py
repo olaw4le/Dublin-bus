@@ -302,7 +302,7 @@ def quickanddirty(route, direction, startstop, endstop):
 
 
 def get_proportion(route, direction, startstop, endstop, weekday, month, time_group):
-    print(route, direction, startstop, endstop, weekday, month, time_group)
+    
     """returns a proportion representing the amount of the total bus route journey that the users journey represents
         
         It will first attempt to do this using calculated proportions for that day of the week, month and time_group, 
@@ -344,7 +344,7 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
                     index1 = list_of_keys.index(item)
                 if endstop == last_stop_segment:
                     index2 = list_of_keys.index(item)
-                    print("Index2", index2)
+    
 
         total = 0
 
