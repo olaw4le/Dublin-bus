@@ -62,7 +62,6 @@ def get_fare(route, direction, start_stop, end_stop):
             cells = row.find_all("td")
             if len(cells) == 2 and "€" in str(cells[1].contents[0]):
                 # strip the extra whitespace
-                print(str(cells[0].contents[0]).strip(), str(cells[1].contents[0]).replace("€", "").strip())
                 fare_details[cells[0].contents[0].strip()] = cells[1].contents[0].replace("€", "").strip()
 
         # change flag to true if found
