@@ -169,6 +169,7 @@ function stops() {
 
 var index;
 
+
 // function to populate the remaining destination stop
 function destination_stops() {
 	var To = "<option value=0>-- Select --</option>";
@@ -200,12 +201,12 @@ function origin_marker() {
 	route = x[0]
 
 	$.ajax({
-		type: "POST",
-		url: "list_latlng/",
-		data: {
-			route: route
-		}
-	})
+			type: "POST",
+			url: "list_latlng/",
+			data: {
+				route: route
+			}
+		})
 
 		.done(function (response) {
 			var x = JSON.parse(response)
@@ -229,17 +230,18 @@ function calcRoute() {
 	var start = $("#estimator-origin").val();
 	var x = start.split(" ");
 	start = x[0]
+	var end_stop = $("#estimator-destination").val()
 	var end = $("#estimator-destination").val()
 	var x = end.split(" ");
 	end = x[0]
 
 	$.ajax({
-		type: "POST",
-		url: "list_latlng/",
-		data: {
-			route: route
-		}
-	})
+			type: "POST",
+			url: "list_latlng/",
+			data: {
+				route: route
+			}
+		})
 		.done(function (response) {
 
 			var x = JSON.parse(response)
@@ -257,22 +259,28 @@ function calcRoute() {
 				position: new google.maps.LatLng(start_latlng),
 				map: map,
 				title: 'Origin',
+				icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
 			});
 
 			var marker2 = new google.maps.Marker({
 				position: new google.maps.LatLng(end_latlng),
 				map: map,
 				title: 'Destination',
+				icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 			});
 
 			allMarkers.push(marker1)
 			allMarkers.push(marker2)
 
-
 			list = destination_list.splice(0, destination_list.length - 2)
 
-			for (key in list) {
-				var y = list[key].split(" ");
+			index = list.indexOf(String(end_stop)) //finding the index of the selected stop
+			destination_list = list.slice(0, index + 1) //displaying the stops after the selected stops 
+			destination_list.pop()
+
+
+			for (key in destination_list) {
+				var y = destination_list[key].split(" ");
 				start = y[0]
 
 				var stop_latlng = {
@@ -284,7 +292,7 @@ function calcRoute() {
 					position: new google.maps.LatLng(stop_latlng),
 					map: map,
 					title: 'stop ' + start,
-					icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|ddd'
+					icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 				});
 
 				allMarkers.push(marker)
@@ -380,17 +388,17 @@ $(function () {
 
 			// send post request
 			$.ajax({
-				type: "POST",
-				url: "prediction/",
-				data: {
-					date: date,
-					time: timeSeconds,
-					route: route,
-					origin: origin,
-					destination: destination,
-					direction: direction
-				}
-			})
+					type: "POST",
+					url: "prediction/",
+					data: {
+						date: date,
+						time: timeSeconds,
+						route: route,
+						origin: origin,
+						destination: destination,
+						direction: direction
+					}
+				})
 				// response returned from post request
 				.done(function (response) {
 
@@ -562,17 +570,17 @@ function makeStatsRequest() {
 	$('#graph-loader').show();
 	// make the request
 	$.ajax({
-		type: "POST",
-		url: "get_stats/",
-		data: {
-			date: params.date,
-			time: params.time,
-			route: params.route,
-			direction: params.direction,
-			end: params.end,
-			start: params.start
-		}
-	})
+			type: "POST",
+			url: "get_stats/",
+			data: {
+				date: params.date,
+				time: params.time,
+				route: params.route,
+				direction: params.direction,
+				end: params.end,
+				start: params.start
+			}
+		})
 
 		// when response received
 		.done(function (response) {
@@ -621,7 +629,6 @@ function updateTextInfo(data) {
 	}
 
 	// if there's a faster time than the 'search time' add that to the description
-	console.log(data.data[current_time]);
 	if (data.data[current_time] == 0) {
 		$("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
 
