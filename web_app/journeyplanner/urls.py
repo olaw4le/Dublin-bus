@@ -1,12 +1,12 @@
 from django.urls import path
-from . import views #import views.py from current directory
+from . import views  # import views.py from current directory
 from django.conf.urls import url, include
 
 
 # view.home is the function we created in views.py which returns a HttpResponse
 # stating that we have made it to the homepage
 urlpatterns = [
-    path('', views.home, name = 'home-page'),
+    path('', views.home, name='home-page'),
     path('routeplanner/', views.routeplanner, name = 'routeplanner'),
     path('allroutes/', views.allroutes, name='allroutes'),
     path('realtime/', views.realtime, name='realtime'),
@@ -23,13 +23,8 @@ urlpatterns = [
     url(r'^accident/', views.accident, name='accident')
 ]
 
-
-
-
-# we have a urls module in made project 'dublin-bus'. 
+# we have a urls module in made project 'dublin-bus'.
 # this will take our whole website which urls should send us to our journeyplanner app
-
-
 
 # www.youtube.com/journeyplanner/routes?bus=41a&time=1700
 # www.youtube.com/timetable/routes
