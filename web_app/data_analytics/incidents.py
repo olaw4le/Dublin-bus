@@ -88,7 +88,7 @@ def return_incident_info(route, direction, date, time, start_stop_x, start_stop_
             end_cut = distance_list_destination.index(nearest_match_destination)
 
             # segment of the route that the user travels
-            users_route = new_list[start_cut:end_cut]
+            users_route = list_of_points_on_shape[start_cut:end_cut]
 
             # make users_route into a path for postgresql
             postgre_path = "'["

@@ -184,10 +184,8 @@ def generate_test_dataframe(route, direction, date, time):
     now = datetime.now()
     if abs((dt - now).total_seconds()) < 3600:
         current = True
-        print("using current weather data")
     else:
         current = False
-        print("using forecast weather data")
 
     if current:
         # if so; get current weather from database
@@ -359,13 +357,11 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         if proportion > 0:
             return proportion
         else:
-            print("Unable to access proportions data, using simple percentage of route")
             proportion = quickanddirty(route, direction, startstop, endstop)
             return proportion
 
     # otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
     except Exception as e:
-        print("Unable to access proportions data, using simple percentage of route")
         print(e)
         proportion = quickanddirty(route, direction, startstop, endstop)
     return proportion
@@ -390,7 +386,6 @@ def generate_prediction(route, startstop, endstop, date, time, direction):
 
         # get the prediction from the pickle using the test dataframe generated above
         prediction = model.predict(test)
-        print("Prediction from model: ", int(prediction[0]))
 
         # get month, day_of_the_week and time_group from the date and time,
         # these are needed for calculating the proportion of the total git sjourney that the users trip represents.
