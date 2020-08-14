@@ -1,21 +1,10 @@
 import pandas as pd
 import pickle
 import json
-import math
-import requests
-import urllib.request
+import os
 from datetime import datetime
-# from data_analytics import db_interface as db
 from web_app.db_interface import db_interface as db
 from data_analytics.get_weather_data import get_nearest_forecast, time_from_seconds
-import os
-from sklearn.linear_model import LinearRegression
-
-# ignore warnings
-import warnings
-
-warnings.filterwarnings('ignore')
-
 
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
@@ -31,6 +20,7 @@ weather_api_key = "86baa129046e5cbaeb16af074356e579"
 
 
 def get_weather_from_db():
+
     """returns a tuple of the 'current' weather data from out postgres database."""
 
     sql = db.construct_sql(table_name="weather_data_current", query_type="select_all")
@@ -41,6 +31,7 @@ def get_weather_from_db():
 
 
 def time_group_function(row):
+
     """given a time in seconds after midnight, returns a "time_group". a time_group is a portion of the day.
 
         We have split the day into 29 portions.
@@ -145,11 +136,13 @@ def time_group_function(row):
 
 
 def get_active_columns(test):
+
     """Returns a list of the categorical columns in a given test dataframe that are "positive".
 
-    For example the test_dataframe fed to the pickle might have columns for the categorical feature "DAYOFWEEK" but in any given
-    instance of the dataframe only one of those 7 will be positive. If the day in question is a Monday then DAYOFWEEK_0 will be "positive" 
-    and the other six will be "negative". The same for weather_main, weather_description, MONTH and TIME_GROUP"""
+    For example the test_dataframe fed to the pickle might have columns for the categorical feature "DAYOFWEEK" but
+    in any given instance of the dataframe only one of those 7 will be positive. If the day in question is a Monday 
+    then DAYOFWEEK_0 will be "positive" and the other six will be "negative". The same for weather_main, 
+    weather_description, MONTH and TIME_GROUP"""
 
     active_columns = []
 
@@ -175,14 +168,15 @@ def get_active_columns(test):
 
 
 def generate_test_dataframe(route, direction, date, time):
+
     """Returns a dataframe with the user entered trip details if given the route, direction, date and time
     
-    This function is called from the generate_predictions function and in turn calls the get_weather_from_db function, 
-    the time_group_function  and the get_active_columns function
-    The list of columns in the dataframe varies per route, and the list of columns is stored in a json format on the database
-    Continuous features are added to that dataframe directly, whereas categorical features that need to be one hot encoded for
-    are added to a temporary dataframe.
-    The get_active_columns function returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
+    This function is called from the generate_predictions function and in turn calls the get_weather_from_db
+    function, the time_group_function  and the get_active_columns function
+    The list of columns in the dataframe varies per route, and the list of columns is stored in a json format
+    on the database. Continuous features are added to that dataframe directly, whereas categorical features 
+    that need to be one hot encoded for are added to a temporary dataframe. The get_active_columns function 
+    returns a list of which categorical features in the dataframe needed to be marked 1 instead of 0."""
 
     # check if *current* weather data should be used for prediction;
 
@@ -190,10 +184,8 @@ def generate_test_dataframe(route, direction, date, time):
     now = datetime.now()
     if abs((dt - now).total_seconds()) < 3600:
         current = True
-        print("using current weather data")
     else:
         current = False
-        print("using forecast weather data")
 
     if current:
         # if so; get current weather from database
@@ -279,14 +271,18 @@ def generate_test_dataframe(route, direction, date, time):
 
 
 def quickanddirty(route, direction, startstop, endstop):
-    """Returns proportion of the total journey that the user takes simply as percentage of how many of the stops on the route they travelled
+
+    """Returns proportion of the total journey that the user takes simply as percentage of how many of the 
+    stops on the route they travelled
         
-        I don't like this function, because I don't see the point of training a linear regression model, and then using a blunt object like this to 
-        allocate the proportion. It is simply here as a failsafe. The main segment_calculation function contains its own checks and failsafes.
-        It can handle a NaN value in the proportions or a missed/skippedd segment... however...
-        One situation when this function may be needed is for example... the 41 bus route is 24 hours now and wasn't in 2018, so...
-        If linear regression will manage to return a 3am prediction... but the proportion function would fail as the 3am time_group is empty
-        However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate than at 6pm on a weekday"""
+    I don't like this function, because I don't see the point of training a linear regression model, and then 
+    using a blunt object like this to allocate the proportion. It is simply here as a failsafe. The main 
+    segment_calculation function contains its own checks and failsafes. It can handle a NaN value in the 
+    proportions or a missed/skippedd segment... however... One situation when this function may be needed is 
+    for example... the 41 bus route is 24 hours now and wasn't in 2018, so... If linear regression will manage 
+    to return a 3am prediction... but the proportion function would fail as the 3am time_group is empty
+    However, that isn't the worst thing in the world... because at 3am a simple average is probably more accurate 
+    than at 6pm on a weekday"""
 
     # get the master list of ordered stops
     f = open(path + "/journeyplanner/static/journeyplanner/ordered_stops_main.json")
@@ -308,8 +304,9 @@ def quickanddirty(route, direction, startstop, endstop):
 def get_proportion(route, direction, startstop, endstop, weekday, month, time_group):
     """returns a proportion representing the amount of the total bus route journey that the users journey represents
         
-        It will first attempt to do this using calculated proportions for that day of the week, month and time_group, but will resort to 
-        a simple percentage of the amount of the stops travelled compared to the amount of stops there are"""
+        It will first attempt to do this using calculated proportions for that day of the week, month and time_group, 
+        but will resort to a simple percentage of the amount of the stops travelled compared to the amount of stops 
+        there are"""
 
     # dictionaries for use finding the relevant section of the code in the database
     days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
@@ -324,7 +321,9 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
     try:
         # construct sql query
         table_name = "route_%s_%s_proportions" % (route.lower(), direction)
-        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",data={"month": months[month], "weekday": days[weekday], "timegroup": str(time_group)})
+        sql_values = db.construct_sql(table_name=table_name, query_type="select_where",
+                                      data={"month": months[month], "weekday": days[weekday],
+                                            "timegroup": str(time_group)})
 
         sql_keys = db.construct_sql(table_name=table_name, query_type="attr_names")
 
@@ -358,52 +357,50 @@ def get_proportion(route, direction, startstop, endstop, weekday, month, time_gr
         if proportion > 0:
             return proportion
         else:
-            print("Unable to access proportions data, using simple percentage of route")
             proportion = quickanddirty(route, direction, startstop, endstop)
             return proportion
 
     # otherwise simply return the percentage of the number of stops a user is travelling (*eyeroll*)
-    except:
-        print("Unable to access proportions data, using simple percentage of route")
+    except Exception as e:
+        print(e)
         proportion = quickanddirty(route, direction, startstop, endstop)
     return proportion
 
 
 def generate_prediction(route, startstop, endstop, date, time, direction):
-    """It returns the users estimated journey time in minutes. It is the main function in the script. It is the one called from the front end, and calls all the other functions either directly or indirectly
+
+    """It returns the users estimated journey time in minutes. It is the main function in the script. 
+
+    It is the one called from the front end, and calls all the other functions either directly or indirectly
     Takes route, the users boarding stop, the users alighting stop, the date, time and direction as parameters. 
     """
-    #try:
-    print("From generate prediction: ", route, startstop, endstop, date, time, direction)
 
-    # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
-    test = generate_test_dataframe(route, direction, date, time)
-    # loads the correct linear regression pickle using the route and direction
-    pickle_file = path + "/data_analytics/pickles_neural_net_random_forest_combo/" + str(route) + "_direction" + str(direction) + ".pickle"
-    print("Pickle file name", pickle_file)
-    pickle_in = open(pickle_file, 'rb')
-    model = pickle.load(pickle_in)
+    try:
+        # calls a function which generates a test dataframe from the route number, the direction, the date and the time.
+        test = generate_test_dataframe(route, direction, date, time)
 
-    # get the prediction from the pickle using the test dataframe generated above
-    prediction = model.predict(test)
-    print("Prediction from model: ", int(prediction[0]))
+        # loads the correct linear regression pickle using the route and direction
+        pickle_file = path + "/data_analytics/pickles_neural_net_random_forest_combo/" + str(route) + "_direction" + str(direction) + ".pickle"
+        pickle_in = open(pickle_file, 'rb')
+        model = pickle.load(pickle_in)
 
-    # get month, day_of_the_week and time_group from the date and time,
-    # these are needed for calculating the proportion of the total
-    # journey that the users trip represents.
-    date_time_obj = datetime.strptime(date, '%Y-%m-%d')
-    weekday = date_time_obj.weekday()
-    month = date_time_obj.month
-    time_group = time_group_function(time)
+        # get the prediction from the pickle using the test dataframe generated above
+        prediction = model.predict(test)
 
-    # get the proportion using the get_proportion
-    proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
+        # get month, day_of_the_week and time_group from the date and time,
+        # these are needed for calculating the proportion of the total git sjourney that the users trip represents.
+        date_time_obj = datetime.strptime(date, '%Y-%m-%d')
+        weekday = date_time_obj.weekday()
+        month = date_time_obj.month
+        time_group = time_group_function(time)
 
-    # get proportion and multiply by the prediction
-    result = proportion * prediction[0]
-    # print("Users proportion: ", proportion)
-    # print("Users estimated journeytime: ", int(result))
-    minutes = int(result) // 60
-    return minutes
-    #except:
-        #return 0
+        # get the proportion using the get_proportion
+        proportion = get_proportion(route, direction, startstop, endstop, weekday, month, int(time_group))
+
+        # get proportion and multiply by the prediction
+        result = proportion * prediction[0]
+
+        minutes = int(result) // 60
+        return minutes
+    except:
+        return 0

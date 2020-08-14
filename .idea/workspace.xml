@@ -273,7 +273,11 @@
       <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/9_direction1.pickle" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/web_app/data_analytics/pickles_neural_net_random_forest_combo/9_direction2.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/loadtest.py" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/web_app/journeyplanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/journeyplanner/views.py" afterDir="false" />
+>>>>>>> 3456bf1c7cc673f9740e0a99863412240741ecb9
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

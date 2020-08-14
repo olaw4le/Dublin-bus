@@ -53,11 +53,7 @@
         <div class="alert alert-danger geo-error" id="stop-to-stop-incomplete-form-error" role="alert">
             Please select route, origin stop and destination stop.
         </div>
-
-
-
-
-        <!-- <p id="stop-to-stop-incomplete-form-error">Please select route, subroute, origin stop and destination stop</p> -->
+  
         <button type="submit" class="go-button btn btn-warning btn-lg" id="stop-to-stop-go">Go</button>
         <div class="mobile-space"></div>
     </form>
@@ -121,7 +117,6 @@
     </div>
 
     <!-- fare -->
-
     <div id="accordion-fare-tab2" class="fare-accordion results tab-card">
         <div class="card">
             <div class="card-header" id="heading-tab2">
@@ -188,7 +183,7 @@
             <!-- define the canvas where the chart will be drawn -->
             <!-- the canvas element must be the only element placed within a container
                     div with style="position: relative;" for the chart to be responsive -->
-            <div class="chart-container chart" style="position: relative;">
+            <div class="chart-container chart" id="chart-container" style="position: relative;">
                 <canvas id="results-canvas"></canvas>
             </div>
 

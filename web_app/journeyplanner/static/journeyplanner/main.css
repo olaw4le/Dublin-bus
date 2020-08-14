@@ -14,11 +14,6 @@ html, body {
   #map {
     height: 100%;
     position: relative;
-    /* -webkit-transform: none !important; 
-    z-index: auto !important;
-  }
-    #map  > div{
-        z-index: auto !important; */
   }
 
   #fullscreen-map {
@@ -40,6 +35,8 @@ html, body {
     overflow-x: hidden;
     box-shadow: 4px 4px 8px #B8B8B8;
   }
+
+  /* safari bug fix - ensure autocomplete is visible on top of div */
   .pac-container {
     z-index: 5001 !important;
 }
@@ -294,7 +291,6 @@ ul {
 .instruction {
   font-size: 0.9em;
   margin-left: 10px;
-  /* padding-top: 10px; */
 }
 
 #instruction-planner {
@@ -344,7 +340,6 @@ label.dt-label {
   padding-left: 20px !important;
   text-align: left;
   min-width: 150px;
-
 }
 
 .spinner-border {
@@ -414,8 +409,6 @@ label.dt-label {
 
 .invalid-location-error{
   display: none;
-  /* color: red;
-  margin-left: 5px; */
 }
 
 .alert-danger {
@@ -462,21 +455,20 @@ label.dt-label {
   margin-top: 10px;
 }
 
-.fare-header {
-  text-align: left;
-  font-weight: 600;
-}
-
 #leap-logout {
   display: none;
   margin-left: 30px;
 }
 
 /* fare */
-
 .fare-button {
   text-align: left;
   margin-left: 0px;
+}
+
+.fare-header {
+  text-align: left;
+  font-weight: 600;
 }
 
 #accordion-fare-tourist {
@@ -489,7 +481,6 @@ label.dt-label {
 
 #accordion-fare-tab2 {
   display:none;
-  
 }
 
 .fare-accordion {
@@ -501,7 +492,6 @@ label.dt-label {
   width: 90vw;
   max-width: 400px;
 }
-
 
 .fare-result-detailed{
   padding-left: 0px;
@@ -536,10 +526,17 @@ label.dt-label {
   margin-left: 15px;
 }
 
+/*error messages */
 #no-data-error{
   width: 95%;
   margin: auto;
   margin-top: 15px;
+}
+
+.no-directions-error {
+  display: none;
+  margin-left: 10px;
+  margin-top: 10px;
 }
   
 /* media queries to make interface responsive */
@@ -555,14 +552,9 @@ label.dt-label {
       max-width: 650px;
     }
 
-
-
     #fullscreen-map {
-      /* height: calc(100vh - 85px); */
       height: 400px;
-  
     }
-
 
     /* hide tab title on mobiles */
     .tab-title {
@@ -655,11 +647,9 @@ label.dt-label {
       .input-box {
         max-width: 70vw;
         min-width: 270px;  
-        width: 70vw;
-        /* margin-bottom: 10px;
-        margin-left: 5px; */
-       
+        width: 70vw;       
       }
+
       #geolocation-tourist {
         margin: 0px !important;
         padding-left: 5px;
@@ -676,7 +666,7 @@ label.dt-label {
 
       .row .datetime {
         margin-left: 4px;
-        max-width: 200px;
+        max-width: 240px;
       }
 
       .container .news {
@@ -686,7 +676,7 @@ label.dt-label {
         margin-right: 3px;
       }
 
-          /* instructions to user on map interface */
+        /* instructions to user on map interface */
     .instruction {
       font-size: 0.9em;
       margin-left: 10px;
@@ -711,7 +701,6 @@ label.dt-label {
     margin: 5px 15px 15px 15px;
     width: 90vw;
     min-width: 300px;
-
   }
 
   #results-chart {
@@ -723,35 +712,42 @@ label.dt-label {
     margin-top: 20px;
   }
 
-  .edit-journey {
-    margin-top: 10px;
+    .edit-journey {
+      margin-top: 10px;
+    }
+
+    #realtime-input {
+      max-width: 300px;
+    }
   }
 
-/* change font of bottom nav when mobile screens get below 400px */
-  @media only screen and (max-width: 400px){
+  /* change font of bottom nav when mobile screens get below 400px */
+  @media only screen and (max-width: 360px){
 
     a.nav-item.nav-link.load-interface.nav-bottom{
-      font-size: 0.75em;
-    }
-
-  }
-
-    /* show map interface again when screen is stretched out */
-    @media only screen and (min-width: 992px) {
-      #map-interface {
-        z-index: 1000;
-        position: absolute;
-        display: block;
-        top: 90px;
-        left: 50px;
-        bottom: 50px;
-        width: 440px;
-        height: 550px;
-      }
+      font-size: 0.6em;
     }
   }
 
+  /* show map interface again when screen is stretched out */
+  @media only screen and (min-width: 992px) {
+    #map-interface {
+      z-index: 5000;
+      position: absolute;
+      display: block;
+      top: 30px;
+      left: 20px;
+      bottom: 30px;
+      width: auto;
+      height: calc(100vh - 134px);
+      overflow-y: hidden;
+      overflow-x: hidden;
+      box-shadow: 4px 4px 8px #B8B8B8;
+    }
+  }
 
+
+  /* autocomplete */
   .ui-autocomplete {
     position: absolute;
     top: 100%;
