@@ -109,7 +109,7 @@ def prediction(request):
         if result >= 300:
             result = 'N/A'
         elif result == 0:
-            result = "Prediction unavailable!"
+            result = "Currently unavailable"
         elif result != 0:
             result = (result, ' minutes')
         
@@ -119,7 +119,7 @@ def prediction(request):
 
     except Exception as e:
         print(e)
-        result = "Prediction unavailable!"
+        result = "Currently unavailable"
         results_dict = {"result": result, "fare": {"found": False}}
 
     return JsonResponse(results_dict)

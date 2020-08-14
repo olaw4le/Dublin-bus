@@ -8,10 +8,14 @@ file_path = (base_path / "static/journeyplanner/ordered_stops_main.json").resolv
 
 
 def get_fare(route, direction, start_stop, end_stop):
+    '''function which takes a route, direction, start and end stops and scrapes the dublin bus 
+    website to obtain the fare'''
 
+    #initialise fare dictionary and set flag to false
     fare_details = dict()
     fare_details["found"] = False
 
+    #get stops for specific route from JSON
     with open(file_path) as json_file:
         ordered_stops = json.load(json_file)
     route = route.upper()
@@ -24,10 +28,8 @@ def get_fare(route, direction, start_stop, end_stop):
         direction = int(direction)
     else:
         return fare_details
-    print("looking for", direction)
+    #get index of start and stop routes from main subroute in the JSON
     for subroute in route_dict:
-        print(route_dict[subroute]["direction"])
-        print(route_dict[subroute]["main"])
         if route_dict[subroute]["main"] and int(route_dict[subroute]["direction"]) == int(direction):
             try:
                 start_stop_idx = route_dict[subroute]["stops"].index(int(start_stop))
@@ -36,8 +38,9 @@ def get_fare(route, direction, start_stop, end_stop):
             except: 
                 return fare_details
     else:
-        print("No fare")
         return fare_details
+
+    # convert direction to required format for Dublin Bus website
     if direction == 2:
         direction = "I"
     elif direction == 1:
@@ -49,7 +52,6 @@ def get_fare(route, direction, start_stop, end_stop):
     try: 
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
-        # adult_fare = soup.find(id="ctl00_FullRegion_MainRegion_ContentColumns_holder_FareListingControl_lblFare")
         # find the table head that contains the string "all fares"
         head = soup.find_all("th", string=lambda string: string and "All Fares" in string)
         table = head[0].parent.parent
@@ -61,11 +63,9 @@ def get_fare(route, direction, start_stop, end_stop):
                 print(str(cells[0].contents[0]).strip(), str(cells[1].contents[0]).replace("€", "").strip())
                 fare_details[cells[0].contents[0].strip()] = cells[1].contents[0].replace("€", "").strip()
 
+        #change flag to true if found
         fare_details["found"]=True
-        print(url)
         fare_details["url"] = url
-        print("fare details")
-        print(fare_details)
         return fare_details
     except:
         return fare_details

@@ -20,7 +20,6 @@ function clearMarkers() {
 	}
 }
 
-
 $(document).ready(function () {
 
 	// Remove routes when navigating to another tab
@@ -64,7 +63,6 @@ var allMarkers = [];
 // an object to hold key-pair values <headsign>:<route_id> - similar to a python dict
 var routeNames = {};
 
-
 $(function () {
 	var jqxhr = $.getJSON("static/new_ordered_stops.json", null, function (data) {
 		stations = data;
@@ -89,7 +87,6 @@ $(function () {
 		route_number = route_number.filter(function (item, pos) {
 			return route_number.indexOf(item) == pos;
 		});
-
 	});
 
 	$("#estimator-route").autocomplete({
@@ -108,7 +105,6 @@ $(function () {
 			stops()
 		}
 	});
-
 });
 
 //getting the value of the selected  route
@@ -135,10 +131,7 @@ function stops() {
 			var x = key.split("_");
 			var y = (x[0] + " " + stations[key].headsign)
 
-
 			if (sel_route == y) {
-
-
 				routes = stations[key].stops
 				direction = key.charAt(key.length - 1);
 
@@ -174,7 +167,6 @@ function stops() {
 	});
 }
 
-
 var index;
 
 // function to populate the remaining destination stop
@@ -198,7 +190,6 @@ function destination_stops() {
 	$("#estimator-destination").html(To)
 }
 
-
 function origin_marker() {
 	var origin_stop = $("#estimator-origin").val()
 	var x = origin_stop.split(" ");
@@ -208,14 +199,13 @@ function origin_marker() {
 	var x = route.split(" ");
 	route = x[0]
 
-
 	$.ajax({
-			type: "POST",
-			url: "list_latlng/",
-			data: {
-				route: route
-			}
-		})
+		type: "POST",
+		url: "list_latlng/",
+		data: {
+			route: route
+		}
+	})
 
 		.done(function (response) {
 			var x = JSON.parse(response)
@@ -227,9 +217,7 @@ function origin_marker() {
 					title: key,
 				});
 				allMarkers.push(marker)
-
 			}
-
 		});
 }
 
@@ -246,13 +234,12 @@ function calcRoute() {
 	end = x[0]
 
 	$.ajax({
-			type: "POST",
-			url: "list_latlng/",
-			data: {
-				route: route
-			}
-		})
-
+		type: "POST",
+		url: "list_latlng/",
+		data: {
+			route: route
+		}
+	})
 		.done(function (response) {
 
 			var x = JSON.parse(response)
@@ -284,9 +271,7 @@ function calcRoute() {
 
 			list = destination_list.splice(0, destination_list.length - 2)
 
-
 			for (key in list) {
-
 				var y = list[key].split(" ");
 				start = y[0]
 
@@ -303,11 +288,7 @@ function calcRoute() {
 				});
 
 				allMarkers.push(marker)
-
-
 			}
-
-
 		})
 };
 
@@ -316,7 +297,6 @@ $("#estimator-route").on('keyup click change hover focus', stops);
 $("#estimator-route").change(origin_marker);
 $("#estimator-route").change(removeLineFromMap);
 $("#estimator-origin").change(destination_stops);
-
 
 // go button for tab 2 to show and hide results
 $(function () {
@@ -327,6 +307,8 @@ $(function () {
 		$('#cash-and-leap-tab2').html("");
 		$('#fare-result-tab2').html("");
 		$("#stop-to-stop-estimate").html("");
+
+		// hide results and fare initially 
 		$('.fare-accordion').hide();
 		$('#results-card').hide();
 		$('#results-chart').hide();
@@ -338,10 +320,9 @@ $(function () {
 		} else {
 			$(".spinner-border").show();
 
+			// calculate the route and hide line from map
 			calcRoute();
 			removeLineFromMap();
-			//makeStatsRequest();
-
 
 			//  use different date and time values depending on size of screen
 			if ($(window).width() < 992) {
@@ -349,13 +330,9 @@ $(function () {
 				var arr = datetimeValue.split('T');
 				date = arr[0];
 				time = arr[1];
-
 			} else {
 				var date = $("#datepicker-tab2").val();
-
 				time = $('#timepicker-tab2').val();
-
-
 				// use date and time here to make properly formatted datetimeValue for mobile
 				datetimeValue = date + 'T' + time;
 			}
@@ -384,7 +361,6 @@ $(function () {
 				},
 			});
 
-
 			$(".datetime").val(datetimeValue);
 
 			// convert time to seconds since midnight
@@ -404,18 +380,17 @@ $(function () {
 
 			// send post request
 			$.ajax({
-					type: "POST",
-					url: "prediction/",
-					data: {
-						date: date,
-						time: timeSeconds,
-						route: route,
-						origin: origin,
-						destination: destination,
-						direction: direction
-					}
-				})
-
+				type: "POST",
+				url: "prediction/",
+				data: {
+					date: date,
+					time: timeSeconds,
+					route: route,
+					origin: origin,
+					destination: destination,
+					direction: direction
+				}
+			})
 				// response returned from post request
 				.done(function (response) {
 
@@ -474,17 +449,15 @@ $(function () {
 	});
 	// call post request function when mobile datetime value changed
 	$("#datetime-tab2-results").on("change", function () {
-
 		sendDateTimeChangePostRequest();
-
 	});
-
 });
 
 
 // post request sent again when date and time changed on results page
 function sendDateTimeChangePostRequest() {
 
+	// show and hide appropriate info 
 	$('#results-card').hide();
 	$("#stop-to-stop-estimate").hide();
 	$("#estimate-loader").show();
@@ -534,7 +507,6 @@ function sendDateTimeChangePostRequest() {
 	});
 }
 
-
 // code for creating journey time graphs //
 
 //  1.  read the search params from the html
@@ -549,33 +521,33 @@ function sendDateTimeChangePostRequest() {
 
 // function for reading in the parameters used for generating the graphs
 function getSearchParams() {
-    var routeName = $("#estimator-route").val();
-    // find the route number using the routeName
-    var route = routeNames[routeName].split("_");
+	var routeName = $("#estimator-route").val();
+	// find the route number using the routeName
+	var route = routeNames[routeName].split("_");
 
-    var originName = $("#estimator-origin").val();
-    var origin = originName.split(" ")[0];
-    var destinationName = $("#estimator-destination").val();
-    var destination = destinationName.split(" ")[0];
+	var originName = $("#estimator-origin").val();
+	var origin = originName.split(" ")[0];
+	var destinationName = $("#estimator-destination").val();
+	var destination = destinationName.split(" ")[0];
 
-    var params = new Object();
-    params["route"] = route[0];
-    params["direction"] = route[1];
-    params["start"] = origin;
-    params["end"] = destination;
+	var params = new Object();
+	params["route"] = route[0];
+	params["direction"] = route[1];
+	params["start"] = origin;
+	params["end"] = destination;
 
-    // diff date and time values depending on screen size
-    if ($(window).width() < 992) {
-        datetimeValue = $("#datetime-tab2-results").val();
-        var arr = datetimeValue.split('T');
-        params["date"] = arr[0];
-        params["time"] = arr[1];
-    } else {
-        params["date"] = $("#datepicker-tab2-results-date").val();
-        params["time"] = $('#datepicker-tab2-results-time').val();
-    }
+	// diff date and time values depending on screen size
+	if ($(window).width() < 992) {
+		datetimeValue = $("#datetime-tab2-results").val();
+		var arr = datetimeValue.split('T');
+		params["date"] = arr[0];
+		params["time"] = arr[1];
+	} else {
+		params["date"] = $("#datepicker-tab2-results-date").val();
+		params["time"] = $('#datepicker-tab2-results-time').val();
+	}
 
-    return params;
+	return params;
 }
 
 
@@ -590,17 +562,17 @@ function makeStatsRequest() {
 	$('#graph-loader').show();
 	// make the request
 	$.ajax({
-			type: "POST",
-			url: "get_stats/",
-			data: {
-				date: params.date,
-				time: params.time,
-				route: params.route,
-				direction: params.direction,
-				end: params.end,
-				start: params.start
-			}
-		})
+		type: "POST",
+		url: "get_stats/",
+		data: {
+			date: params.date,
+			time: params.time,
+			route: params.route,
+			direction: params.direction,
+			end: params.end,
+			start: params.start
+		}
+	})
 
 		// when response received
 		.done(function (response) {
@@ -627,42 +599,42 @@ function makeStatsRequest() {
 // display a textual description of the data contained in the graph
 function updateTextInfo(data) {
 
-    // get the 95% journey time for this time group
-    var keys = Object.keys(data.data);
-    var current_time = keys[Math.floor(keys.length / 2)];
-    var journey_time = "dummy";
-    var fastest_time;
+	// get the 95% journey time for this time group
+	var keys = Object.keys(data.data);
+	var current_time = keys[Math.floor(keys.length / 2)];
+	var journey_time = "dummy";
+	var fastest_time;
 
-    for (var key in data.data) {
-        var t = data.data[key];
-        if (journey_time === "dummy") {
-            if (data.data[key] > 0) {
-                journey_time = data.data[key];
-                fastest_time = journey_time;
-            }
-        } else if (t < journey_time) {
-            // ignore journey times of 0 minute - this is missing data
-            if (t > 0) {
-                fastest_time = key;
-            }
-        }
-    }
+	for (var key in data.data) {
+		var t = data.data[key];
+		if (journey_time === "dummy") {
+			if (data.data[key] > 0) {
+				journey_time = data.data[key];
+				fastest_time = journey_time;
+			}
+		} else if (t < journey_time) {
+			// ignore journey times of 0 minute - this is missing data
+			if (t > 0) {
+				fastest_time = key;
+			}
+		}
+	}
 
-    // if there's a faster time than the 'search time' add that to the description
-    console.log(data.data[current_time]);
-    if (data.data[current_time] == 0) {
-        $("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
+	// if there's a faster time than the 'search time' add that to the description
+	console.log(data.data[current_time]);
+	if (data.data[current_time] == 0) {
+		$("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
 
-    } else if (current_time === fastest_time) {
-        $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
-    } else {
-        var timeDelta = journey_time - data.data[fastest_time];
-        if (timeDelta > 1) {
-            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
-        } else {
-            $("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
-        }
-    }
+	} else if (current_time === fastest_time) {
+		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
+	} else {
+		var timeDelta = journey_time - data.data[fastest_time];
+		if (timeDelta > 1) {
+			$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
+		} else {
+			$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
+		}
+	}
 
 }
 
@@ -702,60 +674,60 @@ function DataSet(data) {
 
 function drawBarChart(data) {
 
-    // get the chart container from the info.html page
-    var container = $("#chart-container");
-    var bars = [];
-    var labels = Object.keys(data);
+	// get the chart container from the info.html page
+	var container = $("#chart-container");
+	var bars = [];
+	var labels = Object.keys(data);
 
-    bars = new DataSet(data);
+	bars = new DataSet(data);
 
-    // check if a chart already exists in the container div;
-    // if so just update the existing chart with new data
-    // else create a new chart element in the container div
+	// check if a chart already exists in the container div;
+	// if so just update the existing chart with new data
+	// else create a new chart element in the container div
 
-    container.empty();
-    $('<canvas id="results-canvas"></canvas>').prependTo(container);
+	container.empty();
+	$('<canvas id="results-canvas"></canvas>').prependTo(container);
 
-    var ctx = $("#results-canvas");
+	var ctx = $("#results-canvas");
 
-    var someChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            datasets: [bars],
-            labels: Object.keys(data),
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: false
-            },
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        labelString: "Travel Time (Minutes)",
-                        display: true
-                    },
-                    stacked: false,
-                    display: true,
-                    gridLineWidth: 0,
-                    minorTickInterval: null,
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                xAxes: [{
-                    stacked: false,
-                    display: true,
-                    gridLineWidth: 0,
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        }
-    });
+	var someChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			datasets: [bars],
+			labels: Object.keys(data),
+		},
+		options: {
+			responsive: true,
+			legend: {
+				display: false
+			},
+			scales: {
+				yAxes: [{
+					scaleLabel: {
+						labelString: "Travel Time (Minutes)",
+						display: true
+					},
+					stacked: false,
+					display: true,
+					gridLineWidth: 0,
+					minorTickInterval: null,
+					ticks: {
+						beginAtZero: true
+					}
+				}],
+				xAxes: [{
+					stacked: false,
+					display: true,
+					gridLineWidth: 0,
+					gridLines: {
+						display: false
+					}
+				}]
+			}
+		}
+	});
 
-    return someChart;
+	return someChart;
 
 }
 
@@ -764,6 +736,5 @@ function chartDataError() {
 	$("#no-data-error").show();
 	$("#results-chart").hide();
 }
-
 
 $('#stop-to-stop-go').on('click', makeStatsRequest)

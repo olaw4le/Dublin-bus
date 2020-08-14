@@ -9,9 +9,12 @@ var directionsRenderer;
 var markerArray;
 var geocoder;
 var geolocation = false;
+
+// to ensure map interface visible on Safari
 window.setInterval(function () {
 	$("#map-interface").zIndex(1000);
 }, 500);
+
 //loading the ui map.This is the function that loads when the opens the page 
 function initMap() {
 
@@ -27,29 +30,24 @@ function initMap() {
 	})
 
 	//the current location 
-	// var dublin = { lat: 53.349424, lng: -6.260452};
-
 	var dublin = {
 		lat: 53.349424,
 		lng: -6.363448826171867
 	};
-
 
 	//showing the map
 	map = new google.maps.Map(
 		document.getElementById('map'), {
 			center: dublin,
 			zoom: 12,
+			// ensure map interface visible on Safari
 			bounds_changed: function () {
-
 				$("#map-interface").zIndex(5000);
 			},
 			idle: function () {
-
 				$("#map-interface").zIndex(5000);
 			},
 			zoom_changed: function () {
-
 				$("#map-interface").zIndex(5000);
 			},
 			styles: [{
@@ -227,8 +225,6 @@ function getGeolocation(inputID) {
 			'Error: Your browser doesn\'t support geolocation.');
 		infoWindow.open(map);
 	};
-
-
 }
 
 // function to geocode geolocation coordinates into address

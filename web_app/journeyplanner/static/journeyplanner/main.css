@@ -291,7 +291,6 @@ ul {
 .instruction {
   font-size: 0.9em;
   margin-left: 10px;
-  /* padding-top: 10px; */
 }
 
 #instruction-planner {
@@ -341,7 +340,6 @@ label.dt-label {
   padding-left: 20px !important;
   text-align: left;
   min-width: 150px;
-
 }
 
 .spinner-border {
@@ -411,8 +409,6 @@ label.dt-label {
 
 .invalid-location-error{
   display: none;
-  /* color: red;
-  margin-left: 5px; */
 }
 
 .alert-danger {
@@ -459,21 +455,20 @@ label.dt-label {
   margin-top: 10px;
 }
 
-.fare-header {
-  text-align: left;
-  font-weight: 600;
-}
-
 #leap-logout {
   display: none;
   margin-left: 30px;
 }
 
 /* fare */
-
 .fare-button {
   text-align: left;
   margin-left: 0px;
+}
+
+.fare-header {
+  text-align: left;
+  font-weight: 600;
 }
 
 #accordion-fare-tourist {
@@ -486,7 +481,6 @@ label.dt-label {
 
 #accordion-fare-tab2 {
   display:none;
-  
 }
 
 .fare-accordion {
@@ -498,7 +492,6 @@ label.dt-label {
   width: 90vw;
   max-width: 400px;
 }
-
 
 .fare-result-detailed{
   padding-left: 0px;
@@ -533,6 +526,7 @@ label.dt-label {
   margin-left: 15px;
 }
 
+/*error messages */
 #no-data-error{
   width: 95%;
   margin: auto;
@@ -559,7 +553,6 @@ label.dt-label {
     }
 
     #fullscreen-map {
-      /* height: calc(100vh - 85px); */
       height: 400px;
     }
 
@@ -683,7 +676,7 @@ label.dt-label {
         margin-right: 3px;
       }
 
-          /* instructions to user on map interface */
+        /* instructions to user on map interface */
     .instruction {
       font-size: 0.9em;
       margin-left: 10px;
@@ -719,37 +712,39 @@ label.dt-label {
     margin-top: 20px;
   }
 
-  .edit-journey {
-    margin-top: 10px;
+    .edit-journey {
+      margin-top: 10px;
+    }
+
+    #realtime-input {
+      max-width: 300px;
+    }
   }
 
-  #realtime-input {
-    max-width: 300px;
-  }
-  }
   /* change font of bottom nav when mobile screens get below 400px */
   @media only screen and (max-width: 360px){
 
     a.nav-item.nav-link.load-interface.nav-bottom{
       font-size: 0.6em;
     }
+  }
 
-    /* show map interface again when screen is stretched out */
-    @media only screen and (min-width: 992px) {
-      #map-interface {
-        z-index: 1000;
-        position: absolute;
-        display: block;
-        top: 90px;
-        left: 50px;
-        bottom: 50px;
-        width: 440px;
-        height: 550px;
-      }
+  /* show map interface again when screen is stretched out */
+  @media only screen and (min-width: 992px) {
+    #map-interface {
+      z-index: 1000;
+      position: absolute;
+      display: block;
+      top: 90px;
+      left: 50px;
+      bottom: 50px;
+      width: 440px;
+      height: 550px;
     }
   }
 
 
+  /* autocomplete */
   .ui-autocomplete {
     position: absolute;
     top: 100%;
