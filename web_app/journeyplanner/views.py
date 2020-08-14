@@ -188,7 +188,6 @@ def planner(request):
                 else:
                     prediction.append(calculation)
 
-
             except Exception as e:
                 print(e)
                 prediction.append(duration)
@@ -198,9 +197,13 @@ def planner(request):
             #     pass
 
             # get the fare for each leg of the journey
-            journey_fare = get_fare(route, direction, origin, arrival)
-            total_fare.append(journey_fare)
-
+            try:
+                journey_fare = get_fare(route, direction, origin, arrival)
+                total_fare.append(journey_fare)
+            except Exception as e:
+                print(e)
+                journey_fare = {"found": False}
+                total_fare.append(journey_fare)
 
     prediction_and_fare["fare"] = total_fare
     prediction_and_fare["prediction"] = prediction
