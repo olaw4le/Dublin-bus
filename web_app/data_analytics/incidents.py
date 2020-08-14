@@ -10,6 +10,7 @@ password = "YZuB%F34qYSbpp7J"
 host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
 port = 5432
 
+
 def return_incident_info(route, direction, date, time, start_stop_x, start_stop_y, end_stop_x, end_stop_y):
     print(route)
     print(direction)
@@ -55,7 +56,6 @@ def return_incident_info(route, direction, date, time, start_stop_x, start_stop_
                     item_2 = item_q.replace("'", "")
                     new_list.append(item_2)
 
-                    
             for q in new_list:
                 r = q.split(',')
                 x = float(r[0])

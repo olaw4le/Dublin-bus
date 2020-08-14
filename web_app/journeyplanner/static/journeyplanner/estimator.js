@@ -427,7 +427,11 @@ $(function () {
 					// hide spinner and show estimate
 					$("#estimate-loader").hide();
 					$("#stop-to-stop-estimate").html(response.result);
-					makeStatsRequest();
+					if (response.result === "Currently unavailable") {
+					    $('#graph-loader').hide();
+					} else {
+					    makeStatsRequest();
+					}
 				});
 
 
@@ -511,7 +515,12 @@ function sendDateTimeChangePostRequest() {
 		$("#stop-to-stop-estimate").html(response.result);
 		$("#stop-to-stop-estimate").show();
 		// request new data for graphs when date & time changes
-		makeStatsRequest();
+		console.log(response.result)
+		if (response.result === "Currently unavailable") {
+		    $('#graph-loader').hide();
+		} else {
+			makeStatsRequest();
+		}
 	});
 }
 
@@ -595,10 +604,11 @@ function makeStatsRequest() {
 
 				updateTextInfo(infoObject);
 				drawBarChart(data.hourly);
+				$('#results-chart').show();
 			} else {
 				chartDataError();
 			}
-			$('#results-chart').show();
+
 			$('#graph-loader').hide();
 		});
 }
@@ -618,29 +628,31 @@ function updateTextInfo(data) {
 		if (journey_time === "dummy") {
 			if (data.data[key] > 0) {
 				journey_time = data.data[key];
-				fastest_time = journey_time;
+				fastest_time = key;
 			}
 		} else if (t < journey_time) {
 			// ignore journey times of 0 minute - this is missing data
 			if (t > 0) {
+			    journey_time = data.data[key];
 				fastest_time = key;
 			}
 		}
 	}
 
 	// if there's a faster time than the 'search time' add that to the description
+<<<<<<< HEAD
+=======
+	console.log(data.data[current_time]);
+
+>>>>>>> f2dc0031e231eb84187c0ac01764360666b4157b
 	if (data.data[current_time] == 0) {
 		$("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
 
 	} else if (current_time === fastest_time) {
-		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes.");
+		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes.");
 	} else {
-		var timeDelta = journey_time - data.data[fastest_time];
-		if (timeDelta > 1) {
-			$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minutes faster at " + fastest_time + ".");
-		} else {
-			$("#results-description").html("At " + current_time + " 95% of journeys take less than " + journey_time + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
-		}
+	    var timeDelta = data.data[current_time] - data.data[fastest_time];
+		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
 	}
 
 }
@@ -744,4 +756,4 @@ function chartDataError() {
 	$("#results-chart").hide();
 }
 
-$('#stop-to-stop-go').on('click', makeStatsRequest)
+//$('#stop-to-stop-go').on('click', makeStatsRequest)

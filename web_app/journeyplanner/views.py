@@ -10,12 +10,12 @@ import requests
 from pyleapcard import *
 from .fare import get_fare
 
-from data_analytics import neural_net
-from data_analytics import incidents
-from data_analytics import get_direction
-import db_interface.db_interface as db
-from data_analytics import get_journey_proportion as jp
-from data_analytics.to_time_group import to_time_group
+from web_app.data_analytics import neural_net
+from web_app.data_analytics import incidents
+from web_app.data_analytics import get_direction
+import web_app.db_interface.db_interface as db
+from web_app.data_analytics import get_historical_data as jp
+from web_app.data_analytics.to_time_group import to_time_group
 
 from datetime import datetime, timedelta, time
 
@@ -193,10 +193,11 @@ def planner(request):
 
                 else:
                     prediction.append(calculation)
-                    
 
                 # print('prediction from module',prediction)
-            except:
+
+            except Exception as e:
+                print(e)
                 prediction.append(duration)
                 print('prediction from google', prediction)
 
