@@ -29,9 +29,30 @@ $ git clone https://csgitlab.ucd.ie/work-in-progress/research-project.git
 ```
 ~/my_project_dir$ pip install -r /research_project/web_app/requirements.txt
 ```
-### Configure Gunicorn Application Server
+### Create a .env file with login information
+```
+/my_project_dir/research_project/web_app$ vim .env
+```
+```
+database="<database_name>"
+user="<database_username>"
+password="<database_password>"
+host="<database_host>"
+port="<database_communication_port>"
+traffic_key="<api_key_for_traffic_alerts>"
+weather_key="<api_key_for_weather_data>"
+```
+### Run Locally for Development
+- To host the web app on a local machine for development
+```
+~/my_project_dir/research_project$ python web_app/manage.py runserver
+```
+- Weather & Traffic scrappers are run separately from the main web app and can be called using
 
-### Install & Configure Nginx
+### Deploy to Production
+#### Configure Gunicorn Application Server
+
+#### Install & Configure Nginx
 
 
 ## Features
