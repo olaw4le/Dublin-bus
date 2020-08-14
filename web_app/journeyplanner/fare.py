@@ -8,34 +8,36 @@ file_path = (base_path / "static/journeyplanner/ordered_stops_main.json").resolv
 
 
 def get_fare(route, direction, start_stop, end_stop):
-    '''function which takes a route, direction, start and end stops and scrapes the dublin bus 
-    website to obtain the fare'''
+    """function which takes a route, direction, start and end stops and scrapes the dublin bus
+    website to obtain the fare"""
 
-    #initialise fare dictionary and set flag to false
+    # initialise fare dictionary and set flag to false
     fare_details = dict()
     fare_details["found"] = False
 
-    #get stops for specific route from JSON
+    # get stops for specific route from JSON
     with open(file_path) as json_file:
         ordered_stops = json.load(json_file)
     route = route.upper()
     fare_details["route"] = route
     try:
         route_dict = ordered_stops[route]
-    except:
+    except Exception as e:
+        print(e)
         return fare_details
     if direction:
         direction = int(direction)
     else:
         return fare_details
-    #get index of start and stop routes from main subroute in the JSON
-    for subroute in route_dict:
-        if route_dict[subroute]["main"] and int(route_dict[subroute]["direction"]) == int(direction):
+    # get index of start and stop routes from main subroute in the JSON
+    for sub_route in route_dict:
+        if route_dict[sub_route]["main"] and int(route_dict[sub_route]["direction"]) == int(direction):
             try:
-                start_stop_idx = route_dict[subroute]["stops"].index(int(start_stop))
-                end_stop_idx = route_dict[subroute]["stops"].index(int(end_stop))
+                start_stop_idx = route_dict[sub_route]["stops"].index(int(start_stop))
+                end_stop_idx = route_dict[sub_route]["stops"].index(int(end_stop))
                 break
-            except: 
+            except Exception as e:
+                print(e)
                 return fare_details
     else:
         return fare_details
@@ -63,11 +65,13 @@ def get_fare(route, direction, start_stop, end_stop):
                 print(str(cells[0].contents[0]).strip(), str(cells[1].contents[0]).replace("€", "").strip())
                 fare_details[cells[0].contents[0].strip()] = cells[1].contents[0].replace("€", "").strip()
 
-        #change flag to true if found
+        # change flag to true if found
         fare_details["found"]=True
         fare_details["url"] = url
         return fare_details
-    except:
+
+    except Exception as e:
+        print(e)
         return fare_details
     
 
