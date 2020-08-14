@@ -66,7 +66,7 @@ def get_fare(route, direction, start_stop, end_stop):
                 fare_details[cells[0].contents[0].strip()] = cells[1].contents[0].replace("€", "").strip()
 
         # change flag to true if found
-        fare_details["found"]=True
+        fare_details["found"] = True
         fare_details["url"] = url
         return fare_details
 
