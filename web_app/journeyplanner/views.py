@@ -14,7 +14,7 @@ from data_analytics import neural_net
 from data_analytics import incidents
 from data_analytics import get_direction
 import db_interface.db_interface as db
-from data_analytics import get_journey_proportion as jp
+from data_analytics import get_historical_data as jp
 from data_analytics.to_time_group import to_time_group
 
 from datetime import datetime, timedelta, time
