@@ -101,7 +101,6 @@ def prediction(request):
         date = request.POST["date"]
         time = request.POST["time"]
         direction = request.POST["direction"]
-        # print("From prediction(views.py): ", route, origin, destination, date, time)
 
     try:
         result = neural_net.generate_prediction(route, origin, destination, date, time, direction)
@@ -113,7 +112,6 @@ def prediction(request):
         elif result != 0:
             result = (result, ' minutes')
         
-        # print("Users estimated journey in minutes (from views.py)", result)
         journey_fare = get_fare(route, direction, origin, destination)
         results_dict = {"result": result, "fare": journey_fare}
 
@@ -143,7 +141,6 @@ def planner(request):
             time = request.POST["time"]
             duration = i["duration"]
 
-            # print("duration",duration)
 
             # direction = 2
             route_number = route.upper()
@@ -172,7 +169,6 @@ def planner(request):
                 origin = find_stop(route_list, (departure_lat, departure_lng))
                 arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
-                # print(direction)
 
             except:
                 direction = None
@@ -184,22 +180,18 @@ def planner(request):
                 calculation = neural_net.generate_prediction(route_number, origin, arrival, date, time, direction)
                 if calculation >=300:
                     prediction.append(duration)
-                    print('prediction from google', prediction)
     
                 elif calculation ==0:
                     # return the google prediction if the calculation is 0
                     prediction.append(duration)
-                    print('prediction from google', prediction)
 
                 else:
                     prediction.append(calculation)
 
-                # print('prediction from module',prediction)
 
             except Exception as e:
                 print(e)
                 prediction.append(duration)
-                print('prediction from google', prediction)
 
             # adding the calculated value to the list that will be sent back
             # finally:
@@ -209,12 +201,10 @@ def planner(request):
             journey_fare = get_fare(route, direction, origin, arrival)
             total_fare.append(journey_fare)
 
-            # print("prediction list",prediction)
 
     prediction_and_fare["fare"] = total_fare
     prediction_and_fare["prediction"] = prediction
-    # print("prediction and fare dict")
-    # print(prediction_and_fare)
+   
     return JsonResponse(json.dumps(prediction_and_fare), safe=False)
     
 
@@ -228,8 +218,6 @@ def find_latlng(request):
         # getting the suggested route file 
         route_list = stops_latlng(route_number)
         result = latlng(route_list, str(stop_id))
-
-        # print(result)
         
     return HttpResponse(json.dumps(result))
 
@@ -253,7 +241,6 @@ def real_time(request):
         r = requests.get(url=url)
 
         data = r.json()
-        print(data)
 
     return HttpResponse(json.dumps(data))
 
@@ -415,7 +402,6 @@ def get_stats(request):
         if all_null:
             response["daily"] = "none"
 
-        # print(response)
         return HttpResponse(json.dumps(response))
 
 
@@ -454,7 +440,6 @@ def accident(request):
                 origin = find_stop(route_list, (departure_lat, departure_lng))
                 arrival = find_stop(route_list, (arrival_lat, arrival_lng))
                 direction = get_direction.get_direction_from_stops(route, origin, arrival)
-                # print(direction)
 
             except:
                 direction = None
@@ -462,7 +447,7 @@ def accident(request):
                 arrival = 0
 
             response= incidents.return_incident_info(route_number, direction, date, time, departure_lat, departure_lng, arrival_lat, arrival_lng)
-            print(response)
+
 
         return HttpResponse(json.dumps(response))
 
