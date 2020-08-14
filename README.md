@@ -3,7 +3,7 @@
 >A web based application for generating and serving journey-time predictions for Dublin Bus
 >Django, Python 3.7, JavaScript, jQuery
 
-##Installation
+## Installation
 ### Create a project Directory
 - Create a directory to house this project
 ```
