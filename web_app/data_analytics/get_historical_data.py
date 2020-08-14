@@ -1,5 +1,5 @@
 # from data_analytics import db_interface as db
-import db_interface.db_interface as db
+import web_app.db_interface.db_interface as db
 import json
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -183,8 +183,7 @@ def sum_values(values, **kwargs):
         try:
             total += int(n)
         except Exception as e:
-            # print("Error: can't cast type to int")
-            # print(e)
+            print(e)
             nulls += 1
 
     # return the sum of all proportions + the (number of missing values * the average journey time)
