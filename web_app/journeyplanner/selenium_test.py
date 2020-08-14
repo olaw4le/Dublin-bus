@@ -16,7 +16,6 @@ class seliumtesting(unittest.TestCase):
     # declare variable to store the URL to be visited
     base_url="https://www.plan-your-journey.eu"
 
-
     # --- Pre - Condition ---
     def setUp(self):
         # declare and initialize driver variable
@@ -25,7 +24,7 @@ class seliumtesting(unittest.TestCase):
         self.driver.maximize_window()
         # driver should wait implicitly for a given duration, for the element under consideration to load.
         # to enforce this setting we will use builtin implicitly_wait() function of our 'driver' object.
-        self.driver.implicitly_wait(10)  #10 is in seconds
+        self.driver.implicitly_wait(10)  # 10 is in seconds
 
     # --- Steps ---
     def test_realtime(self):
@@ -54,12 +53,12 @@ class seliumtesting(unittest.TestCase):
         element = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="leap-tab"]')))
         element.click()
 
-        # look for the loging box and enter the login details
+        # look for the logging box and enter the login details
         user_input = self.driver.find_element_by_id("leap-user")
         user_input.send_keys('testing@outlook.com')
 
         # look for the password input box and enter the password
-        user_password =self.driver.find_element_by_id("leap-password")
+        user_password = self.driver.find_element_by_id("leap-password")
         user_password.send_keys("testing")
 
         # click the  button
@@ -67,17 +66,15 @@ class seliumtesting(unittest.TestCase):
         button.click()
         time.sleep(5)
 
-
-
     def test_routeplanner(self):
-       # to load a given URL in browser window
+        # to load a given URL in browser window
         self.driver.get(self.base_url)
 
         # to enter orgin adress, we need to locate the search textbox
         user_origin=self.driver.find_element_by_id("origin")
         user_origin.send_keys('UCD Sports Centre, Belfield, Dublin, Ireland')
 
-        user_destination= self.driver.find_element_by_id("destination")
+        user_destination = self.driver.find_element_by_id("destination")
         user_destination.send_keys('Ballsbridge, Dublin, Ireland')
 
         button=self.driver.find_element_by_id("go")
@@ -85,8 +82,7 @@ class seliumtesting(unittest.TestCase):
 
         time.sleep(4)
 
-
-     # --- Steps ---
+    # --- Steps ---
     def test_tourist(self):
         # to load a given URL in browser window
         self.driver.get(self.base_url)
@@ -95,11 +91,11 @@ class seliumtesting(unittest.TestCase):
         element = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tourist-tab"]')))
         element.click()
         # input the origin destination
-        user_origin= self.driver.find_element_by_id("origin-tourist")
+        user_origin = self.driver.find_element_by_id("origin-tourist")
         user_origin.send_keys('Ballsbridge, Dublin, Ireland')
 
         # look for the check  box and click it
-        checkbox =self.driver.find_element_by_id("coffee-shops")
+        checkbox = self.driver.find_element_by_id("coffee-shops")
         checkbox.click()
 
         time.sleep(5)
@@ -126,21 +122,20 @@ class seliumtesting(unittest.TestCase):
         time.sleep(1)
 
         # select the destination option
-        destination=Select(self.driver.find_element_by_id('estimator-destination'))
+        destination = Select(self.driver.find_element_by_id('estimator-destination'))
         destination.select_by_index(8)
 
         # click on the go button
-        button=self.driver.find_element_by_id('stop-to-stop-go')
+        button = self.driver.find_element_by_id('stop-to-stop-go')
         button.click()
 
         time.sleep(5)
-
-
 
     # --- Post - Condition ---
     def tearDown(self):
         # to close the browser
         self.driver.close()
+
 
 if __name__ == "__main__":
     unittest.main()
