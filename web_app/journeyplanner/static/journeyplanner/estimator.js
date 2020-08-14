@@ -640,11 +640,6 @@ function updateTextInfo(data) {
 	}
 
 	// if there's a faster time than the 'search time' add that to the description
-<<<<<<< HEAD
-=======
-	console.log(data.data[current_time]);
-
->>>>>>> f2dc0031e231eb84187c0ac01764360666b4157b
 	if (data.data[current_time] == 0) {
 		$("#results-description").html("Unfortunately there is no historical data for buses at this time, however 95% of journey at " + fastest_time + " take less than " + data.data[fastest_time] + " minutes .");
 
