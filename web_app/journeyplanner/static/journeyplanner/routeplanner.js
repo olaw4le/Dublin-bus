@@ -542,7 +542,7 @@ function calculateAndDisplayRoute(directionsRenderer, directionsService, markerA
 						}
 
 					}).done(function (traffic_response) {
-
+						$("#traffic-incident-content").html("");
                         // parse the response and display warning to user if array not empty
                         traffic_response = JSON.parse(traffic_response)[0]
                         if (traffic_response.length != 0) {

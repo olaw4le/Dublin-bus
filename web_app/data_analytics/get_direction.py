@@ -24,4 +24,4 @@ def get_direction_from_stops(route, stop_1, stop_2):
             if int(stop_1) in stops_dict[route][key]['stops'] and int(stop_2) in stops_dict[route][key]['stops']:
                 return stops_dict[route][key]['direction']
     else:
-        return EnvironmentError
+        raise EnvironmentError
