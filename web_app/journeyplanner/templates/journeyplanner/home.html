@@ -6,31 +6,32 @@
 <!-- sidebar menu on desktop landing page -->
 <div id="fullscreen-map">
   <div id="map" style="-webkit-transform: none; z-index: 1;"></div>
-  <div class="card container" id="map-interface">
+  <div class="card container pl-2 pr-0" id="map-interface">
     <div class='row'>
       <div class='col list-group' id="tab-menu">
-        <a class="slide-menu-item" id="hide-menu" aria-selected="false"> <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right: 5px;"></i> Hide</a>
-        <a class="slide-menu-item" id="show-menu"  aria-selected="false" style="display:none"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-        <a class="slide-menu-item active load-interface hide-slide-menu" id="routeplanner-tab" 
+        <a class="slide-menu-item" id="hide-menu" aria-selected="false">
+          <i class="fa fa-arrow-left" aria-hidden="true" style="margin-right: 5px;"></i> Hide</a>
+        <a class="slide-menu-item" id="show-menu" aria-selected="false" style="display:none">
+          <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        <a class="slide-menu-item active load-interface hide-slide-menu" id="routeplanner-tab"
           aria-controls="route-planner" aria-selected="true">PLANNER</a>
-        <a class="slide-menu-item load-interface hide-slide-menu" id="allroutes-tab" 
-          aria-controls="all-routes" aria-selected="false">STOP TO STOP</a>
-        <a class="slide-menu-item load-interface hide-slide-menu" id="realtime-tab" 
-          aria-controls="realtime" aria-selected="false">REAL-TIME</a>
-        <a class="slide-menu-item load-interface hide-slide-menu" id="leap-tab" 
-          aria-controls="leap-card" aria-selected="false">LEAP CARD</a>
-        <a class="slide-menu-item load-interface hide-slide-menu" id="tourist-tab" 
-          aria-controls="tourist-attractions" aria-selected="false">TOURIST</a>
+        <a class="slide-menu-item load-interface hide-slide-menu" id="allroutes-tab" aria-controls="all-routes"
+          aria-selected="false">STOP TO STOP</a>
+        <a class="slide-menu-item load-interface hide-slide-menu" id="realtime-tab" aria-controls="realtime"
+          aria-selected="false">REAL-TIME</a>
+        <a class="slide-menu-item load-interface hide-slide-menu" id="leap-tab" aria-controls="leap-card"
+          aria-selected="false">LEAP CARD</a>
+        <a class="slide-menu-item load-interface hide-slide-menu" id="tourist-tab" aria-controls="tourist-attractions"
+          aria-selected="false">TOURIST</a>
       </div>
       <div class='col' id="map-interface-content">Loading content..</div>
     </div>
   </div>
-</div>
+</div> 
 
 
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap"
->
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKIG0tau-Kvkyv3pX_H4sErJqzbe07KUU&libraries=places&callback=initMap">
   </script>
 <script src=" {% static 'journeyplanner/map.js' %}"></script>
 

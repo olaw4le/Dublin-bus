@@ -553,7 +553,7 @@ label.dt-label {
     }
 
     #fullscreen-map {
-      height: 400px;
+      height: 350px;
     }
 
     /* hide tab title on mobiles */
@@ -799,3 +799,11 @@ label.dt-label {
     position: absolute;
     width: 1px;
   }
+
+
+
+
+
+.fixed-bottom {
+    z-index: 9999 !important;
+}

@@ -698,7 +698,7 @@ $(function () {
 				$("#checkbox-card").hide();
 				if ($(window).width() < 992) {
 					$("#map-interface").css(
-						"top", "400px");
+						"top", "350");
 				}
 				$("#route-results-tourist").show();
 			}
@@ -748,7 +748,7 @@ $(function () {
 		// show half map on mobile screens
 		if ($(window).width() < 992) {
 			$("#map-interface").css(
-				"top", "400px");
+				"top", "350");
 		}
 		$("#route-results-tourist").hide();
 		$('#direction-tourist').empty()
