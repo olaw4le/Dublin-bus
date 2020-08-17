@@ -148,14 +148,18 @@ function routes() {
 	var ending = destination.getPlace();
 
 	// display error to user if valid starting location not entered
-	if (!starting) {
-		$('.invalid-location-error').show();
-		return false;
-	} else {
-		//starting address latitude
-		starting_lat = starting.geometry.location.lat();
-		starting_lng = starting.geometry.location.lng();
+
+	if (!geolocation) {
+		if (!starting) {
+			$('.invalid-location-error').show();
+			return false;
+		} else {
+			//starting address latitude
+			starting_lat = starting.geometry.location.lat();
+			starting_lng = starting.geometry.location.lng();
+		}
 	}
+
 	// display error to user if valid ending location not entered
 	if (!ending) {
 		$('.invalid-location-error').show();
