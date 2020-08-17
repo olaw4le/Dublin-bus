@@ -708,6 +708,8 @@ $(function () {
 	// add on click to edit-journey button to hide results and show journey planner
 	$('.edit-journey').on('click', function () {
 
+		$('.invalid-location-error').hide();
+
 		// hide the fare and error messages when the user clicks back
 		$('.no-directions-error').hide();
 		$('.fare-accordion').hide();

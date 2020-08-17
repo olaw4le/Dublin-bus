@@ -653,6 +653,7 @@ $(function () {
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
 
+		$('.invalid-location-error').hide();
         $("#traffic-incident").hide();
         $('.no-directions-error').hide();
         removeLineFromMap();
