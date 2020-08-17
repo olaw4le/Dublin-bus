@@ -698,7 +698,7 @@ $(function () {
 				$("#checkbox-card").hide();
 				if ($(window).width() < 992) {
 					$("#map-interface").css(
-						"top", "400px");
+						"top", "350");
 				}
 				$("#route-results-tourist").show();
 			}
@@ -707,6 +707,8 @@ $(function () {
 
 	// add on click to edit-journey button to hide results and show journey planner
 	$('.edit-journey').on('click', function () {
+
+		$('.invalid-location-error').hide();
 
 		// hide the fare and error messages when the user clicks back
 		$('.no-directions-error').hide();
@@ -748,7 +750,7 @@ $(function () {
 		// show half map on mobile screens
 		if ($(window).width() < 992) {
 			$("#map-interface").css(
-				"top", "400px");
+				"top", "350");
 		}
 		$("#route-results-tourist").hide();
 		$('#direction-tourist').empty()

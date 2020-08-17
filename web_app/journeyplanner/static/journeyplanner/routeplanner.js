@@ -148,14 +148,18 @@ function routes() {
 	var ending = destination.getPlace();
 
 	// display error to user if valid starting location not entered
-	if (!starting) {
-		$('.invalid-location-error').show();
-		return false;
-	} else {
-		//starting address latitude
-		starting_lat = starting.geometry.location.lat();
-		starting_lng = starting.geometry.location.lng();
+
+	if (!geolocation) {
+		if (!starting) {
+			$('.invalid-location-error').show();
+			return false;
+		} else {
+			//starting address latitude
+			starting_lat = starting.geometry.location.lat();
+			starting_lng = starting.geometry.location.lng();
+		}
 	}
+
 	// display error to user if valid ending location not entered
 	if (!ending) {
 		$('.invalid-location-error').show();
@@ -638,7 +642,7 @@ $(function () {
             $(".form-area").hide();
             if ($(window).width() < 992) {
                 $("#map-interface").css(
-                    "top", "400px");
+                    "top", "350");
             }
             $("#route-results").show();
         }
@@ -649,6 +653,7 @@ $(function () {
     // add on click to edit-journey button to hide results and show journey planner
     $('.edit-journey').on('click', function () {
 
+		$('.invalid-location-error').hide();
         $("#traffic-incident").hide();
         $('.no-directions-error').hide();
         removeLineFromMap();

@@ -403,8 +403,6 @@ label.dt-label {
 
 #tourist-destination-error {
   display: none;
-  color: red;
-  margin-left: 5px;
 }
 
 .invalid-location-error{
@@ -443,7 +441,7 @@ label.dt-label {
 }
 
 #realtime-input {
-  width: 420px;
+  width: 400px;
 }
 
 #realtime-error {
@@ -553,7 +551,7 @@ label.dt-label {
     }
 
     #fullscreen-map {
-      height: 400px;
+      height: 350px;
     }
 
     /* hide tab title on mobiles */
@@ -719,6 +717,15 @@ label.dt-label {
     #realtime-input {
       max-width: 300px;
     }
+
+  /* tourist map checkboxes */
+  #checkbox-card {
+    margin: 15px 40px 15px 15px;
+    padding-bottom: 10px;
+  }
+
+
+
   }
 
   /* change font of bottom nav when mobile screens get below 400px */
@@ -799,3 +806,11 @@ label.dt-label {
     position: absolute;
     width: 1px;
   }
+
+
+
+
+
+.fixed-bottom {
+    z-index: 9999 !important;
+}

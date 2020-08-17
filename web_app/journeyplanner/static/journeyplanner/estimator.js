@@ -139,19 +139,24 @@ function stops() {
 
 					for (var key3 in routes[key2]) {
 
+
 						var x = Object.values(routes[key2])
+
 						var y = JSON.stringify(x);
+
 						y = y.replace(/[[\]]/g, '')
 						y = y.replace(/['"]+/g, '')
 
-
-						list += (key3 + " " + y) + ",";
+						if (y != "") {
+							list += (key3 + " " + y) + ",";
+						}
 					}
 				}
 
 				//turning the into an array
 				list = list.trim().split(",");
 				result = list
+
 
 				//popuplating the sub route select list
 				for (var i = 0; i < list.length; i++) {
@@ -211,14 +216,25 @@ function origin_marker() {
 		.done(function (response) {
 			var x = JSON.parse(response)
 
+			var bounds = new google.maps.LatLngBounds();
+
 			for (key in x) {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(x[key].lat, x[key].lng),
 					map: map,
 					title: key,
 				});
+
+				loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+				bounds.extend(loc);
+
 				allMarkers.push(marker)
+
+
 			}
+
+			map.fitBounds(bounds);
+			map.panToBounds(bounds);
 		});
 }
 
@@ -278,15 +294,20 @@ function calcRoute() {
 			destination_list = list.slice(0, index + 1) //displaying the stops after the selected stops 
 			destination_list.pop()
 
-
+			var bounds = new google.maps.LatLngBounds();
 			for (key in destination_list) {
 				var y = destination_list[key].split(" ");
 				start = y[0]
 
-				var stop_latlng = {
-					lat: x[start].lat,
-					lng: x[start].lng
-				};
+				try {
+					var stop_latlng = {
+						lat: x[start].lat,
+						lng: x[start].lng
+					};
+
+				} catch (err) {
+					stop_latlng = null
+				}
 
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(stop_latlng),
@@ -295,8 +316,16 @@ function calcRoute() {
 					icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 				});
 
+				loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+				bounds.extend(loc);
+
 				allMarkers.push(marker)
 			}
+
+			map.fitBounds(bounds);
+			map.panToBounds(bounds);
+
+
 		})
 };
 
@@ -428,9 +457,9 @@ $(function () {
 					$("#estimate-loader").hide();
 					$("#stop-to-stop-estimate").html(response.result);
 					if (response.result === "Currently unavailable") {
-					    $('#graph-loader').hide();
+						$('#graph-loader').hide();
 					} else {
-					    makeStatsRequest();
+						makeStatsRequest();
 					}
 				});
 
@@ -457,6 +486,7 @@ $(function () {
 		$('.fare-accordion').hide();
 		$('#cash-and-leap-tab2').html("");
 		$('#fare-result-tab2').html("");
+		$('#stop-to-stop-incomplete-form-error').hide();
 
 	});
 	// call post request function when mobile datetime value changed
@@ -515,9 +545,8 @@ function sendDateTimeChangePostRequest() {
 		$("#stop-to-stop-estimate").html(response.result);
 		$("#stop-to-stop-estimate").show();
 		// request new data for graphs when date & time changes
-		console.log(response.result)
 		if (response.result === "Currently unavailable") {
-		    $('#graph-loader').hide();
+			$('#graph-loader').hide();
 		} else {
 			makeStatsRequest();
 		}
@@ -633,7 +662,7 @@ function updateTextInfo(data) {
 		} else if (t < journey_time) {
 			// ignore journey times of 0 minute - this is missing data
 			if (t > 0) {
-			    journey_time = data.data[key];
+				journey_time = data.data[key];
 				fastest_time = key;
 			}
 		}
@@ -646,7 +675,7 @@ function updateTextInfo(data) {
 	} else if (current_time === fastest_time) {
 		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes.");
 	} else {
-	    var timeDelta = data.data[current_time] - data.data[fastest_time];
+		var timeDelta = data.data[current_time] - data.data[fastest_time];
 		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
 	}
 
