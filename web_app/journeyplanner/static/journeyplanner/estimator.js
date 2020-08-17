@@ -484,6 +484,7 @@ $(function () {
 		$('.fare-accordion').hide();
 		$('#cash-and-leap-tab2').html("");
 		$('#fare-result-tab2').html("");
+		$('#stop-to-stop-incomplete-form-error').hide();
 
 	});
 	// call post request function when mobile datetime value changed

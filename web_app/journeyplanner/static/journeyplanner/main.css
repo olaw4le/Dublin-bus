@@ -403,8 +403,6 @@ label.dt-label {
 
 #tourist-destination-error {
   display: none;
-  color: red;
-  margin-left: 5px;
 }
 
 .invalid-location-error{
