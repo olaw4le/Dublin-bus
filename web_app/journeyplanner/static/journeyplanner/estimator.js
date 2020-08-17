@@ -283,10 +283,14 @@ function calcRoute() {
 				var y = destination_list[key].split(" ");
 				start = y[0]
 
-				var stop_latlng = {
-					lat: x[start].lat,
-					lng: x[start].lng
-				};
+				try {
+					var stop_latlng = {
+						lat: x[start].lat,
+						lng: x[start].lng
+					};
+				} catch (err) {
+					stop_latlng = null
+				}
 
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(stop_latlng),
@@ -428,9 +432,9 @@ $(function () {
 					$("#estimate-loader").hide();
 					$("#stop-to-stop-estimate").html(response.result);
 					if (response.result === "Currently unavailable") {
-					    $('#graph-loader').hide();
+						$('#graph-loader').hide();
 					} else {
-					    makeStatsRequest();
+						makeStatsRequest();
 					}
 				});
 
@@ -517,7 +521,7 @@ function sendDateTimeChangePostRequest() {
 		// request new data for graphs when date & time changes
 		console.log(response.result)
 		if (response.result === "Currently unavailable") {
-		    $('#graph-loader').hide();
+			$('#graph-loader').hide();
 		} else {
 			makeStatsRequest();
 		}
@@ -633,7 +637,7 @@ function updateTextInfo(data) {
 		} else if (t < journey_time) {
 			// ignore journey times of 0 minute - this is missing data
 			if (t > 0) {
-			    journey_time = data.data[key];
+				journey_time = data.data[key];
 				fastest_time = key;
 			}
 		}
@@ -646,7 +650,7 @@ function updateTextInfo(data) {
 	} else if (current_time === fastest_time) {
 		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes.");
 	} else {
-	    var timeDelta = data.data[current_time] - data.data[fastest_time];
+		var timeDelta = data.data[current_time] - data.data[fastest_time];
 		$("#results-description").html("At " + current_time + " 95% of journeys take less than " + data.data[current_time] + " minutes. This journey is up to " + timeDelta + " minute faster at " + fastest_time + ".");
 	}
 
