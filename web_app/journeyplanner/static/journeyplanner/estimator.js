@@ -138,17 +138,18 @@ function stops() {
 				for (var key2 in routes) {
 
 					for (var key3 in routes[key2]) {
-						console.log(key3)
+
 
 						var x = Object.values(routes[key2])
-						console.log("x = ", x)
+
 						var y = JSON.stringify(x);
-						console.log("y =", y)
+
 						y = y.replace(/[[\]]/g, '')
 						y = y.replace(/['"]+/g, '')
- 
-						if (y != ""){
-						list += (key3 + " " + y) + ",";}
+
+						if (y != "") {
+							list += (key3 + " " + y) + ",";
+						}
 					}
 				}
 
@@ -156,7 +157,6 @@ function stops() {
 				list = list.trim().split(",");
 				result = list
 
-				console.log(list)
 
 				//popuplating the sub route select list
 				for (var i = 0; i < list.length; i++) {
@@ -215,6 +215,7 @@ function origin_marker() {
 
 		.done(function (response) {
 			var x = JSON.parse(response)
+
 			var bounds = new google.maps.LatLngBounds();
 
 			for (key in x) {
@@ -303,6 +304,7 @@ function calcRoute() {
 						lat: x[start].lat,
 						lng: x[start].lng
 					};
+
 				} catch (err) {
 					stop_latlng = null
 				}
@@ -543,7 +545,6 @@ function sendDateTimeChangePostRequest() {
 		$("#stop-to-stop-estimate").html(response.result);
 		$("#stop-to-stop-estimate").show();
 		// request new data for graphs when date & time changes
-		console.log(response.result)
 		if (response.result === "Currently unavailable") {
 			$('#graph-loader').hide();
 		} else {
