@@ -717,6 +717,15 @@ label.dt-label {
     #realtime-input {
       max-width: 300px;
     }
+
+  /* tourist map checkboxes */
+  #checkbox-card {
+    margin: 15px 40px 15px 15px;
+    padding-bottom: 10px;
+  }
+
+
+
   }
 
   /* change font of bottom nav when mobile screens get below 400px */
