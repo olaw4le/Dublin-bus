@@ -240,7 +240,7 @@ def list_latlng(request):
 def real_time(request):
     if request.method == "POST":
         stop_number = request.POST["stopnumber"]
-        url = "https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid={}&format=json".format(stop_number)
+        url = "https://api.nationaltransport.ie/rtpi/RealTimeBusInformation?stopid={}&format=json&key=fee27c7c02eb4ccab027551bf8557ad3".format(stop_number)
         r = requests.get(url=url)
 
         data = r.json()

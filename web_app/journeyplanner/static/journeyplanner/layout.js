@@ -40,9 +40,9 @@ $(document).ready(function () {
         navIdForTab = navId.split("-")[0];
         $('#' + navIdForTab + '-tab').addClass("active");
 
-        // show map on input view of tourist map and stop to stop
-        if ((navId === "tourist-nav" || navId === "allroutes-nav") && $(window).width() < 992) {
-            $("#map-interface").css("top", "350px");
+        // show map on input view of tourist map 
+        if ((navId === "tourist-nav") && $(window).width() < 992) {
+            $("#map-interface").css("top", 350);
         } else {
             $("#map-interface").css("top", "0px")
         }
@@ -74,8 +74,8 @@ $(document).ready(function () {
 // Show interface if hidden when window resized
 $(window).resize(function () {
     if ($(window).width() <= 992){
-          if ($('#tourist-nav').hasClass("active") || $('#allroutes-nav').hasClass("active")) {
-            $("#map-interface").css("top", 400);
+          if ($('#tourist-nav').hasClass("active")){
+            $("#map-interface").css("top", 350);
         } 
 
     }
