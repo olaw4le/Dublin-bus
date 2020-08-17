@@ -156,6 +156,8 @@ function stops() {
 				list = list.trim().split(",");
 				result = list
 
+				console.log(list)
+
 				//popuplating the sub route select list
 				for (var i = 0; i < list.length; i++) {
 					To += "<option>  " + list[i] + "</option>";
@@ -213,6 +215,7 @@ function origin_marker() {
 
 		.done(function (response) {
 			var x = JSON.parse(response)
+			var bounds = new google.maps.LatLngBounds();
 
 			for (key in x) {
 				var marker = new google.maps.Marker({
@@ -220,8 +223,17 @@ function origin_marker() {
 					map: map,
 					title: key,
 				});
+
+				loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+				bounds.extend(loc);
+
 				allMarkers.push(marker)
+
+
 			}
+
+			map.fitBounds(bounds);
+			map.panToBounds(bounds);
 		});
 }
 
@@ -281,7 +293,7 @@ function calcRoute() {
 			destination_list = list.slice(0, index + 1) //displaying the stops after the selected stops 
 			destination_list.pop()
 
-
+			var bounds = new google.maps.LatLngBounds();
 			for (key in destination_list) {
 				var y = destination_list[key].split(" ");
 				start = y[0]
@@ -302,8 +314,16 @@ function calcRoute() {
 					icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 				});
 
+				loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+				bounds.extend(loc);
+
 				allMarkers.push(marker)
 			}
+
+			map.fitBounds(bounds);
+			map.panToBounds(bounds);
+
+
 		})
 };
 
