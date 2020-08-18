@@ -698,7 +698,7 @@ $(function () {
 				$("#checkbox-card").hide();
 				if ($(window).width() < 992) {
 					$("#map-interface").css(
-						"top", "350");
+						"top", "350px");
 				}
 				$("#route-results-tourist").show();
 			}

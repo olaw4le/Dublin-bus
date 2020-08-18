@@ -642,7 +642,7 @@ $(function () {
             $(".form-area").hide();
             if ($(window).width() < 992) {
                 $("#map-interface").css(
-                    "top", "350");
+                    "top", "350px");
             }
             $("#route-results").show();
         }

@@ -455,7 +455,7 @@ label.dt-label {
 
 #leap-logout {
   display: none;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 /* fare */
@@ -535,6 +535,11 @@ label.dt-label {
   display: none;
   margin-left: 10px;
   margin-top: 10px;
+}
+
+#leap-detailed-container {
+  padding-left: 5px;
+  margin-left: 0px;
 }
   
 /* media queries to make interface responsive */
