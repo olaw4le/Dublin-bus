@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from dotenv import find_dotenv, load_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 database = os.getenv("database")
 user = os.getenv("user")
 password = os.getenv("password")
