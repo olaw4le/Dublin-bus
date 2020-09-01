@@ -5,18 +5,19 @@ import os
 from datetime import datetime
 from web_app.db_interface import db_interface as db
 from data_analytics.get_weather_data import get_nearest_forecast, time_from_seconds
+from dotenv import find_dotenv, load_dotenv
 
 cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
 path = cwd
 
 # load environment
-database = "postgres"
-user = "postgres"
-password = "YZuB%F34qYSbpp7J"
-host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-port = 5432
-weather_api_key = "86baa129046e5cbaeb16af074356e579"
+load_dotenv(find_dotenv())
+database = os.getenv("database")
+user = os.getenv("user")
+password = os.getenv("password")
+host = os.getenv("host")
+port = os.getenv("port")
 
 
 def get_weather_from_db():
