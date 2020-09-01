@@ -1,13 +1,16 @@
 # from data_analytics import db_interface as db
 from db_interface.db_interface import *
 import csv
+import os
+from dotenv import find_dotenv, load_dotenv
 
-# hard code env variables to appease laura - major security vulnerability !
-database = "postgres"
-user = "postgres"
-password = "YZuB%F34qYSbpp7J"
-host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-port = 5432
+# get environment variables
+load_dotenv(find_dotenv())
+database = os.getenv("database")
+user = os.getenv("user")
+password = os.getenv("password")
+host = os.getenv("host")
+port = os.getenv("port")
 
 file_path = "route_shapes.csv"
 
