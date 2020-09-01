@@ -4,21 +4,12 @@ import json
 import os
 from dotenv import load_dotenv, find_dotenv
 
-"""
 load_dotenv()
 database = os.getenv("database")
 user = os.getenv("user")
 password = os.getenv("password")
 host = os.getenv("host")
 port = os.getenv("port")
-"""
-
-# hard code env variables to appease laura - major security vulnerability !
-database = "postgres"
-user = "postgres"
-password = "YZuB%F34qYSbpp7J"
-host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-port = 5432
 
 # 1. find segments in journey
 # 2. query database for segment proportions
