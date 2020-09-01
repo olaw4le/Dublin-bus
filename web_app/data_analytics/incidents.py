@@ -1,18 +1,21 @@
 import db_interface.db_interface as db
 from datetime import datetime
+import os
 from vincenty import vincenty
+from dotenv import find_dotenv, load_dotenv
 
 # load environment
-database = "postgres"
-user = "postgres"
-password = "YZuB%F34qYSbpp7J"
-host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-port = 5432
+load_dotenv(find_dotenv())
+database = os.getenv("database")
+user = os.getenv("user")
+password = os.getenv("password")
+host = os.getenv("host")
+port = os.getenv("port")
 
 
 def return_incident_info(route, direction, date, time, start_stop_x, start_stop_y, end_stop_x, end_stop_y):
-
-    """will return a list containing strings of descriptive information, each pertaining to a single traffic incident. Returns an """
+    """will return a list containing strings of descriptive information,
+    each pertaining to a single traffic incident. Returns an """
  
     # get the route and direction string to use to query the database
     route_string = str(route.lower()) + "_" + str(direction)
@@ -21,10 +24,10 @@ def return_incident_info(route, direction, date, time, start_stop_x, start_stop_
     sql = "SELECT * FROM incident_lookup l, incident_data d WHERE l.route_id = '%s' AND l.incident_id = d.incident_id;" % (route_string)
     relevant_incidents = db.execute_sql(sql, database, user, password, host, port, retrieving_data=True)
 
-    #create a list to hold the results
+    # create a list to hold the results
     results_list = []
     
-    #itterate through the list of traffic incidents relevant to this route
+    # itterate through the list of traffic incidents relevant to this route
     for incident in relevant_incidents:
         
         # the api really isn't great, so I just decided to remove these two incidents from the lists because Abbey
@@ -33,7 +36,7 @@ def return_incident_info(route, direction, date, time, start_stop_x, start_stop_
 
         if "Abbey Cottages" not in incident[8] and "and Ormond Street" not in incident[7]:
             
-            #get the shape of the bus route from the database
+            # get the shape of the bus route from the database
             sql1 = "SELECT * FROM db_gtfs_shapes WHERE route_id = '%s';" % (route_string)
             route_shape = db.execute_sql(sql1, database, user, password, host, port, retrieving_data=True)
             

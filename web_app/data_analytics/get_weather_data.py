@@ -1,23 +1,14 @@
 import db_interface.db_interface as db
+import os
 from datetime import datetime
+from dotenv import find_dotenv, load_dotenv
 
-
-"""
-load_dotenv()
+load_dotenv(find_dotenv())
 database = os.getenv("database")
 user = os.getenv("user")
 password = os.getenv("password")
 host = os.getenv("host")
 port = os.getenv("port")
-"""
-
-# hard code env variables to appease laura - major security vulnerability !
-database = "postgres"
-user = "postgres"
-password = "YZuB%F34qYSbpp7J"
-host = "group-10-dublin-bus.cu4ammu8tjpf.eu-west-1.rds.amazonaws.com"
-port = 5432
-
 
 # 1. check if date is within forecast -- this info could be kept on the web server to speed up queries??
 # 2. If so query the database for the nearest forecast
